@@ -1,11 +1,13 @@
 import { Global, css } from "@emotion/react";
 import React from "react";
+import fonts from "../assets/font/font.ts";
 const GlobalStyle = () => (
   <Global
     styles={css`
+      ${fonts}
       * {
         box-sizing: border-box;
-
+        font-family: "Spoqa Han Sans Neo", "sans-serif";
         font-size: 15px;
         font-weight: 300;
         color: black;

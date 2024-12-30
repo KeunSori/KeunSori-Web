@@ -1,16 +1,15 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/css";
 import React, { useEffect, useState } from "react";
+import logo from "../../../public/logo.svg";
 
 const Menu = styled.div<MenuProps>`
   position: fixed;
   z-index: 3;
   width: calc(100%);
-  height: 59px;
+  height: 65px;
   background-color: white;
   box-sizing: border-box;
-  font-size: 15px;
-  font-weight: 300;
   top: 0px;
   display: flex;
   justify-content: space-between;
@@ -26,11 +25,13 @@ const Space = styled.div`
   box-sizing: border-box;
   border: none;
   &:hover {
-    background-color: #e6e6e6;
+    color: #ffaa00;
+    border-bottom: 3px solid #ffaa00;
   }
-  padding: 12px 10px;
+  font-weight: 400;
+  font-size: 16px;
+  padding: 5px 0px;
   width: auto;
-  border-radius: 8px;
 `;
 
 const NavBar: React.FC = () => {
@@ -56,12 +57,18 @@ const NavBar: React.FC = () => {
           onClick={scrollToTop}
           style={{ cursor: "pointer" }}
         >
-          큰소리
+          <img
+            className={css`
+              width: 90px;
+            `}
+            src={logo}
+            alt="logo"
+          />
         </div>
         <div
           className={css`
             display: flex;
-            gap: 10px;
+            gap: 25px;
             margin: auto;
           `}
         >
