@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/css";
 import React, { useEffect, useState } from "react";
 import logo from "../../../public/logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Menu = styled.div<MenuProps>`
   position: fixed;
@@ -22,9 +22,12 @@ type MenuProps = {
   isMove: boolean;
 };
 
-const Space = styled.div`
+const Space = styled.div<{ isActive?: boolean }>`
+  cursor: pointer;
   box-sizing: border-box;
   border: none;
+  color: ${({ isActive }) => (isActive ? "#ffaa00" : "inherit")};
+  border-bottom: ${({ isActive }) => (isActive ? "3px solid #ffaa00" : "none")};
   &:hover {
     color: #ffaa00;
     border-bottom: 3px solid #ffaa00;
@@ -37,6 +40,7 @@ const Space = styled.div`
 
 const NavBar: React.FC = () => {
   const [isMove, setIsMove] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,43 +49,42 @@ const NavBar: React.FC = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
-    <>
-      <Menu isMove={isMove}>
-        <div
-          className={css`
-            margin: auto;
-          `}
-          style={{ cursor: "pointer" }}
-        >
-          <Link to="/">
-            <img
-              className={css`
-                width: 60px;
-              `}
-              src={logo}
-              alt="logo"
-            />
-          </Link>
-        </div>
+    <Menu isMove={isMove}>
+      <div
+        className={css`
+          margin: auto;
+        `}
+        style={{ cursor: "pointer" }}
+      >
+        <Link to="/">
+          <img
+            className={css`
+              width: 60px;
+            `}
+            src={logo}
+            alt="logo"
+          />
+        </Link>
+      </div>
 
-        <div
-          className={css`
-            display: flex;
-            gap: 25px;
-            margin: auto;
-          `}
-        >
-          <Space>지원하기</Space>
-
-          <Space>문의하기</Space>
-
-          <Link to="/login">
-            <Space>my keun</Space>
-          </Link>
-        </div>
-      </Menu>
-    </>
+      <div
+        className={css`
+          display: flex;
+          gap: 25px;
+          margin: auto;
+        `}
+      >
+        <Space isActive={location.pathname === "/recruit"}>지원하기</Space>
+        <Link to="/contact">
+          <Space isActive={location.pathname === "/contact"}>문의하기</Space>
+        </Link>
+        <Link to="/login">
+          <Space isActive={location.pathname === "/login"}>my keun</Space>
+        </Link>
+      </div>
+    </Menu>
   );
 };
 
