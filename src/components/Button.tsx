@@ -10,6 +10,7 @@ const Button = styled.button`
   padding: 15px;
   text-align: center;
   border-radius: 30px;
+  cursor: pointer;
   background-color: #ffc927;
   &:hover,
   &:active {

@@ -1,11 +1,15 @@
 import { css } from "@emotion/css";
 import logo from "../../public/logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import Input from "../components/Input.tsx";
 import Button from "../components/Button.tsx";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate("/user");
+  };
   return (
     <>
       <div
@@ -29,7 +33,7 @@ const LoginPage = () => {
         </Link>
         <Input placeholder="학번"></Input>
         <Input placeholder="비밀번호"></Input>
-        <Button>로그인</Button>
+        <Button onClick={onClick}>로그인</Button>
         <Link to="/signup">
           <div
             className={css`
