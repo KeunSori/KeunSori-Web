@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage.tsx";
 import GlobalStyle from "./styles/GlobalStyle.tsx";
-import React from "react";
 import LoginPage from "./pages/LoginPage.tsx";
 import SignUpPage from "./pages/SignUpPage.tsx";
 import UserPage from "./pages/UserPage.tsx";

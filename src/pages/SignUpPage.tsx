@@ -3,7 +3,6 @@ import Button from "../components/Button.tsx";
 import logo from "../../public/logo.svg";
 import { Link } from "react-router-dom";
 import Input from "../components/Input.tsx";
-import React from "react";
 
 const SignUpPage = () => {
   return (

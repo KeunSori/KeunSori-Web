@@ -1,6 +1,5 @@
 import { css } from "@emotion/css";
 import NavBar from "../components/navBar/navBar.tsx";
-import React from "react";
 const HomePage = () => {
   return (
     <>

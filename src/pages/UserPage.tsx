@@ -2,7 +2,6 @@ import { css } from "@emotion/css";
 import logo from "../../public/logo.svg";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
-import React from "react";
 const Nav = styled.a`
   font-size: 22px;
   font-weight: 500;
