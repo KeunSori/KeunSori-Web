@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/css";
 import React, { useEffect, useState } from "react";
 import logo from "../../../public/logo.svg";
+import { Link } from "react-router-dom";
 
 const Menu = styled.div<MenuProps>`
   position: fixed;
@@ -36,9 +37,6 @@ const Space = styled.div`
 
 const NavBar: React.FC = () => {
   const [isMove, setIsMove] = useState(false);
-  const scrollToTop = () => {
-    window.scrollTo(0, 0);
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,17 +52,19 @@ const NavBar: React.FC = () => {
           className={css`
             margin: auto;
           `}
-          onClick={scrollToTop}
           style={{ cursor: "pointer" }}
         >
-          <img
-            className={css`
-              width: 90px;
-            `}
-            src={logo}
-            alt="logo"
-          />
+          <Link to="/">
+            <img
+              className={css`
+                width: 60px;
+              `}
+              src={logo}
+              alt="logo"
+            />
+          </Link>
         </div>
+
         <div
           className={css`
             display: flex;
@@ -76,7 +76,9 @@ const NavBar: React.FC = () => {
 
           <Space>문의하기</Space>
 
-          <Space>my keun</Space>
+          <Link to="/login">
+            <Space>my keun</Space>
+          </Link>
         </div>
       </Menu>
     </>
