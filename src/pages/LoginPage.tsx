@@ -1,5 +1,5 @@
 import { css } from "@emotion/css";
-import logo from "../../public/logo.svg";
+import logo from "/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/Input.tsx";
 import Button from "../components/Button.tsx";

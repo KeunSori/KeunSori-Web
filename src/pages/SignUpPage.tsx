@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
 import Button from "../components/Button.tsx";
-import logo from "../../public/logo.svg";
+import logo from "/logo.svg";
 import { Link } from "react-router-dom";
 import Input from "../components/Input.tsx";
 

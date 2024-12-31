@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/css";
 import React, { useEffect, useState } from "react";
-import logo from "../../../public/logo.svg";
+import logo from "/logo.svg";
 import { Link, useLocation } from "react-router-dom";
 
 const Menu = styled.div<MenuProps>`
