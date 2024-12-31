@@ -32,7 +32,13 @@ const HomePage = () => {
             홍익대학교 컴퓨터공학과 밴드 학회
           </div>
         </div>
-        <img src={monkey} alt="monkey"></img>
+        <img
+          className={css`
+            width: 500px;
+          `}
+          src={monkey}
+          alt="monkey"
+        ></img>
       </div>
     </>
   );
