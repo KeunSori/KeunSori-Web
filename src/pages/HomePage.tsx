@@ -18,7 +18,7 @@ const HomePage = () => {
             className={css`
               font-size: 80px;
               font-weight: 700;
-              margin: 10px;
+              margin-bottom: 10px;
             `}
           >
             큰소리
