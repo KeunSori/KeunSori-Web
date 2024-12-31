@@ -76,7 +76,9 @@ const NavBar: React.FC = () => {
           margin: auto;
         `}
       >
-        <Space isActive={location.pathname === "/recruit"}>지원하기</Space>
+        <Link to="/recruit">
+          <Space isActive={location.pathname === "/recruit"}>지원하기</Space>
+        </Link>
         <Link to="/contact">
           <Space isActive={location.pathname === "/contact"}>문의하기</Space>
         </Link>
