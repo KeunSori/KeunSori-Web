@@ -1,6 +1,7 @@
 import { css } from "@emotion/css";
 import NavBar2 from "../components/navBar/navBar2.tsx";
 import styled from "@emotion/styled";
+import CurrentBook from "../components/Book/CurrentBook.tsx";
 const Nav = styled.div`
   font-size: 17px;
   font-weight: 300;
@@ -31,12 +32,14 @@ const BookPage = () => {
             gap: 20px;
             width: 60%;
             border-bottom: 2px solid #f1f1f1;
+            margin-bottom: 20px;
           `}
         >
           <Nav>예약 현황</Nav>
           <Nav>예약 신청</Nav>
           <Nav>나의 예약</Nav>
         </div>
+        <CurrentBook />
       </div>
     </>
   );
