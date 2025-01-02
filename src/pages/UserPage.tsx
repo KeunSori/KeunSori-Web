@@ -83,7 +83,9 @@ const UserPage = () => {
             align-items: center;
           `}
         >
-          <Nav>연습실</Nav>
+          <Link to="/book">
+            <Nav>연습실</Nav>
+          </Link>
           <Nav>게시판</Nav>
           <Nav>마이페이지</Nav>
         </div>

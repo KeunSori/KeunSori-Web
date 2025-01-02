@@ -1,5 +1,5 @@
 import { css } from "@emotion/css";
-import crymonkey from "../../public/그림1.svg";
+import crymonkey from "/crymonkey.svg";
 import NavBar from "../components/navBar/navBar.tsx";
 const RecruitPage = () => {
   return (

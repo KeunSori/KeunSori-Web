@@ -6,6 +6,7 @@ import SignUpPage from "./pages/SignUpPage.tsx";
 import UserPage from "./pages/UserPage.tsx";
 import ContactPage from "./pages/ContactPage.tsx";
 import RecruitPage from "./pages/RecruitPage.tsx";
+import BookPage from "./pages/BookPage.tsx";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/user" element={<UserPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/recruit" element={<RecruitPage />} />
+          <Route path="/book" element={<BookPage />} />
         </Routes>
       </BrowserRouter>
     </>
