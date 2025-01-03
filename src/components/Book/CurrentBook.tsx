@@ -52,7 +52,8 @@ const StyledDropdown = styled(Dropdown)`
   }
 `;
 const Notion = styled.div`
-  width: 380px;
+  width: 340px;
+  max-width: 100%;
   height: 150px;
   border-radius: 10px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
@@ -106,6 +107,7 @@ const CurrentBook: React.FC = () => {
           view="month"
           prev2Label={null}
           next2Label={null}
+          formatDay={(_locale, date) => date.getDate().toString()}
         />
         <div
           className={css`
@@ -125,6 +127,7 @@ const CurrentBook: React.FC = () => {
               display: flex;
               flex-direction: column;
               height: 400px;
+
               max-height: 100%;
               padding: 20px 0px;
               margin-top: 40px;

@@ -3,6 +3,7 @@ import NavBar2 from "../components/navBar/navBar2.tsx";
 import styled from "@emotion/styled";
 import CurrentBook from "../components/Book/CurrentBook.tsx";
 import { useState } from "react";
+import ApplicationBook from "../components/Book/ApplicationBook.tsx";
 interface NavProps {
   isActive: boolean;
 }
@@ -80,6 +81,7 @@ const BookPage = () => {
             </Nav>
           </div>
           {current && <CurrentBook />}
+          {application && <ApplicationBook />}
         </div>
       </div>
     </>
