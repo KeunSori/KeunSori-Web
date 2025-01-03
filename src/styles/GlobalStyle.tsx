@@ -39,7 +39,7 @@ const GlobalStyle = () => (
         scroll-behavior: smooth;
       }
       .react-calendar {
-        width: 350px;
+        width: 380px !important;
         max-width: 100%;
         background: white;
         padding: 20px;

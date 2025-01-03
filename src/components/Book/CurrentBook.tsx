@@ -3,7 +3,17 @@ import styled from "@emotion/styled";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Dropdown from "react-dropdown";
-
+const Title = styled.div`
+  font-size: 11px;
+  font-weight: 300;
+  margin-top: 15px;
+  color: #7f8fa4;
+`;
+const Detail = styled.div`
+  font-size: 14px;
+  font-weight: 300;
+  margin-top: 5px;
+`;
 const StyledDropdown = styled(Dropdown)`
   position: absolute;
   left: 20px;
@@ -41,6 +51,15 @@ const StyledDropdown = styled(Dropdown)`
     font-size: 10px;
   }
 `;
+const Notion = styled.div`
+  width: 380px;
+  height: 150px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  padding: 15px 20px;
+  font-size: 15px;
+  font-weight: 700;
+`;
 const CurrentBook: React.FC = () => {
   const options = ["팀", "개인"];
   const options2 = ["보컬", "기타", "베이스", "드럼", "키보드"];
@@ -75,9 +94,10 @@ const CurrentBook: React.FC = () => {
       </div>
       <div
         className={css`
-          margin: 60px 0px;
+          margin: 20px 0px;
           display: flex;
           align-items: center;
+          justify-content: center;
           gap: 30px;
         `}
       >
@@ -99,7 +119,41 @@ const CurrentBook: React.FC = () => {
           className={css`
             width: 350px;
           `}
-        ></div>
+        >
+          <div
+            className={css`
+              display: flex;
+              flex-direction: column;
+              height: 400px;
+              max-height: 100%;
+              padding: 20px 0px;
+              margin-top: 40px;
+            `}
+          >
+            <Notion>
+              김홍대<Title>악기</Title>
+              <Detail>Guiter</Detail>
+              <div
+                className={css`
+                  display: flex;
+                  justify-content: space-between;
+                  padding-right: 60px;
+                  padding-bottom: 15px;
+                  border-bottom: 1px solid #f1f1f1;
+                `}
+              >
+                <div>
+                  <Title>날짜</Title>
+                  <Detail>2025.01.01</Detail>
+                </div>
+                <div>
+                  <Title>시간</Title>
+                  <Detail>11:00 - 12:00</Detail>
+                </div>
+              </div>
+            </Notion>
+          </div>
+        </div>
       </div>
     </>
   );
