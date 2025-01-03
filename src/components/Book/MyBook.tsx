@@ -1,6 +1,5 @@
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
-import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Dropdown from "react-dropdown";
 const Title = styled.div`
@@ -52,16 +51,16 @@ const StyledDropdown = styled(Dropdown)`
   }
 `;
 const Notion = styled.div`
-  width: 340px;
+  width: 270px;
   max-width: 100%;
-  height: 150px;
+  height: 190px;
   border-radius: 10px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-  padding: 15px 20px;
+  padding: 20px;
   font-size: 15px;
   font-weight: 700;
 `;
-const CurrentBook: React.FC = () => {
+const MyBook: React.FC = () => {
   const options = ["팀", "개인"];
   const options2 = ["보컬", "기타", "베이스", "드럼", "키보드"];
   const defaultOption = "신청 유형";
@@ -98,67 +97,73 @@ const CurrentBook: React.FC = () => {
           margin: 20px 0px;
           display: flex;
           align-items: center;
-          justify-content: center;
+
           gap: 30px;
         `}
       >
-        <Calendar
-          calendarType="gregory"
-          view="month"
-          prev2Label={null}
-          next2Label={null}
-          formatDay={(_locale, date) => date.getDate().toString()}
-        />
         <div
           className={css`
-            width: 2px;
-            height: 250px;
+            display: flex;
+            height: 400px;
+
             max-height: 100%;
-            background-color: #f1f1f1;
-          `}
-        ></div>
-        <div
-          className={css`
-            width: 350px;
+            padding: 20px 0px;
+            margin-top: 30px;
           `}
         >
-          <div
-            className={css`
-              display: flex;
-              flex-direction: column;
-              height: 400px;
-
-              max-height: 100%;
-              padding: 20px 0px;
-              margin-top: 40px;
-            `}
-          >
-            <Notion>
-              김홍대<Title>악기</Title>
-              <Detail>Guiter</Detail>
+          <Notion>
+            김홍대<Title>악기</Title>
+            <Detail>Guiter</Detail>
+            <div
+              className={css`
+                display: flex;
+                justify-content: space-between;
+                padding-right: 30px;
+                padding-bottom: 15px;
+                border-bottom: 1px solid #f1f1f1;
+              `}
+            >
+              <div>
+                <Title>날짜</Title>
+                <Detail>2025.01.01</Detail>
+              </div>
+              <div>
+                <Title>시간</Title>
+                <Detail>11:00 - 12:00</Detail>
+              </div>
+            </div>
+            <div
+              className={css`
+                margin: 15px 0px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              `}
+            >
               <div
                 className={css`
-                  display: flex;
-                  justify-content: space-between;
-                  padding-right: 60px;
-                  padding-bottom: 15px;
-                  border-bottom: 1px solid #f1f1f1;
+                  font-weight: 700;
+                  color: #68ae82;
                 `}
               >
-                <div>
-                  <Title>날짜</Title>
-                  <Detail>2025.01.01</Detail>
-                </div>
-                <div>
-                  <Title>시간</Title>
-                  <Detail>11:00 - 12:00</Detail>
-                </div>
+                예약 완료
               </div>
-            </Notion>
-          </div>
+              <div
+                className={css`
+                  font-weight: 700;
+                  color: #bbc5d5;
+                  &:hover {
+                    color: black;
+                  }
+                `}
+              >
+                예약 취소
+              </div>
+            </div>
+          </Notion>
         </div>
       </div>
     </>
   );
 };
-export default CurrentBook;
+export default MyBook;

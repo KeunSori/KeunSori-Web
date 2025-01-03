@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import CurrentBook from "../components/Book/CurrentBook.tsx";
 import { useState } from "react";
 import ApplicationBook from "../components/Book/ApplicationBook.tsx";
+import MyBook from "../components/Book/MyBook.tsx";
 interface NavProps {
   isActive: boolean;
 }
@@ -82,6 +83,7 @@ const BookPage = () => {
           </div>
           {current && <CurrentBook />}
           {application && <ApplicationBook />}
+          {my && <MyBook />}
         </div>
       </div>
     </>

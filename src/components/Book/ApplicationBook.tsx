@@ -134,46 +134,43 @@ const ApplicationBook: React.FC = () => {
           </>
         )}
       </div>
-
-      <div
-        className={css`
-          height: 380px;
-          margin: 0px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 30px;
-        `}
-      >
-        <Calendar
-          calendarType="gregory"
-          view="month"
-          prev2Label={null}
-          next2Label={null}
-          formatDay={(_locale, date) => date.getDate().toString()}
-        />
+      {instrument["guitar"] ||
+      instrument["vocal"] ||
+      instrument["bass"] ||
+      instrument["drum"] ||
+      instrument["keyboard"] ? (
         <div
           className={css`
-            width: 2px;
-            height: 250px;
-            max-height: 100%;
-            background-color: #f1f1f1;
-          `}
-        ></div>
-        <div
-          className={css`
-            width: 350px;
+            height: 380px;
+            margin: 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
           `}
         >
+          <Calendar
+            calendarType="gregory"
+            view="month"
+            prev2Label={null}
+            next2Label={null}
+            formatDay={(_locale, date) => date.getDate().toString()}
+          />
           <div
             className={css`
-              display: grid;
-              grid-template-columns: repeat(3, 1fr);
-              grid-template-rows: repeat(6, 1fr);
+              width: 2px;
+              height: 250px;
+              max-height: 100%;
+              background-color: #f1f1f1;
+            `}
+          ></div>
+          <div
+            className={css`
+              width: 350px;
             `}
           ></div>
         </div>
-      </div>
+      ) : null}
     </>
   );
 };
