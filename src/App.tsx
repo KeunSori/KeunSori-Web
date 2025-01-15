@@ -11,6 +11,7 @@ import { AuthProvider } from "./contexts/AuthContext.tsx";
 import BookManagePage from "./pages/BookManagePage.tsx";
 import BoardPage from "./pages/BoardPage.tsx";
 import MyPage from "./pages/MyPage.tsx";
+import MemberManagement from "./pages/MemeberManagement.tsx";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/bookmanage" element={<BookManagePage />} />
             <Route path="/board" element={<BoardPage />} />
             <Route path="/mypage" element={<MyPage />} />
+          <Route path="/member-management" element={<MemberManagement />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
