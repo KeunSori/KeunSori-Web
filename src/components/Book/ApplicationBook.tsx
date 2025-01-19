@@ -27,6 +27,7 @@ const ApplicationBook: React.FC = () => {
     if (e.currentTarget.dataset.action === "team") {
       setTeam(true);
       setIndividual(false);
+      setInstrument(defaultInstrument);
     } else {
       setTeam(false);
       setIndividual(true);
@@ -122,7 +123,8 @@ const ApplicationBook: React.FC = () => {
       instrument["vocal"] ||
       instrument["bass"] ||
       instrument["drum"] ||
-      instrument["keyboard"] ? (
+      instrument["keyboard"] ||
+      team ? (
         <div
           className={css`
             margin-top: 20px;
@@ -163,15 +165,15 @@ const ApplicationBook: React.FC = () => {
               <Time>
                 시작 시간:
                 {startTime?.time
-                  ? ` ${startTime.time} :${
+                  ? ` ${startTime.time} : ${
                       startTime.index % 2 === 0 ? " 00" : " 30"
                     }`
-                  : "00 : 00"}
+                  : " 00 : 00"}
               </Time>
               <Time>
                 마감 시간:
                 {endTime?.time
-                  ? ` ${endTime.time} :${
+                  ? ` ${endTime.time} : ${
                       endTime.index % 2 === 0 ? " 00" : " 30"
                     }`
                   : ` 00 : 00`}
