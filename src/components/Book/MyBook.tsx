@@ -53,7 +53,7 @@ const StyledDropdown = styled(Dropdown)`
 const Notion = styled.div`
   width: 270px;
   max-width: 100%;
-  height: 190px;
+  height: 210px;
   border-radius: 10px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
   padding: 20px;

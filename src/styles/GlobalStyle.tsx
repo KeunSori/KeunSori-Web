@@ -6,7 +6,7 @@ const GlobalStyle = () => (
       ${fonts}
       * {
         box-sizing: border-box;
-        font-family: "Nanum Gothic", "sans-serif";
+        font-family: "Spoqa Han Sans Neo", "Spoqa Han Sans JP", sans-serif;
         font-size: 15px;
         font-weight: 300;
         color: black;

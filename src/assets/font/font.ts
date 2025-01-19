@@ -1,7 +1,8 @@
 import { css } from "@emotion/react";
 
 const fonts = css`
-  @import url("http://fonts.googleapis.com/earlyaccess/nanumgothic.css");
+  @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+  @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-jp.css);
 `;
 
 export default fonts;
