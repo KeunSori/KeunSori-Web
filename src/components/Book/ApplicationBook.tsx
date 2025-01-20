@@ -2,14 +2,13 @@ import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import { useState } from "react";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
 import Reservation from "./Reservation.tsx";
 import { useAtom } from "jotai";
 import { endTimeAtom, startTimeAtom } from "./Time.ts";
 import { Value } from "react-calendar/src/shared/types.js";
 
 const ApplicationBook: React.FC = () => {
-  const defaultInstrument = {
+  const defaultInstruments = {
     vocal: false,
     guitar: false,
     bass: false,
@@ -18,7 +17,9 @@ const ApplicationBook: React.FC = () => {
   };
   const [team, setTeam] = useState(false);
   const [individual, setIndividual] = useState(false);
-  const [instrument, setInstrument] = useState<instrument>(defaultInstrument);
+  const [instruments, setInstruments] =
+    useState<instrument>(defaultInstruments);
+  const [instrument, setInstrument] = useState<string>("");
   const [startTime] = useAtom(startTimeAtom);
   const [endTime] = useAtom(endTimeAtom);
   const [date, setDate] = useState<Date | null>(null);
@@ -27,16 +28,18 @@ const ApplicationBook: React.FC = () => {
     if (e.currentTarget.dataset.action === "team") {
       setTeam(true);
       setIndividual(false);
-      setInstrument(defaultInstrument);
+      setInstruments(defaultInstruments);
+      setInstrument("ALL");
     } else {
       setTeam(false);
       setIndividual(true);
     }
   };
   const onClickInstrument = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setInstrument(defaultInstrument);
+    setInstruments(defaultInstruments);
     const value = e.currentTarget.value as keyof instrument;
-    setInstrument((prev) => ({ ...prev, [value]: !prev[value] }));
+    setInstruments((prev) => ({ ...prev, [value]: !prev[value] }));
+    setInstrument(value);
   };
   const handleDateChange = (value: Value) => {
     if (Array.isArray(value)) {
@@ -44,6 +47,16 @@ const ApplicationBook: React.FC = () => {
     } else {
       setDate(value);
     }
+  };
+  const beforeToday = (date: Date) => {
+    const today = new Date();
+    return (
+      date.getDate() < today.getDate() && date.getMonth() <= today.getMonth()
+    );
+  };
+  const nextMonth = (date: Date) => {
+    const today = new Date();
+    return date.getMonth() - 1 > today.getMonth();
   };
 
   return (
@@ -59,7 +72,13 @@ const ApplicationBook: React.FC = () => {
           gap: 5px;
         `}
       >
-        신청 유형
+        <div
+          className={css`
+            width: 70px;
+          `}
+        >
+          신청 유형
+        </div>
         <Button isActive={team} onClick={onClick} data-action="team">
           팀
         </Button>
@@ -77,7 +96,7 @@ const ApplicationBook: React.FC = () => {
           <>
             악기
             <Button
-              isActive={instrument["guitar"]}
+              isActive={instruments["guitar"]}
               disabled={team}
               value="guitar"
               onClick={onClickInstrument}
@@ -85,7 +104,7 @@ const ApplicationBook: React.FC = () => {
               기타
             </Button>
             <Button
-              isActive={instrument["vocal"]}
+              isActive={instruments["vocal"]}
               disabled={team}
               value="vocal"
               onClick={onClickInstrument}
@@ -93,7 +112,7 @@ const ApplicationBook: React.FC = () => {
               보컬
             </Button>
             <Button
-              isActive={instrument["bass"]}
+              isActive={instruments["bass"]}
               disabled={team}
               value="bass"
               onClick={onClickInstrument}
@@ -101,7 +120,7 @@ const ApplicationBook: React.FC = () => {
               베이스
             </Button>
             <Button
-              isActive={instrument["drum"]}
+              isActive={instruments["drum"]}
               disabled={team}
               value="drum"
               onClick={onClickInstrument}
@@ -109,7 +128,7 @@ const ApplicationBook: React.FC = () => {
               드럼
             </Button>
             <Button
-              isActive={instrument["keyboard"]}
+              isActive={instruments["keyboard"]}
               disabled={team}
               value="keyboard"
               onClick={onClickInstrument}
@@ -119,11 +138,11 @@ const ApplicationBook: React.FC = () => {
           </>
         )}
       </div>
-      {instrument["guitar"] ||
-      instrument["vocal"] ||
-      instrument["bass"] ||
-      instrument["drum"] ||
-      instrument["keyboard"] ||
+      {instruments["guitar"] ||
+      instruments["vocal"] ||
+      instruments["bass"] ||
+      instruments["drum"] ||
+      instruments["keyboard"] ||
       team ? (
         <div
           className={css`
@@ -152,6 +171,9 @@ const ApplicationBook: React.FC = () => {
                 prev2Label={null}
                 next2Label={null}
                 formatDay={(_locale, date) => date.getDate().toString()}
+                tileDisabled={({ date }: { date: Date }) =>
+                  beforeToday(date) || nextMonth(date)
+                }
               />
             </div>
             <SelectedTime>
@@ -164,25 +186,20 @@ const ApplicationBook: React.FC = () => {
               </Time>
               <Time>
                 시작 시간:
-                {startTime?.time
-                  ? ` ${startTime.time} : ${
-                      startTime.index % 2 === 0 ? " 00" : " 30"
-                    }`
-                  : " 00 : 00"}
+                {startTime?.time ? ` ${startTime.time} ` : " 00:00"}
               </Time>
               <Time>
                 마감 시간:
                 {endTime?.time
-                  ? ` ${endTime.time} : ${
-                      endTime.index % 2 === 0 ? " 00" : " 30"
-                    }`
-                  : ` 00 : 00`}
+                  ? ` ${endTime.time} 
+                    `
+                  : " 00:00"}
               </Time>
               <ReservationButton>예약하기</ReservationButton>
             </SelectedTime>
           </div>
 
-          <Reservation />
+          <Reservation date={date} instrument={instrument} team={team} />
         </div>
       ) : null}
     </>
@@ -213,6 +230,7 @@ const SelectedTime = styled.div`
   font-size: 20px;
   font-weight: 300;
 `;
+
 const calendarStyles = css`
   .react-calendar {
     width: 500px !important;
@@ -225,6 +243,16 @@ const calendarStyles = css`
     font-family: "Nanum Gothic", "sans-serif" !important;
     font-size: 10px;
     line-height: 1.3 !important;
+  }
+  .react-calendar__tile--disabled {
+    background-color: #f0f0f0 !important;
+    cursor: not-allowed !important;
+  }
+  .react-calendar__navigation__prev-button {
+    if (!nextMonth{date}) {
+      display: none;
+      cursor: not-allowed;
+    }
   }
 `;
 interface ButttonProps {

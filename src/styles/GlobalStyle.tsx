@@ -9,7 +9,6 @@ const GlobalStyle = () => (
         font-family: "Spoqa Han Sans Neo", "Spoqa Han Sans JP", sans-serif;
         font-size: 15px;
         font-weight: 300;
-        color: black;
       }
       body {
         margin: 0px;
@@ -73,6 +72,11 @@ const GlobalStyle = () => (
         background-color: white !important;
       }
 
+      .react-calendar__tile:disabled {
+        background-color: white !important;
+        cursor: not-allowed !important;
+      }
+
       .react-calendar__month-view__weekdays {
         text-align: center;
         text-transform: uppercase;
@@ -93,17 +97,20 @@ const GlobalStyle = () => (
 
       .react-calendar__tile--active {
         background: #ffe187 !important;
-        color: white !important;
+        color: black !important;
       }
 
       .react-calendar__tile--active:enabled:hover,
       .react-calendar__tile--active:enabled:focus {
-        background: !important;
-        color: white !important;
+        color: black !important;
       }
 
       .react-calendar__month-view__days__day--neighboringMonth {
         visibility: hidden !important;
+      }
+
+      .react-calendar__navigation__label {
+        pointer-events: none;
       }
     `}
   />

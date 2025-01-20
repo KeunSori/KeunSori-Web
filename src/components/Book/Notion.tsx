@@ -9,15 +9,15 @@ interface NotionProps {
 const Notion: React.FC<NotionProps> = ({ user }) => {
   const [instrument, setInstrument] = useState<string>("");
   const TransInstrument = (session: string) => {
-    if (session == "VOCAL") {
+    if (session == "vocal") {
       setInstrument("보컬");
-    } else if (session == "GUITAR") {
+    } else if (session == "guitar") {
       setInstrument("기타");
-    } else if (session == "BASS") {
+    } else if (session == "bass") {
       setInstrument("베이스");
-    } else if (session == "KEYBOARD") {
+    } else if (session == "keyboard") {
       setInstrument("키보드");
-    } else if (session == "DRUM") {
+    } else if (session == "drum") {
       setInstrument("드럼");
     } else {
       setInstrument("합주");

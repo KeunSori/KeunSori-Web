@@ -35,18 +35,27 @@ const CurrentBook: React.FC = () => {
   };
   const onInstrumentClick = (option: Option) => {
     if (option.value === "보컬") {
-      setInstrument("VOCAL");
+      setInstrument("vocal");
     } else if (option.value === "기타") {
-      setInstrument("GUITAR");
+      setInstrument("guitar");
     } else if (option.value === "베이스") {
-      setInstrument("BASS");
+      setInstrument("bass");
     } else if (option.value === "드럼") {
-      setInstrument("DRUM");
+      setInstrument("drum");
     } else if (option.value === "키보드") {
-      setInstrument("KEYBOARD");
+      setInstrument("keyboard");
     }
   };
-
+  const beforeToday = (date: Date) => {
+    const today = new Date();
+    return (
+      date.getDate() < today.getDate() && date.getMonth() <= today.getMonth()
+    );
+  };
+  const nextMonth = (date: Date) => {
+    const today = new Date();
+    return date.getMonth() - 1 > today.getMonth();
+  };
   const handleDateChange = (value: Value) => {
     if (Array.isArray(value)) {
       setDate(value[0]);
@@ -111,6 +120,7 @@ const CurrentBook: React.FC = () => {
           prev2Label={null}
           next2Label={null}
           formatDay={(_locale, date) => date.getDate().toString()}
+          tileDisabled={({ date }) => beforeToday(date) || nextMonth(date)}
         />
         <div
           className={css`
