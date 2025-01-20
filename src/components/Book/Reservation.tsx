@@ -127,7 +127,7 @@ const Reservation: React.FC<ReservationProps> = ({
       unAvailableSlots(newfilteredData);
       console.log(`Filtered data for ${date}:`, filteredUserData);
     }
-  }, [date]);
+  }, [date, instrument, team]);
 
   return (
     <Container>
