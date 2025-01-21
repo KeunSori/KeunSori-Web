@@ -4,8 +4,9 @@ import { useState } from "react";
 import Calendar from "react-calendar";
 import Reservation from "./Reservation.tsx";
 import { useAtom } from "jotai";
-import { endTimeAtom, startTimeAtom } from "./Time.ts";
+import { endTimeAtom, isOpenAtom, startTimeAtom } from "./Time.ts";
 import { Value } from "react-calendar/src/shared/types.js";
+import SuccessModal from "./SuccessModal.tsx";
 
 const ApplicationBook: React.FC = () => {
   const defaultInstruments = {
@@ -23,6 +24,7 @@ const ApplicationBook: React.FC = () => {
   const [startTime] = useAtom(startTimeAtom);
   const [endTime] = useAtom(endTimeAtom);
   const [date, setDate] = useState<Date | null>(null);
+  const [isOpen, setIsOpen] = useAtom(isOpenAtom);
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (e.currentTarget.dataset.action === "team") {
@@ -61,147 +63,156 @@ const ApplicationBook: React.FC = () => {
 
   return (
     <>
-      <div
-        className={css`
-          padding-left: 20px;
-          grid-template-columns: repeat(6, 1fr);
-          grid-template-rows: repeat(2, 1fr);
-          width: 60%;
-          display: grid;
-          align-items: center;
-          gap: 5px;
-        `}
-      >
-        <div
-          className={css`
-            width: 70px;
-          `}
-        >
-          신청 유형
-        </div>
-        <Button isActive={team} onClick={onClick} data-action="team">
-          팀
-        </Button>
-        <Button
-          isActive={individual}
-          onClick={onClick}
-          data-action="individual"
-        >
-          개인
-        </Button>
-        <span></span>
-        <span></span>
-        <span></span>
-        {(team || individual) && (
-          <>
-            악기
-            <Button
-              isActive={instruments["guitar"]}
-              disabled={team}
-              value="guitar"
-              onClick={onClickInstrument}
-            >
-              기타
-            </Button>
-            <Button
-              isActive={instruments["vocal"]}
-              disabled={team}
-              value="vocal"
-              onClick={onClickInstrument}
-            >
-              보컬
-            </Button>
-            <Button
-              isActive={instruments["bass"]}
-              disabled={team}
-              value="bass"
-              onClick={onClickInstrument}
-            >
-              베이스
-            </Button>
-            <Button
-              isActive={instruments["drum"]}
-              disabled={team}
-              value="drum"
-              onClick={onClickInstrument}
-            >
-              드럼
-            </Button>
-            <Button
-              isActive={instruments["keyboard"]}
-              disabled={team}
-              value="keyboard"
-              onClick={onClickInstrument}
-            >
-              키보드
-            </Button>
-          </>
-        )}
-      </div>
-      {instruments["guitar"] ||
-      instruments["vocal"] ||
-      instruments["bass"] ||
-      instruments["drum"] ||
-      instruments["keyboard"] ||
-      team ? (
-        <div
-          className={css`
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 40px;
-            flex-direction: column;
-          `}
-        >
+      <SuccessModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      {!isOpen && (
+        <div>
           <div
             className={css`
-              display: flex;
-              justify-content: center;
-              gap: 60px;
+              padding-left: 20px;
+              grid-template-columns: repeat(6, 1fr);
+              grid-template-rows: repeat(2, 1fr);
+              width: 60%;
+              display: grid;
+              align-items: center;
+              gap: 5px;
             `}
           >
-            {" "}
-            <div className={calendarStyles}>
-              <Calendar
-                calendarType="gregory"
-                view="month"
-                value={date}
-                onChange={handleDateChange}
-                prev2Label={null}
-                next2Label={null}
-                formatDay={(_locale, date) => date.getDate().toString()}
-                tileDisabled={({ date }: { date: Date }) =>
-                  beforeToday(date) || nextMonth(date)
-                }
-              />
+            <div
+              className={css`
+                width: 70px;
+              `}
+            >
+              신청 유형
             </div>
-            <SelectedTime>
-              <Time>
-                {date
-                  ? `날짜: ${date.getFullYear()}년 ${
-                      date.getMonth() + 1
-                    }월 ${date.getDate()}일`
-                  : "날짜를 선택해주세요."}
-              </Time>
-              <Time>
-                시작 시간:
-                {startTime?.time ? ` ${startTime.time} ` : " 00:00"}
-              </Time>
-              <Time>
-                마감 시간:
-                {endTime?.time
-                  ? ` ${endTime.time} 
-                    `
-                  : " 00:00"}
-              </Time>
-              <ReservationButton>예약하기</ReservationButton>
-            </SelectedTime>
+            <Button isActive={team} onClick={onClick} data-action="team">
+              팀
+            </Button>
+            <Button
+              isActive={individual}
+              onClick={onClick}
+              data-action="individual"
+            >
+              개인
+            </Button>
+            <span></span>
+            <span></span>
+            <span></span>
+            {(team || individual) && (
+              <>
+                악기
+                <Button
+                  isActive={instruments["guitar"]}
+                  disabled={team}
+                  value="guitar"
+                  onClick={onClickInstrument}
+                >
+                  기타
+                </Button>
+                <Button
+                  isActive={instruments["vocal"]}
+                  disabled={team}
+                  value="vocal"
+                  onClick={onClickInstrument}
+                >
+                  보컬
+                </Button>
+                <Button
+                  isActive={instruments["bass"]}
+                  disabled={team}
+                  value="bass"
+                  onClick={onClickInstrument}
+                >
+                  베이스
+                </Button>
+                <Button
+                  isActive={instruments["drum"]}
+                  disabled={team}
+                  value="drum"
+                  onClick={onClickInstrument}
+                >
+                  드럼
+                </Button>
+                <Button
+                  isActive={instruments["keyboard"]}
+                  disabled={team}
+                  value="keyboard"
+                  onClick={onClickInstrument}
+                >
+                  키보드
+                </Button>
+              </>
+            )}
           </div>
+          {instruments["guitar"] ||
+          instruments["vocal"] ||
+          instruments["bass"] ||
+          instruments["drum"] ||
+          instruments["keyboard"] ||
+          team ? (
+            <div
+              className={css`
+                margin-top: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 40px;
+                flex-direction: column;
+              `}
+            >
+              <div
+                className={css`
+                  display: flex;
+                  justify-content: center;
+                  gap: 60px;
+                `}
+              >
+                <div className={calendarStyles}>
+                  <Calendar
+                    calendarType="gregory"
+                    view="month"
+                    value={date}
+                    onChange={handleDateChange}
+                    prev2Label={null}
+                    next2Label={null}
+                    formatDay={(_locale, date) => date.getDate().toString()}
+                    tileDisabled={({ date }: { date: Date }) =>
+                      beforeToday(date) || nextMonth(date)
+                    }
+                  />
+                </div>
+                <SelectedTime>
+                  <Time>
+                    {date
+                      ? `날짜: ${date.getFullYear()}년 ${
+                          date.getMonth() + 1
+                        }월 ${date.getDate()}일`
+                      : "날짜를 선택해주세요."}
+                  </Time>
+                  <Time>
+                    시작 시간:
+                    {startTime?.time ? ` ${startTime.time} ` : " 00:00"}
+                  </Time>
+                  <Time>
+                    마감 시간:
+                    {endTime?.time
+                      ? ` ${endTime.time} 
+                    `
+                      : " 00:00"}
+                  </Time>
+                  <ReservationButton
+                    onClick={() => setIsOpen(true)}
+                    disabled={!date || !startTime || !endTime}
+                  >
+                    예약하기
+                  </ReservationButton>
+                </SelectedTime>
+              </div>
 
-          <Reservation date={date} instrument={instrument} team={team} />
+              <Reservation date={date} instrument={instrument} team={team} />
+            </div>
+          ) : null}
         </div>
-      ) : null}
+      )}
     </>
   );
 };

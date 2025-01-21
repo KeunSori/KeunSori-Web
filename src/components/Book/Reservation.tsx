@@ -212,13 +212,12 @@ const SlotButton = styled.button<{ available: boolean; selected: boolean }>`
   height: 50px;
   border: solid 1px #f1f1f1;
   background-color: ${({ available, selected }) =>
-    selected ? "#ffe187" : available ? "white" : "#DDDDDD"}; // 마감(회색)
+    selected ? "#ffe187" : available ? "white" : "#DDDDDD"};
   color: ${({ available }) => (available ? "black" : "gray")};
   cursor: ${({ available }) => (available ? "pointer" : "not-allowed")};
   font-size: 14px;
 
   &:hover {
-    background-color: ${({ available }) =>
-      available ? "#FFAA00" : "#DDDDDD"}; // 예약 가능 시 hover 효과
+    background-color: ${({ available }) => (available ? "#FFAA00" : "#DDDDDD")};
   }
 `;
