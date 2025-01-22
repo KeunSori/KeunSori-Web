@@ -1,8 +1,9 @@
 import { css } from "@emotion/css";
 import logo from "/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
-import Input from "../components/Input.tsx";
+//import Input from "../components/Input.tsx";
 import Button from "../components/Button.tsx";
+import LoginForm from "../components/Login/LoginForm.tsx";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -30,9 +31,8 @@ const LoginPage = () => {
             alt="logo"
           />
         </Link>
-        <Input placeholder="학번"></Input>
-        <Input placeholder="비밀번호"></Input>
-        <Button onClick={onClick}>로그인</Button>
+        <LoginForm />
+        <Button onClick={onClick}>go to /user</Button>
         <Link to="/signup">
           <div
             className={css`

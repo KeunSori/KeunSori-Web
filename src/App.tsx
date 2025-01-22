@@ -7,22 +7,25 @@ import UserPage from "./pages/UserPage.tsx";
 import ContactPage from "./pages/ContactPage.tsx";
 import RecruitPage from "./pages/RecruitPage.tsx";
 import BookPage from "./pages/BookPage.tsx";
+import { AuthProvider } from "./contexts/AuthContext.tsx";
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/user" element={<UserPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/recruit" element={<RecruitPage />} />
-          <Route path="/book" element={<BookPage />} />
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/user" element={<UserPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/recruit" element={<RecruitPage />} />
+            <Route path="/book" element={<BookPage />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </>
   );
 }
