@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import Reservation from "./Reservation.tsx";
 import { useAtom } from "jotai";
@@ -60,7 +60,13 @@ const ApplicationBook: React.FC = () => {
     const today = new Date();
     return date.getMonth() - 1 > today.getMonth();
   };
-
+  useEffect(() => {
+    setIndividual(false);
+    setTeam(false);
+    setInstruments(defaultInstruments);
+    setInstrument("");
+    setDate(null);
+  }, [isOpen]);
   return (
     <>
       <SuccessModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
