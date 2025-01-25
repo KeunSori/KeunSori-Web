@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { login, getUserData } from "../api/auth";
+import { login } from "../api/auth";
 import { getToken, setToken, removeToken } from "../utils/jwt";
 
 interface AuthContextProps {
@@ -12,29 +12,37 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
+interface User{
+  isLoggedIn: boolean;
+}
+
 export const AuthContext = createContext<AuthContextProps | null>(null);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User>();
 
   useEffect(() => {
     const token = getToken();
+
     if (token) {
-      getUserData(token)
-        .then(setUser)
-        .catch(() => removeToken());
+      setUser({isLoggedIn: false});
+
+      // getUserData(token)
+      //   .then(setUser)
+      //   .catch(() => removeToken());
     }
   }, []);
 
   const loginUser = async (email: string, password: string) => {
     const data = await login(email, password);
     setToken(data.token);
-    setUser(data.user);
+    //setUser(data.user);
+    setUser({isLoggedIn: true})
   };
 
   const logoutUser = () => {
     removeToken();
-    setUser(null);
+    setUser({isLoggedIn: false});
   };
 
   return (
