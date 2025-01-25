@@ -3,7 +3,7 @@ import { login } from "../api/auth";
 import { getToken, setToken, removeToken } from "../utils/jwt";
 
 interface AuthContextProps {
-  user: any;
+  user: User;
   loginUser: (email: string, password: string) => Promise<void>;
   logoutUser: () => void;
 }
@@ -16,10 +16,14 @@ interface User{
   isLoggedIn: boolean;
 }
 
-export const AuthContext = createContext<AuthContextProps | null>(null);
+export const AuthContext = createContext<AuthContextProps>({
+  user: {isLoggedIn: false},
+  loginUser: async () => {},
+  logoutUser: () => {}
+});
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User>({isLoggedIn: false});
 
   useEffect(() => {
     const token = getToken();

@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import logo from "/logo.svg";
 import { Link, useLocation } from "react-router-dom";
+import {AuthContext} from "../../contexts/AuthContext";
 
 const Menu = styled.div<MenuProps>`
   position: fixed;
@@ -39,6 +40,7 @@ const Space = styled.div<{ isActive?: boolean }>`
 `;
 
 const NavBar: React.FC = () => {
+  const {user} = useContext(AuthContext);
   const [isMove, setIsMove] = useState(false);
   const location = useLocation();
 
@@ -82,7 +84,7 @@ const NavBar: React.FC = () => {
         <Link to="/contact">
           <Space isActive={location.pathname === "/contact"}>문의하기</Space>
         </Link>
-        <Link to="/login">
+        <Link to={user?.isLoggedIn ? "/user" : "/login"}>
           <Space isActive={location.pathname === "/login"}>my keun</Space>
         </Link>
       </div>
