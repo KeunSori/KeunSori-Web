@@ -2,26 +2,24 @@ import { css } from "@emotion/css";
 import logo from "../../public/logo.svg";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
+import singmonkey from "../../public/singmonkey.svg";
 const Nav = styled.a`
   font-size: 22px;
   font-weight: 500;
+  width: 100px;
+  text-align: center;
   cursor: pointer;
   &:hover {
-    color: white;
+    color: #ffaa00;
+    border-bottom: 4px solid #ffaa00;
   }
+`;
+const Image = styled.img`
+  width: 400px;
+  height: 400px;
+  margin-top: 70px;
 `;
 
-const Today = styled.div`
-  font-size: 25px;
-  font-weight: 500;
-  box-sizing: border-box;
-  border: none;
-  &:hover,
-  & :active {
-    color: #ffaa00;
-    border-bottom: 3px solid #ffaa00;
-  }
-`;
 const UserPage = () => {
   return (
     <>
@@ -46,37 +44,23 @@ const UserPage = () => {
             alt="logo"
           />
         </Link>
+        <Image src={singmonkey} />
         <div
           className={css`
+            display: flex;
+            justify-content: center;
             width: 100%;
-            margin-top: 170px;
-            margin-bottom: 20px;
-            padding-left: 50px;
+            margin-bottom: 30px;
             font-size: 60px;
             font-weight: 500;
           `}
         >
           안녕하세요 학회원님!
         </div>
-      </div>
-      <div
-        className={css`
-          display: flex;
-          align-items: center;
-        `}
-      >
-        <div
-          className={css`
-            background-color: #f0f0f0;
-            width: 50%;
-            height: 3px;
-          `}
-        />
         <div
           className={css`
             width: 50%;
-            height: 80px;
-            background-color: #ffe187;
+            height: 100px;
             display: flex;
             justify-content: space-around;
             padding: 10px;
@@ -86,22 +70,10 @@ const UserPage = () => {
           <Link to="/book">
             <Nav>연습실</Nav>
           </Link>
-          <Nav>게시판</Nav>
+          <Link to="/book">
+            <Nav>게시판</Nav>
+          </Link>
           <Nav>마이페이지</Nav>
-        </div>
-      </div>
-      <div>
-        <div
-          className={css`
-            display: flex;
-            justify-content: space-around;
-            width: 50%;
-            padding: 0px 30px;
-            font-size: 30px;
-          `}
-        >
-          <Today>오늘의 예약</Today>
-          <Today>오늘의 글</Today>
         </div>
       </div>
     </>
