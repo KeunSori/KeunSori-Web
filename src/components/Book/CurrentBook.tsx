@@ -7,7 +7,6 @@ import { Value } from "react-calendar/src/shared/types.js";
 import Dropdown, { Option } from "react-dropdown";
 import Notion from "./Notion.tsx";
 import { UserData } from "../../data/user.ts";
-
 const today = new Date();
 
 const CurrentBook: React.FC = () => {
@@ -23,6 +22,7 @@ const CurrentBook: React.FC = () => {
   const isSameDay = (d1: Date, d2: Date) => {
     return d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
   };
+
   const onTeaamClick = (option: Option) => {
     if (option.value === "팀") {
       setTeam(true);
