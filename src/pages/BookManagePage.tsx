@@ -2,12 +2,14 @@ import { css } from "@emotion/css";
 import NavBar3 from "../components/navBar/navBar3.tsx";
 import styled from "@emotion/styled";
 import { useState } from "react";
+import BasicManage from "../components/BookMange/BasicManage.tsx";
+import DateManage from "../components/BookMange/DateManage.tsx";
 
 interface NavProps {
   isActive: boolean;
 }
 const Nav = styled.button<NavProps>`
-  font-size: 17px;
+  font-size: 15px;
   background-color: ${({ isActive }) => (isActive ? "#FFF4D5" : "transparent")};
   font-weight: 300;
   border-radius: 10px;
@@ -66,6 +68,8 @@ const BookManagePage = () => {
               일자별 예약 관리
             </Nav>
           </div>
+          {basic && <BasicManage />}
+          {date && <DateManage />}
         </div>
       </div>
     </>
