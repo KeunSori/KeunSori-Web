@@ -8,7 +8,7 @@ const Menu = styled.div<MenuProps>`
   position: fixed;
   z-index: 3;
   width: calc(100%);
-  height: 65px;
+  height: 55px;
   background-color: white;
   box-sizing: border-box;
   top: 0px;
@@ -32,8 +32,8 @@ const Space = styled.div<{ isActive?: boolean }>`
     color: #ffaa00;
     border-bottom: 3px solid #ffaa00;
   }
-  font-weight: 400;
-  font-size: 18px;
+  font-weight: 300;
+  font-size: 16px;
   padding: 5px;
   width: auto;
 `;
@@ -61,7 +61,7 @@ const NavBar3: React.FC = () => {
         <Link to="/">
           <img
             className={css`
-              width: 60px;
+              width: 50px;
             `}
             src={logo}
             alt="logo"
