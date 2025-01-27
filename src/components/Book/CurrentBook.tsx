@@ -6,9 +6,20 @@ import "react-calendar/dist/Calendar.css";
 import { Value } from "react-calendar/src/shared/types.js";
 import Dropdown, { Option } from "react-dropdown";
 import Notion from "./Notion.tsx";
-import { UserData } from "../../data/user.ts";
+import axios from "axios";
+
 const today = new Date();
 
+interface UserInfo {
+  reservationId: number;
+  session: string;
+  reservationDate: string;
+  reservationStartTime: string;
+  reservationEndTime: string;
+  reservationType: string;
+  reservationMemberId: number;
+  reservationMemberName: string;
+}
 const CurrentBook: React.FC = () => {
   const options = ["팀", "개인"];
   const options2 = ["보컬", "기타", "베이스", "드럼", "키보드"];
@@ -18,7 +29,10 @@ const CurrentBook: React.FC = () => {
   const [individual, setIndividual] = useState(false);
   const [instrument, setInstrument] = useState<string>("");
   const [date, setDate] = useState<Date | null>(today);
-  const [filteredUserData, setFilteredUserData] = useState(UserData);
+  const [UserData, setUserData] = useState<UserInfo[] | null>(null);
+  const [filteredUserData, setFilteredUserData] = useState<UserInfo[] | null>(
+    UserData
+  );
   const isSameDay = (d1: Date, d2: Date) => {
     return d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
   };
@@ -46,12 +60,42 @@ const CurrentBook: React.FC = () => {
       setInstrument("keyboard");
     }
   };
-  const beforeToday = (date: Date) => {
-    const today = new Date();
-    return (
-      date.getDate() < today.getDate() && date.getMonth() <= today.getMonth()
-    );
+  const formatDate = (date: Date | null): string | null => {
+    if (!date) return null;
+
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+
+    return `${year}${month}`;
   };
+
+  async function fetchData() {
+    const token = localStorage.getItem("accessToken");
+    console.log(`Token: ${token}`);
+    try {
+      const response = await axios.get(
+        `http://ec2-13-209-174-180.ap-northeast-2.compute.amazonaws.com/reservation/list?month=${formatDate(
+          date
+        )}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setUserData(response.data);
+      if (date) {
+        const filteredData = response.data?.filter((user: UserInfo) => {
+          const userDate = new Date(user.reservationDate);
+          return isSameDay(userDate, date);
+        });
+        console.log(`Filtered data for ${date}:`, filteredData);
+        setFilteredUserData(filteredData || null);
+      }
+    } catch (error) {
+      console.log(`에러남:${error}`);
+    }
+  }
   const nextMonth = (date: Date) => {
     const today = new Date();
     return date.getMonth() - 1 > today.getMonth();
@@ -64,14 +108,7 @@ const CurrentBook: React.FC = () => {
     }
   };
   useEffect(() => {
-    if (date) {
-      const filteredData = UserData.filter((user) => {
-        const userDate = new Date(user.reservationDate);
-        return isSameDay(userDate, date);
-      });
-      console.log(`Filtered data for ${date}:`, filteredData);
-      setFilteredUserData(filteredData);
-    }
+    fetchData();
   }, [date]);
   return (
     <>
@@ -120,7 +157,7 @@ const CurrentBook: React.FC = () => {
           prev2Label={null}
           next2Label={null}
           formatDay={(_locale, date) => date.getDate().toString()}
-          tileDisabled={({ date }) => beforeToday(date) || nextMonth(date)}
+          tileDisabled={({ date }) => nextMonth(date)}
         />
         <div
           className={css`
@@ -145,9 +182,9 @@ const CurrentBook: React.FC = () => {
               margin-top: 40px;
             `}
           >
-            {filteredUserData.map((user) =>
+            {filteredUserData?.map((user) =>
               team ? (
-                user.reservationType === "TEAM" && (
+                user.reservationType === "team" && (
                   <Notion key={user.reservationId} user={user} />
                 )
               ) : individual ? (
@@ -156,7 +193,7 @@ const CurrentBook: React.FC = () => {
                     <Notion key={user.reservationId} user={user} />
                   )
                 ) : (
-                  user.reservationType === "PERSONAL" && (
+                  user.reservationType !== "team" && (
                     <Notion key={user.reservationId} user={user} />
                   )
                 )
