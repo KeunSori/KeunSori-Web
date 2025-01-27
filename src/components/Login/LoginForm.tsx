@@ -3,16 +3,23 @@ import { css } from "@emotion/css";
 import { AuthContext } from "../../contexts/AuthContext";
 import Input from "../Input.tsx";
 import Button from "../Button.tsx";
+import {useNavigate} from "react-router-dom";
 
 const LoginForm: React.FC = () => {
-  const [email, setEmail] = useState("");
+  const [studentId, setStudentId] = useState("");
   const [password, setPassword] = useState("");
   const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (authContext) {
-      await authContext.loginUser(email, password);
+      const success = await authContext.loginUser(studentId, password);
+
+      if (success) {
+        navigate("/user");
+      }
     }
   };
 
@@ -28,8 +35,8 @@ const LoginForm: React.FC = () => {
       >
         <Input
           type="string"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={studentId}
+          onChange={(e) => setStudentId(e.target.value)}
           placeholder="학번"
           required
         ></Input>
