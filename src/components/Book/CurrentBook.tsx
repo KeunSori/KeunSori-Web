@@ -6,7 +6,7 @@ import "react-calendar/dist/Calendar.css";
 import { Value } from "react-calendar/src/shared/types.js";
 import Dropdown, { Option } from "react-dropdown";
 import Notion from "./Notion.tsx";
-import axios from "axios";
+import axiosInstance from "../../api/axiosInstance.ts";
 
 const today = new Date();
 
@@ -73,10 +73,8 @@ const CurrentBook: React.FC = () => {
     const token = localStorage.getItem("accessToken");
     console.log(`Token: ${token}`);
     try {
-      const response = await axios.get(
-        `http://ec2-13-209-174-180.ap-northeast-2.compute.amazonaws.com/reservation/list?month=${formatDate(
-          date
-        )}`,
+      const response = await axiosInstance.get(
+        `/reservation/list?month=${formatDate(date)}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

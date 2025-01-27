@@ -1,15 +1,9 @@
 import { css } from "@emotion/css";
 import logo from "/logo.svg";
-import { Link, useNavigate } from "react-router-dom";
-//import Input from "../components/Input.tsx";
-import Button from "../components/Button.tsx";
+import { Link } from "react-router-dom";
 import LoginForm from "../components/Login/LoginForm.tsx";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
-  const onClick = () => {
-    navigate("/user");
-  };
   return (
     <>
       <div
@@ -32,7 +26,7 @@ const LoginPage = () => {
           />
         </Link>
         <LoginForm />
-        <Button onClick={onClick}>go to /user</Button>
+
         <Link to="/signup">
           <div
             className={css`
