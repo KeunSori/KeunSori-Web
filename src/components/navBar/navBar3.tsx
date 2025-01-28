@@ -37,7 +37,8 @@ const Space = styled.div<{ isActive?: boolean }>`
   padding: 5px;
   width: auto;
 `;
-const NavBar2: React.FC = () => {
+
+const NavBar3: React.FC = () => {
   const [isMove, setIsMove] = useState(false);
   const location = useLocation();
 
@@ -60,7 +61,7 @@ const NavBar2: React.FC = () => {
         <Link to="/">
           <img
             className={css`
-              width: 60px;
+              width: 50px;
             `}
             src={logo}
             alt="logo"
@@ -75,18 +76,15 @@ const NavBar2: React.FC = () => {
           margin: auto;
         `}
       >
-        <Link to="/recruit">
-          <Space isActive={location.pathname === "/book"}>예약하기</Space>
+        <Link to="/bookmanage">
+          <Space isActive={location.pathname === "/bookmanage"}>예약관리</Space>
         </Link>
         <Link to="/contact">
-          <Space isActive={location.pathname === "/contact"}>게시판</Space>
-        </Link>
-        <Link to="/login">
-          <Space isActive={location.pathname === "/login"}>마이페이지</Space>
+          <Space isActive={location.pathname === "/contact"}>회원관리</Space>
         </Link>
       </div>
     </Menu>
   );
 };
 
-export default NavBar2;
+export default NavBar3;
