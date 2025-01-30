@@ -7,19 +7,10 @@ import { Value } from "react-calendar/src/shared/types.js";
 import Dropdown, { Option } from "react-dropdown";
 import Notion from "./Notion.tsx";
 import axiosInstance from "../../api/axiosInstance.ts";
+import { UserInfo } from "../../data/user.ts";
 
 const today = new Date();
 
-interface UserInfo {
-  reservationId: number;
-  session: string;
-  reservationDate: string;
-  reservationStartTime: string;
-  reservationEndTime: string;
-  reservationType: string;
-  reservationMemberId: number;
-  reservationMemberName: string;
-}
 const CurrentBook: React.FC = () => {
   const options = ["팀", "개인"];
   const options2 = ["보컬", "기타", "베이스", "드럼", "키보드"];
@@ -37,7 +28,7 @@ const CurrentBook: React.FC = () => {
     return d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
   };
 
-  const onTeaamClick = (option: Option) => {
+  const onTeamClick = (option: Option) => {
     if (option.value === "팀") {
       setTeam(true);
       setIndividual(false);
@@ -121,7 +112,7 @@ const CurrentBook: React.FC = () => {
       >
         <StyledDropdown
           options={options}
-          onChange={onTeaamClick}
+          onChange={onTeamClick}
           value={defaultOption}
           arrowClassName="custom-arrow"
           arrowClosed={<span className="arrow-closed">▼</span>}
@@ -178,6 +169,7 @@ const CurrentBook: React.FC = () => {
               max-height: 100%;
               padding: 20px 0px;
               margin-top: 40px;
+              overflow-y: auto;
             `}
           >
             {filteredUserData?.map((user) =>

@@ -1,27 +1,53 @@
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
-import axiosInstance from "../../api/axiosInstance";
-import { useEffect } from "react";
+import { UserInfo } from "../../data/user.ts";
+import { useEffect, useState } from "react";
+import axiosInstance from "../../api/axiosInstance.ts";
 
-const MyNotion: React.FC = () => {
-  async function fetchData() {
+interface MyNotionProps {
+  user: UserInfo;
+}
+const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
+  const [instrument, setInstrument] = useState<string>("");
+  const TransInstrument = (session: string) => {
+    if (session == "vocal") {
+      setInstrument("보컬");
+    } else if (session == "guitar") {
+      setInstrument("기타");
+    } else if (session == "bass") {
+      setInstrument("베이스");
+    } else if (session == "keyboard") {
+      setInstrument("키보드");
+    } else if (session == "drum") {
+      setInstrument("드럼");
+    } else {
+      setInstrument("합주");
+    }
+  };
+  const [date, setDate] = useState<Date | null>(null);
+  const TransDate = (userDate: string) => {
+    setDate(new Date(userDate));
+  };
+  const handleDelete = async () => {
     const token = localStorage.getItem("accessToken");
-    const response = await axiosInstance.get("/reservation/my", {
+    await axiosInstance.delete(`/reservation/${user.reservationId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.data);
-  }
+    console.log("예약 취소 완료");
+    window.location.reload();
+  };
   useEffect(() => {
-    fetchData();
+    TransInstrument(user.session);
+    TransDate(user.reservationDate);
   }, []);
   return (
     <>
       <div
         className={css`
           display: flex;
-          height: 400px;
+          height: 200px;
 
           max-height: 100%;
           padding: 20px 0px;
@@ -29,8 +55,9 @@ const MyNotion: React.FC = () => {
         `}
       >
         <Notion>
-          김홍대<Title>악기</Title>
-          <Detail>Guiter</Detail>
+          {user.reservationMemberName}
+          <Title>악기</Title>
+          <Detail>{instrument}</Detail>
           <div
             className={css`
               display: flex;
@@ -42,11 +69,19 @@ const MyNotion: React.FC = () => {
           >
             <div>
               <Title>날짜</Title>
-              <Detail>2025.01.01</Detail>
+              <Detail>{`${
+                date
+                  ? `${date.getFullYear()}년 ${
+                      date.getMonth() + 1
+                    }월 ${date.getDate()}일`
+                  : "날짜 정보 없음"
+              }`}</Detail>
             </div>
             <div>
               <Title>시간</Title>
-              <Detail>11:00 - 12:00</Detail>
+              <Detail>
+                {user.reservationStartTime} - {user.reservationEndTime}
+              </Detail>
             </div>
           </div>
           <div
@@ -65,17 +100,20 @@ const MyNotion: React.FC = () => {
             >
               예약 완료
             </div>
-            <div
+            <button
               className={css`
                 font-weight: 700;
                 color: #bbc5d5;
+                background-color: white;
+                cursor: pointer;
                 &:hover {
                   color: black;
                 }
               `}
+              onClick={handleDelete}
             >
               예약 취소
-            </div>
+            </button>
           </div>
         </Notion>
       </div>

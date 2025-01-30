@@ -5,6 +5,7 @@ interface SuccessModalProps {
   onClose: () => void;
 }
 const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose }) => {
+  
   return (
     <ModalContainer isOpen={isOpen}>
       <p>예약이 완료되었습니다.</p>

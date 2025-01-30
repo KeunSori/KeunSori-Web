@@ -3,12 +3,31 @@ import styled from "@emotion/styled";
 import "react-calendar/dist/Calendar.css";
 import Dropdown from "react-dropdown";
 import MyNotion from "./MyNotion";
+import axiosInstance from "../../api/axiosInstance";
+import { useEffect, useState } from "react";
+import { UserInfo } from "../../data/user.ts";
 
 const MyBook: React.FC = () => {
   const options = ["팀", "개인"];
   const options2 = ["보컬", "기타", "베이스", "드럼", "키보드"];
   const defaultOption = "신청 유형";
   const defaultOption2 = "악기";
+
+  const [userData, setUserData] = useState<UserInfo[] | null>(null);
+
+  async function fetchData() {
+    const token = localStorage.getItem("accessToken");
+    const response = await axiosInstance.get("/reservation/my", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setUserData(response.data);
+    console.log(response.data);
+  }
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -41,11 +60,14 @@ const MyBook: React.FC = () => {
           margin: 20px 0px;
           display: flex;
           align-items: center;
-
+          width: 130%;
+          flex-wrap: wrap;
           gap: 30px;
         `}
       >
-        <MyNotion />
+        {userData?.map((user) => (
+          <MyNotion key={user.reservationId} user={user} />
+        ))}
       </div>
     </>
   );

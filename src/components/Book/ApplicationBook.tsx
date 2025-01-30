@@ -7,6 +7,7 @@ import { useAtom } from "jotai";
 import { endTimeAtom, isOpenAtom, startTimeAtom } from "./Time.ts";
 import { Value } from "react-calendar/src/shared/types.js";
 import SuccessModal from "./SuccessModal.tsx";
+import axiosInstance from "../../api/axiosInstance.ts";
 
 const ApplicationBook: React.FC = () => {
   const defaultInstruments = {
@@ -16,8 +17,7 @@ const ApplicationBook: React.FC = () => {
     keyboard: false,
     drum: false,
   };
-  const [team, setTeam] = useState(false);
-  const [individual, setIndividual] = useState(false);
+  const [team, setTeam] = useState<boolean>(false);
   const [instruments, setInstruments] =
     useState<instrument>(defaultInstruments);
   const [instrument, setInstrument] = useState<string>("");
@@ -27,14 +27,13 @@ const ApplicationBook: React.FC = () => {
   const [isOpen, setIsOpen] = useAtom(isOpenAtom);
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (e.currentTarget.dataset.action === "team") {
+    const action = e.currentTarget.dataset.action;
+    if (action === "team") {
       setTeam(true);
-      setIndividual(false);
       setInstruments(defaultInstruments);
       setInstrument("ALL");
-    } else {
+    } else if (action === "personal") {
       setTeam(false);
-      setIndividual(true);
     }
   };
   const onClickInstrument = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -56,12 +55,26 @@ const ApplicationBook: React.FC = () => {
       date.getDate() < today.getDate() && date.getMonth() <= today.getMonth()
     );
   };
+  const handleSubmit = async () => {
+    if (!date || !startTime || !endTime) return;
+    console.log(" type: ", team);
+    await axiosInstance.post("/reservation", {
+      reservationType: team ? "TEAM" : "PERSONAL",
+      reservationSession: "VOCAL",
+      reservationDate: `${date.getFullYear()}-${(date.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}-${date.getDate()}`,
+      reservationStartTime: startTime.time,
+      reservationEndTime: endTime.time,
+    });
+    console.log("예약 완료");
+    setIsOpen(true);
+  };
   const nextMonth = (date: Date) => {
     const today = new Date();
     return date.getMonth() - 1 > today.getMonth();
   };
   useEffect(() => {
-    setIndividual(false);
     setTeam(false);
     setInstruments(defaultInstruments);
     setInstrument("");
@@ -93,17 +106,13 @@ const ApplicationBook: React.FC = () => {
             <Button isActive={team} onClick={onClick} data-action="team">
               팀
             </Button>
-            <Button
-              isActive={individual}
-              onClick={onClick}
-              data-action="individual"
-            >
+            <Button isActive={!team} onClick={onClick} data-action="individual">
               개인
             </Button>
             <span></span>
             <span></span>
             <span></span>
-            {(team || individual) && (
+            {(team || !team) && (
               <>
                 악기
                 <Button
@@ -206,7 +215,7 @@ const ApplicationBook: React.FC = () => {
                       : " 00:00"}
                   </Time>
                   <ReservationButton
-                    onClick={() => setIsOpen(true)}
+                    onClick={handleSubmit}
                     disabled={!date || !startTime || !endTime}
                   >
                     예약하기
