@@ -4,9 +4,15 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import Reservation from "./Reservation.tsx";
 import { useAtom } from "jotai";
-import { dateAtom, endTimeAtom, isOpenAtom, startTimeAtom } from "../Time.ts";
+import {
+  dateAtom,
+  endTimeAtom,
+  isOpenAtom,
+  startTimeAtom,
+  instrument,
+} from "../Time.ts";
 import { Value } from "react-calendar/src/shared/types.js";
-import SuccessModal from "../SuccessModal.tsx";
+import { Button, ReservationButton } from "./Button.tsx";
 import axiosInstance from "../../../api/axiosInstance.ts";
 
 const ApplicationBook: React.FC = () => {
@@ -63,7 +69,7 @@ const ApplicationBook: React.FC = () => {
     console.log(" type: ", instrument);
     await axiosInstance.post("/reservation", {
       reservationType: team ? "TEAM" : "PERSONAL",
-      reservationSession: team ? "ALL" : "DRUM",
+      reservationSession: team ? instrument : "ALL",
       reservationDate: `${date.getFullYear()}-${(date.getMonth() + 1)
         .toString()
         .padStart(2, "0")}-${date.getDate()}`,
@@ -71,6 +77,7 @@ const ApplicationBook: React.FC = () => {
       reservationEndTime: endTime.time,
     });
     console.log("예약 완료");
+    alert("예약이 완료되었습니다!");
     setIsOpen(true);
   };
   const nextMonth = (date: Date) => {
@@ -86,18 +93,20 @@ const ApplicationBook: React.FC = () => {
   }, [isOpen]);
   return (
     <>
-      <SuccessModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
-      {!isOpen && (
-        <div>
+      <div>
+        <div
+          className={css`
+            padding-left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+          `}
+        >
           <div
             className={css`
-              padding-left: 20px;
-              grid-template-columns: repeat(6, 1fr);
-              grid-template-rows: repeat(2, 1fr);
-              width: 60%;
-              display: grid;
+              display: flex;
               align-items: center;
-              gap: 5px;
+              gap: 8px;
             `}
           >
             <div
@@ -117,12 +126,23 @@ const ApplicationBook: React.FC = () => {
             >
               개인
             </Button>
-            <span></span>
-            <span></span>
-            <span></span>
-            {(team || individual) && (
-              <>
-                악기
+          </div>
+          {(team || individual) && (
+            <>
+              <div
+                className={css`
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                `}
+              >
+                <div
+                  className={css`
+                    width: 70px;
+                  `}
+                >
+                  악기
+                </div>
                 <Button
                   isActive={instruments["guitar"]}
                   disabled={team}
@@ -163,109 +183,84 @@ const ApplicationBook: React.FC = () => {
                 >
                   키보드
                 </Button>
-              </>
-            )}
-          </div>
-          {instruments["guitar"] ||
-          instruments["vocal"] ||
-          instruments["bass"] ||
-          instruments["drum"] ||
-          instruments["keyboard"] ||
-          team ? (
+              </div>
+            </>
+          )}
+        </div>
+        {instruments["guitar"] ||
+        instruments["vocal"] ||
+        instruments["bass"] ||
+        instruments["drum"] ||
+        instruments["keyboard"] ||
+        team ? (
+          <div
+            className={css`
+              margin-top: 20px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 40px;
+              flex-direction: column;
+            `}
+          >
             <div
               className={css`
-                margin-top: 20px;
                 display: flex;
-                align-items: center;
                 justify-content: center;
-                gap: 40px;
-                flex-direction: column;
+                gap: 60px;
               `}
             >
-              <div
-                className={css`
-                  display: flex;
-                  justify-content: center;
-                  gap: 60px;
-                `}
-              >
-                <div className={calendarStyles}>
-                  <Calendar
-                    calendarType="gregory"
-                    view="month"
-                    value={date}
-                    onChange={handleDateChange}
-                    prev2Label={null}
-                    next2Label={null}
-                    formatDay={(_locale, date) => date.getDate().toString()}
-                    tileDisabled={({ date }: { date: Date }) =>
-                      beforeToday(date) || nextMonth(date)
-                    }
-                  />
-                </div>
-                <SelectedTime>
-                  <Time>
-                    {date
-                      ? `날짜: ${date.getFullYear()}년 ${
-                          date.getMonth() + 1
-                        }월 ${date.getDate()}일`
-                      : "날짜를 선택해주세요."}
-                  </Time>
-                  <Time>
-                    시작 시간:
-                    {startTime?.time ? ` ${startTime.time} ` : " 00:00"}
-                  </Time>
-                  <Time>
-                    마감 시간:
-                    {endTime?.time
-                      ? ` ${endTime.time} 
-                    `
-                      : " 00:00"}
-                  </Time>
-                  <ReservationButton
-                    onClick={handleSubmit}
-                    disabled={!date || !startTime || !endTime}
-                  >
-                    예약하기
-                  </ReservationButton>
-                </SelectedTime>
+              <div className={calendarStyles}>
+                <Calendar
+                  calendarType="gregory"
+                  view="month"
+                  value={date}
+                  onChange={handleDateChange}
+                  prev2Label={null}
+                  next2Label={null}
+                  formatDay={(_locale, date) => date.getDate().toString()}
+                  tileDisabled={({ date }: { date: Date }) =>
+                    beforeToday(date) || nextMonth(date)
+                  }
+                />
               </div>
-
-              <Reservation date={date} instrument={instrument} team={team} />
+              <SelectedTime>
+                <div>
+                  {date
+                    ? `날짜: ${date.getFullYear()}년 ${
+                        date.getMonth() + 1
+                      }월 ${date.getDate()}일`
+                    : "날짜를 선택해주세요."}
+                </div>
+                <div>
+                  시작 시간:
+                  {startTime?.time ? ` ${startTime.time} ` : " 00:00"}
+                </div>
+                <div>
+                  마감 시간:
+                  {endTime?.time
+                    ? ` ${endTime.time} 
+                    `
+                    : " 00:00"}
+                </div>
+                <ReservationButton
+                  onClick={handleSubmit}
+                  disabled={!date || !startTime || !endTime}
+                >
+                  예약하기
+                </ReservationButton>
+              </SelectedTime>
             </div>
-          ) : null}
-        </div>
-      )}
+
+            <Reservation date={date} instrument={instrument} team={team} />
+          </div>
+        ) : null}
+      </div>
     </>
   );
 };
 export default ApplicationBook;
-const ReservationButton = styled.button`
-  width: 200px;
-  height: 50px;
-  background-color: #fff4d5;
-  color: #7f8fa4;
-  border: none;
-  border-radius: 5px;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  margin-top: 100px;
-  :disabled {
-    background-color: #f1f1f1;
-    color: #b0b0b0;
-    cursor: not-allowed;
-    &:hover {
-      background-color: #f1f1f1;
-      color: #b0b0b0;
-    }
-  }
-  &:hover {
-    background-color: #ffe493;
-    color: black;
-  }
-`;
-const Time = styled.div``;
+
 const SelectedTime = styled.div`
   display: flex;
   padding-top: 40px;
@@ -300,36 +295,3 @@ const calendarStyles = css`
     }
   }
 `;
-interface ButttonProps {
-  isActive: boolean;
-}
-const Button = styled.button<ButttonProps>`
-  background-color: ${({ isActive }) => (isActive ? "#ffe493" : "white")};
-  color: ${({ isActive }) => (isActive ? "black" : "#7f8fa4")};
-  border: ${({ isActive }) =>
-    isActive ? "1.5px solid #ffe493;" : "1px solid #7f8fa4"};
-  border-radius: 5px;
-  padding: 5px;
-  cursor: pointer;
-  width: 70px;
-
-  &:hover {
-    background-color: #ffe493;
-    color: black;
-    border: 1px solid #ffe493;
-  }
-  &:disabled {
-    background-color: #f1f1f1;
-    color: #b0b0b0;
-    border: 1px solid #d1d1d1;
-    cursor: not-allowed;
-  }
-`;
-
-interface instrument {
-  vocal: boolean;
-  guitar: boolean;
-  bass: boolean;
-  keyboard: boolean;
-  drum: boolean;
-}

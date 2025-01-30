@@ -174,7 +174,7 @@ const CurrentBook: React.FC = () => {
           >
             {filteredUserData?.map((user) =>
               team ? (
-                user.reservationType === "team" && (
+                user.reservationType === "TEAM" && (
                   <Notion key={user.reservationId} user={user} />
                 )
               ) : individual ? (

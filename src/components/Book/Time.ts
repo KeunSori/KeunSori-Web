@@ -1,4 +1,13 @@
 import { atom } from "jotai";
+
+export interface instrument {
+  vocal: boolean;
+  guitar: boolean;
+  bass: boolean;
+  keyboard: boolean;
+  drum: boolean;
+}
+
 interface Time {
   time: string;
   index: number;
