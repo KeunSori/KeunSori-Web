@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/css";
 import { useAtom } from "jotai";
-import { endTimeAtom, startTimeAtom } from "./Time.ts";
-import { UserData, UserInfo } from "../../data/user.ts";
+import { endTimeAtom, startTimeAtom } from "../Time.ts";
+import { UserInfo } from "../../../data/user.ts";
 import { useEffect, useState } from "react";
+import axiosInstance from "../../../api/axiosInstance.ts";
 
 const slots = Array.from({ length: 26 }, (_, index) => ({
   time: `${10 + Math.floor(index / 2)}:${index % 2 === 0 ? "00" : "30"}`,
@@ -23,24 +24,43 @@ const Reservation: React.FC<ReservationProps> = ({
   const [startTime, setStartTime] = useAtom(startTimeAtom);
   const [endTime, setEndTime] = useAtom(endTimeAtom);
   const [selectedSlots, setSelectedtSlots] = useState(slots);
-  const [filteredUserData, setFilteredUserData] = useState<UserInfo[]>([]);
 
-  const isSameDay = (d1: Date, d2: Date) => {
-    if (d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate()) {
-      console.log(
-        `d1: ${d1.getMonth()}:${d1.getDate()}, d2: ${d2.getMonth()}:${d2.getDate()}`
+  const formatDate = (date: Date | null): string | null => {
+    if (!date) return null;
+
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+
+    return `${year}${month}`;
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `/reservation/list?month=${formatDate(date)}`
       );
+      console.log(response.data);
+
+      if (date) {
+        const newfilteredData = response.data.filter((user: UserInfo) => {
+          const userDate = new Date(user.reservationDate);
+          return (
+            userDate.getFullYear() === date.getFullYear() &&
+            userDate.getMonth() === date.getMonth() &&
+            userDate.getDate() === date.getDate()
+          );
+        });
+        console.log("newfilteredData: ", newfilteredData);
+        unAvailableSlots(newfilteredData);
+      }
+    } catch (error) {
+      console.log(`에러남:${error}`);
     }
-    return (
-      d1.getFullYear() === d2.getFullYear() &&
-      d1.getMonth() === d2.getMonth() &&
-      d1.getDate() === d2.getDate()
-    );
   };
   const unAvailableSlots = (data: UserInfo[]) => {
-    console.log(`new data for ${date}:`, data);
     data.forEach((user) => {
-      console.log(user.reservationDate);
+      console.log("session: ", user.session);
+
       if (team) {
         const start = slots.findIndex(
           (slot) => slot.time === user.reservationStartTime
@@ -56,7 +76,7 @@ const Reservation: React.FC<ReservationProps> = ({
             return slot;
           })
         );
-      } else if (user.session == instrument || user.session == "ALL") {
+      } else if (user.session == instrument || user.session == "all") {
         const start = slots.findIndex(
           (slot) => slot.time === user.reservationStartTime
         );
@@ -113,20 +133,10 @@ const Reservation: React.FC<ReservationProps> = ({
     }
   };
   useEffect(() => {
-    if (date) {
-      setStartTime(null);
-      setEndTime(null);
-      setSelectedtSlots(slots);
-      const newfilteredData = UserData.filter((user) => {
-        const userDate = new Date(user.reservationDate);
-        return isSameDay(userDate, date);
-      });
-      console.log(`new data for ${date}:`, newfilteredData);
-      setFilteredUserData(newfilteredData);
-      console.log(`Filtered data for ${date}:`, filteredUserData);
-      unAvailableSlots(newfilteredData);
-      console.log(`Filtered data for ${date}:`, filteredUserData);
-    }
+    setStartTime(null);
+    setEndTime(null);
+    setSelectedtSlots(slots);
+    fetchData();
   }, [date, instrument, team]);
 
   return (

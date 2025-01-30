@@ -7,3 +7,5 @@ interface Time {
 export const startTimeAtom = atom<Time | null>(null);
 export const endTimeAtom = atom<Time | null>(null);
 export const isOpenAtom = atom<boolean>(false);
+const today = new Date();
+export const dateAtom = atom<Date | null>(today);

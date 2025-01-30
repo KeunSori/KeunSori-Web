@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import Reservation from "./Reservation.tsx";
 import { useAtom } from "jotai";
-import { endTimeAtom, isOpenAtom, startTimeAtom } from "./Time.ts";
+import { dateAtom, endTimeAtom, isOpenAtom, startTimeAtom } from "../Time.ts";
 import { Value } from "react-calendar/src/shared/types.js";
-import SuccessModal from "./SuccessModal.tsx";
-import axiosInstance from "../../api/axiosInstance.ts";
+import SuccessModal from "../SuccessModal.tsx";
+import axiosInstance from "../../../api/axiosInstance.ts";
 
 const ApplicationBook: React.FC = () => {
   const defaultInstruments = {
@@ -18,22 +18,26 @@ const ApplicationBook: React.FC = () => {
     drum: false,
   };
   const [team, setTeam] = useState<boolean>(false);
+  const [individual, setIndividual] = useState<boolean>(false);
   const [instruments, setInstruments] =
     useState<instrument>(defaultInstruments);
   const [instrument, setInstrument] = useState<string>("");
   const [startTime] = useAtom(startTimeAtom);
   const [endTime] = useAtom(endTimeAtom);
-  const [date, setDate] = useState<Date | null>(null);
+  const [date, setDate] = useAtom(dateAtom);
   const [isOpen, setIsOpen] = useAtom(isOpenAtom);
+  const today = new Date();
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const action = e.currentTarget.dataset.action;
     if (action === "team") {
       setTeam(true);
+      setIndividual(false);
       setInstruments(defaultInstruments);
       setInstrument("ALL");
-    } else if (action === "personal") {
+    } else if (action === "individual") {
       setTeam(false);
+      setIndividual(true);
     }
   };
   const onClickInstrument = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -50,17 +54,16 @@ const ApplicationBook: React.FC = () => {
     }
   };
   const beforeToday = (date: Date) => {
-    const today = new Date();
     return (
       date.getDate() < today.getDate() && date.getMonth() <= today.getMonth()
     );
   };
   const handleSubmit = async () => {
     if (!date || !startTime || !endTime) return;
-    console.log(" type: ", team);
+    console.log(" type: ", instrument);
     await axiosInstance.post("/reservation", {
       reservationType: team ? "TEAM" : "PERSONAL",
-      reservationSession: "VOCAL",
+      reservationSession: team ? "ALL" : "DRUM",
       reservationDate: `${date.getFullYear()}-${(date.getMonth() + 1)
         .toString()
         .padStart(2, "0")}-${date.getDate()}`,
@@ -76,9 +79,10 @@ const ApplicationBook: React.FC = () => {
   };
   useEffect(() => {
     setTeam(false);
+    setIndividual(false);
     setInstruments(defaultInstruments);
     setInstrument("");
-    setDate(null);
+    setDate(today);
   }, [isOpen]);
   return (
     <>
@@ -106,13 +110,17 @@ const ApplicationBook: React.FC = () => {
             <Button isActive={team} onClick={onClick} data-action="team">
               팀
             </Button>
-            <Button isActive={!team} onClick={onClick} data-action="individual">
+            <Button
+              isActive={individual}
+              onClick={onClick}
+              data-action="individual"
+            >
               개인
             </Button>
             <span></span>
             <span></span>
             <span></span>
-            {(team || !team) && (
+            {(team || individual) && (
               <>
                 악기
                 <Button
@@ -236,14 +244,25 @@ const ReservationButton = styled.button`
   width: 200px;
   height: 50px;
   background-color: #fff4d5;
+  color: #7f8fa4;
   border: none;
   border-radius: 5px;
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
   margin-top: 100px;
+  :disabled {
+    background-color: #f1f1f1;
+    color: #b0b0b0;
+    cursor: not-allowed;
+    &:hover {
+      background-color: #f1f1f1;
+      color: #b0b0b0;
+    }
+  }
   &:hover {
-    background-color: #f9d835;
+    background-color: #ffe493;
+    color: black;
   }
 `;
 const Time = styled.div``;
@@ -287,7 +306,8 @@ interface ButttonProps {
 const Button = styled.button<ButttonProps>`
   background-color: ${({ isActive }) => (isActive ? "#ffe493" : "white")};
   color: ${({ isActive }) => (isActive ? "black" : "#7f8fa4")};
-  border: ${({ isActive }) => (isActive ? "none" : "1px solid #7f8fa4")};
+  border: ${({ isActive }) =>
+    isActive ? "1.5px solid #ffe493;" : "1px solid #7f8fa4"};
   border-radius: 5px;
   padding: 5px;
   cursor: pointer;
@@ -296,7 +316,7 @@ const Button = styled.button<ButttonProps>`
   &:hover {
     background-color: #ffe493;
     color: black;
-    border: none;
+    border: 1px solid #ffe493;
   }
   &:disabled {
     background-color: #f1f1f1;
