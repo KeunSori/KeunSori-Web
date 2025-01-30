@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/css";
 import { useAtom } from "jotai";
-import { endTimeAtom, startTimeAtom } from "../Time.ts";
+import { endTimeAtom, printEndTimeAtom, startTimeAtom } from "../Time.ts";
 import { UserInfo } from "../../../data/user.ts";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../api/axiosInstance.ts";
+import { SlotButton } from "./Button.tsx";
 
 const slots = Array.from({ length: 26 }, (_, index) => ({
   time: `${10 + Math.floor(index / 2)}:${index % 2 === 0 ? "00" : "30"}`,
@@ -23,6 +24,7 @@ const Reservation: React.FC<ReservationProps> = ({
 }) => {
   const [startTime, setStartTime] = useAtom(startTimeAtom);
   const [endTime, setEndTime] = useAtom(endTimeAtom);
+  const [, setPrintEndTime] = useAtom(printEndTimeAtom);
   const [selectedSlots, setSelectedtSlots] = useState(slots);
 
   const formatDate = (date: Date | null): string | null => {
@@ -106,28 +108,34 @@ const Reservation: React.FC<ReservationProps> = ({
           .every((slot) => slot.available);
         if (allSlotsAvailable) {
           setEndTime({ time, index });
+          setPrintEndTime(slots[index + 1].time);
         } else {
           setStartTime({ time, index });
           setEndTime(null);
+          setPrintEndTime("");
         }
       }
       if (startTime && endTime) {
         if (startTime.index + 3 < index || startTime.index > index) {
           setStartTime({ time, index });
           setEndTime(null);
+          setPrintEndTime("");
         } else if (endTime.index < index) {
           const allSlotsAvailable = slots
             .slice(startTime.index, index + 1)
             .every((slot) => slot.available);
           if (allSlotsAvailable) {
             setEndTime({ time, index });
+            setPrintEndTime(slots[index + 1].time);
           } else {
             setStartTime({ time, index });
             setEndTime(null);
+            setPrintEndTime("");
           }
         } else if (startTime.index < index || endTime.index > index) {
           setStartTime({ time, index });
           setEndTime(null);
+          setPrintEndTime("");
         }
       }
     }
@@ -135,6 +143,7 @@ const Reservation: React.FC<ReservationProps> = ({
   useEffect(() => {
     setStartTime(null);
     setEndTime(null);
+    setPrintEndTime("");
     setSelectedtSlots(slots);
     fetchData();
   }, [date, instrument, team]);
@@ -186,7 +195,6 @@ const Reservation: React.FC<ReservationProps> = ({
 
 export default Reservation;
 
-// Styled Components
 const TimeContainer = styled.div`
   display: flex;
   flex-wrap: nowrap;
@@ -208,26 +216,10 @@ const TimeSlots = styled.div`
   flex-wrap: nowrap;
   padding: 0px 5px;
   overflow-x: auto;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   ::-webkit-scrollbar {
     display: none;
   }
   justify-content: center;
-`;
-
-const SlotButton = styled.button<{ available: boolean; selected: boolean }>`
-  flex-shrink: 0;
-  width: 30px;
-  height: 50px;
-  border: solid 1px #f1f1f1;
-  background-color: ${({ available, selected }) =>
-    selected ? "#ffe187" : available ? "white" : "#DDDDDD"};
-  color: ${({ available }) => (available ? "black" : "gray")};
-  cursor: ${({ available }) => (available ? "pointer" : "not-allowed")};
-  font-size: 14px;
-
-  &:hover {
-    background-color: ${({ available }) => (available ? "#FFAA00" : "#DDDDDD")};
-  }
 `;

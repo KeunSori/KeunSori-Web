@@ -10,6 +10,7 @@ import {
   isOpenAtom,
   startTimeAtom,
   instrument,
+  printEndTimeAtom,
 } from "../Time.ts";
 import { Value } from "react-calendar/src/shared/types.js";
 import { Button, ReservationButton } from "./Button.tsx";
@@ -33,6 +34,7 @@ const ApplicationBook: React.FC = () => {
   const [date, setDate] = useAtom(dateAtom);
   const [isOpen, setIsOpen] = useAtom(isOpenAtom);
   const today = new Date();
+  const [prinEndTime] = useAtom(printEndTimeAtom);
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const action = e.currentTarget.dataset.action;
@@ -239,7 +241,7 @@ const ApplicationBook: React.FC = () => {
                 <div>
                   마감 시간:
                   {endTime?.time
-                    ? ` ${endTime.time} 
+                    ? ` ${prinEndTime} 
                     `
                     : " 00:00"}
                 </div>
