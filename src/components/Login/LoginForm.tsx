@@ -3,7 +3,7 @@ import { css } from "@emotion/css";
 import { AuthContext } from "../../contexts/AuthContext";
 import Input from "../Input.tsx";
 import Button from "../Button.tsx";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm: React.FC = () => {
   const [studentId, setStudentId] = useState("");
@@ -18,7 +18,7 @@ const LoginForm: React.FC = () => {
       const success = await authContext.loginUser(studentId, password);
 
       if (success) {
-        navigate("/user");
+        navigate("/book");
       }
     }
   };

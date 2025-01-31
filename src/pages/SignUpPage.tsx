@@ -16,7 +16,7 @@ const SignUpPage = () => {
           gap: 1px;
         `}
       >
-        <Link to="/">
+        <Link to="/login">
           <img
             className={css`
               margin-top: 60px;

@@ -1,7 +1,17 @@
 import { css } from "@emotion/css";
 import NavBar from "../components/navBar/navBar.tsx";
 import monkey from "/monkey.svg";
+import { getToken } from "../utils/jwt.ts";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 const HomePage = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (getToken()) {
+      navigate("/book");
+    }
+  }, []);
+
   return (
     <>
       <NavBar />

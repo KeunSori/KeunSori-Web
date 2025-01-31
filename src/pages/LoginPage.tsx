@@ -14,7 +14,7 @@ const LoginPage = () => {
           flex-direction: column;
         `}
       >
-        <Link to="/">
+        <Link to="/login">
           <img
             className={css`
               margin-top: 60px;
