@@ -11,11 +11,13 @@ interface NavProps {
 }
 const Nav = styled.button<NavProps>`
   font-size: 17px;
+  min-width: 80px;
   background-color: ${({ isActive }) => (isActive ? "#FFF4D5" : "transparent")};
   font-weight: 300;
+  white-space: nowrap;
   border-radius: 10px;
   padding: 10px;
-  margin-bottom: 10px;
+
   &:hover,
   &:active {
     background-color: #fff4d5;
@@ -32,10 +34,9 @@ const containerStyle = css`
 
 const innerContainerStyle = css`
   display: flex;
-  gap: 20px;
+  gap: 15px;
   width: 100%;
-  border-bottom: 2px solid #f1f1f1;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 const BookPage = () => {
   const locaiton = useLocation();
@@ -59,7 +60,7 @@ const BookPage = () => {
       <div className={containerStyle}>
         <div
           className={css`
-            width: 60%;
+            width: 70%;
           `}
         >
           <div className={innerContainerStyle}>

@@ -1,13 +1,12 @@
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Calendar from "react-calendar";
 import Reservation from "./Reservation.tsx";
 import { useAtom } from "jotai";
 import {
   dateAtom,
   endTimeAtom,
-  isOpenAtom,
   startTimeAtom,
   instrument,
   printEndTimeAtom,
@@ -17,6 +16,7 @@ import { Button, ReservationButton } from "./Button.tsx";
 import axiosInstance from "../../../api/axiosInstance.ts";
 import CalendarStyles from "./CalenderStyles.tsx";
 import { InstrumentInfo } from "../../../data/user.ts";
+import OutContainer from "../OutContainer.tsx";
 
 const ApplicationBook: React.FC = () => {
   const defaultInstruments: InstrumentInfo = {
@@ -34,7 +34,6 @@ const ApplicationBook: React.FC = () => {
   const [startTime] = useAtom(startTimeAtom);
   const [endTime] = useAtom(endTimeAtom);
   const [date, setDate] = useAtom(dateAtom);
-  const [isOpen, setIsOpen] = useAtom(isOpenAtom);
   const today = new Date();
   const [prinEndTime] = useAtom(printEndTimeAtom);
 
@@ -76,7 +75,7 @@ const ApplicationBook: React.FC = () => {
     console.log(instrument);
     await axiosInstance.post("/reservation", {
       reservationType: team ? "TEAM" : "PERSONAL",
-      reservationSession: team ? "ALL" : inst,
+      reservationSession: team ? "ALL" : instrument,
       reservationDate: `${date.getFullYear()}-${(date.getMonth() + 1)
         .toString()
         .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`,
@@ -85,22 +84,16 @@ const ApplicationBook: React.FC = () => {
     });
     console.log("예약 완료");
     alert("예약이 완료되었습니다!");
-    setIsOpen(true);
+    window.location.reload();
   };
   const nextMonth = (date: Date) => {
     const today = new Date();
     return date.getMonth() - 1 > today.getMonth();
   };
-  useEffect(() => {
-    setTeam(false);
-    setIndividual(false);
-    setInstruments(defaultInstruments);
 
-    setDate(today);
-  }, [isOpen]);
   return (
     <>
-      <div>
+      <OutContainer>
         <div
           className={css`
             padding-left: 20px;
@@ -118,7 +111,7 @@ const ApplicationBook: React.FC = () => {
           >
             <div
               className={css`
-                width: 70px;
+                min-width: 70px;
               `}
             >
               신청 유형
@@ -145,7 +138,7 @@ const ApplicationBook: React.FC = () => {
               >
                 <div
                   className={css`
-                    width: 70px;
+                    min-width: 70px;
                   `}
                 >
                   악기
@@ -262,7 +255,7 @@ const ApplicationBook: React.FC = () => {
             <Reservation date={date} instrument={instrument} team={team} />
           </div>
         ) : null}
-      </div>
+      </OutContainer>
     </>
   );
 };

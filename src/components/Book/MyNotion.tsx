@@ -44,79 +44,68 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
   }, []);
   return (
     <>
-      <div
-        className={css`
-          display: flex;
-          height: 200px;
-
-          max-height: 100%;
-          padding: 20px 0px;
-          margin-top: 30px;
-        `}
-      >
-        <Notion>
-          {user.reservationMemberName}
-          <Title>악기</Title>
-          <Detail>{instrument}</Detail>
+      <Notion>
+        {user.reservationMemberName}
+        <Title>악기</Title>
+        <Detail>{instrument}</Detail>
+        <div
+          className={css`
+            display: flex;
+            justify-content: space-between;
+            padding-right: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f1f1f1;
+          `}
+        >
+          <div>
+            <Title>날짜</Title>
+            <Detail>{`${
+              date
+                ? `${date.getFullYear()}년 ${
+                    date.getMonth() + 1
+                  }월 ${date.getDate()}일`
+                : "날짜 정보 없음"
+            }`}</Detail>
+          </div>
+          <div>
+            <Title>시간</Title>
+            <Detail>
+              {user.reservationStartTime} - {user.reservationEndTime}
+            </Detail>
+          </div>
+        </div>
+        <div
+          className={css`
+            margin: 15px 0px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          `}
+        >
           <div
             className={css`
-              display: flex;
-              justify-content: space-between;
-              padding-right: 30px;
-              padding-bottom: 15px;
-              border-bottom: 1px solid #f1f1f1;
+              font-weight: 700;
+              color: #68ae82;
             `}
           >
-            <div>
-              <Title>날짜</Title>
-              <Detail>{`${
-                date
-                  ? `${date.getFullYear()}년 ${
-                      date.getMonth() + 1
-                    }월 ${date.getDate()}일`
-                  : "날짜 정보 없음"
-              }`}</Detail>
-            </div>
-            <div>
-              <Title>시간</Title>
-              <Detail>
-                {user.reservationStartTime} - {user.reservationEndTime}
-              </Detail>
-            </div>
+            예약 완료
           </div>
-          <div
+          <button
             className={css`
-              margin: 15px 0px;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
+              font-weight: 700;
+              color: #bbc5d5;
+              background-color: white;
+              cursor: pointer;
+              &:hover {
+                color: black;
+              }
             `}
+            onClick={handleDelete}
           >
-            <div
-              className={css`
-                font-weight: 700;
-                color: #68ae82;
-              `}
-            >
-              예약 완료
-            </div>
-            <button
-              className={css`
-                font-weight: 700;
-                color: #bbc5d5;
-                background-color: white;
-                cursor: pointer;
-                &:hover {
-                  color: black;
-                }
-              `}
-              onClick={handleDelete}
-            >
-              예약 취소
-            </button>
-          </div>
-        </Notion>
-      </div>
+            예약 취소
+          </button>
+        </div>
+      </Notion>
     </>
   );
 };

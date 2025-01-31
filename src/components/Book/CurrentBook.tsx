@@ -1,21 +1,17 @@
 import { css } from "@emotion/css";
-import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { Value } from "react-calendar/src/shared/types.js";
-import Dropdown, { Option } from "react-dropdown";
 import Notion from "./Notion.tsx";
 import axiosInstance from "../../api/axiosInstance.ts";
 import { UserInfo } from "../../data/user.ts";
+import { InstrumentDropBox, TeamDropBox } from "./Application/DropBox.tsx";
+import OutContainer from "./OutContainer.tsx";
 
 const today = new Date();
 
 const CurrentBook: React.FC = () => {
-  const options = ["팀", "개인"];
-  const options2 = ["보컬", "기타", "베이스", "드럼", "키보드"];
-  const defaultOption = "신청 유형";
-  const defaultOption2 = "악기";
   const [team, setTeam] = useState(false);
   const [individual, setIndividual] = useState(false);
   const [instrument, setInstrument] = useState<string>("");
@@ -28,28 +24,35 @@ const CurrentBook: React.FC = () => {
     return d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
   };
 
-  const onTeamClick = (option: Option) => {
-    if (option.value === "팀") {
+  const onTeamClick = (value: string) => {
+    if (value === "팀") {
       setTeam(true);
       setIndividual(false);
       setInstrument("");
-    } else {
+    } else if (value === "개인") {
       setTeam(false);
       setIndividual(true);
+    } else {
+      setTeam(false);
+      setIndividual(false);
+      setInstrument("");
     }
   };
-  const onInstrumentClick = (option: Option) => {
-    if (option.value === "보컬") {
+  const onInstrumentClick = (value: string) => {
+    if (value === "보컬") {
       setInstrument("vocal");
-    } else if (option.value === "기타") {
+    } else if (value === "기타") {
       setInstrument("guitar");
-    } else if (option.value === "베이스") {
+    } else if (value === "베이스") {
       setInstrument("bass");
-    } else if (option.value === "드럼") {
+    } else if (value === "드럼") {
       setInstrument("drum");
-    } else if (option.value === "키보드") {
+    } else if (value === "키보드") {
       setInstrument("keyboard");
+    } else {
+      setInstrument("");
     }
+    console.log("props전달", value);
   };
   const formatDate = (date: Date | null): string | null => {
     if (!date) return null;
@@ -101,75 +104,71 @@ const CurrentBook: React.FC = () => {
   }, [date]);
   return (
     <>
-      <div
-        className={css`
-          width: 100%;
-          position: relative;
-          display: flex;
-          align-items: center;
-          margin-bottom: 20px;
-        `}
-      >
-        <StyledDropdown
-          options={options}
-          onChange={onTeamClick}
-          value={defaultOption}
-          arrowClassName="custom-arrow"
-          arrowClosed={<span className="arrow-closed">▼</span>}
-          arrowOpen={<span className="arrow-open">▲</span>}
-        />
-        {individual && (
-          <StyledDropdown
-            options={options2}
-            value={defaultOption2}
-            onChange={onInstrumentClick}
-            arrowClassName="custom-arrow"
-            arrowClosed={<span className="arrow-closed">▼</span>}
-            arrowOpen={<span className="arrow-open">▲</span>}
-          />
-        )}
-      </div>
-      <div
-        className={css`
-          margin: 20px 0px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 30px;
-        `}
-      >
-        <Calendar
-          calendarType="gregory"
-          view="month"
-          value={date}
-          onChange={handleDateChange}
-          prev2Label={null}
-          next2Label={null}
-          formatDay={(_locale, date) => date.getDate().toString()}
-          tileDisabled={({ date }) => nextMonth(date)}
-        />
+      <OutContainer>
         <div
           className={css`
-            width: 2px;
-            height: 250px;
-            max-height: 100%;
-            background-color: #f1f1f1;
-          `}
-        ></div>
-        <div
-          className={css`
-            width: 350px;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
           `}
         >
+          <TeamDropBox onClick={onTeamClick} />
+          {individual && <InstrumentDropBox onClick={onInstrumentClick} />}
+        </div>
+        <div
+          className={css`
+            margin: 20px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 30px;
+          `}
+        >
+          <Calendar
+            calendarType="gregory"
+            view="month"
+            value={date}
+            onChange={handleDateChange}
+            prev2Label={null}
+            next2Label={null}
+            formatDay={(_locale, date) => date.getDate().toString()}
+            tileDisabled={({ date }) => nextMonth(date)}
+          />
+          <div
+            className={css`
+              width: 2px;
+              height: 200px;
+              max-height: 100%;
+              background-color: #f1f1f1;
+            `}
+          ></div>
+
           <div
             className={css`
               display: flex;
               flex-direction: column;
-              height: 400px;
+              width: 370px;
+              padding: 5px;
+              height: 350px;
               max-height: 100%;
-              padding: 20px 0px;
-              margin-top: 40px;
+              overflow-x: hidden;
               overflow-y: auto;
+              wrap: no-wrap;
+              padding-right: 10px;
+              ::-webkit-scrollbar {
+                width: 8px;
+              }
+
+              ::-webkit-scrollbar-thumb {
+                background-color: #bbb;
+                border-radius: 10px;
+              }
+              ::-webkit-scrollbar-thumb:hover {
+                background-color: #888;
+              }
             `}
           >
             {filteredUserData?.map((user) =>
@@ -179,7 +178,7 @@ const CurrentBook: React.FC = () => {
                 )
               ) : individual ? (
                 instrument ? (
-                  instrument === user.session && (
+                  instrument === user.reservationSession && (
                     <Notion key={user.reservationId} user={user} />
                   )
                 ) : (
@@ -193,46 +192,8 @@ const CurrentBook: React.FC = () => {
             )}
           </div>
         </div>
-      </div>
+      </OutContainer>
     </>
   );
 };
 export default CurrentBook;
-
-const StyledDropdown = styled(Dropdown)`
-  position: absolute;
-  left: 20px;
-  top: 10px;
-  &:nth-child(2) {
-    left: 130px;
-  }
-  .Dropdown-control {
-    display: flex;
-    background-color: white;
-    color: black;
-    width: 110px;
-    height: 32px;
-    font-size: 13px;
-  }
-  .Dropdown-menu {
-    background-color: white;
-    margin-left: 5px;
-    width: 100px;
-    border-radius: 10px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
-  }
-
-  .Dropdown-option {
-    padding: 13px;
-    &:hover,
-    &:active {
-      color: #ffaa00;
-      font-weight: 600;
-    }
-  }
-  .arrow-closed,
-  .arrow-open {
-    margin-left: 5px !important;
-    font-size: 10px;
-  }
-`;

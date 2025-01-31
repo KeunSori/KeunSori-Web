@@ -33,6 +33,7 @@ const Button = styled.button<ButttonProps>`
   padding: 5px;
   cursor: pointer;
   width: 70px;
+  min-width: 70px;
 
   &:hover {
     background-color: #ffe493;
