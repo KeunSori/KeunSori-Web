@@ -1,8 +1,7 @@
 import { css } from "@emotion/css";
-import Button from "../components/Button.tsx";
 import logo from "/logo.svg";
 import { Link } from "react-router-dom";
-import Input from "../components/Input.tsx";
+import SignUpForm from "../components/SignUp/SignUpForm.tsx";
 
 const SignUpPage = () => {
   return (
@@ -27,16 +26,7 @@ const SignUpPage = () => {
             alt="logo"
           />
         </Link>
-        <Input placeholder="이름"></Input>
-        <Input placeholder="학번"></Input>
-        <Input placeholder="비밀번호"></Input>
-        <Input placeholder="비밀번호 확인"></Input>
-        <div
-          className={css`
-            height: 2px;
-          `}
-        ></div>
-        <Button>큰소리 회원가입</Button>
+        <SignUpForm />
       </div>
     </>
   );
