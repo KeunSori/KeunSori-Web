@@ -9,6 +9,24 @@ interface MyNotionProps {
 }
 const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
   const [instrument, setInstrument] = useState<string>("");
+  const checkDate = () => {
+    const now = new Date();
+    const date = new Date(user.reservationDate);
+    if (
+      now.getFullYear() === date.getFullYear() &&
+      now.getMonth() === date.getMonth() &&
+      now.getDate() === date.getDate()
+    ) {
+      if (user.reservationStartTime > now.getHours() + ":" + now.getMinutes()) {
+        return true;
+      }
+      return false;
+    }
+    if (now > date) {
+      return true;
+    }
+    return false;
+  };
   const TransInstrument = (session: string) => {
     if (session == "vocal") {
       setInstrument("보컬");
@@ -90,20 +108,22 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
           >
             예약 완료
           </div>
-          <button
-            className={css`
-              font-weight: 700;
-              color: #bbc5d5;
-              background-color: white;
-              cursor: pointer;
-              &:hover {
-                color: black;
-              }
-            `}
-            onClick={handleDelete}
-          >
-            예약 취소
-          </button>
+          {!checkDate() && (
+            <button
+              className={css`
+                font-weight: 700;
+                color: #bbc5d5;
+                background-color: white;
+                cursor: pointer;
+                &:hover {
+                  color: black;
+                }
+              `}
+              onClick={handleDelete}
+            >
+              예약 취소
+            </button>
+          )}
         </div>
       </Notion>
     </>

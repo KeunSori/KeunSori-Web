@@ -6,6 +6,7 @@ import ApplicationBook from "../components/Book/Application/ApplicationBook.tsx"
 import MyBook from "../components/Book/MyBook.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { getToken } from "../utils/jwt.ts";
 interface NavProps {
   isActive: boolean;
 }
@@ -43,7 +44,7 @@ const BookPage = () => {
   const query = new URLSearchParams(locaiton.search);
   const component = query.get("type");
   const navigate = useNavigate();
-
+  if (!getToken()) navigate("/login");
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     navigate(`/book?type=${e.currentTarget.dataset.action}`);
     console.log(component);

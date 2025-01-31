@@ -75,14 +75,14 @@ const NavBar2: React.FC = () => {
           margin: auto;
         `}
       >
-        <Link to="/recruit">
+        <Link to="/book">
           <Space isActive={location.pathname === "/book"}>예약하기</Space>
         </Link>
-        <Link to="/contact">
-          <Space isActive={location.pathname === "/contact"}>게시판</Space>
+        <Link to="/board">
+          <Space isActive={location.pathname === "/board"}>게시판</Space>
         </Link>
-        <Link to="/login">
-          <Space isActive={location.pathname === "/login"}>마이페이지</Space>
+        <Link to="/mypage">
+          <Space isActive={location.pathname === "/mypage"}>마이페이지</Space>
         </Link>
       </div>
     </Menu>

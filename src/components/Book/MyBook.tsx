@@ -79,10 +79,10 @@ const MyBook: React.FC = () => {
             padding: 5px;
             margin: 20px 0px;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             width: 100%;
             flex-wrap: wrap;
+            align-content: flex-start;
             gap: 30px;
           `}
         >
