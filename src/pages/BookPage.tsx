@@ -2,9 +2,10 @@ import { css } from "@emotion/css";
 import NavBar2 from "../components/navBar/navBar2.tsx";
 import styled from "@emotion/styled";
 import CurrentBook from "../components/Book/CurrentBook.tsx";
-import { useState } from "react";
 import ApplicationBook from "../components/Book/Application/ApplicationBook.tsx";
 import MyBook from "../components/Book/MyBook.tsx";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 interface NavProps {
   isActive: boolean;
 }
@@ -37,25 +38,20 @@ const innerContainerStyle = css`
   margin-bottom: 20px;
 `;
 const BookPage = () => {
-  const [current, setCurrent] = useState(true);
-  const [application, setApplication] = useState(false);
-  const [my, setMy] = useState(false);
+  const locaiton = useLocation();
+  const query = new URLSearchParams(locaiton.search);
+  const component = query.get("type");
+  const navigate = useNavigate();
 
-  function onClick(e: React.MouseEvent<HTMLButtonElement>) {
-    if (e.currentTarget.dataset.action === "current") {
-      setCurrent(true);
-      setApplication(false);
-      setMy(false);
-    } else if (e.currentTarget.dataset.action === "application") {
-      setCurrent(false);
-      setApplication(true);
-      setMy(false);
-    } else {
-      setCurrent(false);
-      setApplication(false);
-      setMy(true);
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    navigate(`/book?type=${e.currentTarget.dataset.action}`);
+    console.log(component);
+  };
+  useEffect(() => {
+    if (!component) {
+      navigate("/book?type=current");
     }
-  }
+  }, []);
 
   return (
     <>
@@ -67,23 +63,31 @@ const BookPage = () => {
           `}
         >
           <div className={innerContainerStyle}>
-            <Nav onClick={onClick} data-action="current" isActive={current}>
+            <Nav
+              onClick={onClick}
+              data-action="current"
+              isActive={component === "current"}
+            >
               예약 현황
             </Nav>
             <Nav
               onClick={onClick}
               data-action="application"
-              isActive={application}
+              isActive={component === "application"}
             >
               예약 신청
             </Nav>
-            <Nav onClick={onClick} data-action="my" isActive={my}>
+            <Nav
+              onClick={onClick}
+              data-action="my"
+              isActive={component === "my"}
+            >
               나의 예약
             </Nav>
           </div>
-          {current && <CurrentBook />}
-          {application && <ApplicationBook />}
-          {my && <MyBook />}
+          {component === "current" && <CurrentBook />}
+          {component === "application" && <ApplicationBook />}
+          {component === "my" && <MyBook />}
         </div>
       </div>
     </>

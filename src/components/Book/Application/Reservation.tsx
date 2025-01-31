@@ -52,7 +52,7 @@ const Reservation: React.FC<ReservationProps> = ({
             userDate.getDate() === date.getDate()
           );
         });
-        console.log("newfilteredData: ", newfilteredData);
+
         unAvailableSlots(newfilteredData);
       }
     } catch (error) {
@@ -61,7 +61,7 @@ const Reservation: React.FC<ReservationProps> = ({
   };
   const unAvailableSlots = (data: UserInfo[]) => {
     data.forEach((user) => {
-      console.log("session: ", user.session);
+      console.log("session: ", user.reservationSession);
 
       if (team) {
         const start = slots.findIndex(
@@ -78,7 +78,10 @@ const Reservation: React.FC<ReservationProps> = ({
             return slot;
           })
         );
-      } else if (user.session == instrument || user.session == "all") {
+      } else if (
+        user.reservationSession == instrument ||
+        user.reservationSession == "all"
+      ) {
         const start = slots.findIndex(
           (slot) => slot.time === user.reservationStartTime
         );
@@ -97,6 +100,7 @@ const Reservation: React.FC<ReservationProps> = ({
     });
   };
   const handleSlotClick = (index: number, time: string, available: boolean) => {
+    console.log(instrument);
     if (available) {
       if (!startTime) {
         setStartTime({ time, index });

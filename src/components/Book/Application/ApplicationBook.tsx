@@ -15,9 +15,11 @@ import {
 import { Value } from "react-calendar/src/shared/types.js";
 import { Button, ReservationButton } from "./Button.tsx";
 import axiosInstance from "../../../api/axiosInstance.ts";
+import CalendarStyles from "./CalenderStyles.tsx";
+import { InstrumentInfo } from "../../../data/user.ts";
 
 const ApplicationBook: React.FC = () => {
-  const defaultInstruments = {
+  const defaultInstruments: InstrumentInfo = {
     vocal: false,
     guitar: false,
     bass: false,
@@ -51,6 +53,7 @@ const ApplicationBook: React.FC = () => {
   const onClickInstrument = (e: React.MouseEvent<HTMLButtonElement>) => {
     setInstruments(defaultInstruments);
     const value = e.currentTarget.value as keyof instrument;
+    console.log("value: ", value);
     setInstruments((prev) => ({ ...prev, [value]: !prev[value] }));
     setInstrument(value);
   };
@@ -68,13 +71,15 @@ const ApplicationBook: React.FC = () => {
   };
   const handleSubmit = async () => {
     if (!date || !startTime || !endTime) return;
-    console.log(" type: ", instrument);
+    const inst = Object.keys(instruments).find(([value]) => value);
+    setInstrument(inst?.toString() || "");
+    console.log(instrument);
     await axiosInstance.post("/reservation", {
       reservationType: team ? "TEAM" : "PERSONAL",
-      reservationSession: team ? instrument : "ALL",
+      reservationSession: team ? "ALL" : inst,
       reservationDate: `${date.getFullYear()}-${(date.getMonth() + 1)
         .toString()
-        .padStart(2, "0")}-${date.getDate()}`,
+        .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`,
       reservationStartTime: startTime.time,
       reservationEndTime: endTime.time,
     });
@@ -90,7 +95,7 @@ const ApplicationBook: React.FC = () => {
     setTeam(false);
     setIndividual(false);
     setInstruments(defaultInstruments);
-    setInstrument("");
+
     setDate(today);
   }, [isOpen]);
   return (
@@ -212,7 +217,7 @@ const ApplicationBook: React.FC = () => {
                 gap: 60px;
               `}
             >
-              <div className={calendarStyles}>
+              <CalendarStyles>
                 <Calendar
                   calendarType="gregory"
                   view="month"
@@ -225,7 +230,7 @@ const ApplicationBook: React.FC = () => {
                     beforeToday(date) || nextMonth(date)
                   }
                 />
-              </div>
+              </CalendarStyles>
               <SelectedTime>
                 <div>
                   {date
@@ -271,29 +276,4 @@ const SelectedTime = styled.div`
   gap: 20px;
   font-size: 20px;
   font-weight: 300;
-`;
-
-const calendarStyles = css`
-  .react-calendar {
-    width: 500px !important;
-    max-width: 100%;
-    background: white;
-    padding: 20px;
-    border: none !important;
-    border-radius: 20px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
-    font-family: "Nanum Gothic", "sans-serif" !important;
-    font-size: 10px;
-    line-height: 1.3 !important;
-  }
-  .react-calendar__tile--disabled {
-    background-color: #f0f0f0 !important;
-    cursor: not-allowed !important;
-  }
-  .react-calendar__navigation__prev-button {
-    if (!nextMonth{date}) {
-      display: none;
-      cursor: not-allowed;
-    }
-  }
 `;

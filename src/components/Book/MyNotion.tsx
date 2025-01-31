@@ -39,7 +39,7 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
     window.location.reload();
   };
   useEffect(() => {
-    TransInstrument(user.session);
+    TransInstrument(user.reservationSession);
     TransDate(user.reservationDate);
   }, []);
   return (

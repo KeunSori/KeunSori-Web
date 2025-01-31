@@ -29,7 +29,7 @@ const Notion: React.FC<NotionProps> = ({ user }) => {
     setDate(new Date(userDate));
   };
   useEffect(() => {
-    TransInstrument(user.session);
+    TransInstrument(user.reservationSession);
     TransDate(user.reservationDate);
   }, []);
   return (
