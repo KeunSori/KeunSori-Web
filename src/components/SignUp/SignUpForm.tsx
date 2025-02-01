@@ -45,7 +45,7 @@ const SignUpForm: React.FC = () => {
   };
 
   return (
-    <div>
+    <>
       <form onSubmit={handleSubmit}>
         <div
           className={css`
@@ -137,7 +137,7 @@ const SignUpForm: React.FC = () => {
           {message}
         </p>
       )}
-    </div>
+    </>
   );
 };
 

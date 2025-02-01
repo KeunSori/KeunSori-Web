@@ -1,24 +1,22 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import logo from "/image/logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import useIsMobile from "../mobile/useIsMobile";
 import { IoClose, IoMenu } from "react-icons/io5";
 import Space from "./Space.tsx";
 import { Menu, MobileMenu } from "./Menu.tsx";
+import { AuthContext } from "../../contexts/AuthContext.tsx";
 
 const NavBar2: React.FC = () => {
   const [isMove, setIsMove] = useState(false);
   const location = useLocation();
   const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
-  const LogoutUser = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("accessTokenExpireTime");
-    window.location.href = "/";
-  };
+
+  const { logoutUser } = useContext(AuthContext);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsMove(window.scrollY > 0);
@@ -65,7 +63,7 @@ const NavBar2: React.FC = () => {
           <Link to="/mypage">
             <Space isActive={location.pathname === "/mypage"}>마이페이지</Space>
           </Link>
-          <LogOutButton onClick={LogoutUser}>로그아웃</LogOutButton>
+          <LogOutButton onClick={logoutUser}>로그아웃</LogOutButton>
         </div>
       ) : (
         <>
@@ -86,7 +84,7 @@ const NavBar2: React.FC = () => {
             <Link to="/mypage">
               <Space isActive={false}>마이페이지</Space>
             </Link>
-            <Space onClick={LogoutUser}>로그아웃</Space>
+            <Space onClick={logoutUser}>로그아웃</Space>
           </MobileMenu>
         </>
       )}
