@@ -78,7 +78,7 @@ const CurrentBook: React.FC = () => {
       setUserData(response.data);
       if (date) {
         const filteredData = response.data?.filter((user: UserInfo) => {
-          const userDate = new Date(user.reservationDate);
+          const userDate = new Date(TransDate(user.reservationDate));
           return isSameDay(userDate, date);
         });
         console.log(`Filtered data for ${date}:`, filteredData);
@@ -88,10 +88,17 @@ const CurrentBook: React.FC = () => {
       console.log(`에러남:${error}`);
     }
   }
-  const nextMonth = (date: Date) => {
-    const today = new Date();
-    return date.getMonth() - 1 > today.getMonth();
+  const TransDate = (userDate: string) => {
+    return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
   };
+
+  const UnvailableMonth = (date: Date) => {
+    return (
+      date.getMonth() - 1 > today.getMonth() ||
+      date.getMonth() < today.getMonth()
+    );
+  };
+
   const handleDateChange = (value: Value) => {
     if (Array.isArray(value)) {
       setDate(value[0]);
@@ -135,7 +142,7 @@ const CurrentBook: React.FC = () => {
             prev2Label={null}
             next2Label={null}
             formatDay={(_locale, date) => date.getDate().toString()}
-            tileDisabled={({ date }) => nextMonth(date)}
+            tileDisabled={({ date }) => UnvailableMonth(date)}
           />
           <div
             className={css`

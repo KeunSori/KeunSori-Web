@@ -6,6 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 
 const Menu = styled.div<MenuProps>`
   position: fixed;
+  gap: 200px;
   z-index: 3;
   width: calc(100%);
   height: 55px;

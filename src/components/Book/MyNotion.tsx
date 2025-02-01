@@ -11,7 +11,9 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
   const [instrument, setInstrument] = useState<string>("");
   const checkDate = () => {
     const now = new Date();
-    const date = new Date(user.reservationDate);
+
+    const date = new Date(TransDate(user.reservationDate));
+    console.log(`변경후`, date);
     if (
       now.getFullYear() === date.getFullYear() &&
       now.getMonth() === date.getMonth() &&
@@ -26,6 +28,9 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
       return true;
     }
     return false;
+  };
+  const TransDate = (userDate: string) => {
+    return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
   };
   const TransInstrument = (session: string) => {
     if (session == "vocal") {
@@ -43,9 +48,7 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
     }
   };
   const [date, setDate] = useState<Date | null>(null);
-  const TransDate = (userDate: string) => {
-    setDate(new Date(userDate));
-  };
+
   const handleDelete = async () => {
     const token = localStorage.getItem("accessToken");
     await axiosInstance.delete(`/reservation/${user.reservationId}`, {
@@ -58,7 +61,7 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
   };
   useEffect(() => {
     TransInstrument(user.reservationSession);
-    TransDate(user.reservationDate);
+    setDate(new Date(TransDate(user.reservationDate)));
   }, []);
   return (
     <>
@@ -71,6 +74,7 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
             display: flex;
             justify-content: space-between;
             padding-right: 30px;
+            gap: 15px;
             padding-bottom: 15px;
             border-bottom: 1px solid #f1f1f1;
           `}
@@ -94,7 +98,7 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
         </div>
         <div
           className={css`
-            margin: 15px 0px;
+            margin-top: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -139,12 +143,13 @@ const Title = styled.div`
 const Detail = styled.div`
   font-size: 14px;
   font-weight: 300;
+  white-space: nowrap;
   margin-top: 5px;
 `;
 const Notion = styled.div`
   width: 270px;
   max-width: 100%;
-  height: 210px;
+  height: 100%;
   border-radius: 10px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
   padding: 20px;

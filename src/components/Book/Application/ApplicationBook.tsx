@@ -65,7 +65,7 @@ const ApplicationBook: React.FC = () => {
   };
   const beforeToday = (date: Date) => {
     return (
-      date.getDate() < today.getDate() && date.getMonth() <= today.getMonth()
+      date.getDate() < today.getDate() && date.getMonth() === today.getMonth()
     );
   };
   const handleSubmit = async () => {
@@ -86,9 +86,11 @@ const ApplicationBook: React.FC = () => {
     alert("예약이 완료되었습니다!");
     window.location.reload();
   };
-  const nextMonth = (date: Date) => {
-    const today = new Date();
-    return date.getMonth() - 1 > today.getMonth();
+  const UnvailableMonth = (date: Date) => {
+    return (
+      date.getMonth() - 1 > today.getMonth() ||
+      date.getMonth() < today.getMonth()
+    );
   };
 
   return (
@@ -220,7 +222,7 @@ const ApplicationBook: React.FC = () => {
                   next2Label={null}
                   formatDay={(_locale, date) => date.getDate().toString()}
                   tileDisabled={({ date }: { date: Date }) =>
-                    beforeToday(date) || nextMonth(date)
+                    beforeToday(date) || UnvailableMonth(date)
                   }
                 />
               </CalendarStyles>

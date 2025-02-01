@@ -26,11 +26,11 @@ const Notion: React.FC<NotionProps> = ({ user }) => {
 
   const [date, setDate] = useState<Date | null>(null);
   const TransDate = (userDate: string) => {
-    setDate(new Date(userDate));
+    return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
   };
   useEffect(() => {
     TransInstrument(user.reservationSession);
-    TransDate(user.reservationDate);
+    setDate(new Date(TransDate(user.reservationDate)));
   }, []);
   return (
     <>
@@ -83,8 +83,8 @@ const Detail = styled.div`
 `;
 
 const NotionItem = styled.div`
-  width: 320px;
-  max-width: 100%
+  width: 340px;
+  max-width: 100%;
   height: 150px;
   border-radius: 10px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);

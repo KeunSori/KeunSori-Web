@@ -22,6 +22,7 @@ const Reservation: React.FC<ReservationProps> = ({
   instrument,
   team,
 }) => {
+  const today = new Date();
   const [startTime, setStartTime] = useAtom(startTimeAtom);
   const [endTime, setEndTime] = useAtom(endTimeAtom);
   const [, setPrintEndTime] = useAtom(printEndTimeAtom);
@@ -60,6 +61,28 @@ const Reservation: React.FC<ReservationProps> = ({
     }
   };
   const unAvailableSlots = (data: UserInfo[]) => {
+    console.log(
+      today.getDate() === date?.getDate() &&
+        today.getMonth() === date?.getMonth()
+    );
+    if (
+      today.getDate() === date?.getDate() &&
+      today.getMonth() === date?.getMonth()
+    ) {
+      const nowTime = `${today.getHours()}:${
+        today.getMinutes() > 30 ? "30" : "00"
+      }`;
+      console.log("nowTime: ", nowTime);
+      const start = slots.findIndex((slot) => slot.time === nowTime);
+      setSelectedtSlots((prev) =>
+        prev.map((slot, index) => {
+          if (index <= start) {
+            return { ...slot, available: false };
+          }
+          return slot;
+        })
+      );
+    }
     data.forEach((user) => {
       console.log("session: ", user.reservationSession);
 

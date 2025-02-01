@@ -3,7 +3,7 @@ import { css } from "@emotion/css";
 import React, { useEffect, useState, useContext } from "react";
 import logo from "/logo.svg";
 import { Link, useLocation } from "react-router-dom";
-import {AuthContext} from "../../contexts/AuthContext";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Menu = styled.div<MenuProps>`
   position: fixed;
@@ -40,7 +40,7 @@ const Space = styled.div<{ isActive?: boolean }>`
 `;
 
 const NavBar: React.FC = () => {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [isMove, setIsMove] = useState(false);
   const location = useLocation();
 
