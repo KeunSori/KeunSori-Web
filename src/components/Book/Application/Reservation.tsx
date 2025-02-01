@@ -261,6 +261,10 @@ const TimeSlots = styled.div`
   padding: 0px 5px;
   overflow-x: auto;
   scrollbar-width: none;
+  @media (max-width: 768px) {
+    width: 300px;
+  }
+  width: 100%;
   -ms-overflow-style: none;
   ::-webkit-scrollbar {
     display: none;

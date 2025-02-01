@@ -122,6 +122,7 @@ const TeamDropBox: React.FC<DropBoxProps> = ({ onClick }) => {
 };
 const ArrowButton = styled.button`
   font-size: 10px;
+  color: #000;
   background-color: transparent;
   cursor: pointer;
 `;
@@ -161,6 +162,7 @@ const Dropbox = styled.div<DropboxProps>`
   `}
 `;
 const SelectedButton = styled.button`
+  color: rgb(0, 0, 0);
   min-width: 100px;
   white-space: nowrap;
   height: 30px;

@@ -13,11 +13,16 @@ interface NavProps {
 const Nav = styled.button<NavProps>`
   font-size: 17px;
   min-width: 80px;
+  @media (max-width: 768px) {
+    min-width: 40px;
+    font-size: 15px;
+  }
   background-color: ${({ isActive }) => (isActive ? "#FFF4D5" : "transparent")};
   font-weight: 300;
   white-space: nowrap;
   border-radius: 10px;
   padding: 10px;
+  color: black;
 
   &:hover,
   &:active {

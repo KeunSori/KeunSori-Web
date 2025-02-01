@@ -11,17 +11,19 @@ interface SlotButtonProps {
   isMobile?: boolean;
 }
 
-const SlotButton = styled.button<SlotButtonProps>`
-  flex-shrink: 0;
-  width: ${({ isMobile }) => (isMobile ? "20px" : "30px")};
+const SlotButton = styled.div<SlotButtonProps>`
+  display: block;
+  width: 30px;
+  @media (max-width: 768px) {
+    width: 30px;
+    height: 40px;
+  }
   height: 50px;
   border: solid 1px #f1f1f1;
   background-color: ${({ available, selected }) =>
     selected ? "#ffe187" : available ? "white" : "#DDDDDD"};
   color: ${({ available }) => (available ? "black" : "gray")};
   cursor: ${({ available }) => (available ? "pointer" : "not-allowed")};
-  font-size: 14px;
-
   &:hover {
     background-color: ${({ available }) => (available ? "#FFAA00" : "#DDDDDD")};
   }
@@ -34,9 +36,9 @@ const Button = styled.button<ButttonProps>`
   border-radius: 5px;
   padding: 5px;
   cursor: pointer;
-  width: ${({ isMobile }) => (isMobile ? "50px" : "70px")};
-  font-size: ${({ isMobile }) => (isMobile ? "13px" : "15px")};
-  min-width: ${({ isMobile }) => (isMobile ? "50px" : "70px")};
+  width: ${({ isMobile }) => (isMobile ? "40px" : "70px")};
+  font-size: ${({ isMobile }) => (isMobile ? "11px" : "15px")};
+  min-width: ${({ isMobile }) => (isMobile ? "40px" : "70px")};
 
   &:hover {
     background-color: #ffe493;
@@ -52,7 +54,10 @@ const Button = styled.button<ButttonProps>`
 `;
 
 const ReservationButton = styled.button<{ isMobile?: boolean }>`
-  width: ${({ isMobile }) => (isMobile ? "30%" : "200px")};
+  @media (max-width: 768px) {
+    width: 120px;
+  }
+  width: 200px;
   height: ${({ isMobile }) => (isMobile ? "40px" : "50px")};
   background-color: #fff4d5;
   color: #7f8fa4;

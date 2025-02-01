@@ -17,8 +17,9 @@ const CalendarStyles = styled.div<{ isMobile?: boolean }>`
     line-height: 1.3 !important;
   }
   .react-calendar__tile--disabled {
-    background-color: #f0f0f0 !important;
+    background-color: black !important
     cursor: not-allowed !important;
+    color: #f0f0f0 !important;
   }
   .react-calendar__navigation__prev-button {
     if (!nextMonth{date}) {

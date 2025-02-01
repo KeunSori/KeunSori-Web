@@ -101,6 +101,10 @@ const ApplicationBook: React.FC = () => {
         <div
           className={css`
             padding-left: 20px;
+            @media (max-width: 768px) {
+              padding-left: 0;
+              justify-content: center;
+            }
             display: flex;
             flex-direction: column;
             gap: 5px;
@@ -116,9 +120,13 @@ const ApplicationBook: React.FC = () => {
             <div
               className={css`
                 min-width: 70px;
+                @media (max-width: 768px) {
+                  min-width: 45px;
+                  font-size: 12px;
+                }
               `}
             >
-              신청 유형
+              유형
             </div>
             <Button
               isActive={team}
@@ -149,6 +157,10 @@ const ApplicationBook: React.FC = () => {
                 <div
                   className={css`
                     min-width: 70px;
+                    @media (max-width: 768px) {
+                      min-width: 45px;
+                      font-size: 12px;
+                    }
                   `}
                 >
                   악기

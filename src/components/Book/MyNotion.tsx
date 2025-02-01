@@ -45,7 +45,14 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
     }
   };
   const [date, setDate] = useState<Date | null>(null);
-
+  const printEndTime = (endTime: string) => {
+    if (endTime[3] === "3") {
+      console.log(`${endTime}->${parseInt(endTime[0] + endTime[1]) + 1}:00`);
+      return (parseInt(endTime[0] + endTime[1]) + 1).toString() + ":00";
+    } else {
+      return `${endTime[0] + endTime[1]}:30`;
+    }
+  };
   const handleDelete = async () => {
     const token = localStorage.getItem("accessToken");
     await axiosInstance.delete(`/reservation/${user.reservationId}`, {
@@ -89,7 +96,8 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
           <div>
             <Title>시간</Title>
             <Detail>
-              {user.reservationStartTime} - {user.reservationEndTime}
+              {user.reservationStartTime} -{" "}
+              {printEndTime(user.reservationEndTime)}
             </Detail>
           </div>
         </div>

@@ -9,9 +9,9 @@ const GlobalStyle = () => (
         font-family: "Spoqa Han Sans Neo", "Spoqa Han Sans JP", sans-serif;
         font-size: 15px;
         font-weight: 300;
-        color: black;
       }
       body {
+        color: black;
         margin: 0px;
         padding: 0;
         font-size: 15px;
@@ -75,7 +75,8 @@ const GlobalStyle = () => (
 
       .react-calendar__tile:disabled {
         background-color: white !important;
-        cursor: not-allowed !important;
+        color: rgb(169, 169, 169) !important;
+        cursor: not-allowed;
       }
 
       .react-calendar__month-view__weekdays {
