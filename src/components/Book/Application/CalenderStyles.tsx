@@ -1,8 +1,11 @@
 import styled from "@emotion/styled";
 
-const CalendarStyles = styled.div`
+const CalendarStyles = styled.div<{ isMobile?: boolean }>`
+  display: flex;
+  justify-content: center;
   .react-calendar {
-    width: 500px !important;
+    width: ${(props) =>
+      props.isMobile ? "300px !important" : "500px !important"};
     max-width: 100%;
     background: white;
     padding: 20px;

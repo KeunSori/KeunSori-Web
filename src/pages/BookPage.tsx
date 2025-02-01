@@ -6,6 +6,7 @@ import ApplicationBook from "../components/Book/Application/ApplicationBook.tsx"
 import MyBook from "../components/Book/MyBook.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import axiosInstance from "../api/axiosInstance.ts";
 interface NavProps {
   isActive: boolean;
 }
@@ -43,6 +44,22 @@ const BookPage = () => {
   const query = new URLSearchParams(locaiton.search);
   const component = query.get("type");
   const navigate = useNavigate();
+  async function fetchData() {
+    const token = localStorage.getItem("accessToken");
+    try {
+      await axiosInstance.get("/reservation/my", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (e) {
+      console.log(e);
+      navigate("/login");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("accessTokenExpireTime");
+    }
+  }
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     navigate(`/book?type=${e.currentTarget.dataset.action}`);
     console.log(component);
@@ -52,6 +69,9 @@ const BookPage = () => {
       navigate("/book?type=current");
     }
   }, []);
+  useEffect(() => {
+    fetchData();
+  }, [component]);
 
   return (
     <>

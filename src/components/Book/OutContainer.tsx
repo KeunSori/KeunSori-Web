@@ -5,6 +5,7 @@ const OutContainer = styled.div`
   border-top: 1px solid #f1f1f1;
   padding-top: 20px;
   padding-left: 20px;
+  margin-bottom: 20px;
 `;
 
 export default OutContainer;

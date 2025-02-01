@@ -2,16 +2,18 @@ import styled from "@emotion/styled";
 
 interface ButttonProps {
   isActive: boolean;
+  isMobile?: boolean;
 }
 
 interface SlotButtonProps {
   available: boolean;
   selected: boolean;
+  isMobile?: boolean;
 }
 
 const SlotButton = styled.button<SlotButtonProps>`
   flex-shrink: 0;
-  width: 30px;
+  width: ${({ isMobile }) => (isMobile ? "20px" : "30px")};
   height: 50px;
   border: solid 1px #f1f1f1;
   background-color: ${({ available, selected }) =>
@@ -32,8 +34,9 @@ const Button = styled.button<ButttonProps>`
   border-radius: 5px;
   padding: 5px;
   cursor: pointer;
-  width: 70px;
-  min-width: 70px;
+  width: ${({ isMobile }) => (isMobile ? "50px" : "70px")};
+  font-size: ${({ isMobile }) => (isMobile ? "13px" : "15px")};
+  min-width: ${({ isMobile }) => (isMobile ? "50px" : "70px")};
 
   &:hover {
     background-color: #ffe493;
@@ -48,9 +51,9 @@ const Button = styled.button<ButttonProps>`
   }
 `;
 
-const ReservationButton = styled.button`
-  width: 200px;
-  height: 50px;
+const ReservationButton = styled.button<{ isMobile?: boolean }>`
+  width: ${({ isMobile }) => (isMobile ? "30%" : "200px")};
+  height: ${({ isMobile }) => (isMobile ? "40px" : "50px")};
   background-color: #fff4d5;
   color: #7f8fa4;
   border: none;
@@ -58,7 +61,7 @@ const ReservationButton = styled.button`
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
-  margin-top: 100px;
+  margin-top: ${({ isMobile }) => (isMobile ? "20px" : "100px")};
   :disabled {
     background-color: #f1f1f1;
     color: #b0b0b0;

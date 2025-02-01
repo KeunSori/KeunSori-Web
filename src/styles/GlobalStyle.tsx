@@ -9,6 +9,7 @@ const GlobalStyle = () => (
         font-family: "Spoqa Han Sans Neo", "Spoqa Han Sans JP", sans-serif;
         font-size: 15px;
         font-weight: 300;
+        color: black;
       }
       body {
         margin: 0px;

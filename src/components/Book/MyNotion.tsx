@@ -19,9 +19,6 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
       now.getMonth() === date.getMonth() &&
       now.getDate() === date.getDate()
     ) {
-      if (user.reservationStartTime > now.getHours() + ":" + now.getMinutes()) {
-        return true;
-      }
       return false;
     }
     if (now > date) {
@@ -147,7 +144,7 @@ const Detail = styled.div`
   margin-top: 5px;
 `;
 const Notion = styled.div`
-  width: 270px;
+  width: 250px;
   max-width: 100%;
   height: 100%;
   border-radius: 10px;

@@ -130,8 +130,10 @@ const CurrentBook: React.FC = () => {
             display: flex;
             align-items: center;
             justify-content: center;
-
             gap: 30px;
+            @media (max-width: 768px) {
+              flex-direction: column;
+            }
           `}
         >
           <Calendar
@@ -146,6 +148,9 @@ const CurrentBook: React.FC = () => {
           />
           <div
             className={css`
+              @media (max-width: 768px) {
+                display: none;
+              }
               width: 2px;
               height: 200px;
               max-height: 100%;
@@ -157,6 +162,7 @@ const CurrentBook: React.FC = () => {
             className={css`
               display: flex;
               flex-direction: column;
+              align-items: center;
               width: 370px;
               padding: 5px;
               height: 350px;

@@ -17,6 +17,7 @@ import axiosInstance from "../../../api/axiosInstance.ts";
 import CalendarStyles from "./CalenderStyles.tsx";
 import { InstrumentInfo } from "../../../data/user.ts";
 import OutContainer from "../OutContainer.tsx";
+import useIsMobile from "../../mobile/useIsMobile.tsx";
 
 const ApplicationBook: React.FC = () => {
   const defaultInstruments: InstrumentInfo = {
@@ -26,6 +27,7 @@ const ApplicationBook: React.FC = () => {
     keyboard: false,
     drum: false,
   };
+  const isMobile = useIsMobile();
   const [team, setTeam] = useState<boolean>(false);
   const [individual, setIndividual] = useState<boolean>(false);
   const [instruments, setInstruments] =
@@ -118,11 +120,17 @@ const ApplicationBook: React.FC = () => {
             >
               신청 유형
             </div>
-            <Button isActive={team} onClick={onClick} data-action="team">
+            <Button
+              isActive={team}
+              isMobile={isMobile}
+              onClick={onClick}
+              data-action="team"
+            >
               팀
             </Button>
             <Button
               isActive={individual}
+              isMobile={isMobile}
               onClick={onClick}
               data-action="individual"
             >
@@ -148,6 +156,7 @@ const ApplicationBook: React.FC = () => {
                 <Button
                   isActive={instruments["guitar"]}
                   disabled={team}
+                  isMobile={isMobile}
                   value="guitar"
                   onClick={onClickInstrument}
                 >
@@ -156,6 +165,7 @@ const ApplicationBook: React.FC = () => {
                 <Button
                   isActive={instruments["vocal"]}
                   disabled={team}
+                  isMobile={isMobile}
                   value="vocal"
                   onClick={onClickInstrument}
                 >
@@ -164,6 +174,7 @@ const ApplicationBook: React.FC = () => {
                 <Button
                   isActive={instruments["bass"]}
                   disabled={team}
+                  isMobile={isMobile}
                   value="bass"
                   onClick={onClickInstrument}
                 >
@@ -172,6 +183,7 @@ const ApplicationBook: React.FC = () => {
                 <Button
                   isActive={instruments["drum"]}
                   disabled={team}
+                  isMobile={isMobile}
                   value="drum"
                   onClick={onClickInstrument}
                 >
@@ -180,6 +192,7 @@ const ApplicationBook: React.FC = () => {
                 <Button
                   isActive={instruments["keyboard"]}
                   disabled={team}
+                  isMobile={isMobile}
                   value="keyboard"
                   onClick={onClickInstrument}
                 >
@@ -195,24 +208,9 @@ const ApplicationBook: React.FC = () => {
         instruments["drum"] ||
         instruments["keyboard"] ||
         team ? (
-          <div
-            className={css`
-              margin-top: 20px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              gap: 40px;
-              flex-direction: column;
-            `}
-          >
-            <div
-              className={css`
-                display: flex;
-                justify-content: center;
-                gap: 60px;
-              `}
-            >
-              <CalendarStyles>
+          <InContainer isMobile={isMobile}>
+            <Container isMobile={isMobile}>
+              <CalendarStyles isMobile={isMobile}>
                 <Calendar
                   calendarType="gregory"
                   view="month"
@@ -226,49 +224,83 @@ const ApplicationBook: React.FC = () => {
                   }
                 />
               </CalendarStyles>
-              <SelectedTime>
-                <div>
-                  {date
-                    ? `날짜: ${date.getFullYear()}년 ${
-                        date.getMonth() + 1
-                      }월 ${date.getDate()}일`
-                    : "날짜를 선택해주세요."}
-                </div>
-                <div>
-                  시작 시간:
-                  {startTime?.time ? ` ${startTime.time} ` : " 00:00"}
-                </div>
-                <div>
-                  마감 시간:
-                  {endTime?.time
-                    ? ` ${prinEndTime} 
+              {isMobile && (
+                <Reservation date={date} instrument={instrument} team={team} />
+              )}
+              <SelectedTime isMobile={isMobile}>
+                <Times isMobile={isMobile}>
+                  <Time>
+                    {date
+                      ? `날짜: ${date.getFullYear()}년 ${
+                          date.getMonth() + 1
+                        }월 ${date.getDate()}일`
+                      : "날짜를 선택해주세요."}
+                  </Time>
+                  <Time>
+                    시작 시간:
+                    {startTime?.time ? ` ${startTime.time} ` : " 00:00"}
+                  </Time>
+                  <Time>
+                    마감 시간:
+                    {endTime?.time
+                      ? ` ${prinEndTime} 
                     `
-                    : " 00:00"}
-                </div>
+                      : " 00:00"}
+                  </Time>
+                </Times>
+
                 <ReservationButton
                   onClick={handleSubmit}
+                  isMobile={isMobile}
                   disabled={!date || !startTime || !endTime}
                 >
                   예약하기
                 </ReservationButton>
               </SelectedTime>
-            </div>
-
-            <Reservation date={date} instrument={instrument} team={team} />
-          </div>
+            </Container>
+            {!isMobile && (
+              <Reservation date={date} instrument={instrument} team={team} />
+            )}
+          </InContainer>
         ) : null}
       </OutContainer>
     </>
   );
 };
 export default ApplicationBook;
+const InContainer = styled.div<{ isMobile: boolean }>`
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: ${({ isMobile }) => (isMobile ? "20px" : "40px")};
+  flex-direction: column;
+`;
 
-const SelectedTime = styled.div`
+const Times = styled.div<{ isMobile: boolean }>`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ isMobile }) => (isMobile ? "10px" : "20px")};
+`;
+const Time = styled.div`
+  white-space: nowrap;
+`;
+const Container = styled.div<{ isMobile: boolean }>`
+  display: flex;
+  justify-content: center;
+  flex-direction: ${({ isMobile }) => (isMobile ? "column" : "row")};
+  gap: ${({ isMobile }) => (isMobile ? "10px" : "60px")};
+`;
+const SelectedTime = styled.div<{ isMobile: boolean }>`
   display: flex;
   padding-top: 40px;
-  flex-direction: column;
-  width: 200px;
+  flex-direction: ${({ isMobile }) => (isMobile ? "row" : "column")};
+  width: 100%
+  
+  align-items: center;
+  justify-content: center;
   gap: 20px;
+  margin-right: 20px
   font-size: 20px;
   font-weight: 300;
 `;

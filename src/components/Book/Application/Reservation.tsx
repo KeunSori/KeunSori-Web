@@ -6,6 +6,7 @@ import { UserInfo } from "../../../data/user.ts";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../api/axiosInstance.ts";
 import { SlotButton } from "./Button.tsx";
+import useIsMobile from "../../mobile/useIsMobile.tsx";
 
 const slots = Array.from({ length: 26 }, (_, index) => ({
   time: `${10 + Math.floor(index / 2)}:${index % 2 === 0 ? "00" : "30"}`,
@@ -23,10 +24,14 @@ const Reservation: React.FC<ReservationProps> = ({
   team,
 }) => {
   const today = new Date();
+  const isMobile = useIsMobile();
   const [startTime, setStartTime] = useAtom(startTimeAtom);
   const [endTime, setEndTime] = useAtom(endTimeAtom);
   const [, setPrintEndTime] = useAtom(printEndTimeAtom);
   const [selectedSlots, setSelectedtSlots] = useState(slots);
+  const TransDate = (userDate: string) => {
+    return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
+  };
 
   const formatDate = (date: Date | null): string | null => {
     if (!date) return null;
@@ -46,7 +51,7 @@ const Reservation: React.FC<ReservationProps> = ({
 
       if (date) {
         const newfilteredData = response.data.filter((user: UserInfo) => {
-          const userDate = new Date(user.reservationDate);
+          const userDate = new Date(TransDate(user.reservationDate));
           return (
             userDate.getFullYear() === date.getFullYear() &&
             userDate.getMonth() === date.getMonth() &&
@@ -61,10 +66,6 @@ const Reservation: React.FC<ReservationProps> = ({
     }
   };
   const unAvailableSlots = (data: UserInfo[]) => {
-    console.log(
-      today.getDate() === date?.getDate() &&
-        today.getMonth() === date?.getMonth()
-    );
     if (
       today.getDate() === date?.getDate() &&
       today.getMonth() === date?.getMonth()
@@ -72,7 +73,6 @@ const Reservation: React.FC<ReservationProps> = ({
       const nowTime = `${today.getHours()}:${
         today.getMinutes() > 30 ? "30" : "00"
       }`;
-      console.log("nowTime: ", nowTime);
       const start = slots.findIndex((slot) => slot.time === nowTime);
       setSelectedtSlots((prev) =>
         prev.map((slot, index) => {
@@ -199,6 +199,7 @@ const Reservation: React.FC<ReservationProps> = ({
                   <SlotButton
                     key={index}
                     available={slot.available}
+                    isMobile={isMobile}
                     selected={
                       (!!startTime &&
                         !!endTime &&
@@ -236,6 +237,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 20px;
+  margin-bottom: 0px;
 `;
 
 const TimeSlots = styled.div`
