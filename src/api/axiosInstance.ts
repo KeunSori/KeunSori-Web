@@ -25,9 +25,8 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    const statusCode = error.response?.status;
 
-    if ((statusCode === 401 || statusCode === 403) && !originalRequest._retry) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
@@ -44,15 +43,10 @@ axiosInstance.interceptors.response.use(
           { headers: { "Refresh-Token": refreshToken } }
         );
 
-        console.log("성공했다잉:", data);
-
         setToken(data);
 
-        console.log("이제 다시 요청할게");
-        console.log("악쎄스 토큰 여기: ", localStorage.getItem("accessToken"));
-        const newAccessToken = localStorage.getItem("accessToken");
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return axiosInstance(originalRequest);
+        originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
+        return axios(originalRequest);
       } catch (refreshError) {
         console.error("토큰 갱신 실패", refreshError);
         localStorage.removeItem("accessToken");
@@ -61,8 +55,6 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(refreshError);
       }
     }
-
-    throw error;
   }
 );
 
