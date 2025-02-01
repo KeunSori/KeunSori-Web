@@ -66,14 +66,29 @@ const Reservation: React.FC<ReservationProps> = ({
     }
   };
   const unAvailableSlots = (data: UserInfo[]) => {
+    console.log(
+      "data: ",
+      today.getDate() === date?.getDate() &&
+        today.getMonth() === date?.getMonth()
+    );
     if (
       today.getDate() === date?.getDate() &&
-      today.getMonth() === date?.getMonth()
+      today.getMonth() === date?.getMonth() &&
+      today.getHours() > 10
     ) {
       const nowTime = `${today.getHours()}:${
         today.getMinutes() > 30 ? "30" : "00"
       }`;
+      console.log("nowTime: ", nowTime);
       const start = slots.findIndex((slot) => slot.time === nowTime);
+      if (start === -1) {
+        setSelectedtSlots((prev) =>
+          prev.map((slot) => {
+            return { ...slot, available: false };
+          })
+        );
+      }
+
       setSelectedtSlots((prev) =>
         prev.map((slot, index) => {
           if (index <= start) {
