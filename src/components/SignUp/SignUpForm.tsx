@@ -4,11 +4,13 @@ import { css } from "@emotion/css";
 import Input from "../Input.tsx";
 import Button from "../Button.tsx";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignUpForm: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
     studentId: "",
+    hongikgmail: "",
     password: "",
     passwordConfirm: "",
   });
@@ -23,14 +25,22 @@ const SignUpForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      formData.hongikgmail += "@g.hongik.ac.kr";
       const response = await registerUser(formData);
       console.log("응답: ", response);
-      setMessage(response);
+      setMessage(response.message);
 
       navigate("/login");
-    } catch (error) {
-      setMessage("Sign up failed. Try again please.");
-      console.error(error);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.error("Error: ", error.message);
+        console.error("Server message: ", error.response?.data.message);
+
+        setMessage(error.response?.data.message || "다시 시도해주세요.");
+      } else {
+        console.error("Unexpected error: ", error);
+        setMessage("Unexpected error occured.");
+      }
     }
   };
 
@@ -62,6 +72,37 @@ const SignUpForm: React.FC = () => {
             onChange={handleChange}
             required
           ></Input>
+          <div
+            className={css`
+              display: flex;
+              align-items: center;
+              width: 410px;
+            `}
+          >
+            <Input
+              name="hongikgmail"
+              placeholder="홍익대학교 gmail"
+              type="string"
+              value={formData.hongikgmail}
+              onChange={handleChange}
+              required
+              className={css`
+                width: 100%;
+                border-right: none;
+              `}
+            ></Input>
+            <span
+              className={css`
+                padding: 10px;
+                font-size: 16px;
+                margin-right: 5px;
+                padding-left: 0px;
+              `}
+            >
+              @g.hongik.ac.kr
+            </span>
+          </div>
+
           <Input
             name="password"
             placeholder="비밀번호"
@@ -86,7 +127,16 @@ const SignUpForm: React.FC = () => {
           <Button type="submit">큰소리 회원가입</Button>
         </div>
       </form>
-      {message && <p>{message}</p>}
+      {message && (
+        <p
+          className={css`
+            text-align: center;
+            color: red;
+          `}
+        >
+          {message}
+        </p>
+      )}
     </div>
   );
 };
