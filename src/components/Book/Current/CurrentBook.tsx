@@ -8,6 +8,8 @@ import axiosInstance from "../../../api/axiosInstance.ts";
 import { UserInfo } from "../../../data/user.ts";
 import { InstrumentDropBox, TeamDropBox } from "../Application/DropBox.tsx";
 import OutContainer from "../OutContainer.tsx";
+import styled from "@emotion/styled";
+import { useNavigate } from "react-router-dom";
 
 const today = new Date();
 
@@ -20,6 +22,7 @@ const CurrentBook: React.FC = () => {
   const [filteredUserData, setFilteredUserData] = useState<UserInfo[] | null>(
     UserData
   );
+  const navigate = useNavigate();
   const isSameDay = (d1: Date, d2: Date) => {
     return d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
   };
@@ -214,6 +217,9 @@ const CurrentBook: React.FC = () => {
                   <Notion key={user.reservationId} user={user} />
                 )
               )}
+              <Application onClick={() => navigate("/book?type=application")}>
+                + 예약 신청 하기
+              </Application>
             </div>
           </div>
         </div>
@@ -221,4 +227,22 @@ const CurrentBook: React.FC = () => {
     </>
   );
 };
+const Application = styled.button`
+  width: 250px;
+  max-width: 100%;
+  cursor: pointer;
+  min-height: 50px;
+  font-weight: 400;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: white;
+  border: 1px solid #fec511;
+  color: #fec511;
+  &:hover {
+    background-color: #fbe59d;
+    color: white;
+  }
+`;
+
 export default CurrentBook;

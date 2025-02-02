@@ -75,18 +75,23 @@ const ApplicationBook: React.FC = () => {
     const inst = Object.keys(instruments).find(([value]) => value);
     setInstrument(inst?.toString() || "");
     console.log(printEndTime);
-    await axiosInstance.post("/reservation", {
-      reservationType: team ? "TEAM" : "PERSONAL",
-      reservationSession: team ? "ALL" : instrument,
-      reservationDate: `${date.getFullYear()}-${(date.getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`,
-      reservationStartTime: startTime.time,
-      reservationEndTime: printEndTime,
-    });
-    console.log("예약 완료");
-    alert("예약이 완료되었습니다!");
-    window.location.reload();
+    try {
+      await axiosInstance.post("/reservation", {
+        reservationType: team ? "TEAM" : "PERSONAL",
+        reservationSession: team ? "ALL" : instrument,
+        reservationDate: `${date.getFullYear()}-${(date.getMonth() + 1)
+          .toString()
+          .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`,
+        reservationStartTime: startTime.time,
+        reservationEndTime: printEndTime,
+      });
+      console.log("예약 완료");
+      alert("예약이 완료되었습니다!");
+      window.location.reload();
+    } catch (e) {
+      console.log(e);
+      alert("다시 시도 해주세요.");
+    }
   };
   const UnvailableMonth = (date: Date) => {
     return (
