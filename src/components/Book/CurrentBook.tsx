@@ -65,7 +65,6 @@ const CurrentBook: React.FC = () => {
 
   async function fetchData() {
     const token = localStorage.getItem("accessToken");
-    console.log(`Token: ${token}`);
     try {
       const response = await axiosInstance.get(
         `/reservation/list?month=${formatDate(date)}`,

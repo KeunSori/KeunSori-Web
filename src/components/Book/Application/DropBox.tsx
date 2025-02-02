@@ -120,7 +120,7 @@ const TeamDropBox: React.FC<DropBoxProps> = ({ onClick }) => {
     </Container>
   );
 };
-const ArrowButton = styled.button`
+const ArrowButton = styled.div`
   font-size: 10px;
   color: #000;
   background-color: transparent;

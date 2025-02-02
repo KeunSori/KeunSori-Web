@@ -51,7 +51,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setUser({ isLoggedIn: true });
       return { success: true };
     } catch (error) {
-      console.log(" 일단 에러 받았어~ ");
       if (axios.isAxiosError(error)) {
         console.error("login failed:", error.response?.data || error.message);
 

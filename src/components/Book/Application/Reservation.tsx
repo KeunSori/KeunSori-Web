@@ -196,7 +196,7 @@ const Reservation: React.FC<ReservationProps> = ({
         <TimeContainer>
           <TimeSlots>
             {selectedSlots.map((slot, index) => (
-              <>
+              <div key={index}>
                 <div
                   className={css`
                     display: flex;
@@ -227,7 +227,7 @@ const Reservation: React.FC<ReservationProps> = ({
                     }
                   ></SlotButton>
                 </div>
-              </>
+              </div>
             ))}
           </TimeSlots>
         </TimeContainer>
