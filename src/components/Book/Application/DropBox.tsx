@@ -180,6 +180,7 @@ const Button = styled.button`
   text-align: left;
   padding: 8px;
   background-color: #fff;
+  color: black;
   &:hover {
     color: #ffaa00;
     font-weight: 500;
