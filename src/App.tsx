@@ -11,7 +11,6 @@ import { AuthProvider } from "./contexts/AuthContext.tsx";
 import BookManagePage from "./pages/BookManagePage.tsx";
 import BoardPage from "./pages/BoardPage.tsx";
 import MyPage from "./pages/MyPage.tsx";
-import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 function App() {
   return (
@@ -25,15 +24,14 @@ function App() {
             <Route path="/signup" element={<SignUpPage />} />
 
             {/* 인증이 필요한 페이지들 */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="/user" element={<UserPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/recruit" element={<RecruitPage />} />
-              <Route path="/book" element={<BookPage />} />
-              <Route path="/bookmanage" element={<BookManagePage />} />
-              <Route path="/board" element={<BoardPage />} />
-              <Route path="/mypage" element={<MyPage />} />
-            </Route>
+
+            <Route path="/user" element={<UserPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/recruit" element={<RecruitPage />} />
+            <Route path="/book" element={<BookPage />} />
+            <Route path="/bookmanage" element={<BookManagePage />} />
+            <Route path="/board" element={<BoardPage />} />
+            <Route path="/mypage" element={<MyPage />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
