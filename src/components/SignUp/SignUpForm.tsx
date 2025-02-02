@@ -59,7 +59,7 @@ const SignUpForm: React.FC = () => {
           <Input
             name="name"
             placeholder="이름"
-            type="string"
+            type="name"
             value={formData.name}
             onChange={handleChange}
             required
@@ -106,7 +106,7 @@ const SignUpForm: React.FC = () => {
           <Input
             name="password"
             placeholder="비밀번호"
-            type="string"
+            type="password"
             value={formData.password}
             onChange={handleChange}
             required
@@ -114,7 +114,7 @@ const SignUpForm: React.FC = () => {
           <Input
             name="passwordConfirm"
             placeholder="비밀번호 확인"
-            type="string"
+            type="password"
             value={formData.passwordConfirm}
             onChange={handleChange}
             required
