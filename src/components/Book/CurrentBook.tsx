@@ -157,52 +157,73 @@ const CurrentBook: React.FC = () => {
               background-color: #f1f1f1;
             `}
           ></div>
-
           <div
             className={css`
               display: flex;
               flex-direction: column;
               align-items: center;
-              width: 370px;
-              padding-top: 5px;
-              height: 350px;
-              max-height: 100%;
-              overflow-x: hidden;
-              overflow-y: auto;
-              wrap: no-wrap;
-              padding-right: 10px;
-              ::-webkit-scrollbar {
-                width: 8px;
-              }
-
-              ::-webkit-scrollbar-thumb {
-                background-color: #bbb;
-                border-radius: 10px;
-              }
-              ::-webkit-scrollbar-thumb:hover {
-                background-color: #888;
-              }
             `}
           >
-            {filteredUserData?.map((user) =>
-              team ? (
-                user.reservationType === "TEAM" && (
-                  <Notion key={user.reservationId} user={user} />
-                )
-              ) : individual ? (
-                instrument ? (
-                  instrument === user.reservationSession && (
+            <p
+              className={css`
+                @media (max-width: 768px) {
+                  display: block;
+                  width: 60%;
+                  text-align: center;
+                  padding-bottom: 10px;
+                  border-bottom: 1px solid rgb(187, 187, 187);
+                }
+                display: none;
+              `}
+            >
+              예약 목록
+            </p>
+            <div
+              className={css`
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 370px;
+                padding-top: 5px;
+                height: 350px;
+                max-height: 100%;
+                overflow-x: hidden;
+                overflow-y: auto;
+                wrap: no-wrap;
+
+                ::-webkit-scrollbar {
+                  width: 8px;
+                }
+
+                ::-webkit-scrollbar-thumb {
+                  background-color: #bbb;
+                  border-radius: 10px;
+                }
+                ::-webkit-scrollbar-thumb:hover {
+                  background-color: #888;
+                }
+              `}
+            >
+              {filteredUserData?.map((user) =>
+                team ? (
+                  user.reservationType === "TEAM" && (
                     <Notion key={user.reservationId} user={user} />
+                  )
+                ) : individual ? (
+                  instrument ? (
+                    instrument === user.reservationSession && (
+                      <Notion key={user.reservationId} user={user} />
+                    )
+                  ) : (
+                    user.reservationType !== "team" && (
+                      <Notion key={user.reservationId} user={user} />
+                    )
                   )
                 ) : (
-                  user.reservationType !== "team" && (
-                    <Notion key={user.reservationId} user={user} />
-                  )
+                  <Notion key={user.reservationId} user={user} />
                 )
-              ) : (
-                <Notion key={user.reservationId} user={user} />
-              )
-            )}
+              )}
+            </div>
           </div>
         </div>
       </OutContainer>

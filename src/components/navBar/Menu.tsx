@@ -23,7 +23,7 @@ const MobileMenu = styled.div<MobileMenuProps>`
     `}
 `;
 const Menu = styled.div<MenuProps>`
-  margin-top: 5px;
+  padding: 5px 0px;
   position: fixed;
   gap: 300px;
   @media (max-width: 768px) {
