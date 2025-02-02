@@ -3,10 +3,22 @@ import fonts from "../assets/font/font.ts";
 const GlobalStyle = () => (
   <Global
     styles={css`
+      @font-face {
+        font-family: "S-CoreDream";
+        src: url(/fonts/S-Core_Dream/SCDream2.ttf) format("trueType");
+        font-weight: 200;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: SejongGeulggot;
+        src: url(/fonts/SejongGeulggot.ttf) format("truetype");
+        font-weight: 300;
+        font-style: normal;
+      }
       ${fonts}
       * {
         box-sizing: border-box;
-        font-family: "Spoqa Han Sans Neo", "Spoqa Han Sans JP", sans-serif;
+        font-family: "S-CoreDream", "Spoqa Han Sans JP", sans-serif;
         font-size: 15px;
         font-weight: 300;
       }

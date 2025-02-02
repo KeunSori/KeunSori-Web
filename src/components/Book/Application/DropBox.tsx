@@ -142,7 +142,8 @@ const Dropbox = styled.div<DropboxProps>`
   position: absolute;
   width: 100px;
   max-height: ${({ isOpened }) => (isOpened ? "200px" : "0px")};
-  transition: max-height 0.3s ease-in-out;
+  padding: ${({ isOpened }) => (isOpened ? "10px" : "0px")};
+  transition: max-height, padding 0.3s ease-in-out;
   border-radius: 10px;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -152,7 +153,7 @@ const Dropbox = styled.div<DropboxProps>`
   z-index: 1;
   gap: 5px;
   top: 30px;
-  padding: 10px;
+
   background-color: #fff;
 
   ${({ isOpened }) =>
