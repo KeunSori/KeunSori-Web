@@ -67,7 +67,9 @@ const ApplicationBook: React.FC = () => {
   };
   const beforeToday = (date: Date) => {
     return (
-      date.getDate() < today.getDate() && date.getMonth() === today.getMonth()
+      date.getDate() < today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
     );
   };
   const handleSubmit = async () => {
@@ -96,7 +98,8 @@ const ApplicationBook: React.FC = () => {
   const UnvailableMonth = (date: Date) => {
     return (
       date.getMonth() - 1 > today.getMonth() ||
-      date.getMonth() < today.getMonth()
+      date.getMonth() < today.getMonth() ||
+      date.getFullYear() === today.getFullYear()
     );
   };
 
