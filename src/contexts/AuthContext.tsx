@@ -5,6 +5,7 @@ import axios from "axios";
 
 interface AuthContextProps {
   user: User;
+  isLoading: boolean;
   loginUser: (
     studentId: string,
     password: string
@@ -22,22 +23,21 @@ interface User {
 
 export const AuthContext = createContext<AuthContextProps>({
   user: { isLoggedIn: false },
+  isLoading: true,
   loginUser: async () => ({ success: false, message: "초기값" }),
   logoutUser: () => {},
 });
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User>({ isLoggedIn: false });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const token = getToken();
 
     if (token) {
-      setUser({ isLoggedIn: false });
-
-      // getUserData(token)
-      //   .then(setUser)
-      //   .catch(() => removeToken());
+      setUser({ isLoggedIn: true });
+      setIsLoading(false);
     }
   }, []);
 
@@ -71,7 +71,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loginUser, logoutUser }}>
+    <AuthContext.Provider value={{ user, isLoading, loginUser, logoutUser }}>
       {children}
     </AuthContext.Provider>
   );
