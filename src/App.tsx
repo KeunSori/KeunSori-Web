@@ -13,6 +13,8 @@ import BoardPage from "./pages/BoardPage.tsx";
 import MyPage from "./pages/MyPage.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
+// Test Commit message
+
 function App() {
   return (
     <>
