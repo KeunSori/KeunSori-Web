@@ -15,4 +15,8 @@ export const setToken = (tokenData: tokenData) => {
   );
 };
 
-export const removeToken = () => localStorage.removeItem("accessToken");
+export const removeToken = () => {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("accessTokenExpireTime");
+};
