@@ -86,6 +86,7 @@ const NavBar2: React.FC = () => {
             <Link to="/mypage">
               <Space isActive={false}>마이페이지</Space>
             </Link>
+            <Space onClick={LogoutUser}>로그아웃</Space>
           </MobileMenu>
         </>
       )}
@@ -100,9 +101,10 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   font-size: 20px;
-  margin-right: 30px;
+  margin-right: 10px;
 `;
 const LogOutButton = styled.button`
+  font-family: SejongGeulggot;
   background-color: transparent;
   border: 1.5px solid #fec511;
   border-radius: 25px;

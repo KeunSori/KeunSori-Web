@@ -11,11 +11,10 @@ interface NavProps {
   isActive: boolean;
 }
 const Nav = styled.button<NavProps>`
-SejongGeulggot
   font-size: 17px;
   font-family: S-CoreDream, sans-serif;
   min-width: 80px;
-  font-weight: 100;
+  font-weight: 200;
   font-size: 15px;
   @media (max-width: 768px) {
     min-width: 40px;

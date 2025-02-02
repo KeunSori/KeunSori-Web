@@ -10,6 +10,36 @@ const GlobalStyle = () => (
         font-style: normal;
       }
       @font-face {
+        font-family: "S-CoreDream";
+        src: url(/fonts/S-Core_Dream/SCDream1.ttf) format("trueType");
+        font-weight: 100;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "S-CoreDream";
+        src: url(/fonts/S-Core_Dream/SCDream3.ttf) format("trueType");
+        font-weight: 300;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "S-CoreDream";
+        src: url(/fonts/S-Core_Dream/SCDream4.ttf) format("trueType");
+        font-weight: 400;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "S-CoreDream";
+        src: url(/fonts/S-Core_Dream/SCDream5.ttf) format("trueType");
+        font-weight: 500;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "S-CoreDream";
+        src: url(/fonts/S-Core_Dream/SCDream6.ttf) format("trueType");
+        font-weight: 600;
+        font-style: normal;
+      }
+      @font-face {
         font-family: SejongGeulggot;
         src: url(/fonts/SejongGeulggot.ttf) format("truetype");
         font-weight: 300;

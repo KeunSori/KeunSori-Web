@@ -8,7 +8,7 @@ const MobileMenu = styled.div<MobileMenuProps>`
   flex-direction: column;
   position: absolute;
   width: 100%;
-  height: ${({ isOpened }) => (isOpened ? "175px" : "0px")};
+  height: ${({ isOpened }) => (isOpened ? "230px" : "0px")};
   transition: height 0.3s ease-in-out;
   z-index: 1;
   gap: 5px;

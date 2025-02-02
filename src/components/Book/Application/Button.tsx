@@ -37,7 +37,7 @@ const Button = styled.button<ButttonProps>`
   padding: 5px;
   cursor: pointer;
   width: ${({ isMobile }) => (isMobile ? "40px" : "70px")};
-  font-size: ${({ isMobile }) => (isMobile ? "11px" : "15px")};
+  font-size: ${({ isMobile }) => (isMobile ? "11px" : "14px")};
   min-width: ${({ isMobile }) => (isMobile ? "40px" : "70px")};
 
   &:hover {
