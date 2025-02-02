@@ -65,9 +65,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logoutUser = async () => {
-    await logout();
     removeToken();
     setUser({ isLoggedIn: false });
+    console.log("해치웠나?");
+    window.location.href = "/login";
+    await logout();
   };
 
   return (
