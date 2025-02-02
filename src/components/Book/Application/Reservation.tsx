@@ -5,8 +5,11 @@ import { endTimeAtom, printEndTimeAtom, startTimeAtom } from "../Time.ts";
 import { UserInfo } from "../../../data/user.ts";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../api/axiosInstance.ts";
-import { SlotButton } from "./Button.tsx";
+import { SlotButton } from "./styles/Button.tsx";
 import useIsMobile from "../../mobile/useIsMobile.tsx";
+import { useNavigate } from "react-router-dom";
+import { TimeSlots } from "./styles/Times.tsx";
+import { SlotContainer } from "./styles/Containers.tsx";
 
 const slots = Array.from({ length: 26 }, (_, index) => ({
   time: `${10 + Math.floor(index / 2)}:${index % 2 === 0 ? "00" : "30"}`,
@@ -29,6 +32,7 @@ const Reservation: React.FC<ReservationProps> = ({
   const [endTime, setEndTime] = useAtom(endTimeAtom);
   const [, setPrintEndTime] = useAtom(printEndTimeAtom);
   const [selectedSlots, setSelectedtSlots] = useState(slots);
+  const navigate = useNavigate();
   const TransDate = (userDate: string) => {
     return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
   };
@@ -63,6 +67,8 @@ const Reservation: React.FC<ReservationProps> = ({
       }
     } catch (error) {
       console.log(`에러남:${error}`);
+      alert("정보를 불러올 수 없습니다");
+      navigate("/login");
     }
   };
 
@@ -199,7 +205,7 @@ const Reservation: React.FC<ReservationProps> = ({
   }, [date, instrument, team]);
 
   return (
-    <Container>
+    <SlotContainer>
       <Time>
         <TimeContainer>
           <TimeSlots>
@@ -240,7 +246,7 @@ const Reservation: React.FC<ReservationProps> = ({
           </TimeSlots>
         </TimeContainer>
       </Time>
-    </Container>
+    </SlotContainer>
   );
 };
 
@@ -254,28 +260,4 @@ const TimeContainer = styled.div`
 const Time = styled.div`
   display: flex;
   align-items: center;
-`;
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px;
-  margin-bottom: 0px;
-`;
-
-const TimeSlots = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  padding: 0px 5px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  @media (max-width: 768px) {
-    width: 300px;
-  }
-  width: 100%;
-  -ms-overflow-style: none;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  justify-content: center;
 `;

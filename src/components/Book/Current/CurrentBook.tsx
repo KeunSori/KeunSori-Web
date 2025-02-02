@@ -80,6 +80,8 @@ const CurrentBook: React.FC = () => {
       }
     } catch (error) {
       console.log(`에러남:${error}`);
+      alert("정보를 불러올 수 없습니다");
+      navigate("/login");
     }
   }
   const TransDate = (userDate: string) => {

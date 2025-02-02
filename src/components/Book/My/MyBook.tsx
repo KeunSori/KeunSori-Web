@@ -6,11 +6,13 @@ import { useEffect, useState } from "react";
 import { UserInfo } from "../../../data/user.ts";
 import { InstrumentDropBox, TeamDropBox } from "../Application/DropBox.tsx";
 import OutContainer from "../OutContainer.tsx";
+import { useNavigate } from "react-router-dom";
 
 const MyBook: React.FC = () => {
   const [team, setTeam] = useState(false);
   const [individual, setIndividual] = useState(false);
   const [instrument, setInstrument] = useState<string>("");
+  const navigate = useNavigate();
 
   const onTeamClick = (value: string) => {
     if (value === "팀") {
@@ -44,8 +46,14 @@ const MyBook: React.FC = () => {
   const [userData, setUserData] = useState<UserInfo[] | null>(null);
 
   async function fetchData() {
-    const response = await axiosInstance.get("/reservation/my");
-    setUserData(response.data);
+    try {
+      const response = await axiosInstance.get("/reservation/my");
+      setUserData(response.data);
+    } catch (e) {
+      console.error(e);
+      alert("예약 정보를 불러오는데 실패했습니다.");
+      navigate("/login");
+    }
   }
   useEffect(() => {
     fetchData();

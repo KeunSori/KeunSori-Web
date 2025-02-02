@@ -1,5 +1,3 @@
-import { css } from "@emotion/css";
-import styled from "@emotion/styled";
 import { useState } from "react";
 import Calendar from "react-calendar";
 import Reservation from "./Reservation.tsx";
@@ -12,12 +10,20 @@ import {
   printEndTimeAtom,
 } from "../Time.ts";
 import { Value } from "react-calendar/src/shared/types.js";
-import { Button, ReservationButton } from "./Button.tsx";
+import { Button, ReservationButton } from "./styles/Button.tsx";
 import axiosInstance from "../../../api/axiosInstance.ts";
 import CalendarStyles from "./CalenderStyles.tsx";
 import { InstrumentInfo } from "../../../data/user.ts";
 import OutContainer from "../OutContainer.tsx";
 import useIsMobile from "../../mobile/useIsMobile.tsx";
+import { SelectedTime, Time, Times } from "./styles/Times.tsx";
+import {
+  ButtonContainer,
+  Container,
+  InContainer,
+  MidContainer,
+  TypeContainer,
+} from "./styles/Containers.tsx";
 
 const ApplicationBook: React.FC = () => {
   const defaultInstruments: InstrumentInfo = {
@@ -99,43 +105,16 @@ const ApplicationBook: React.FC = () => {
     return (
       date.getMonth() - 1 > today.getMonth() ||
       date.getMonth() < today.getMonth() ||
-      date.getFullYear() === today.getFullYear()
+      date.getFullYear() !== today.getFullYear()
     );
   };
 
   return (
     <>
       <OutContainer>
-        <div
-          className={css`
-            padding-left: 20px;
-            @media (max-width: 768px) {
-              padding-left: 0;
-              justify-content: center;
-            }
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-          `}
-        >
-          <div
-            className={css`
-              display: flex;
-              align-items: center;
-              gap: 8px;
-            `}
-          >
-            <div
-              className={css`
-                min-width: 70px;
-                @media (max-width: 768px) {
-                  min-width: 45px;
-                  font-size: 12px;
-                }
-              `}
-            >
-              유형
-            </div>
+        <MidContainer>
+          <ButtonContainer>
+            <TypeContainer>유형</TypeContainer>
             <Button
               isActive={team}
               isMobile={isMobile}
@@ -152,27 +131,11 @@ const ApplicationBook: React.FC = () => {
             >
               개인
             </Button>
-          </div>
+          </ButtonContainer>
           {(team || individual) && (
             <>
-              <div
-                className={css`
-                  display: flex;
-                  align-items: center;
-                  gap: 8px;
-                `}
-              >
-                <div
-                  className={css`
-                    min-width: 70px;
-                    @media (max-width: 768px) {
-                      min-width: 45px;
-                      font-size: 12px;
-                    }
-                  `}
-                >
-                  악기
-                </div>
+              <ButtonContainer>
+                <TypeContainer>악기</TypeContainer>
                 <Button
                   isActive={instruments["guitar"]}
                   disabled={team}
@@ -218,10 +181,10 @@ const ApplicationBook: React.FC = () => {
                 >
                   키보드
                 </Button>
-              </div>
+              </ButtonContainer>
             </>
           )}
-        </div>
+        </MidContainer>
         {instruments["guitar"] ||
         instruments["vocal"] ||
         instruments["bass"] ||
@@ -288,39 +251,3 @@ const ApplicationBook: React.FC = () => {
   );
 };
 export default ApplicationBook;
-const InContainer = styled.div<{ isMobile: boolean }>`
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: ${({ isMobile }) => (isMobile ? "20px" : "40px")};
-  flex-direction: column;
-`;
-
-const Times = styled.div<{ isMobile: boolean }>`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ isMobile }) => (isMobile ? "10px" : "20px")};
-`;
-const Time = styled.div`
-  white-space: nowrap;
-`;
-const Container = styled.div<{ isMobile: boolean }>`
-  display: flex;
-  justify-content: center;
-  flex-direction: ${({ isMobile }) => (isMobile ? "column" : "row")};
-  gap: ${({ isMobile }) => (isMobile ? "10px" : "60px")};
-`;
-const SelectedTime = styled.div<{ isMobile: boolean }>`
-  display: flex;
-  padding-top: 40px;
-  flex-direction: ${({ isMobile }) => (isMobile ? "row" : "column")};
-  width: 100%
-  
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  margin-right: 20px
-  font-size: 20px;
-  font-weight: 300;
-`;
