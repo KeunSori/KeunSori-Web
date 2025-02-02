@@ -8,12 +8,7 @@ export const registerUser = async (data: {
   passwordConfirm: string;
 }) => {
   try {
-    console.log("request content: ", data);
     const response = await axiosInstance.post("/signup", data);
-
-    //test code
-    console.log("이게 status 임: ", response.status);
-
     return response.data;
   } catch (error) {
     console.error("error: ", error);

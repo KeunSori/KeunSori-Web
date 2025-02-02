@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setToken } from "../utils/jwt";
+import { setToken, removeToken } from "../utils/jwt";
 
 const API_URL = "https://keunsori-api.everdu.com/";
 
@@ -44,19 +44,16 @@ axiosInstance.interceptors.response.use(
           { headers: { "Refresh-Token": refreshToken } }
         );
 
-        console.log("성공했다잉:", data);
-
         setToken(data);
 
-        console.log("이제 다시 요청할게");
-        console.log("악쎄스 토큰 여기: ", localStorage.getItem("accessToken"));
         const newAccessToken = localStorage.getItem("accessToken");
+
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         console.error("토큰 갱신 실패", refreshError);
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
+        removeToken();
         window.location.href = "/login";
         return Promise.reject(refreshError);
       }
