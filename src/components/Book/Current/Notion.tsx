@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
-import { UserInfo } from "../../data/user.ts";
+import { UserInfo } from "../../../data/user.ts";
 import { useEffect, useState } from "react";
 
 interface NotionProps {
@@ -23,13 +23,7 @@ const Notion: React.FC<NotionProps> = ({ user }) => {
       setInstrument("합주");
     }
   };
-  const printEndTime = (endTime: string) => {
-    if (endTime[3] === "3") {
-      return (parseInt(endTime[0] + endTime[1]) + 1).toString() + ":00";
-    } else {
-      return `${endTime[0] + endTime[1]}:30`;
-    }
-  };
+
   const [date, setDate] = useState<Date | null>(null);
   const TransDate = (userDate: string) => {
     return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
@@ -63,8 +57,7 @@ const Notion: React.FC<NotionProps> = ({ user }) => {
           <div>
             <Title>시간</Title>
             <Detail>
-              {user.reservationStartTime} -{" "}
-              {printEndTime(user.reservationEndTime)}
+              {user.reservationStartTime} - {user.reservationEndTime}
             </Detail>
           </div>
         </div>

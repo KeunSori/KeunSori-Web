@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { Value } from "react-calendar/src/shared/types.js";
-import Notion from "./Notion.tsx";
-import axiosInstance from "../../api/axiosInstance.ts";
-import { UserInfo } from "../../data/user.ts";
-import { InstrumentDropBox, TeamDropBox } from "./Application/DropBox.tsx";
-import OutContainer from "./OutContainer.tsx";
+import Notion from "../Current/Notion.tsx";
+import axiosInstance from "../../../api/axiosInstance.ts";
+import { UserInfo } from "../../../data/user.ts";
+import { InstrumentDropBox, TeamDropBox } from "../Application/DropBox.tsx";
+import OutContainer from "../OutContainer.tsx";
 
 const today = new Date();
 
@@ -52,7 +52,6 @@ const CurrentBook: React.FC = () => {
     } else {
       setInstrument("");
     }
-    console.log("props전달", value);
   };
   const formatDate = (date: Date | null): string | null => {
     if (!date) return null;
@@ -64,15 +63,9 @@ const CurrentBook: React.FC = () => {
   };
 
   async function fetchData() {
-    const token = localStorage.getItem("accessToken");
     try {
       const response = await axiosInstance.get(
-        `/reservation/list?month=${formatDate(date)}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `/reservation/list?month=${formatDate(date)}`
       );
       setUserData(response.data);
       if (date) {
@@ -80,7 +73,6 @@ const CurrentBook: React.FC = () => {
           const userDate = new Date(TransDate(user.reservationDate));
           return isSameDay(userDate, date);
         });
-        console.log(`Filtered data for ${date}:`, filteredData);
         setFilteredUserData(filteredData || null);
       }
     } catch (error) {
@@ -182,8 +174,8 @@ const CurrentBook: React.FC = () => {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                width: 370px;
                 padding-top: 5px;
+                padding-right: 10px;
                 height: 350px;
                 max-height: 100%;
                 overflow-x: hidden;

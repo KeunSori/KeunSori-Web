@@ -1,8 +1,8 @@
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
-import { UserInfo } from "../../data/user.ts";
+import { UserInfo } from "../../../data/user.ts";
 import { useEffect, useState } from "react";
-import axiosInstance from "../../api/axiosInstance.ts";
+import axiosInstance from "../../../api/axiosInstance.ts";
 
 interface MyNotionProps {
   user: UserInfo;
@@ -13,7 +13,6 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
     const now = new Date();
 
     const date = new Date(TransDate(user.reservationDate));
-    console.log(`변경후`, date);
     if (
       now.getFullYear() === date.getFullYear() &&
       now.getMonth() === date.getMonth() &&
@@ -45,22 +44,9 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
     }
   };
   const [date, setDate] = useState<Date | null>(null);
-  const printEndTime = (endTime: string) => {
-    if (endTime[3] === "3") {
-      console.log(`${endTime}->${parseInt(endTime[0] + endTime[1]) + 1}:00`);
-      return (parseInt(endTime[0] + endTime[1]) + 1).toString() + ":00";
-    } else {
-      return `${endTime[0] + endTime[1]}:30`;
-    }
-  };
+
   const handleDelete = async () => {
-    const token = localStorage.getItem("accessToken");
-    await axiosInstance.delete(`/reservation/${user.reservationId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log("예약 취소 완료");
+    await axiosInstance.delete(`/reservation/${user.reservationId}`);
     window.location.reload();
   };
   useEffect(() => {
@@ -96,8 +82,7 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
           <div>
             <Title>시간</Title>
             <Detail>
-              {user.reservationStartTime} -{" "}
-              {printEndTime(user.reservationEndTime)}
+              {user.reservationStartTime} - {user.reservationEndTime}
             </Detail>
           </div>
         </div>

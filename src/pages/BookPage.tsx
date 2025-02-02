@@ -1,9 +1,9 @@
 import { css } from "@emotion/css";
 import NavBar2 from "../components/navBar/navBar2.tsx";
 import styled from "@emotion/styled";
-import CurrentBook from "../components/Book/CurrentBook.tsx";
+import CurrentBook from "../components/Book/Current/CurrentBook.tsx";
 import ApplicationBook from "../components/Book/Application/ApplicationBook.tsx";
-import MyBook from "../components/Book/MyBook.tsx";
+import MyBook from "../components/Book/My/MyBook.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axiosInstance from "../api/axiosInstance.ts";
@@ -68,7 +68,6 @@ const BookPage = () => {
   }
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     navigate(`/book?type=${e.currentTarget.dataset.action}`);
-    console.log(component);
   };
   useEffect(() => {
     if (!component) {

@@ -65,12 +65,8 @@ const Reservation: React.FC<ReservationProps> = ({
       console.log(`에러남:${error}`);
     }
   };
+
   const unAvailableSlots = (data: UserInfo[]) => {
-    console.log(
-      "data: ",
-      today.getDate() === date?.getDate() &&
-        today.getMonth() === date?.getMonth()
-    );
     if (
       today.getDate() === date?.getDate() &&
       today.getMonth() === date?.getMonth() &&
@@ -79,7 +75,6 @@ const Reservation: React.FC<ReservationProps> = ({
       const nowTime = `${today.getHours()}:${
         today.getMinutes() > 30 ? "30" : "00"
       }`;
-      console.log("nowTime: ", nowTime);
       const start = slots.findIndex((slot) => slot.time === nowTime);
       if (start === -1) {
         setSelectedtSlots((prev) =>
@@ -98,6 +93,7 @@ const Reservation: React.FC<ReservationProps> = ({
         })
       );
     }
+
     data.forEach((user) => {
       console.log("session: ", user.reservationSession);
 
@@ -105,9 +101,12 @@ const Reservation: React.FC<ReservationProps> = ({
         const start = slots.findIndex(
           (slot) => slot.time === user.reservationStartTime
         );
-        const end = slots.findIndex(
+
+        const printend = slots.findIndex(
           (slot) => slot.time === user.reservationEndTime
         );
+        const end = user.reservationEndTime === "23:00" ? 25 : printend - 1;
+
         setSelectedtSlots((prev) =>
           prev.map((slot, index) => {
             if (index >= start && index <= end) {
@@ -123,9 +122,10 @@ const Reservation: React.FC<ReservationProps> = ({
         const start = slots.findIndex(
           (slot) => slot.time === user.reservationStartTime
         );
-        const end = slots.findIndex(
+        const printend = slots.findIndex(
           (slot) => slot.time === user.reservationEndTime
         );
+        const end = user.reservationEndTime === "23:00" ? 25 : printend - 1;
         setSelectedtSlots((prev) =>
           prev.map((slot, index) => {
             if (index >= start && index <= end) {
@@ -150,7 +150,11 @@ const Reservation: React.FC<ReservationProps> = ({
           .every((slot) => slot.available);
         if (allSlotsAvailable) {
           setEndTime({ time, index });
-          setPrintEndTime(slots[index + 1].time);
+          if (time[0] === "2" && time[1] === "2" && time[3] === "3") {
+            setPrintEndTime("23:00");
+          } else {
+            setPrintEndTime(slots[index + 1].time);
+          }
         } else {
           setStartTime({ time, index });
           setEndTime(null);
@@ -168,7 +172,11 @@ const Reservation: React.FC<ReservationProps> = ({
             .every((slot) => slot.available);
           if (allSlotsAvailable) {
             setEndTime({ time, index });
-            setPrintEndTime(slots[index + 1].time);
+            if (time[0] === "2" && time[1] === "2" && time[3] === "3") {
+              setPrintEndTime("23:00");
+            } else {
+              setPrintEndTime(slots[index + 1].time);
+            }
           } else {
             setStartTime({ time, index });
             setEndTime(null);

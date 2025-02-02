@@ -37,7 +37,7 @@ const ApplicationBook: React.FC = () => {
   const [endTime] = useAtom(endTimeAtom);
   const [date, setDate] = useAtom(dateAtom);
   const today = new Date();
-  const [prinEndTime] = useAtom(printEndTimeAtom);
+  const [printEndTime] = useAtom(printEndTimeAtom);
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const action = e.currentTarget.dataset.action;
@@ -74,7 +74,7 @@ const ApplicationBook: React.FC = () => {
     if (!date || !startTime || !endTime) return;
     const inst = Object.keys(instruments).find(([value]) => value);
     setInstrument(inst?.toString() || "");
-    console.log(instrument);
+    console.log(printEndTime);
     await axiosInstance.post("/reservation", {
       reservationType: team ? "TEAM" : "PERSONAL",
       reservationSession: team ? "ALL" : instrument,
@@ -82,7 +82,7 @@ const ApplicationBook: React.FC = () => {
         .toString()
         .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`,
       reservationStartTime: startTime.time,
-      reservationEndTime: endTime.time,
+      reservationEndTime: printEndTime,
     });
     console.log("예약 완료");
     alert("예약이 완료되었습니다!");
@@ -255,7 +255,7 @@ const ApplicationBook: React.FC = () => {
                   <Time>
                     마감 시간:
                     {endTime?.time
-                      ? ` ${prinEndTime} 
+                      ? ` ${printEndTime} 
                     `
                       : " 00:00"}
                   </Time>

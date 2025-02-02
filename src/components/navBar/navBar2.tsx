@@ -98,7 +98,7 @@ const Button = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 16px;
   margin-right: 10px;
 `;
 const LogOutButton = styled.button`
@@ -110,8 +110,7 @@ const LogOutButton = styled.button`
   }
 
   border-radius: 25px;
-  padding: 5px 15px;
+  padding: 10px 15px;
   cursor: pointer;
-  font-size: 13px;
   margin-right: 30px;
 `;

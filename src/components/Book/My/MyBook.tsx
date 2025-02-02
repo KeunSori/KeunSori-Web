@@ -1,12 +1,11 @@
 import { css } from "@emotion/css";
 import "react-calendar/dist/Calendar.css";
-
-import MyNotion from "./MyNotion";
-import axiosInstance from "../../api/axiosInstance";
+import MyNotion from "./MyNotion.tsx";
+import axiosInstance from "../../../api/axiosInstance.ts";
 import { useEffect, useState } from "react";
-import { UserInfo } from "../../data/user.ts";
-import { InstrumentDropBox, TeamDropBox } from "./Application/DropBox.tsx";
-import OutContainer from "./OutContainer.tsx";
+import { UserInfo } from "../../../data/user.ts";
+import { InstrumentDropBox, TeamDropBox } from "../Application/DropBox.tsx";
+import OutContainer from "../OutContainer.tsx";
 
 const MyBook: React.FC = () => {
   const [team, setTeam] = useState(false);
@@ -41,19 +40,12 @@ const MyBook: React.FC = () => {
     } else {
       setInstrument("");
     }
-    console.log("props전달", value);
   };
   const [userData, setUserData] = useState<UserInfo[] | null>(null);
 
   async function fetchData() {
-    const token = localStorage.getItem("accessToken");
-    const response = await axiosInstance.get("/reservation/my", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axiosInstance.get("/reservation/my");
     setUserData(response.data);
-    console.log(response.data);
   }
   useEffect(() => {
     fetchData();
