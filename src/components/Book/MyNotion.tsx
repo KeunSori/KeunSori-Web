@@ -156,7 +156,8 @@ const Notion = styled.div`
   max-width: 100%;
   height: 100%;
   border-radius: 10px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgb(218, 218, 218);
+  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
   padding: 20px;
   font-size: 15px;
   font-weight: 700;

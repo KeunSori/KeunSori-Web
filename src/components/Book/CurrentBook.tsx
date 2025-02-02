@@ -152,7 +152,7 @@ const CurrentBook: React.FC = () => {
                 display: none;
               }
               width: 2px;
-              height: 200px;
+              height: 300px;
               max-height: 100%;
               background-color: #f1f1f1;
             `}
@@ -164,7 +164,7 @@ const CurrentBook: React.FC = () => {
               flex-direction: column;
               align-items: center;
               width: 370px;
-              padding: 5px;
+              padding-top: 5px;
               height: 350px;
               max-height: 100%;
               overflow-x: hidden;

@@ -107,6 +107,10 @@ const LogOutButton = styled.button`
   font-family: SejongGeulggot;
   background-color: transparent;
   border: 1.5px solid #fec511;
+  &:hover {
+    background-color: rgba(254, 199, 17, 0.3);
+  }
+
   border-radius: 25px;
   padding: 5px 15px;
   cursor: pointer;

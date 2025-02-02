@@ -9,9 +9,8 @@ const CalendarStyles = styled.div<{ isMobile?: boolean }>`
     max-width: 100%;
     background: white;
     padding: 20px;
-    border: none !important;
+    border: solid 1px black !important;
     border-radius: 20px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
     font-family: "Nanum Gothic", "sans-serif" !important;
     font-size: 10px;
     line-height: 1.3 !important;

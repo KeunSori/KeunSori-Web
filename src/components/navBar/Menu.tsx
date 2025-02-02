@@ -23,11 +23,12 @@ const MobileMenu = styled.div<MobileMenuProps>`
     `}
 `;
 const Menu = styled.div<MenuProps>`
+  margin-top: 5px;
   position: fixed;
+  gap: 300px;
   @media (max-width: 768px) {
     gap: 0px;
   }
-  gap: 200px;
   z-index: 3;
   width: calc(100%);
   height: 55px;

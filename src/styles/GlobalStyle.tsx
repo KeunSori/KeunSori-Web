@@ -1,5 +1,4 @@
 import { Global, css } from "@emotion/react";
-import fonts from "../assets/font/font.ts";
 const GlobalStyle = () => (
   <Global
     styles={css`
@@ -45,10 +44,9 @@ const GlobalStyle = () => (
         font-weight: 300;
         font-style: normal;
       }
-      ${fonts}
       * {
         box-sizing: border-box;
-        font-family: "S-CoreDream", "Spoqa Han Sans JP", sans-serif;
+        font-family: "S-CoreDream", sans-serif;
         font-size: 15px;
         font-weight: 300;
       }
@@ -85,9 +83,9 @@ const GlobalStyle = () => (
         max-width: 100%;
         background: white;
         padding: 20px;
-        border: none !important;
+        border: 1px solid rgb(231, 231, 231) !important;
+        box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
         border-radius: 20px;
-        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
         font-family: "Nanum Gothic", "sans-serif" !important;
         font-size: 10px;
         line-height: 1.3 !important;
