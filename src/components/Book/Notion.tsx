@@ -48,7 +48,6 @@ const Notion: React.FC<NotionProps> = ({ user }) => {
           className={css`
             display: flex;
             justify-content: space-between;
-            padding-right: 60px;
             padding-bottom: 15px;
             border-bottom: 1px solid #f1f1f1;
           `}
@@ -91,15 +90,16 @@ const Detail = styled.div`
 
 const NotionItem = styled.div`
   @media (max-width: 768px) {
-    width: 300px;
+    width: 280px;
   }
-
-  width: 340px;
+  padding: 20px 30px;
+  width: 320px;
   max-width: 100%;
-  height: 150px;
+  height:100%
+  min-height: 150px;
   border-radius: 10px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-  padding: 15px 20px;
+  padding: 15px px;
   font-size: 15px;
   font-weight: 700;
   margin-bottom: 20px;

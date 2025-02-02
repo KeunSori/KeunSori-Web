@@ -1,5 +1,5 @@
 import { css } from "@emotion/css";
-import logo from "/logo.svg";
+import logo from "/image/logo.svg";
 import { Link } from "react-router-dom";
 import SignUpForm from "../components/SignUp/SignUpForm.tsx";
 

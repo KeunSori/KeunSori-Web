@@ -1,8 +1,8 @@
 import { css } from "@emotion/css";
-import logo from "/logo.svg";
+import logo from "/image/logo.svg";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
-import singmonkey from "/singmonkey.svg";
+import singmonkey from "/image/singmonkey.svg";
 
 const Nav = styled.a`
   font-size: 22px;

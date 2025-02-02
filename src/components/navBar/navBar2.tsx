@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/css";
 import React, { useEffect, useState } from "react";
-import logo from "/logo.svg";
+import logo from "/image/logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import useIsMobile from "../mobile/useIsMobile";
 import { IoClose, IoMenu } from "react-icons/io5";
