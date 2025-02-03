@@ -8,7 +8,7 @@ const TimePicker: React.FC = () => {
 
   const generateTimeOptions = (): string[] => {
     const times: string[] = [];
-    for (let hour = 10; hour < 24; hour++) {
+    for (let hour = 10; hour < 23; hour++) {
       for (let minute = 0; minute < 60; minute += 30) {
         const time = `${String(hour).padStart(2, "0")}:${String(
           minute
@@ -56,35 +56,33 @@ const TimePicker: React.FC = () => {
         {selectedTime}
       </SelectedButton>
 
-      {isOpened && (
-        <Dropbox ref={dropdownRef}>
-          {generateTimeOptions().map((time) => (
-            <Button key={time} value={time} onClick={(e) => handleClick(e)}>
-              {time}
-            </Button>
-          ))}
-        </Dropbox>
-      )}
+      <Dropbox ref={dropdownRef} isOpened={isOpened}>
+        {generateTimeOptions().map((time) => (
+          <Button key={time} value={time} onClick={(e) => handleClick(e)}>
+            {time}
+          </Button>
+        ))}
+      </Dropbox>
     </div>
   );
 };
-const Dropbox = styled.div`
+
+const Dropbox = styled.div<{ isOpened: boolean }>`
   display: flex;
   flex-direction: column;
   position: absolute;
   width: 100px;
-  height: 200px;
+  max-height: ${(props) => (props.isOpened ? "200px" : "0px")};
+  transition: max-height 0.3s ease-in-out;
   overflow-y: scroll;
   overflow-x: hidden;
   ::-webkit-scrollbar {
     display: none;
   }
   z-index: 1;
-  gap: 5px;
   top: 30px;
-  padding: 5px;
   background-color: #fff;
-  border: 1px solid #ddd;
+  border: ${(props) => (props.isOpened ? "1px solid #ddd" : "none")};
 `;
 const SelectedButton = styled.button`
   width: 100px;
@@ -97,8 +95,8 @@ const Button = styled.button`
   width: 100px;
   height: 30px;
   text-align: left;
-  margin-left: 5px;
-  margin-bottom: 5px;
+  margin: 10px;
+
   background-color: #fff;
   &:hover {
     color: #ffaa00;

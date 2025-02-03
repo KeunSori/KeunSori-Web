@@ -1,77 +1,59 @@
 import { css } from "@emotion/css";
 import NavBar3 from "../components/navBar/navBar3.tsx";
-import styled from "@emotion/styled";
-import { useState } from "react";
+import { useEffect } from "react";
 import BasicManage from "../components/BookMange/BasicManage.tsx";
 import DateManage from "../components/BookMange/DateManage.tsx";
+import Nav from "../components/Nav.tsx";
+import {
+  ContainerStyle,
+  InnerContainerStyle,
+} from "../components/Container.tsx";
+import { useLocation, useNavigate } from "react-router-dom";
 
-interface NavProps {
-  isActive: boolean;
-}
-const Nav = styled.button<NavProps>`
-  font-size: 15px;
-  background-color: ${({ isActive }) => (isActive ? "#FFF4D5" : "transparent")};
-  font-weight: 300;
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 10px;
-  &:hover,
-  &:active {
-    background-color: #fff4d5;
-  }
-`;
-const containerStyle = css`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 80px;
-`;
-
-const innerContainerStyle = css`
-  display: flex;
-  gap: 20px;
-  width: 100%;
-  border-bottom: 2px solid #f1f1f1;
-  margin-bottom: 20px;
-`;
 const BookManagePage = () => {
-  const [basic, setBasic] = useState(true);
-  const [date, setDate] = useState(false);
-
-  function onClick(e: React.MouseEvent<HTMLButtonElement>) {
-    if (e.currentTarget.dataset.action === "basic") {
-      setBasic(true);
-      setDate(false);
-    } else {
-      setBasic(false);
-      setDate(true);
+  const locaiton = useLocation();
+  const query = new URLSearchParams(locaiton.search);
+  const component = query.get("type");
+  const navigate = useNavigate();
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    navigate(`/bookmanagement?type=${e.currentTarget.dataset.action}`);
+  };
+  useEffect(() => {
+    if (!component) {
+      navigate("/bookmanagement?type=current");
     }
-  }
+  }, []);
 
   return (
     <>
       <NavBar3 />
-      <div className={containerStyle}>
+      <ContainerStyle>
         <div
           className={css`
             width: 60%;
           `}
         >
-          <div className={innerContainerStyle}>
-            <Nav onClick={onClick} data-action="basic" isActive={basic}>
+          <InnerContainerStyle>
+            <Nav
+              onClick={onClick}
+              data-action="basic"
+              isActive={component === "basic"}
+            >
               기본 예약 관리
             </Nav>
 
-            <Nav onClick={onClick} data-action="date" isActive={date}>
+            <Nav
+              onClick={onClick}
+              data-action="date"
+              isActive={component === "date"}
+            >
               일자별 예약 관리
             </Nav>
-          </div>
-          {basic && <BasicManage />}
-          {date && <DateManage />}
+          </InnerContainerStyle>
+          {component === "basic" && <BasicManage />}
+          {component === "date" && <DateManage />}
         </div>
-      </div>
+      </ContainerStyle>
     </>
   );
 };
