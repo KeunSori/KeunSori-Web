@@ -25,7 +25,7 @@ const BasicManage: React.FC = () => {
               gap: 10px;
             `}
           >
-            <Input type="checkbox" />
+            <Input type="checkbox" checked={true} />
             <span>{day}</span>
             <TimePicker />
             부터
@@ -45,6 +45,7 @@ const Input = styled.input`
 const SumbmitButton = styled.button`
   width: 100px;
   padding: 5px;
+  margin-top: 10px;
   border-radius: 5px;
   cursor: pointer;
   background-color: #ffefbe;

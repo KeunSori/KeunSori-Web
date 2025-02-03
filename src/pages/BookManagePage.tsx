@@ -20,7 +20,7 @@ const BookManagePage = () => {
   };
   useEffect(() => {
     if (!component) {
-      navigate("/bookmanagement?type=current");
+      navigate("/bookmanagement?type=basic");
     }
   }, []);
 

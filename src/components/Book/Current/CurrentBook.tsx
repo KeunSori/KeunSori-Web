@@ -10,6 +10,7 @@ import { InstrumentDropBox, TeamDropBox } from "../Application/DropBox.tsx";
 import OutContainer from "../OutContainer.tsx";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
+import NotionContainer from "./NotionContainer.tsx";
 
 const today = new Date();
 
@@ -175,32 +176,7 @@ const CurrentBook: React.FC = () => {
             >
               예약 목록
             </p>
-            <div
-              className={css`
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                padding-top: 5px;
-                padding-right: 10px;
-                height: 350px;
-                max-height: 100%;
-                overflow-x: hidden;
-                overflow-y: auto;
-                wrap: no-wrap;
-
-                ::-webkit-scrollbar {
-                  width: 8px;
-                }
-
-                ::-webkit-scrollbar-thumb {
-                  background-color: #bbb;
-                  border-radius: 10px;
-                }
-                ::-webkit-scrollbar-thumb:hover {
-                  background-color: #888;
-                }
-              `}
-            >
+            <NotionContainer>
               {filteredUserData?.map((user) =>
                 team ? (
                   user.reservationType === "TEAM" && (
@@ -223,7 +199,7 @@ const CurrentBook: React.FC = () => {
               <Application onClick={() => navigate("/book?type=application")}>
                 + 예약 신청 하기
               </Application>
-            </div>
+            </NotionContainer>
           </div>
         </div>
       </OutContainer>

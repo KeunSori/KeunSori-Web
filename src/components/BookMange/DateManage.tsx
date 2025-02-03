@@ -1,32 +1,185 @@
+import { css } from "@emotion/css";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
-import CalendarStyles from "../Book/Application/CalenderStyles";
-import Container from "./Container";
-import MyNotion from "../Book/My/MyNotion";
-import { UserInfo } from "../../data/user";
-const user: UserInfo = {
-  reservationId: 1,
-  reservationMemberName: "홍길동",
-  reservationSession: "vocal",
-  reservationDate: "2021-09-01",
-  reservationEndTime: "11:00",
-  reservationStartTime: "10:00",
-  reservationType: "TEAM",
-  reservationMemberId: 0,
-};
+import "react-calendar/dist/Calendar.css";
+import { Value } from "react-calendar/src/shared/types.js";
+import MyNotion from "../Book/My/MyNotion.tsx";
+import axiosInstance from "../../api/axiosInstance.ts";
+import { UserInfo } from "../../data/user.ts";
+import OutContainer from "../Book/OutContainer.tsx";
+import { useNavigate } from "react-router-dom";
+import NotionContainer from "../Book/Current/NotionContainer.tsx";
+import TimePicker from "./TImePicker";
+import styled from "@emotion/styled";
+
+const today = new Date();
+
 const DateManage: React.FC = () => {
+  const [date, setDate] = useState<Date | null>(today);
+  const [UserData, setUserData] = useState<UserInfo[] | null>(null);
+  const [filteredUserData, setFilteredUserData] = useState<UserInfo[] | null>(
+    UserData
+  );
+  const navigate = useNavigate();
+  const isSameDay = (d1: Date, d2: Date) => {
+    return d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
+  };
+
+  const formatDate = (date: Date | null): string | null => {
+    if (!date) return null;
+
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+
+    return `${year}${month}`;
+  };
+
+  async function fetchData() {
+    try {
+      const response = await axiosInstance.get(
+        `/reservation/list?month=${formatDate(date)}`
+      );
+      setUserData(response.data);
+      if (date) {
+        const filteredData = response.data?.filter((user: UserInfo) => {
+          const userDate = new Date(TransDate(user.reservationDate));
+          return isSameDay(userDate, date);
+        });
+        setFilteredUserData(filteredData || null);
+      }
+    } catch (error) {
+      console.log(`에러남:${error}`);
+      alert("정보를 불러올 수 없습니다");
+      navigate("/login");
+    }
+  }
+  const TransDate = (userDate: string) => {
+    return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
+  };
+
+  const UnvailableMonth = (date: Date) => {
+    return (
+      date.getMonth() - 1 > today.getMonth() ||
+      date.getMonth() < today.getMonth() ||
+      date.getFullYear() !== today.getFullYear()
+    );
+  };
+
+  const handleDateChange = (value: Value) => {
+    if (Array.isArray(value)) {
+      setDate(value[0]);
+    } else {
+      setDate(value);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, [date]);
   return (
-    <Container isDate={true}>
-      <CalendarStyles>
-        <Calendar
-          calendarType="gregory"
-          view="month"
-          prev2Label={null}
-          next2Label={null}
-          formatDay={(_locale, date) => date.getDate().toString()}
-        />
-      </CalendarStyles>
-      <MyNotion key={user.reservationId} user={user} />
-    </Container>
+    <>
+      <OutContainer>
+        <div
+          className={css`
+            margin: 20px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            @media (max-width: 768px) {
+              flex-direction: column;
+            }
+          `}
+        >
+          <Calendar
+            calendarType="gregory"
+            view="month"
+            value={date}
+            onChange={handleDateChange}
+            prev2Label={null}
+            next2Label={null}
+            formatDay={(_locale, date) => date.getDate().toString()}
+            tileDisabled={({ date }) => UnvailableMonth(date)}
+          />
+          <div
+            className={css`
+              @media (max-width: 768px) {
+                display: none;
+              }
+              width: 2px;
+              height: 300px;
+              max-height: 100%;
+              background-color: #f1f1f1;
+            `}
+          ></div>
+          <div
+            className={css`
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            `}
+          >
+            <div
+              className={css`
+                @media (max-width: 768px) {
+                  display: block;
+                  width: 60%;
+                  text-align: center;
+                  padding-bottom: 10px;
+                  border-bottom: 1px solid rgb(187, 187, 187);
+                }
+                display: flex;
+                align-items: center;
+                gap: 10px;
+              `}
+            >
+              {date ? (
+                <>
+                  <Input type="checkbox" checked={true} />
+                  {date.getMonth() + 1}월 {date.getDate()}일
+                  <TimePicker />
+                  부터
+                  <TimePicker />
+                  까지
+                </>
+              ) : (
+                "날짜 정보 없음"
+              )}
+            </div>
+            <NotionContainer>
+              {filteredUserData?.map((user) => (
+                <div
+                  key={user.reservationId}
+                  className={css`
+                    height: 210px;
+                    margin: 10px;
+                  `}
+                >
+                  <MyNotion key={user.reservationId} user={user} />
+                </div>
+              ))}
+            </NotionContainer>
+          </div>
+        </div>
+        <StoreButton>저장하기</StoreButton>
+      </OutContainer>
+    </>
   );
 };
 export default DateManage;
+const StoreButton = styled.button`
+  position: absolute;
+  left: 70%;
+  background-color: #68ae82;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  &:hover {
+    background-color: #5c9f78;
+  }
+`;
+const Input = styled.input`
+  width: 13px;
+`;
