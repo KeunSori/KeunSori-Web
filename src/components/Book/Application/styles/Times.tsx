@@ -25,13 +25,12 @@ const TimeSlots = styled.div`
   display: flex;
   flex-wrap: nowrap;
   padding: 0px 5px;
-  overflow-x: auto;
-  scrollbar-width: none;
+  overflow-x: scroll;
+  scrollbar-width: 10px;
   @media (max-width: 768px) {
     width: 300px;
+    justify-content: flex-start;
   }
-  width: 100%;
-  -ms-overflow-style: none;
   ::-webkit-scrollbar {
     display: none;
   }

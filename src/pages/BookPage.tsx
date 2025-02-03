@@ -18,7 +18,7 @@ const Nav = styled.button<NavProps>`
   font-size: 15px;
   @media (max-width: 768px) {
     min-width: 40px;
-    font-size: 12px;
+    font-size: 13px;
   }
   background-color: ${({ isActive }) => (isActive ? "#FFF4D5" : "transparent")};
   white-space: nowrap;

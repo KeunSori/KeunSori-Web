@@ -15,7 +15,7 @@ const SlotButton = styled.div<SlotButtonProps>`
   display: block;
   width: 30px;
   @media (max-width: 768px) {
-    width: 30px;
+    min-width: 30px;
     height: 40px;
   }
   height: 50px;
@@ -34,10 +34,10 @@ const Button = styled.button<ButttonProps>`
   border: ${({ isActive }) =>
     isActive ? "1.5px solid #ffe493;" : "1px solid #7f8fa4"};
   border-radius: 5px;
-  padding: 5px;
+  padding: 5px 3px;
   cursor: pointer;
   width: ${({ isMobile }) => (isMobile ? "40px" : "70px")};
-  font-size: ${({ isMobile }) => (isMobile ? "11px" : "14px")};
+  font-size: ${({ isMobile }) => (isMobile ? "10px" : "14px")};
   min-width: ${({ isMobile }) => (isMobile ? "40px" : "70px")};
 
   &:hover {

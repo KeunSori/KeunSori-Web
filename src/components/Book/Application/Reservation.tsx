@@ -254,7 +254,6 @@ export default Reservation;
 
 const TimeContainer = styled.div`
   display: flex;
-  flex-wrap: nowrap;
   padding: 0px 5px;
 `;
 const Time = styled.div`
