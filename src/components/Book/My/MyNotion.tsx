@@ -10,6 +10,7 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
   const [instrument, setInstrument] = useState<string>("");
 
   const TransDate = (userDate: string) => {
+    console.log(user);
     return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
   };
 

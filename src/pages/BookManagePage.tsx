@@ -1,8 +1,8 @@
 import { css } from "@emotion/css";
 import NavBar3 from "../components/navBar/navBar3.tsx";
 import { useEffect } from "react";
-import BasicManage from "../components/BookMange/BasicManage/BasicManage.tsx";
-import DateManage from "../components/BookMange/DateMange/DateManage.tsx";
+import BasicManage from "../components/BookMange/BasicManage.tsx";
+import DateManage from "../components/BookMange/DateManage.tsx";
 import Nav from "../components/Nav.tsx";
 import {
   ContainerStyle,
@@ -20,7 +20,7 @@ const BookManagePage = () => {
   };
   useEffect(() => {
     if (!component) {
-      navigate("/bookmanagement?type=basic");
+      navigate("/bookmanagement?type=current");
     }
   }, []);
 
