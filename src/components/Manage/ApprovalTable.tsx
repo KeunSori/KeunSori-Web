@@ -1,7 +1,23 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
-//import axios from "axios";
+import axiosInstance from "../../api/axiosInstance";
 ///import { fetchRows } from "./api"; // API 요청 분리된 파일
+
+interface testInterface {
+  id: number;
+  name: string;
+  studentId: string;
+  status: string;
+  approvalDate: string;
+}
+
+// api test
+const testFetch = async () => {
+    const response = await axiosInstance.get<testInterface>("/admin/members/list");
+    return response.data;
+}
+
+
 
 // 테스트용 Date 객체
 const date_1 = new Date("2002-01-04");
@@ -91,6 +107,8 @@ const ApprovalTable: React.FC = () => {
     };
 
     loadData();
+    const data = testFetch();
+    console.log("데이터 왔다잉: ", data);
   }, []);
 
   // 체크박스 상태 변경
