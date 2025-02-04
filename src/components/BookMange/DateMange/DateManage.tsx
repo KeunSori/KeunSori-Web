@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { Value } from "react-calendar/src/shared/types.js";
-import MyNotion from "../Book/My/MyNotion.tsx";
-import axiosInstance from "../../api/axiosInstance.ts";
-import { UserInfo } from "../../data/user.ts";
-import OutContainer from "../Book/OutContainer.tsx";
-import { useNavigate } from "react-router-dom";
-import NotionContainer from "../Book/Current/NotionContainer.tsx";
-import TimePicker from "./TImePicker";
+import axiosInstance from "../../../api/axiosInstance.ts";
+import { UserInfo } from "../../../data/user.ts";
+import OutContainer from "../../Book/OutContainer.tsx";
+// import { useNavigate } from "react-router-dom";
+import NotionContainer from "../../Book/Current/NotionContainer.tsx";
+import TimePicker from "../TImePicker.tsx";
 import styled from "@emotion/styled";
+import ManageNotion from "./ManageNotion.tsx";
 
 const today = new Date();
 
@@ -20,7 +20,7 @@ const DateManage: React.FC = () => {
   const [filteredUserData, setFilteredUserData] = useState<UserInfo[] | null>(
     UserData
   );
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const isSameDay = (d1: Date, d2: Date) => {
     return d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
   };
@@ -50,7 +50,6 @@ const DateManage: React.FC = () => {
     } catch (error) {
       console.log(`에러남:${error}`);
       alert("정보를 불러올 수 없습니다");
-      navigate("/login");
     }
   }
   const TransDate = (userDate: string) => {
@@ -154,7 +153,7 @@ const DateManage: React.FC = () => {
                     margin: 10px;
                   `}
                 >
-                  <MyNotion key={user.reservationId} user={user} />
+                  <ManageNotion key={user.reservationId} user={user} />
                 </div>
               ))}
             </NotionContainer>

@@ -1,7 +1,7 @@
 import { UserInfo } from "../../../data/user.ts";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../api/axiosInstance.ts";
-import NotionCard from "./NotionCard.tsx";
+import NotionCard from "../../Book/My/NotionCard.tsx";
 
 interface MyNotionProps {
   user: UserInfo;
