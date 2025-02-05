@@ -141,9 +141,9 @@ const Dropbox = styled.div<DropboxProps>`
   flex-direction: column;
   position: absolute;
   width: 100px;
+  padding-bottom: 10px;
   max-height: ${({ isOpened }) => (isOpened ? "200px" : "0px")};
-  padding: ${({ isOpened }) => (isOpened ? "10px" : "0px")};
-  transition: max-height, padding 0.3s ease-in-out;
+  transition: max-height 0.3s ease-in-out;
   border-radius: 10px;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -153,7 +153,6 @@ const Dropbox = styled.div<DropboxProps>`
   z-index: 1;
   gap: 5px;
   top: 30px;
-
   background-color: #fff;
 
   ${({ isOpened }) =>
@@ -181,6 +180,8 @@ const Button = styled.button`
   padding: 8px;
   background-color: #fff;
   color: black;
+  margin: 5px;
+  margin-bottom: 0px;
   &:hover {
     color: #ffaa00;
     font-weight: 500;

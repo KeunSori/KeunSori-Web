@@ -3,7 +3,7 @@ import TimePicker from "../TImePicker";
 import styled from "@emotion/styled";
 interface DayNotionProps {
   date: {
-    dayOfWeek: number;
+    dayOfWeekNum: number;
     startTime: string;
     endTime: string;
     isActive: boolean;
@@ -32,7 +32,7 @@ const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
         onChange={() => handleCheck(isActive)}
       />
       <DayContainer isActive={isActive}>
-        <span>{days[date.dayOfWeek]}</span>
+        <span>{days[date.dayOfWeekNum]}</span>
         <TimePicker disabled={isActive} startTime={date.startTime} />
         부터
         <TimePicker disabled={isActive} endTime={date.endTime} />
