@@ -12,6 +12,9 @@ const LoginPage = () => {
           justify-content: center;
           align-items: center;
           flex-direction: column;
+          height: 100vh;
+          min-height: 100vh;
+          margin-top: -10vh;
         `}
       >
         <Link to="/login">
@@ -20,6 +23,11 @@ const LoginPage = () => {
               margin-top: 60px;
               margin-bottom: 10px;
               width: 210px;
+              max-width: 90%;
+              @media (max-width: 768px) {
+                width: 150px;
+                margin-top: 40px;
+              }
             `}
             src={logo}
             alt="logo"

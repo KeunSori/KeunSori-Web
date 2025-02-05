@@ -46,7 +46,12 @@ const SignUpForm: React.FC = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form
+        className={css`
+          width: 100%;
+        `}
+        onSubmit={handleSubmit}
+      >
         <div
           className={css`
             display: flex;
@@ -56,27 +61,59 @@ const SignUpForm: React.FC = () => {
             gap: 1px;
           `}
         >
-          <Input
-            name="name"
-            placeholder="이름"
-            type="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          ></Input>
-          <Input
-            name="studentId"
-            placeholder="학번"
-            type="string"
-            value={formData.studentId}
-            onChange={handleChange}
-            required
-          ></Input>
           <div
             className={css`
               display: flex;
               align-items: center;
               width: 410px;
+              @media (max-width: 768px) {
+                max-width: 90%;
+              }
+            `}
+          >
+            <Input
+              className={css`
+                width: 100%;
+              `}
+              name="name"
+              placeholder="이름"
+              type="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            ></Input>
+          </div>
+          <div
+            className={css`
+              display: flex;
+              align-items: center;
+              width: 410px;
+              @media (max-width: 768px) {
+                max-width: 90%;
+              }
+            `}
+          >
+            <Input
+              className={css`
+                width: 100%;
+              `}
+              name="studentId"
+              placeholder="학번"
+              type="string"
+              value={formData.studentId}
+              onChange={handleChange}
+              required
+            ></Input>
+          </div>
+
+          <div
+            className={css`
+              display: flex;
+              align-items: center;
+              width: 410px;
+              @media (max-width: 768px) {
+                max-width: 90%;
+              }
             `}
           >
             <Input
@@ -103,28 +140,76 @@ const SignUpForm: React.FC = () => {
             </span>
           </div>
 
-          <Input
-            name="password"
-            placeholder="비밀번호"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          ></Input>
-          <Input
-            name="passwordConfirm"
-            placeholder="비밀번호 확인"
-            type="password"
-            value={formData.passwordConfirm}
-            onChange={handleChange}
-            required
-          ></Input>
+          <div
+            className={css`
+              display: flex;
+              align-items: center;
+              width: 410px;
+              @media (max-width: 768px) {
+                max-width: 90%;
+              }
+            `}
+          >
+            <Input
+              className={css`
+                width: 100%;
+              `}
+              name="password"
+              placeholder="비밀번호"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            ></Input>
+          </div>
+          <div
+            className={css`
+              display: flex;
+              align-items: center;
+              width: 410px;
+              @media (max-width: 768px) {
+                max-width: 90%;
+              }
+            `}
+          >
+            <Input
+              className={css`
+                width: 100%;
+              `}
+              name="passwordConfirm"
+              placeholder="비밀번호 확인"
+              type="password"
+              value={formData.passwordConfirm}
+              onChange={handleChange}
+              required
+            ></Input>
+          </div>
+
           <div
             className={css`
               height: 2px;
             `}
           ></div>
-          <Button type="submit">큰소리 회원가입</Button>
+
+          <div
+            className={css`
+              display: flex;
+              align-items: center;
+              width: 410px;
+              @media (max-width: 768px) {
+                max-width: 90%;
+              }
+            `}
+          >
+            <Button
+              className={css`
+                width: 100%;
+              `}
+              type="submit"
+            >
+              큰소리 회원가입
+            </Button>
+          </div>
         </div>
       </form>
       {message && (

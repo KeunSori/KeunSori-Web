@@ -13,6 +13,9 @@ const SignUpPage = () => {
           align-items: center;
           flex-direction: column;
           gap: 1px;
+          height: 100vh;
+          min-height: 100vh;
+          margin-top: -5vh;
         `}
       >
         <Link to="/login">
@@ -20,7 +23,12 @@ const SignUpPage = () => {
             className={css`
               margin-top: 60px;
               margin-bottom: 10px;
-              width: 130px;
+              width: 210px;
+              max-width: 90%;
+              @media (max-width: 768px) {
+                width: 150px;
+                margin-top: 40px;
+              }
             `}
             src={logo}
             alt="logo"
