@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import axiosInstance from "../../api/axiosInstance";
 ///import { fetchRows } from "./api"; // API 요청 분리된 파일
 
-interface testInterface2 {
+interface applicantResponse {
   id: number;
   name: string;
   StudentId: string;
@@ -11,15 +11,14 @@ interface testInterface2 {
   applicationDate: number[];
 }
 // api test
-const testFetch2 = async (): Promise<testInterface2[]> => {
-  const response = await axiosInstance.get<testInterface2[]>(
+const fetchApplicants = async (): Promise<applicantResponse[]> => {
+  const response = await axiosInstance.get<applicantResponse[]>(
     "/admin/members/applicants"
   );
   return response.data;
 };
 
 interface Row {
-  row_index: number;
   id: number;
   name: string;
   StudentId: string;
@@ -78,12 +77,11 @@ const ApprovalTable: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const members = await testFetch2();
+        const members = await fetchApplicants();
         console.log(members);
 
-        const resultRows = members.map((item, index: number) => ({
+        const resultRows = members.map((item) => ({
           ...item,
-          row_index: index + 1,
           checked: false,
           date: new Date(
             item.applicationDate[0],
@@ -132,7 +130,7 @@ const ApprovalTable: React.FC = () => {
       await Promise.all(
         selectedIds.map(async (id) => {
           try {
-            const response = await axiosInstance.put(
+            const response = await axiosInstance.patch(
               `/admin/members/${id}/approve`
             );
             if (response.status !== 200) {

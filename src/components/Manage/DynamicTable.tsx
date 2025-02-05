@@ -1,31 +1,30 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
-//import axios from "axios";
+import axiosInstance from "../../api/axiosInstance";
 ///import { fetchRows } from "./api"; // API 요청 분리된 파일
 
-// 테스트용 Date 객체
-const date_1 = new Date("2002-01-04");
-const date_2 = new Date("2003-06-10");
-const date_3 = new Date("2003-08-07");
-//
-
-const testInput = [
-  { name: "김지상", username: "Emithen", date: date_1 },
-  { name: "김유진", username: "sophia22001", date: date_2 },
-  { name: "이주희", username: "leejuhi", date: date_3 },
-];
-
-function fetchRows(): Omit<Row, "id" | "checked">[] {
-  return testInput;
+interface memberResponse {
+  id: number;
+  name: string;
+  StudentId: string;
+  status: string;
+  approvalDate: number[];
 }
 
 interface Row {
   id: number;
   name: string;
-  username: string;
+  StudentId: string;
   date: Date; // 서버에서 날짜를 문자열로 전달한다고 가정
   checked?: boolean;
 }
+
+const fetchMembers = async (): Promise<memberResponse[]> => {
+  const response = await axiosInstance.get<memberResponse[]>(
+    "/admin/members/list"
+  );
+  return response.data;
+};
 
 const TableContainer = styled.div`
   width: 100%;
@@ -76,21 +75,36 @@ const DynamicTable: React.FC = () => {
 
   // 데이터 불러오기
   useEffect(() => {
-    const loadData = async () => {
+    const fetchData = async () => {
       try {
-        const data: Omit<Row, "id" | "checked">[] = await fetchRows();
-        const processedData = data.map((item, index: number) => ({
-          ...item,
-          id: index + 1,
-          checked: false, // 초기 체크 상태 추가
-        }));
-        setRows(processedData);
+        const members = await fetchMembers();
+        console.log(members);
+
+        const resultRows = members.map((item) => {
+          const dateArray = item.approvalDate || [2002, 1, 4, 0, 0, 0, 0];
+
+          return {
+            ...item,
+            checked: false,
+            date: new Date(
+              dateArray[0],
+              dateArray[1] - 1,
+              dateArray[2],
+              dateArray[3],
+              dateArray[4],
+              dateArray[5],
+              Math.floor(dateArray[6] / 1_000_000)
+            ),
+          };
+        });
+
+        setRows(resultRows);
       } catch (error) {
-        console.error("데이터 로드 실패:", error);
+        console.error("Fetch error: ", error);
       }
     };
 
-    loadData();
+    fetchData();
   }, []);
 
   // 체크박스 상태 변경
@@ -102,25 +116,37 @@ const DynamicTable: React.FC = () => {
     );
   };
 
-  // 선택된 항목 삭제
-  const handleDelete = () => {
-    setRows((prevRows) => prevRows.filter((row) => !row.checked));
-  };
-
-  /*
-
-  const handleDelete = async (id: number) => {
+  const handleDelete = async () => {
     try {
-      const response = await axios.delete(`/members/${id}`);
-      if (response.status === 200) {
-        setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+      const selectedIds = rows
+        .filter((row) => row.checked)
+        .map((row) => row.id);
+
+      if (selectedIds.length === 0) {
+        alert("항목을 하나 이상 선택하세요.");
+        return;
       }
+
+      console.log("탈퇴 요청 보낼 ID 목록:", selectedIds);
+
+      await Promise.all(
+        selectedIds.map(async (id) => {
+          try {
+            const response = await axiosInstance.delete(`/admin/members/${id}`);
+            if (response.status === 200) {
+              console.log("탈퇴 처리 성공");
+            } else {
+              throw new Error(`탈퇴 처리 실패 (ID: ${id})`);
+            }
+          } catch (error) {
+            console.error(`ID ${id} 탈퇴 처리 실패:`, error);
+          }
+        })
+      );
     } catch (error) {
-      console.error("삭제 실패:", error);
+      console.error("탈퇴 처리 실패:", error);
     }
   };
-
-  **/
 
   return (
     <TableContainer>
@@ -148,7 +174,7 @@ const DynamicTable: React.FC = () => {
               </TableCell>
               <TableCell>{index + 1}</TableCell>
               <TableCell>{row.name}</TableCell>
-              <TableCell>{row.username}</TableCell>
+              <TableCell>{row.StudentId}</TableCell>
               <TableCell>{row.date.toLocaleDateString()}</TableCell>
             </TableRow>
           ))}
