@@ -36,7 +36,7 @@ const NavBar2: React.FC = () => {
         `}
         style={{ cursor: "pointer" }}
       >
-        <Link to="/book">
+        <Link to={{ pathname: "/book", search: "?type=current" }}>
           <img
             className={css`
               width: 60px;
@@ -54,7 +54,7 @@ const NavBar2: React.FC = () => {
             margin: auto;
           `}
         >
-          <Link to="/book">
+          <Link to={{ pathname: "/book", search: "?type=current" }}>
             <Space isActive={location.pathname === "/book"}>연습실</Space>
           </Link>
           <Link to="/board">
@@ -75,7 +75,7 @@ const NavBar2: React.FC = () => {
             )}
           </Button>
           <MobileMenu isOpened={isOpen}>
-            <Link to="/book">
+            <Link to={{ pathname: "/book", search: "?type=current" }}>
               <Space isActive={false}>예약하기</Space>
             </Link>
             <Link to="/board">

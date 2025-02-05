@@ -77,18 +77,7 @@ const DateManage: React.FC = () => {
   return (
     <>
       <OutContainer>
-        <div
-          className={css`
-            margin: 20px 0px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 30px;
-            @media (max-width: 768px) {
-              flex-direction: column;
-            }
-          `}
-        >
+        <CalendarContainer>
           <Calendar
             calendarType="gregory"
             view="month"
@@ -99,17 +88,7 @@ const DateManage: React.FC = () => {
             formatDay={(_locale, date) => date.getDate().toString()}
             tileDisabled={({ date }) => UnvailableMonth(date)}
           />
-          <div
-            className={css`
-              @media (max-width: 768px) {
-                display: none;
-              }
-              width: 2px;
-              height: 300px;
-              max-height: 100%;
-              background-color: #f1f1f1;
-            `}
-          ></div>
+          <Divider />
           <div
             className={css`
               display: flex;
@@ -117,23 +96,10 @@ const DateManage: React.FC = () => {
               align-items: center;
             `}
           >
-            <div
-              className={css`
-                @media (max-width: 768px) {
-                  display: block;
-                  width: 60%;
-                  text-align: center;
-                  padding-bottom: 10px;
-                  border-bottom: 1px solid rgb(187, 187, 187);
-                }
-                display: flex;
-                align-items: center;
-                gap: 10px;
-              `}
-            >
+            <InContainer>
               {date ? (
                 <>
-                  <Input type="checkbox" checked={true} />
+                  <Input type="checkbox" checked={true} disabled={true} />
                   {date.getMonth() + 1}월 {date.getDate()}일
                   <TimePicker />
                   부터
@@ -143,7 +109,7 @@ const DateManage: React.FC = () => {
               ) : (
                 "날짜 정보 없음"
               )}
-            </div>
+            </InContainer>
             <NotionContainer>
               {filteredUserData?.map((user) => (
                 <div
@@ -158,7 +124,7 @@ const DateManage: React.FC = () => {
               ))}
             </NotionContainer>
           </div>
-        </div>
+        </CalendarContainer>
         <StoreButton>저장하기</StoreButton>
       </OutContainer>
     </>
@@ -181,4 +147,36 @@ const StoreButton = styled.button`
 `;
 const Input = styled.input`
   width: 13px;
+`;
+const CalendarContainer = styled.div`
+  margin: 20px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
+const Divider = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+  }
+  width: 2px;
+  height: 300px;
+  max-height: 100%;
+  background-color: #f1f1f1;
+`;
+const InContainer = styled.div`
+  @media (max-width: 768px) {
+    display: block;
+    width: 60%;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(187, 187, 187);
+  }
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;

@@ -1,8 +1,18 @@
 import styled from "@emotion/styled";
 import React, { useRef, useState, useEffect } from "react";
-
-const TimePicker: React.FC = () => {
-  const [selectedTime, setSelectedTime] = useState<string>("10:00");
+interface TimePickerProps {
+  startTime?: string;
+  endTime?: string;
+  disabled?: boolean;
+}
+const TimePicker: React.FC<TimePickerProps> = ({
+  startTime,
+  endTime,
+  disabled,
+}) => {
+  const [selectedTime, setSelectedTime] = useState<string>(
+    startTime || endTime || "10:00"
+  );
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -52,7 +62,10 @@ const TimePicker: React.FC = () => {
         maxWidth: "200px",
       }}
     >
-      <SelectedButton onClick={() => setIsOpened(!isOpened)}>
+      <SelectedButton
+        onClick={() => setIsOpened(!isOpened)}
+        disabled={!disabled}
+      >
         {selectedTime}
       </SelectedButton>
 
@@ -84,7 +97,8 @@ const Dropbox = styled.div<{ isOpened: boolean }>`
   background-color: #fff;
   border: ${(props) => (props.isOpened ? "1px solid #ddd" : "none")};
 `;
-const SelectedButton = styled.button`
+const SelectedButton = styled.button<{ disabled?: boolean }>`
+  cusur: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   width: 100px;
   height: 30px;
   background-color: #fff;

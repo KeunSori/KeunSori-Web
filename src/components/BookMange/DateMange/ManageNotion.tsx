@@ -32,7 +32,7 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
   const [date, setDate] = useState<Date | null>(null);
 
   const handleDelete = async () => {
-    await axiosInstance.delete(`/reservation/${user.reservationId}`);
+    await axiosInstance.delete(`/admin/reservation/${user.reservationId}`);
     window.location.reload();
   };
   useEffect(() => {
