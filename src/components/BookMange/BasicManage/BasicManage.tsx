@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/css";
 import Container from "../Container";
 import DayNotion from "./DayNotion";
+import axiosInstance from "../../../api/axiosInstance";
+import { useEffect } from "react";
 interface Week {
   dayOfWeek: number;
   isActive: boolean;
@@ -18,6 +20,20 @@ const weekData: Week[] = [
   { dayOfWeek: 6, isActive: false, startTime: "10:00", endTime: "11:00" },
 ];
 const BasicManage: React.FC = () => {
+  const fetchData = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `/admin/reservation/weekly-schedule`
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(`에러남:${error}`);
+      alert("정보를 불러올 수 없습니다");
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <>
       <Container>
