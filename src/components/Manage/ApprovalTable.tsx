@@ -3,42 +3,26 @@ import styled from "@emotion/styled";
 import axiosInstance from "../../api/axiosInstance";
 ///import { fetchRows } from "./api"; // API 요청 분리된 파일
 
-interface testInterface {
+interface testInterface2 {
   id: number;
   name: string;
-  studentId: string;
+  StudentId: string;
   status: string;
-  approvalDate: string;
+  applicationDate: number[];
 }
-
 // api test
-const testFetch = async () => {
-    const response = await axiosInstance.get<testInterface>("/admin/members/list");
-    return response.data;
-}
-
-
-
-// 테스트용 Date 객체
-const date_1 = new Date("2002-01-04");
-const date_2 = new Date("2003-06-10");
-const date_3 = new Date("2003-08-07");
-//
-
-const testInput = [
-  { name: "김지상", username: "Emithen", date: date_1 },
-  { name: "김유진", username: "sophia22001", date: date_2 },
-  { name: "이주희", username: "leejuhi", date: date_3 },
-];
-
-function fetchRows(): Omit<Row, "id" | "checked">[] {
-  return testInput;
-}
+const testFetch2 = async (): Promise<testInterface2[]> => {
+  const response = await axiosInstance.get<testInterface2[]>(
+    "/admin/members/applicants"
+  );
+  return response.data;
+};
 
 interface Row {
+  row_index: number;
   id: number;
   name: string;
-  username: string;
+  StudentId: string;
   date: Date; // 서버에서 날짜를 문자열로 전달한다고 가정
   checked?: boolean;
 }
@@ -92,23 +76,33 @@ const ApprovalTable: React.FC = () => {
 
   // 데이터 불러오기
   useEffect(() => {
-    const loadData = async () => {
+    const fetchData = async () => {
       try {
-        const data: Omit<Row, "id" | "checked">[] = await fetchRows();
-        const processedData = data.map((item, index: number) => ({
+        const members = await testFetch2();
+        console.log(members);
+
+        const resultRows = members.map((item, index: number) => ({
           ...item,
-          id: index + 1,
-          checked: false, // 초기 체크 상태 추가
+          row_index: index + 1,
+          checked: false,
+          date: new Date(
+            item.applicationDate[0],
+            item.applicationDate[1] - 1,
+            item.applicationDate[2],
+            item.applicationDate[3],
+            item.applicationDate[4],
+            item.applicationDate[5],
+            Math.floor(item.applicationDate[6] / 1_000_000)
+          ),
         }));
-        setRows(processedData);
+
+        setRows(resultRows);
       } catch (error) {
-        console.error("데이터 로드 실패:", error);
+        console.error("Fetch Error: ", error);
       }
     };
 
-    loadData();
-    const data = testFetch();
-    console.log("데이터 왔다잉: ", data);
+    fetchData();
   }, []);
 
   // 체크박스 상태 변경
@@ -120,25 +114,46 @@ const ApprovalTable: React.FC = () => {
     );
   };
 
-  // 선택된 항목 삭제
-  const ApproveComplete = () => {
-    setRows((prevRows) => prevRows.filter((row) => !row.checked));
-  };
-
-  /*
-
-  const ApprovaeComplete = async (id: number) => {
+  const ApproveComplete = async () => {
     try {
-      const response = await axios.put(`/members/${id}`);
-      if (response.status === 200) {
-        setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+      // ✅ 체크된 행들의 ID 목록 가져오기
+      const selectedIds = rows
+        .filter((row) => row.checked)
+        .map((row) => row.id);
+
+      if (selectedIds.length === 0) {
+        alert("승인할 항목을 선택하세요.");
+        return;
       }
+
+      console.log("승인 요청 보낼 ID 목록:", selectedIds);
+
+      // ✅ 비동기 요청을 병렬로 실행 (Promise.all)
+      await Promise.all(
+        selectedIds.map(async (id) => {
+          try {
+            const response = await axiosInstance.put(
+              `/admin/members/${id}/approve`
+            );
+            if (response.status !== 200) {
+              throw new Error(`승인 실패 (ID: ${id})`);
+            }
+          } catch (error) {
+            console.error(`ID ${id} 승인 실패:`, error);
+          }
+        })
+      );
+
+      // ✅ 요청 성공한 ID들을 rows 상태에서 제거
+      setRows((prevRows) =>
+        prevRows.filter((row) => !selectedIds.includes(row.id))
+      );
+
+      alert("승인이 완료되었습니다.");
     } catch (error) {
-      console.error("삭제 실패:", error);
+      console.error("승인 요청 실패:", error);
     }
   };
-
-  **/
 
   return (
     <TableContainer>
@@ -150,7 +165,7 @@ const ApprovalTable: React.FC = () => {
             </TableHeadCell>
             <TableHeadCell>번호</TableHeadCell>
             <TableHeadCell>이름</TableHeadCell>
-            <TableHeadCell>아이디</TableHeadCell>
+            <TableHeadCell>학번</TableHeadCell>
             <TableHeadCell>가입 신청일</TableHeadCell>
           </TableRow>
         </thead>
@@ -166,7 +181,7 @@ const ApprovalTable: React.FC = () => {
               </TableCell>
               <TableCell>{index + 1}</TableCell>
               <TableCell>{row.name}</TableCell>
-              <TableCell>{row.username}</TableCell>
+              <TableCell>{row.StudentId}</TableCell>
               <TableCell>{row.date.toLocaleDateString()}</TableCell>
             </TableRow>
           ))}
