@@ -133,7 +133,7 @@ const DynamicTable: React.FC = () => {
         selectedIds.map(async (id) => {
           try {
             const response = await axiosInstance.delete(`/admin/members/${id}`);
-            if (response.status === 200) {
+            if (response.status === 204) {
               console.log("탈퇴 처리 성공");
             } else {
               throw new Error(`탈퇴 처리 실패 (ID: ${id})`);
