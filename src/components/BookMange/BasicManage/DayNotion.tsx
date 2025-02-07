@@ -1,16 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TimePicker from "../TImePicker";
 import styled from "@emotion/styled";
+import { useAtom } from "jotai";
+import { Week, weekDataAtom } from "./weekData";
 interface DayNotionProps {
-  date: {
-    dayOfWeekNum: number;
-    startTime: string;
-    endTime: string;
-    isActive: boolean;
-  };
+  date: Week;
 }
 const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
   const [isActive, setIsActive] = useState<boolean>(date.isActive);
+  const [weekData, setWeekData] = useAtom(weekDataAtom);
   const days = [
     "일요일",
     "월요일",
@@ -20,9 +18,43 @@ const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
     "금요일",
     "토요일",
   ];
+  const handleClick =
+    (timeType: "startTime" | "endTime") =>
+    (e: React.MouseEvent<HTMLButtonElement>): void => {
+      const value = e.currentTarget.getAttribute("value");
+      if (value) {
+        if (timeType === "startTime") {
+          console.log("시작시간");
+          const newWeekData = weekData.map((data) =>
+            data.dayOfWeekNum === date.dayOfWeekNum
+              ? { ...data, startTime: value }
+              : data
+          );
+          setWeekData(newWeekData);
+          console.log(newWeekData);
+        } else if (timeType === "endTime") {
+          console.log("끝시간");
+          const newWeekData = weekData.map((data) =>
+            data.dayOfWeekNum === date.dayOfWeekNum
+              ? { ...data, endTime: value }
+              : data
+          );
+          setWeekData(newWeekData);
+          console.log(newWeekData);
+        }
+      }
+    };
   const handleCheck = (isActive: boolean) => {
     setIsActive(!isActive);
+    setWeekData(
+      weekData.map((data) =>
+        data.dayOfWeekNum === date.dayOfWeekNum
+          ? { ...data, isActive: !isActive }
+          : data
+      )
+    );
   };
+  useEffect(() => {}, [weekData]);
 
   return (
     <>
@@ -33,9 +65,19 @@ const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
       />
       <DayContainer isActive={isActive}>
         <span>{days[date.dayOfWeekNum]}</span>
-        <TimePicker disabled={isActive} startTime={date.startTime} />
+        <TimePicker
+          data-action="startTime"
+          disabled={isActive}
+          startTime={date.startTime}
+          onClick={handleClick("startTime")}
+        />
         부터
-        <TimePicker disabled={isActive} endTime={date.endTime} />
+        <TimePicker
+          data-action="endTime"
+          disabled={isActive}
+          endTime={date.endTime}
+          onClick={handleClick("endTime")}
+        />
         까지
       </DayContainer>
     </>

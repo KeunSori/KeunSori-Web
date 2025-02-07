@@ -26,7 +26,6 @@ const TimeSlots = styled.div`
   flex-wrap: nowrap;
   padding: 0px 5px;
   overflow-x: scroll;
-  scrollbar-width: 10px;
   @media (max-width: 768px) {
     width: 300px;
     justify-content: flex-start;

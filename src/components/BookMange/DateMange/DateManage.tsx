@@ -24,7 +24,15 @@ const DateManage: React.FC = () => {
   const isSameDay = (d1: Date, d2: Date) => {
     return d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
   };
-
+  const handleClick =
+    (timeType: "startTime" | "endTime") =>
+    (e: React.MouseEvent<HTMLButtonElement>): void => {
+      const value = e.currentTarget.getAttribute("value");
+      if (value) {
+        console.log(value);
+      }
+      console.log(timeType);
+    };
   const formatDate = (date: Date | null): string | null => {
     if (!date) return null;
 
@@ -33,8 +41,16 @@ const DateManage: React.FC = () => {
 
     return `${year}${month}`;
   };
-
   async function fetchData() {
+    try {
+      const response = await axiosInstance.get(
+        `/admin/reservation/daily-schedule?month=${formatDate(date)}`
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(`에러남:${error}`);
+      alert("정보를 불러올 수 없습니다");
+    }
     try {
       const response = await axiosInstance.get(
         `/reservation/list?month=${formatDate(date)}`
@@ -101,10 +117,15 @@ const DateManage: React.FC = () => {
                 <>
                   <Input type="checkbox" checked={true} disabled={true} />
                   {date.getMonth() + 1}월 {date.getDate()}일
-                  <TimePicker />
+                  <TimePicker
+                    data-action="startTime"
+                    onClick={handleClick("startTime")}
+                  />
                   부터
-                  <TimePicker />
-                  까지
+                  <TimePicker
+                    data-action="endTime"
+                    onClick={handleClick("endTime")}
+                  />
                 </>
               ) : (
                 "날짜 정보 없음"
@@ -131,6 +152,7 @@ const DateManage: React.FC = () => {
   );
 };
 export default DateManage;
+
 const StoreButton = styled.button`
   position: absolute;
   left: 70%;
