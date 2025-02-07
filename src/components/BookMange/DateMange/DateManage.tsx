@@ -158,7 +158,13 @@ const DateManage: React.FC = () => {
                     checked={filterDate?.isActive}
                     onChange={() => handleCheck(filterDate?.isActive ?? false)}
                   />
-                  {date.getMonth() + 1}월 {date.getDate()}일
+                  <div
+                    className={css`
+                      white-space: nowrap;
+                    `}
+                  >
+                    {date.getMonth() + 1}월 {date.getDate()}일
+                  </div>
                   <TimePicker
                     onClick={handleClick("startTime")}
                     disabled={filterDate?.isActive}

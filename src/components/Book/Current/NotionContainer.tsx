@@ -11,7 +11,10 @@ const NotionContainer = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   wrap: no-wrap;
-
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+  }
   ::-webkit-scrollbar {
     width: 8px;
   }

@@ -39,11 +39,10 @@ const Divider = styled.div`
 `;
 const InContainer = styled.div`
   @media (max-width: 768px) {
-    display: block;
     width: 60%;
-    text-align: center;
     padding-bottom: 10px;
     border-bottom: 1px solid rgb(187, 187, 187);
+    justify-content: center;
   }
   display: flex;
   align-items: center;
