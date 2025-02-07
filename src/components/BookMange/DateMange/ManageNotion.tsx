@@ -10,7 +10,6 @@ const ManageNotion: React.FC<ManageNotionProps> = ({ user }) => {
   const [instrument, setInstrument] = useState<string>("");
 
   const TransDate = (userDate: string) => {
-    console.log(user);
     return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
   };
 
@@ -36,7 +35,6 @@ const ManageNotion: React.FC<ManageNotionProps> = ({ user }) => {
     window.location.reload();
   };
   useEffect(() => {
-    console.log();
     TransInstrument(user.reservationSession);
     setDate(new Date(TransDate(user.reservationDate)));
   }, []);

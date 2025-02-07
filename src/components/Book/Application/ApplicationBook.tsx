@@ -25,6 +25,7 @@ import {
   MidContainer,
   TypeContainer,
 } from "./styles/Containers.tsx";
+import { useNavigate } from "react-router-dom";
 
 const ApplicationBook: React.FC = () => {
   const defaultInstruments: InstrumentInfo = {
@@ -46,6 +47,7 @@ const ApplicationBook: React.FC = () => {
   const today = new Date();
   const [printEndTime] = useAtom(printEndTimeAtom);
   const [monthData, setMonthData] = useAtom(monthDataAtom);
+  const navigate = useNavigate();
   const isSameDay = (d1: Date, d2: Date) => {
     return (
       d1.getMonth() === d2.getMonth() &&
@@ -66,7 +68,6 @@ const ApplicationBook: React.FC = () => {
       const response = await authApi.get(
         `/reservation?month=${formatDate(date)}`
       );
-      console.log(response.data);
       setMonthData(response.data);
     } catch {
       console.log("error");
@@ -87,7 +88,6 @@ const ApplicationBook: React.FC = () => {
   const onClickInstrument = (e: React.MouseEvent<HTMLButtonElement>) => {
     setInstruments(defaultInstruments);
     const value = e.currentTarget.value as keyof instrument;
-    console.log("value: ", value);
     setInstruments((prev) => ({ ...prev, [value]: !prev[value] }));
     setInstrument(value);
   };
@@ -109,7 +109,6 @@ const ApplicationBook: React.FC = () => {
     if (!date || !startTime || !endTime) return;
     const inst = Object.keys(instruments).find(([value]) => value);
     setInstrument(inst?.toString() || "");
-    console.log(printEndTime);
     try {
       await authApi.post("/reservation", {
         reservationType: team ? "TEAM" : "PERSONAL",
@@ -120,9 +119,8 @@ const ApplicationBook: React.FC = () => {
         reservationStartTime: startTime.time,
         reservationEndTime: printEndTime,
       });
-      console.log("예약 완료");
       alert("예약이 완료되었습니다!");
-      window.location.reload();
+      navigate("/book?type=my");
     } catch (e) {
       console.log(e);
       alert("다시 시도 해주세요.");

@@ -58,7 +58,6 @@ const DateManage: React.FC = () => {
       const response = await authApi.get(
         `/admin/reservation/daily-schedule?month=${formatDate(date)}`
       );
-      console.log(response.data);
       setmonthData(response.data);
       if (date) {
         const filteredData = response.data?.find((data: Month) => {
@@ -66,7 +65,6 @@ const DateManage: React.FC = () => {
           return isSameDay(dataDate, date);
         });
         setFilterDate(filteredData);
-        console.log(filteredData);
       }
     } catch (error) {
       console.log(`달 정보 에러남:${error}`);
@@ -115,7 +113,6 @@ const DateManage: React.FC = () => {
     }
   };
   const handleSubmit = async () => {
-    console.log(filterDate);
     try {
       await authApi.put(`/admin/reservation/daily-schedule`, filterDate);
       window.location.reload();

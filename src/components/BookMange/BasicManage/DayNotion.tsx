@@ -24,23 +24,19 @@ const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
       const value = e.currentTarget.getAttribute("value");
       if (value) {
         if (timeType === "startTime") {
-          console.log("시작시간");
           const newWeekData = weekData.map((data) =>
             data.dayOfWeekNum === date.dayOfWeekNum
               ? { ...data, startTime: value }
               : data
           );
           setWeekData(newWeekData);
-          console.log(newWeekData);
         } else if (timeType === "endTime") {
-          console.log("끝시간");
           const newWeekData = weekData.map((data) =>
             data.dayOfWeekNum === date.dayOfWeekNum
               ? { ...data, endTime: value }
               : data
           );
           setWeekData(newWeekData);
-          console.log(newWeekData);
         }
       }
     };

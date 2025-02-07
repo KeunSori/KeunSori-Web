@@ -60,7 +60,6 @@ const Reservation: React.FC<ReservationProps> = ({
             userDate.getDate() === date.getDate()
           );
         });
-        console.log("가짜", newfilteredData);
         unAvailableSlot(newfilteredData);
       }
     } catch (error) {
@@ -70,7 +69,6 @@ const Reservation: React.FC<ReservationProps> = ({
       const response = await authApi.get(
         `/reservation/list?month=${formatDate(date)}`
       );
-      console.log("찐", response.data);
 
       if (date) {
         const newfilteredData = response.data.filter((user: UserInfo) => {
@@ -92,10 +90,7 @@ const Reservation: React.FC<ReservationProps> = ({
   };
   const unAvailableSlot = (data: Month) => {
     const start = slots.findIndex((slot) => slot.time === data.startTime);
-    console.log(data);
-    console.log(start);
     const printend = slots.findIndex((slot) => slot.time === data.endTime);
-    console.log(printend);
     const end = data.endTime === "23:00" ? 25 : printend - 1;
     setSelectedtSlots((prev) =>
       prev.map((slot, index) => {
@@ -135,7 +130,6 @@ const Reservation: React.FC<ReservationProps> = ({
     }
 
     data.forEach((user) => {
-      console.log(user);
       if (team) {
         const start = slots.findIndex(
           (slot) => slot.time === user.reservationStartTime
@@ -177,7 +171,6 @@ const Reservation: React.FC<ReservationProps> = ({
     });
   };
   const handleSlotClick = (index: number, time: string, available: boolean) => {
-    console.log(instrument);
     if (available) {
       if (!startTime) {
         setStartTime({ time, index });

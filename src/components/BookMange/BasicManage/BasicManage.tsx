@@ -13,7 +13,6 @@ const BasicManage: React.FC = () => {
     try {
       const response = await authApi.get(`/admin/reservation/weekly-schedule`);
 
-      console.log(response.data);
       setWeekData(response.data);
     } catch (error) {
       console.log(`에러남:${error}`);
@@ -22,12 +21,7 @@ const BasicManage: React.FC = () => {
   };
   const handleSubmit = async () => {
     try {
-      const response = await authApi.put(
-        `/admin/reservation/weekly-schedule`,
-        weekData
-      );
-      console.log("데이터 보냄");
-      console.log(response.data);
+      await authApi.put(`/admin/reservation/weekly-schedule`, weekData);
       window.location.reload();
     } catch (error) {
       console.log(`에러남:${error}`);
