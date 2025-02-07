@@ -10,6 +10,7 @@ import useIsMobile from "../../mobile/useIsMobile.tsx";
 import { useNavigate } from "react-router-dom";
 import { TimeSlots } from "./styles/Times.tsx";
 import { SlotContainer } from "./styles/Containers.tsx";
+import { Month } from "../../BookMange/DateMange/monthData.ts";
 
 const slots = Array.from({ length: 26 }, (_, index) => ({
   time: `${10 + Math.floor(index / 2)}:${index % 2 === 0 ? "00" : "30"}`,
@@ -20,7 +21,6 @@ interface ReservationProps {
   instrument: string;
   team: boolean;
 }
-
 const Reservation: React.FC<ReservationProps> = ({
   date,
   instrument,
@@ -49,9 +49,28 @@ const Reservation: React.FC<ReservationProps> = ({
   const fetchData = async () => {
     try {
       const response = await axiosInstance.get(
+        `/reservation?month=${formatDate(date)}`
+      );
+      if (date) {
+        const newfilteredData = response.data.find((data: Month) => {
+          const userDate = new Date(TransDate(data.date));
+          return (
+            userDate.getFullYear() === date.getFullYear() &&
+            userDate.getMonth() === date.getMonth() &&
+            userDate.getDate() === date.getDate()
+          );
+        });
+        console.log("가짜", newfilteredData);
+        unAvailableSlot(newfilteredData);
+      }
+    } catch (error) {
+      console.log(`에러남:${error}`);
+    }
+    try {
+      const response = await axiosInstance.get(
         `/reservation/list?month=${formatDate(date)}`
       );
-      console.log(response.data);
+      console.log("찐", response.data);
 
       if (date) {
         const newfilteredData = response.data.filter((user: UserInfo) => {
@@ -71,7 +90,22 @@ const Reservation: React.FC<ReservationProps> = ({
       navigate("/login");
     }
   };
-
+  const unAvailableSlot = (data: Month) => {
+    const start = slots.findIndex((slot) => slot.time === data.startTime);
+    console.log(data);
+    console.log(start);
+    const printend = slots.findIndex((slot) => slot.time === data.endTime);
+    console.log(printend);
+    const end = data.endTime === "23:00" ? 25 : printend - 1;
+    setSelectedtSlots((prev) =>
+      prev.map((slot, index) => {
+        if (index < start || index > end) {
+          return { ...slot, available: false };
+        }
+        return slot;
+      })
+    );
+  };
   const unAvailableSlots = (data: UserInfo[]) => {
     if (
       today.getDate() === date?.getDate() &&
@@ -101,8 +135,7 @@ const Reservation: React.FC<ReservationProps> = ({
     }
 
     data.forEach((user) => {
-      console.log("session: ", user.reservationSession);
-
+      console.log(user);
       if (team) {
         const start = slots.findIndex(
           (slot) => slot.time === user.reservationStartTime
