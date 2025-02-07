@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../../api/axiosInstance.ts";
 import NotionCard from "../../Book/My/NotionCard.tsx";
 
-interface MyNotionProps {
+interface ManageNotionProps {
   user: UserInfo;
 }
-const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
+const ManageNotion: React.FC<ManageNotionProps> = ({ user }) => {
   const [instrument, setInstrument] = useState<string>("");
 
   const TransDate = (userDate: string) => {
@@ -36,6 +36,7 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
     window.location.reload();
   };
   useEffect(() => {
+    console.log();
     TransInstrument(user.reservationSession);
     setDate(new Date(TransDate(user.reservationDate)));
   }, []);
@@ -50,4 +51,4 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
     </>
   );
 };
-export default MyNotion;
+export default ManageNotion;

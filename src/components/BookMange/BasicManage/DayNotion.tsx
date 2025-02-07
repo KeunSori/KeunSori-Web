@@ -66,14 +66,12 @@ const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
       <DayContainer isActive={isActive}>
         <span>{days[date.dayOfWeekNum]}</span>
         <TimePicker
-          data-action="startTime"
           disabled={isActive}
           startTime={date.startTime}
           onClick={handleClick("startTime")}
         />
         부터
         <TimePicker
-          data-action="endTime"
           disabled={isActive}
           endTime={date.endTime}
           onClick={handleClick("endTime")}

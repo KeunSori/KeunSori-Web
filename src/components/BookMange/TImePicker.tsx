@@ -39,6 +39,11 @@ const TimePicker: React.FC<TimePickerProps> = ({
     setIsOpened(false);
   };
   useEffect(() => {
+    setSelectedTime(startTime || endTime || "10:00");
+  }, [startTime, endTime]);
+  useEffect(() => {
+    console.log(startTime);
+    console.log(endTime);
     const handleOutsideClick = (event: MouseEvent) => {
       if (
         dropdownRef.current && // dropdownRef가 정의되어 있고

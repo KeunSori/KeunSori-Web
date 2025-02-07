@@ -31,7 +31,6 @@ const NotionCard: React.FC<NotionCardProps> = ({
     return false;
   };
   const TransDate = (userDate: string) => {
-    console.log(user);
     return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
   };
 
