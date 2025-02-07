@@ -4,6 +4,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import Input from "../Input.tsx";
 import Button from "../Button.tsx";
 import { useNavigate } from "react-router-dom";
+import { getMemberStatus } from "../../utils/jwt.ts";
 
 const LoginForm: React.FC = () => {
   const [studentId, setStudentId] = useState("");
@@ -29,7 +30,11 @@ const LoginForm: React.FC = () => {
       return;
     }
 
-    navigate("/book");
+    if (getMemberStatus() === "관리자") {
+      navigate("/member-management");
+    } else {
+      navigate("/book");
+    }
   };
 
   return (

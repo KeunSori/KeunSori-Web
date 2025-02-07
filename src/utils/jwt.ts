@@ -20,3 +20,12 @@ export const removeToken = () => {
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("accessTokenExpireTime");
 };
+
+type memberStatus = "일반" | "관리자" | null;
+
+export const getMemberStatus = () => localStorage.getItem("memberStatus");
+
+export const setMemberStatus = (memberStatus: memberStatus) =>
+  localStorage.setItem("memberStatus", memberStatus || "null");
+
+export const removeMemberStatus = () => localStorage.removeItem("memberStatus");
