@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import Reservation from "./Reservation.tsx";
 import { useAtom } from "jotai";
@@ -8,6 +8,7 @@ import {
   startTimeAtom,
   instrument,
   printEndTimeAtom,
+  monthDataAtom,
 } from "../Time.ts";
 import { Value } from "react-calendar/src/shared/types.js";
 import { Button, ReservationButton } from "./styles/Button.tsx";
@@ -44,7 +45,33 @@ const ApplicationBook: React.FC = () => {
   const [date, setDate] = useAtom(dateAtom);
   const today = new Date();
   const [printEndTime] = useAtom(printEndTimeAtom);
+  const [monthData, setMonthData] = useAtom(monthDataAtom);
+  const isSameDay = (d1: Date, d2: Date) => {
+    return (
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate() &&
+      d1.getFullYear() === d2.getFullYear()
+    );
+  };
+  const formatDate = (date: Date | null): string | null => {
+    if (!date) return null;
 
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+
+    return `${year}${month}`;
+  };
+  const fetchData = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `/reservation?month=${formatDate(date)}`
+      );
+      console.log(response.data);
+      setMonthData(response.data);
+    } catch {
+      console.log("error");
+    }
+  };
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const action = e.currentTarget.dataset.action;
     if (action === "team") {
@@ -101,7 +128,16 @@ const ApplicationBook: React.FC = () => {
       alert("다시 시도 해주세요.");
     }
   };
-  const UnvailableMonth = (date: Date) => {
+  const UnvailableMonth = (date: Date): boolean => {
+    if (monthData) {
+      for (const month of monthData) {
+        if (isSameDay(new Date(month.date), date)) {
+          if (!month.isActive) {
+            return true;
+          }
+        }
+      }
+    }
     return (
       date.getMonth() - 1 > today.getMonth() ||
       date.getMonth() < today.getMonth() ||
@@ -109,6 +145,9 @@ const ApplicationBook: React.FC = () => {
     );
   };
 
+  useEffect(() => {
+    fetchData();
+  }, [date]);
   return (
     <>
       <OutContainer>
