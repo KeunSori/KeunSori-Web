@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { Value } from "react-calendar/src/shared/types.js";
-import axiosInstance from "../../../api/axiosInstance.ts";
+import authApi from "../../../api/Instance/authApi.ts";
 import { UserInfo } from "../../../data/user.ts";
 import OutContainer from "../../Book/OutContainer.tsx";
 import NotionContainer from "../../Book/Current/NotionContainer.tsx";
@@ -55,7 +55,7 @@ const DateManage: React.FC = () => {
   };
   const fetchData = async () => {
     try {
-      const response = await axiosInstance.get(
+      const response = await authApi.get(
         `/admin/reservation/daily-schedule?month=${formatDate(date)}`
       );
       console.log(response.data);
@@ -73,7 +73,7 @@ const DateManage: React.FC = () => {
       alert("정보를 불러올 수 없습니다");
     }
     try {
-      const response = await axiosInstance.get(
+      const response = await authApi.get(
         `/reservation/list?month=${formatDate(date)}`
       );
       setUserData(response.data);
@@ -117,7 +117,7 @@ const DateManage: React.FC = () => {
   const handleSubmit = async () => {
     console.log(filterDate);
     try {
-      await axiosInstance.put(`/admin/reservation/daily-schedule`, filterDate);
+      await authApi.put(`/admin/reservation/daily-schedule`, filterDate);
       window.location.reload();
     } catch (e) {
       console.log(e);

@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/css";
 import Container from "../Container";
 import DayNotion from "./DayNotion";
-import axiosInstance from "../../../api/axiosInstance";
+import authApi from "../../../api/Instance/authApi.ts";
 import { useEffect } from "react";
 import { useAtom } from "jotai";
 import { weekDataAtom } from "./weekData";
@@ -11,9 +11,7 @@ const BasicManage: React.FC = () => {
   const [weekData, setWeekData] = useAtom(weekDataAtom);
   const fetchData = async () => {
     try {
-      const response = await axiosInstance.get(
-        `/admin/reservation/weekly-schedule`
-      );
+      const response = await authApi.get(`/admin/reservation/weekly-schedule`);
 
       console.log(response.data);
       setWeekData(response.data);
@@ -24,7 +22,7 @@ const BasicManage: React.FC = () => {
   };
   const handleSubmit = async () => {
     try {
-      const response = await axiosInstance.put(
+      const response = await authApi.put(
         `/admin/reservation/weekly-schedule`,
         weekData
       );

@@ -63,7 +63,7 @@ const ApplicationBook: React.FC = () => {
   };
   const fetchData = async () => {
     try {
-      const response = await axiosInstance.get(
+      const response = await authApi.get(
         `/reservation?month=${formatDate(date)}`
       );
       console.log(response.data);
