@@ -1,4 +1,4 @@
-import axiosInstance from "./axiosInstance";
+import baseApi from "./Instance/baseApi";
 
 export const registerUser = async (data: {
   name: string;
@@ -8,7 +8,7 @@ export const registerUser = async (data: {
   passwordConfirm: string;
 }) => {
   try {
-    const response = await axiosInstance.post("/signup", data);
+    const response = await baseApi.post("/signup", data);
     return response.data;
   } catch (error) {
     console.error("error: ", error);

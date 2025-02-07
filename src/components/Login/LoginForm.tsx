@@ -29,7 +29,7 @@ const LoginForm: React.FC = () => {
       return;
     }
 
-    navigate("/member-management");
+    navigate("/book");
   };
 
   return (

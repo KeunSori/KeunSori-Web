@@ -12,7 +12,7 @@ import {
 } from "../Time.ts";
 import { Value } from "react-calendar/src/shared/types.js";
 import { Button, ReservationButton } from "./styles/Button.tsx";
-import axiosInstance from "../../../api/axiosInstance.ts";
+import authApi from "../../../api/Instance/authApi.ts";
 import CalendarStyles from "./CalenderStyles.tsx";
 import { InstrumentInfo } from "../../../data/user.ts";
 import OutContainer from "../OutContainer.tsx";
@@ -111,7 +111,7 @@ const ApplicationBook: React.FC = () => {
     setInstrument(inst?.toString() || "");
     console.log(printEndTime);
     try {
-      await axiosInstance.post("/reservation", {
+      await authApi.post("/reservation", {
         reservationType: team ? "TEAM" : "PERSONAL",
         reservationSession: team ? "ALL" : instrument,
         reservationDate: `${date.getFullYear()}-${(date.getMonth() + 1)

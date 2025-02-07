@@ -1,6 +1,6 @@
 import { UserInfo } from "../../../data/user.ts";
 import { useEffect, useState } from "react";
-import axiosInstance from "../../../api/axiosInstance.ts";
+import authApi from "../../../api/Instance/authApi.ts";
 import NotionCard from "./NotionCard.tsx";
 
 interface MyNotionProps {
@@ -31,7 +31,7 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
   const [date, setDate] = useState<Date | null>(null);
 
   const handleDelete = async () => {
-    await axiosInstance.delete(`/reservation/${user.reservationId}`);
+    await authApi.delete(`/reservation/${user.reservationId}`);
     window.location.reload();
   };
   useEffect(() => {

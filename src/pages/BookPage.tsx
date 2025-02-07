@@ -17,6 +17,7 @@ const BookPage = () => {
   const query = new URLSearchParams(locaiton.search);
   const component = query.get("type");
   const navigate = useNavigate();
+
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     navigate(`/book?type=${e.currentTarget.dataset.action}`);
   };

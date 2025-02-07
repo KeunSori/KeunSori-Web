@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
-import axiosInstance from "../../api/axiosInstance";
+import authApi from "../../api/Instance/authApi";
 ///import { fetchRows } from "./api"; // API 요청 분리된 파일
 
 interface memberResponse {
@@ -20,9 +20,7 @@ interface Row {
 }
 
 const fetchMembers = async (): Promise<memberResponse[]> => {
-  const response = await axiosInstance.get<memberResponse[]>(
-    "/admin/members/list"
-  );
+  const response = await authApi.get<memberResponse[]>("/admin/members/list");
   return response.data;
 };
 
@@ -132,7 +130,7 @@ const DynamicTable: React.FC = () => {
       await Promise.all(
         selectedIds.map(async (id) => {
           try {
-            const response = await axiosInstance.delete(`/admin/members/${id}`);
+            const response = await authApi.delete(`/admin/members/${id}`);
             if (response.status === 204) {
               console.log("탈퇴 처리 성공");
             } else {
