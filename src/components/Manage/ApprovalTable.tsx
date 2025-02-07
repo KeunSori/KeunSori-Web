@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
-import axiosInstance from "../../api/axiosInstance";
+import authApi from "../../api/Instance/authApi";
 ///import { fetchRows } from "./api"; // API 요청 분리된 파일
 
 interface applicantResponse {
@@ -12,7 +12,7 @@ interface applicantResponse {
 }
 // api test
 const fetchApplicants = async (): Promise<applicantResponse[]> => {
-  const response = await axiosInstance.get<applicantResponse[]>(
+  const response = await authApi.get<applicantResponse[]>(
     "/admin/members/applicants"
   );
   return response.data;
@@ -130,7 +130,7 @@ const ApprovalTable: React.FC = () => {
       await Promise.all(
         selectedIds.map(async (id) => {
           try {
-            const response = await axiosInstance.patch(
+            const response = await authApi.patch(
               `/admin/members/${id}/approve`
             );
             if (response.status !== 200) {

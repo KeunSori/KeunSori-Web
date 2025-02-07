@@ -1,7 +1,7 @@
 import { css } from "@emotion/css";
 import "react-calendar/dist/Calendar.css";
 import MyNotion from "./MyNotion.tsx";
-import axiosInstance from "../../../api/axiosInstance.ts";
+import authApi from "../../../api/Instance/authApi.ts";
 import { useEffect, useState } from "react";
 import { UserInfo } from "../../../data/user.ts";
 import { InstrumentDropBox, TeamDropBox } from "../Application/DropBox.tsx";
@@ -47,7 +47,7 @@ const MyBook: React.FC = () => {
 
   async function fetchData() {
     try {
-      const response = await axiosInstance.get("/reservation/my");
+      const response = await authApi.get("/reservation/my");
       setUserData(response.data);
     } catch (e) {
       console.error(e);

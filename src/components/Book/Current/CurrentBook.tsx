@@ -4,7 +4,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { Value } from "react-calendar/src/shared/types.js";
 import Notion from "../Current/Notion.tsx";
-import axiosInstance from "../../../api/axiosInstance.ts";
+import authApi from "../../../api/Instance/authApi.ts";
 import { UserInfo } from "../../../data/user.ts";
 import { InstrumentDropBox, TeamDropBox } from "../Application/DropBox.tsx";
 import OutContainer from "../OutContainer.tsx";
@@ -68,7 +68,7 @@ const CurrentBook: React.FC = () => {
 
   async function fetchData() {
     try {
-      const response = await axiosInstance.get(
+      const response = await authApi.get(
         `/reservation/list?month=${formatDate(date)}`
       );
       setUserData(response.data);

@@ -4,7 +4,7 @@ import { useAtom } from "jotai";
 import { endTimeAtom, printEndTimeAtom, startTimeAtom } from "../Time.ts";
 import { UserInfo } from "../../../data/user.ts";
 import { useEffect, useState } from "react";
-import axiosInstance from "../../../api/axiosInstance.ts";
+import authApi from "../../../api/Instance/authApi.ts";
 import { SlotButton } from "./styles/Button.tsx";
 import useIsMobile from "../../mobile/useIsMobile.tsx";
 import { useNavigate } from "react-router-dom";
@@ -48,7 +48,7 @@ const Reservation: React.FC<ReservationProps> = ({
 
   const fetchData = async () => {
     try {
-      const response = await axiosInstance.get(
+      const response = await authApi.get(
         `/reservation?month=${formatDate(date)}`
       );
       if (date) {
@@ -67,7 +67,7 @@ const Reservation: React.FC<ReservationProps> = ({
       console.log(`에러남:${error}`);
     }
     try {
-      const response = await axiosInstance.get(
+      const response = await authApi.get(
         `/reservation/list?month=${formatDate(date)}`
       );
       console.log("찐", response.data);
