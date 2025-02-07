@@ -54,8 +54,10 @@ const NavBar2: React.FC = () => {
             margin: auto;
           `}
         >
-          <Link to="/book">
-            <Space isActive={location.pathname === "/book"}>회원관리</Space>
+          <Link to="/member-management">
+            <Space isActive={location.pathname === "/member-management"}>
+              회원관리
+            </Space>
           </Link>
           <Link to="/bookmanagement">
             <Space isActive={location.pathname === "/bookmanagement"}>
@@ -75,7 +77,7 @@ const NavBar2: React.FC = () => {
             )}
           </Button>
           <MobileMenu isOpened={isOpen}>
-            <Link to="/book">
+            <Link to="/member-management">
               <Space isActive={false}>회원관리</Space>
             </Link>
             <Link to="/bookmanagement">

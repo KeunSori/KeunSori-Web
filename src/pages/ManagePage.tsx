@@ -1,5 +1,5 @@
 import { useState } from "react";
-import NavBar2 from "../components/navBar/navBar2.tsx";
+import NavBar3 from "../components/navBar/navBar3.tsx";
 import { css } from "@emotion/css";
 import DynamicTable from "../components/Manage/DynamicTable.tsx";
 import ApprovalTable from "../components/Manage/ApprovalTable.tsx";
@@ -42,7 +42,7 @@ const ManagePage = () => {
 
   return (
     <>
-      <NavBar2 />
+      <NavBar3 />
       <div className={containerStyle}>
         <div
           className={css`
