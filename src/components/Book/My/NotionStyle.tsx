@@ -8,7 +8,8 @@ const Title = styled.div`
 `;
 const Detail = styled.div`
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
+  color: rgb(98, 98, 98);
   white-space: nowrap;
   margin-top: 5px;
 `;

@@ -1,6 +1,8 @@
 import { css } from "@emotion/css";
 import { Detail, Notion, Title } from "./NotionStyle";
 import { UserInfo } from "../../../data/user.ts";
+import { useState } from "react";
+import Modal from "./Modal.tsx";
 interface NotionCardProps {
   user: UserInfo;
   onDelete: () => void;
@@ -14,6 +16,7 @@ const NotionCard: React.FC<NotionCardProps> = ({
   date,
   instrument,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const checkDate = () => {
     const now = new Date();
 
@@ -94,13 +97,22 @@ const NotionCard: React.FC<NotionCardProps> = ({
                   color: black;
                 }
               `}
-              onClick={onDelete}
+              onClick={() => {
+                setIsModalOpen(true);
+              }}
             >
               예약 취소
             </button>
           )}
         </div>
       </Notion>
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onDelete={onDelete}
+        />
+      )}
     </>
   );
 };

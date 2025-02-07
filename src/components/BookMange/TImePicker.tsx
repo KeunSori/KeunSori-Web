@@ -8,8 +8,8 @@ const TimePicker: React.FC = () => {
 
   const generateTimeOptions = (): string[] => {
     const times: string[] = [];
-    for (let hour = 10; hour < 23; hour++) {
-      for (let minute = 0; minute < 60; minute += 30) {
+    for (let hour = 10; hour <= 23; hour++) {
+      for (let minute = 0; minute < (hour === 23 ? 1 : 60); minute += 30) {
         const time = `${String(hour).padStart(2, "0")}:${String(
           minute
         ).padStart(2, "0")}`;
