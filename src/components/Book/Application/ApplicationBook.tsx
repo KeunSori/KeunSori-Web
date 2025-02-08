@@ -72,6 +72,15 @@ const ApplicationBook: React.FC = () => {
       } catch {
         console.log("error");
       }
+    } else {
+      try {
+        const response = await authApi.get(
+          `/reservation?month=${formatDate(today)}`
+        );
+        setMonthData(response.data);
+      } catch {
+        console.log("error");
+      }
     }
   };
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
