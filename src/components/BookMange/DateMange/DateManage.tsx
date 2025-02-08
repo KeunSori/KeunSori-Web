@@ -18,6 +18,7 @@ import {
 } from "./DateManageStyle.tsx";
 import { useAtom } from "jotai";
 import { Month, MonthDataAtom } from "./monthData.ts";
+import ManageModal from "../ManageModal.tsx";
 
 const today = new Date();
 
@@ -29,7 +30,7 @@ const DateManage: React.FC = () => {
   const [filteredUserData, setFilteredUserData] = useState<UserInfo[] | null>(
     UserData
   );
-  // const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isSameDay = (d1: Date, d2: Date) => {
     return d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
   };
@@ -193,8 +194,15 @@ const DateManage: React.FC = () => {
             </NotionContainer>
           </div>
         </CalendarContainer>
-        <StoreButton onClick={handleSubmit}>저장하기</StoreButton>
+        <StoreButton onClick={() => setIsModalOpen(true)}>저장하기</StoreButton>
       </OutContainer>
+      {isModalOpen && (
+        <ManageModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onStore={handleSubmit}
+        />
+      )}
     </>
   );
 };
