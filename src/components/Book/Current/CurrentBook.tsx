@@ -6,7 +6,7 @@ import { Value } from "react-calendar/src/shared/types.js";
 import Notion from "../Current/Notion.tsx";
 import authApi from "../../../api/Instance/authApi.ts";
 import { UserInfo } from "../../../data/user.ts";
-import { InstrumentDropBox, TeamDropBox } from "../Application/DropBox.tsx";
+import { InstrumentDropBox, TeamDropBox } from "../DropBox/DropBox.tsx";
 import OutContainer from "../OutContainer.tsx";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";

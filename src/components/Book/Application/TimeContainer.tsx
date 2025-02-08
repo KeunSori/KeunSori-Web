@@ -27,11 +27,11 @@ const TimeContainer: React.FC<TimeContainerProps> = ({
             : "날짜를 선택해주세요."}
         </Time>
         <Time>
-          시작 시간:
+          입실 시간:
           {startTime?.time ? ` ${startTime.time} ` : " 00:00"}
         </Time>
         <Time>
-          마감 시간:
+          퇴실 시간:
           {endTime?.time
             ? ` ${printEndTime} 
                     `

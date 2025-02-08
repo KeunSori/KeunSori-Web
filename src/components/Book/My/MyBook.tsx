@@ -4,7 +4,7 @@ import MyNotion from "./MyNotion.tsx";
 import authApi from "../../../api/Instance/authApi.ts";
 import { useEffect, useState } from "react";
 import { UserInfo } from "../../../data/user.ts";
-import { InstrumentDropBox, TeamDropBox } from "../Application/DropBox.tsx";
+import { InstrumentDropBox, TeamDropBox } from "../DropBox/DropBox.tsx";
 import OutContainer from "../OutContainer.tsx";
 import { useNavigate } from "react-router-dom";
 
