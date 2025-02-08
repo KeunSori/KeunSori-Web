@@ -1,13 +1,17 @@
 import styled from "@emotion/styled";
 import { useAtom } from "jotai";
-import { endTimeAtom, printEndTimeAtom, startTimeAtom } from "../Time.ts";
-import { UserInfo } from "../../../data/user.ts";
+import { endTimeAtom, printEndTimeAtom, startTimeAtom } from "../../Time.ts";
+import { UserInfo } from "../../../../data/user.ts";
 import { useEffect, useState } from "react";
-import authApi from "../../../api/Instance/authApi.ts";
+import authApi from "../../../../api/Instance/authApi.ts";
 import { useNavigate } from "react-router-dom";
-import { SlotContainer } from "./styles/Containers.tsx";
-import { Month } from "../../BookMange/DateMange/monthData.ts";
-import { formatDate, isSameDate, transDate } from "../../../utils/dateUtils.ts";
+import { SlotContainer } from "../styles/Containers.tsx";
+import { Month } from "../../../BookMange/DateMange/monthData.ts";
+import {
+  formatDate,
+  isSameDate,
+  transDate,
+} from "../../../../utils/dateUtils.ts";
 import { TimeSlotsGrid } from "./TimeSlotsGrid.tsx";
 
 const baseSlots = Array.from({ length: 26 }, (_, index) => ({

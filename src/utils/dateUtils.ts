@@ -1,3 +1,4 @@
+const today = new Date();
 export const transDate = (userDate: string) => {
   return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
 };
@@ -14,5 +15,12 @@ export const isSameDate = (date1: Date, date2: Date) => {
     date1.getFullYear() === date2.getFullYear() &&
     date1.getMonth() === date2.getMonth() &&
     date1.getDate() === date2.getDate()
+  );
+};
+export const beforeToday = (date: Date) => {
+  return (
+    date.getDate() < today.getDate() &&
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear()
   );
 };
