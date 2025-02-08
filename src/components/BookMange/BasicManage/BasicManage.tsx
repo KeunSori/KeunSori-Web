@@ -3,12 +3,14 @@ import { css } from "@emotion/css";
 import Container from "../Container";
 import DayNotion from "./DayNotion";
 import authApi from "../../../api/Instance/authApi.ts";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { weekDataAtom } from "./weekData";
+import ManageModal from "../ManageModal.tsx";
 
 const BasicManage: React.FC = () => {
   const [weekData, setWeekData] = useAtom(weekDataAtom);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const fetchData = async () => {
     try {
       const response = await authApi.get(`/admin/reservation/weekly-schedule`);
@@ -46,8 +48,15 @@ const BasicManage: React.FC = () => {
             <DayNotion date={date} />
           </div>
         ))}
-        <SumbmitButton onClick={handleSubmit}>저장</SumbmitButton>
+        <SumbmitButton onClick={() => setIsModalOpen(true)}>저장</SumbmitButton>
       </Container>
+      {isModalOpen && (
+        <ManageModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onStore={handleSubmit}
+        />
+      )}
     </>
   );
 };
