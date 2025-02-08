@@ -30,10 +30,15 @@ const LoginForm: React.FC = () => {
       return;
     }
 
-    if (getMemberStatus() === "관리자") {
+    const memberStatus = getMemberStatus();
+
+    if (memberStatus === "관리자") {
       navigate("/member-management");
-    } else {
+    } else if (memberStatus === "일반") {
       navigate("/book");
+    } else {
+      alert("승인 대기 중입니다. 다른 계정으로 다시 시도해주세요.");
+      authContext.logoutUser();
     }
   };
 

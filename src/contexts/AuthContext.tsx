@@ -53,8 +53,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       if (data.memberStatus === "관리자") {
         setMemberStatus("관리자");
-      } else {
+      } else if (data.memberStatus === "일반") {
         setMemberStatus("일반");
+      } else {
+        setMemberStatus("승인 대기");
       }
       return { success: true };
     } catch (error) {

@@ -21,7 +21,7 @@ export const removeToken = () => {
   localStorage.removeItem("accessTokenExpireTime");
 };
 
-type memberStatus = "일반" | "관리자" | null;
+type memberStatus = "일반" | "관리자" | "승인 대기";
 
 export const getMemberStatus = () => localStorage.getItem("memberStatus");
 
