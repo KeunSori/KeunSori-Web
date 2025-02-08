@@ -64,6 +64,7 @@ export default BasicManage;
 const SumbmitButton = styled.button`
   width: 100px;
   padding: 5px;
+  color: black;
   margin-top: 10px;
   border-radius: 5px;
   cursor: pointer;

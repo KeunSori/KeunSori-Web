@@ -21,11 +21,13 @@ const SelectedButton = styled.button<{ disabled?: boolean }>`
   cusur: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   width: 100px;
   height: 30px;
+  color: black;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
 `;
 const Button = styled.button`
+  color: black;
   width: 100px;
   height: 30px;
   text-align: left;
