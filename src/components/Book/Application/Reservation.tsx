@@ -1,17 +1,14 @@
 import styled from "@emotion/styled";
-import { css } from "@emotion/css";
 import { useAtom } from "jotai";
 import { endTimeAtom, printEndTimeAtom, startTimeAtom } from "../Time.ts";
 import { UserInfo } from "../../../data/user.ts";
 import { useEffect, useState } from "react";
 import authApi from "../../../api/Instance/authApi.ts";
-import { SlotButton } from "./styles/Button.tsx";
-import useIsMobile from "../../mobile/useIsMobile.tsx";
 import { useNavigate } from "react-router-dom";
-import { TimeSlots } from "./styles/Times.tsx";
 import { SlotContainer } from "./styles/Containers.tsx";
 import { Month } from "../../BookMange/DateMange/monthData.ts";
-import { formatDate, transDate } from "../../../utils/dateUtils.ts";
+import { formatDate, isSameDate, transDate } from "../../../utils/dateUtils.ts";
+import { TimeSlotsGrid } from "./TimeSlotsGrid.tsx";
 
 const baseSlots = Array.from({ length: 26 }, (_, index) => ({
   time: `${10 + Math.floor(index / 2)}:${index % 2 === 0 ? "00" : "30"}`,
@@ -28,7 +25,6 @@ const Reservation: React.FC<ReservationProps> = ({
   team,
 }) => {
   const today = new Date();
-  const isMobile = useIsMobile();
   const [startTime, setStartTime] = useAtom(startTimeAtom);
   const [endTime, setEndTime] = useAtom(endTimeAtom);
   const [, setPrintEndTime] = useAtom(printEndTimeAtom);
@@ -43,14 +39,9 @@ const Reservation: React.FC<ReservationProps> = ({
       );
       if (date) {
         const newfilteredData = response.data.find((data: Month) => {
-          const userDate = new Date(transDate(data.date));
-          return (
-            userDate.getFullYear() === date.getFullYear() &&
-            userDate.getMonth() === date.getMonth() &&
-            userDate.getDate() === date.getDate()
-          );
+          return isSameDate(new Date(transDate(data.date)), date);
         });
-        unAvailableSlot(newfilteredData);
+        unAvailableSlots(undefined, newfilteredData);
       }
     } catch (error) {
       console.log(`에러남:${error}`);
@@ -62,14 +53,8 @@ const Reservation: React.FC<ReservationProps> = ({
 
       if (date) {
         const newfilteredData = response.data.filter((user: UserInfo) => {
-          const userDate = new Date(transDate(user.reservationDate));
-          return (
-            userDate.getFullYear() === date.getFullYear() &&
-            userDate.getMonth() === date.getMonth() &&
-            userDate.getDate() === date.getDate()
-          );
+          return isSameDate(new Date(transDate(user.reservationDate)), date);
         });
-
         unAvailableSlots(newfilteredData);
       }
     } catch (error) {
@@ -78,87 +63,83 @@ const Reservation: React.FC<ReservationProps> = ({
       navigate("/login");
     }
   };
-  const unAvailableSlot = (data: Month) => {
-    const start = baseSlots.findIndex((slot) => slot.time === data.startTime);
-    const printend = baseSlots.findIndex((slot) => slot.time === data.endTime);
-    const end = data.endTime === "23:00" ? 25 : printend - 1;
-    setSelectedtSlots((prev) =>
-      prev.map((slot, index) => {
-        if (index < start || index > end) {
-          return { ...slot, available: false };
-        }
-        return slot;
-      })
-    );
+  const getSlotIndex = (startTime: string, endTime: string) => {
+    const startIndex = baseSlots.findIndex((slot) => slot.time === startTime);
+    const printEnd = baseSlots.findIndex((slot) => slot.time === endTime);
+    const endIndex = endTime === "23:00" ? 25 : printEnd - 1;
+    return { startIndex, endIndex };
   };
-  const unAvailableSlots = (data: UserInfo[]) => {
-    if (
-      today.getDate() === date?.getDate() &&
-      today.getMonth() === date?.getMonth() &&
-      today.getHours() > 10
-    ) {
-      const nowTime = `${today.getHours()}:${
-        today.getMinutes() > 30 ? "30" : "00"
-      }`;
-      const start = baseSlots.findIndex((slot) => slot.time === nowTime);
-      if (start === -1) {
-        setSelectedtSlots((prev) =>
-          prev.map((slot) => {
-            return { ...slot, available: false };
-          })
-        );
-      }
-
+  const unAvailableSlots = (userData?: UserInfo[], monthData?: Month) => {
+    if (monthData) {
+      const { startIndex, endIndex } = getSlotIndex(
+        monthData.startTime,
+        monthData.endTime
+      );
       setSelectedtSlots((prev) =>
         prev.map((slot, index) => {
-          if (index <= start) {
+          if (index < startIndex || index > endIndex) {
             return { ...slot, available: false };
           }
           return slot;
         })
       );
-    }
-
-    data.forEach((user) => {
-      if (team) {
-        const start = baseSlots.findIndex(
-          (slot) => slot.time === user.reservationStartTime
-        );
-
-        const printend = baseSlots.findIndex(
-          (slot) => slot.time === user.reservationEndTime
-        );
-        const end = user.reservationEndTime === "23:00" ? 25 : printend - 1;
-
-        setSelectedtSlots((prev) =>
-          prev.map((slot, index) => {
-            if (index >= start && index <= end) {
+    } else if (userData) {
+      if (date && isSameDate(today, date) && today.getHours() > 10) {
+        const nowTime = `${today.getHours()}:${
+          today.getMinutes() > 30 ? "30" : "00"
+        }`;
+        const start = baseSlots.findIndex((slot) => slot.time === nowTime);
+        if (start === -1) {
+          setSelectedtSlots((prev) =>
+            prev.map((slot) => {
               return { ...slot, available: false };
-            }
-            return slot;
-          })
-        );
-      } else if (
-        user.reservationSession == instrument ||
-        user.reservationSession == "all"
-      ) {
-        const start = baseSlots.findIndex(
-          (slot) => slot.time === user.reservationStartTime
-        );
-        const printend = baseSlots.findIndex(
-          (slot) => slot.time === user.reservationEndTime
-        );
-        const end = user.reservationEndTime === "23:00" ? 25 : printend - 1;
+            })
+          );
+        }
+
         setSelectedtSlots((prev) =>
           prev.map((slot, index) => {
-            if (index >= start && index <= end) {
+            if (index <= start) {
               return { ...slot, available: false };
             }
             return slot;
           })
         );
       }
-    });
+
+      userData.forEach((user) => {
+        if (team) {
+          const { startIndex, endIndex } = getSlotIndex(
+            user.reservationStartTime,
+            user.reservationEndTime
+          );
+          setSelectedtSlots((prev) =>
+            prev.map((slot, index) => {
+              if (index >= startIndex && index <= endIndex) {
+                return { ...slot, available: false };
+              }
+              return slot;
+            })
+          );
+        } else if (
+          user.reservationSession == instrument ||
+          user.reservationSession == "all"
+        ) {
+          const { startIndex, endIndex } = getSlotIndex(
+            user.reservationStartTime,
+            user.reservationEndTime
+          );
+          setSelectedtSlots((prev) =>
+            prev.map((slot, index) => {
+              if (index >= startIndex && index <= endIndex) {
+                return { ...slot, available: false };
+              }
+              return slot;
+            })
+          );
+        }
+      });
+    }
   };
   const handleSlotClick = (index: number, time: string, available: boolean) => {
     if (available) {
@@ -224,42 +205,12 @@ const Reservation: React.FC<ReservationProps> = ({
     <SlotContainer>
       <Time>
         <TimeContainer>
-          <TimeSlots>
-            {selectedSlots.map((slot, index) => (
-              <div key={index}>
-                <div
-                  className={css`
-                    display: flex;
-                    flex-direction: column;
-                    gap: 10px;
-                  `}
-                >
-                  <div
-                    className={css`
-                      height: 10px;
-                    `}
-                  >
-                    {index % 2 === 0 && index / 2 + 10}{" "}
-                  </div>
-                  <SlotButton
-                    key={index}
-                    available={slot.available}
-                    isMobile={isMobile}
-                    selected={
-                      (!!startTime &&
-                        !!endTime &&
-                        index >= startTime.index &&
-                        index <= endTime.index) ||
-                      startTime?.index === index
-                    }
-                    onClick={() =>
-                      handleSlotClick(index, slot.time, slot.available)
-                    }
-                  ></SlotButton>
-                </div>
-              </div>
-            ))}
-          </TimeSlots>
+          <TimeSlotsGrid
+            slots={selectedSlots}
+            startTime={startTime}
+            endTime={endTime}
+            onSlotsClick={handleSlotClick}
+          />
         </TimeContainer>
       </Time>
     </SlotContainer>

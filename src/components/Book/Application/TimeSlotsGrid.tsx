@@ -11,7 +11,6 @@ interface TimeSlotsGridProps {
   slots: TimeSlot[];
   startTime: TimeInfo | null;
   endTime: TimeInfo | null;
-  printEndTime: string;
   onSlotsClick: (index: number, time: string, available: boolean) => void;
 }
 export const TimeSlotsGrid: React.FC<TimeSlotsGridProps> = ({
