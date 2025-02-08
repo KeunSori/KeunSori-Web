@@ -7,6 +7,7 @@ const NotionContainer = styled.div`
   padding-top: 5px;
   padding-right: 10px;
   height: 350px;
+  width: 340px;
   max-height: 100%;
   overflow-x: hidden;
   overflow-y: auto;

@@ -56,6 +56,8 @@ const Button = styled.button<ButttonProps>`
 const ReservationButton = styled.button<{ isMobile?: boolean }>`
   @media (max-width: 768px) {
     width: 120px;
+    background-color: #ffe493;
+    color: black;
   }
   width: 200px;
   height: ${({ isMobile }) => (isMobile ? "40px" : "50px")};
