@@ -11,8 +11,9 @@ import { useNavigate } from "react-router-dom";
 import { TimeSlots } from "./styles/Times.tsx";
 import { SlotContainer } from "./styles/Containers.tsx";
 import { Month } from "../../BookMange/DateMange/monthData.ts";
+import { formatDate, transDate } from "../../../utils/dateUtils.ts";
 
-const slots = Array.from({ length: 26 }, (_, index) => ({
+const baseSlots = Array.from({ length: 26 }, (_, index) => ({
   time: `${10 + Math.floor(index / 2)}:${index % 2 === 0 ? "00" : "30"}`,
   available: true,
 }));
@@ -31,20 +32,8 @@ const Reservation: React.FC<ReservationProps> = ({
   const [startTime, setStartTime] = useAtom(startTimeAtom);
   const [endTime, setEndTime] = useAtom(endTimeAtom);
   const [, setPrintEndTime] = useAtom(printEndTimeAtom);
-  const [selectedSlots, setSelectedtSlots] = useState(slots);
+  const [selectedSlots, setSelectedtSlots] = useState(baseSlots);
   const navigate = useNavigate();
-  const TransDate = (userDate: string) => {
-    return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
-  };
-
-  const formatDate = (date: Date | null): string | null => {
-    if (!date) return null;
-
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-
-    return `${year}${month}`;
-  };
 
   const fetchData = async () => {
     if (!date) return;
@@ -54,7 +43,7 @@ const Reservation: React.FC<ReservationProps> = ({
       );
       if (date) {
         const newfilteredData = response.data.find((data: Month) => {
-          const userDate = new Date(TransDate(data.date));
+          const userDate = new Date(transDate(data.date));
           return (
             userDate.getFullYear() === date.getFullYear() &&
             userDate.getMonth() === date.getMonth() &&
@@ -73,7 +62,7 @@ const Reservation: React.FC<ReservationProps> = ({
 
       if (date) {
         const newfilteredData = response.data.filter((user: UserInfo) => {
-          const userDate = new Date(TransDate(user.reservationDate));
+          const userDate = new Date(transDate(user.reservationDate));
           return (
             userDate.getFullYear() === date.getFullYear() &&
             userDate.getMonth() === date.getMonth() &&
@@ -90,8 +79,8 @@ const Reservation: React.FC<ReservationProps> = ({
     }
   };
   const unAvailableSlot = (data: Month) => {
-    const start = slots.findIndex((slot) => slot.time === data.startTime);
-    const printend = slots.findIndex((slot) => slot.time === data.endTime);
+    const start = baseSlots.findIndex((slot) => slot.time === data.startTime);
+    const printend = baseSlots.findIndex((slot) => slot.time === data.endTime);
     const end = data.endTime === "23:00" ? 25 : printend - 1;
     setSelectedtSlots((prev) =>
       prev.map((slot, index) => {
@@ -111,7 +100,7 @@ const Reservation: React.FC<ReservationProps> = ({
       const nowTime = `${today.getHours()}:${
         today.getMinutes() > 30 ? "30" : "00"
       }`;
-      const start = slots.findIndex((slot) => slot.time === nowTime);
+      const start = baseSlots.findIndex((slot) => slot.time === nowTime);
       if (start === -1) {
         setSelectedtSlots((prev) =>
           prev.map((slot) => {
@@ -132,11 +121,11 @@ const Reservation: React.FC<ReservationProps> = ({
 
     data.forEach((user) => {
       if (team) {
-        const start = slots.findIndex(
+        const start = baseSlots.findIndex(
           (slot) => slot.time === user.reservationStartTime
         );
 
-        const printend = slots.findIndex(
+        const printend = baseSlots.findIndex(
           (slot) => slot.time === user.reservationEndTime
         );
         const end = user.reservationEndTime === "23:00" ? 25 : printend - 1;
@@ -153,10 +142,10 @@ const Reservation: React.FC<ReservationProps> = ({
         user.reservationSession == instrument ||
         user.reservationSession == "all"
       ) {
-        const start = slots.findIndex(
+        const start = baseSlots.findIndex(
           (slot) => slot.time === user.reservationStartTime
         );
-        const printend = slots.findIndex(
+        const printend = baseSlots.findIndex(
           (slot) => slot.time === user.reservationEndTime
         );
         const end = user.reservationEndTime === "23:00" ? 25 : printend - 1;
@@ -178,7 +167,7 @@ const Reservation: React.FC<ReservationProps> = ({
       } else if (startTime.index + 3 < index || startTime.index > index) {
         setStartTime({ time, index });
       } else if (!endTime) {
-        const allSlotsAvailable = slots
+        const allSlotsAvailable = baseSlots
           .slice(startTime.index, index + 1)
           .every((slot) => slot.available);
         if (allSlotsAvailable) {
@@ -186,7 +175,7 @@ const Reservation: React.FC<ReservationProps> = ({
           if (time[0] === "2" && time[1] === "2" && time[3] === "3") {
             setPrintEndTime("23:00");
           } else {
-            setPrintEndTime(slots[index + 1].time);
+            setPrintEndTime(baseSlots[index + 1].time);
           }
         } else {
           setStartTime({ time, index });
@@ -200,7 +189,7 @@ const Reservation: React.FC<ReservationProps> = ({
           setEndTime(null);
           setPrintEndTime("");
         } else if (endTime.index < index) {
-          const allSlotsAvailable = slots
+          const allSlotsAvailable = baseSlots
             .slice(startTime.index, index + 1)
             .every((slot) => slot.available);
           if (allSlotsAvailable) {
@@ -208,7 +197,7 @@ const Reservation: React.FC<ReservationProps> = ({
             if (time[0] === "2" && time[1] === "2" && time[3] === "3") {
               setPrintEndTime("23:00");
             } else {
-              setPrintEndTime(slots[index + 1].time);
+              setPrintEndTime(baseSlots[index + 1].time);
             }
           } else {
             setStartTime({ time, index });
@@ -227,7 +216,7 @@ const Reservation: React.FC<ReservationProps> = ({
     setStartTime(null);
     setEndTime(null);
     setPrintEndTime("");
-    setSelectedtSlots(slots);
+    setSelectedtSlots(baseSlots);
     fetchData();
   }, [date, instrument, team]);
 
