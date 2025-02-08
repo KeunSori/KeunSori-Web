@@ -25,6 +25,7 @@ import {
   TypeContainer,
 } from "./styles/Containers.tsx";
 import { useNavigate } from "react-router-dom";
+import ReservationModal from "./ReservationModal.tsx";
 
 const ApplicationBook: React.FC = () => {
   const defaultInstruments: InstrumentInfo = {
@@ -47,6 +48,7 @@ const ApplicationBook: React.FC = () => {
   const [printEndTime] = useAtom(printEndTimeAtom);
   const [monthData, setMonthData] = useAtom(monthDataAtom);
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isSameDay = (d1: Date, d2: Date) => {
     return (
       d1.getMonth() === d2.getMonth() &&
@@ -283,7 +285,7 @@ const ApplicationBook: React.FC = () => {
                 </Times>
 
                 <ReservationButton
-                  onClick={handleSubmit}
+                  onClick={() => setIsModalOpen(true)}
                   isMobile={isMobile}
                   disabled={!date || !startTime || !endTime}
                 >
@@ -296,6 +298,13 @@ const ApplicationBook: React.FC = () => {
             )}
           </InContainer>
         ) : null}
+        {isModalOpen && (
+          <ReservationModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onSubmit={handleSubmit}
+          />
+        )}
       </OutContainer>
     </>
   );
