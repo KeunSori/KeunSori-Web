@@ -54,6 +54,9 @@ const ApplicationBook: React.FC = () => {
       d1.getFullYear() === d2.getFullYear()
     );
   };
+  const TransDate = (userDate: string) => {
+    return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
+  };
   const formatDate = (date: Date | null): string | null => {
     if (!date) return null;
 
@@ -139,7 +142,7 @@ const ApplicationBook: React.FC = () => {
   const UnvailableMonth = (date: Date): boolean => {
     if (monthData) {
       for (const month of monthData) {
-        if (isSameDay(new Date(month.date), date)) {
+        if (isSameDay(new Date(TransDate(month.date)), date)) {
           if (!month.isActive) {
             return true;
           }
