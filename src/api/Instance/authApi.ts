@@ -2,7 +2,7 @@ import axios from "axios";
 import { removeToken } from "../../utils/jwt";
 import { logout } from "../auth";
 
-const API_URL = "https://keunsori-api.everdu.com/";
+const API_URL = import.meta.env.VITE_API_URL as string;
 
 const authApi = axios.create({
   baseURL: API_URL,
