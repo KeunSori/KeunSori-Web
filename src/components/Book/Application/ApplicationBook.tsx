@@ -16,7 +16,7 @@ import CalendarStyles from "./CalenderStyles.tsx";
 import { InstrumentInfo } from "../../../data/user.ts";
 import OutContainer from "../OutContainer.tsx";
 import useIsMobile from "../../mobile/useIsMobile.tsx";
-import { SelectedTime, Time, Times } from "./styles/Times.tsx";
+import { SelectedTime } from "./styles/Times.tsx";
 import {
   ButtonContainer,
   Container,
@@ -26,6 +26,7 @@ import {
 } from "./styles/Containers.tsx";
 import { useNavigate } from "react-router-dom";
 import ReservationModal from "./ReservationModal.tsx";
+import TimeContainer from "./TimeContainer.tsx";
 
 const ApplicationBook: React.FC = () => {
   const defaultInstruments: InstrumentInfo = {
@@ -263,26 +264,13 @@ const ApplicationBook: React.FC = () => {
                 <Reservation date={date} instrument={instrument} team={team} />
               )}
               <SelectedTime isMobile={isMobile}>
-                <Times isMobile={isMobile}>
-                  <Time>
-                    {date
-                      ? `날짜: ${date.getFullYear()}년 ${
-                          date.getMonth() + 1
-                        }월 ${date.getDate()}일`
-                      : "날짜를 선택해주세요."}
-                  </Time>
-                  <Time>
-                    시작 시간:
-                    {startTime?.time ? ` ${startTime.time} ` : " 00:00"}
-                  </Time>
-                  <Time>
-                    마감 시간:
-                    {endTime?.time
-                      ? ` ${printEndTime} 
-                    `
-                      : " 00:00"}
-                  </Time>
-                </Times>
+                <TimeContainer
+                  startTime={startTime}
+                  endTime={endTime}
+                  date={date}
+                  printEndTime={printEndTime}
+                  isMobile={isMobile}
+                />
 
                 <ReservationButton
                   onClick={() => setIsModalOpen(true)}
