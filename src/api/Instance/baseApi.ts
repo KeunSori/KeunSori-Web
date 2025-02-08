@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://keunsori-api2.everdu.com/";
+const API_URL = "https://keunsori-api.everdu.com/";
 
 const baseApi = axios.create({
   baseURL: API_URL,
