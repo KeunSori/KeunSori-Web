@@ -1,5 +1,4 @@
 import { atom } from "jotai";
-
 export interface Week {
   dayOfWeekNum: number;
   isActive: boolean;

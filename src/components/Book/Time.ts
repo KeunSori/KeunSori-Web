@@ -18,6 +18,4 @@ export const startTimeAtom = atom<Time | null>(null);
 export const endTimeAtom = atom<Time | null>(null);
 export const printEndTimeAtom = atom<string>("");
 export const isOpenAtom = atom<boolean>(false);
-const today = new Date();
-export const dateAtom = atom<Date | null>(today);
 export const monthDataAtom = atom<Month[] | null>(null);

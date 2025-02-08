@@ -3,7 +3,6 @@ import Calendar from "react-calendar";
 import Reservation from "./Reservation.tsx";
 import { useAtom } from "jotai";
 import {
-  dateAtom,
   endTimeAtom,
   startTimeAtom,
   instrument,
@@ -43,7 +42,7 @@ const ApplicationBook: React.FC = () => {
   const [instrument, setInstrument] = useState<string>("");
   const [startTime] = useAtom(startTimeAtom);
   const [endTime] = useAtom(endTimeAtom);
-  const [date, setDate] = useAtom(dateAtom);
+  const [date, setDate] = useState<Date | null>(null);
   const today = new Date();
   const [printEndTime] = useAtom(printEndTimeAtom);
   const [monthData, setMonthData] = useAtom(monthDataAtom);
@@ -64,13 +63,15 @@ const ApplicationBook: React.FC = () => {
     return `${year}${month}`;
   };
   const fetchData = async () => {
-    try {
-      const response = await authApi.get(
-        `/reservation?month=${formatDate(date)}`
-      );
-      setMonthData(response.data);
-    } catch {
-      console.log("error");
+    if (date) {
+      try {
+        const response = await authApi.get(
+          `/reservation?month=${formatDate(date)}`
+        );
+        setMonthData(response.data);
+      } catch {
+        console.log("error");
+      }
     }
   };
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {

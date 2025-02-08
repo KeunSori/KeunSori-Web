@@ -47,6 +47,7 @@ const Reservation: React.FC<ReservationProps> = ({
   };
 
   const fetchData = async () => {
+    if (!date) return;
     try {
       const response = await authApi.get(
         `/reservation?month=${formatDate(date)}`

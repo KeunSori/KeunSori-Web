@@ -6,6 +6,7 @@ import { Week, weekDataAtom } from "./weekData";
 interface DayNotionProps {
   date: Week;
 }
+
 const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
   const [isActive, setIsActive] = useState<boolean>(date.isActive);
   const [weekData, setWeekData] = useAtom(weekDataAtom);
