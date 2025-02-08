@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import Calendar from "react-calendar";
-import Reservation from "./Reservation.tsx";
+import Reservation from "./Reservation/Reservation.tsx";
 import { useAtom } from "jotai";
 import {
   endTimeAtom,
@@ -10,23 +9,19 @@ import {
   monthDataAtom,
 } from "../Time.ts";
 import { Value } from "react-calendar/src/shared/types.js";
-import { Button, ReservationButton } from "./styles/Button.tsx";
+import { ReservationButton } from "./styles/Button.tsx";
 import authApi from "../../../api/Instance/authApi.ts";
-import CalendarStyles from "./CalenderStyles.tsx";
 import { InstrumentInfo } from "../../../data/user.ts";
 import OutContainer from "../OutContainer.tsx";
 import useIsMobile from "../../mobile/useIsMobile.tsx";
 import { SelectedTime } from "./styles/Times.tsx";
-import {
-  ButtonContainer,
-  Container,
-  InContainer,
-  MidContainer,
-  TypeContainer,
-} from "./styles/Containers.tsx";
+import { Container, InContainer } from "./styles/Containers.tsx";
 import { useNavigate } from "react-router-dom";
 import ReservationModal from "./ReservationModal.tsx";
 import TimeContainer from "./TimeContainer.tsx";
+import { formatDate } from "../../../utils/dateUtils.ts";
+import CalendarComponent from "./CalendarComponent.tsx";
+import ButtonsContainer from "./ButtonsComponent.tsx";
 
 const ApplicationBook: React.FC = () => {
   const defaultInstruments: InstrumentInfo = {
@@ -47,27 +42,10 @@ const ApplicationBook: React.FC = () => {
   const [date, setDate] = useState<Date | null>(null);
   const today = new Date();
   const [printEndTime] = useAtom(printEndTimeAtom);
-  const [monthData, setMonthData] = useAtom(monthDataAtom);
+  const [, setMonthData] = useAtom(monthDataAtom);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const isSameDay = (d1: Date, d2: Date) => {
-    return (
-      d1.getMonth() === d2.getMonth() &&
-      d1.getDate() === d2.getDate() &&
-      d1.getFullYear() === d2.getFullYear()
-    );
-  };
-  const TransDate = (userDate: string) => {
-    return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
-  };
-  const formatDate = (date: Date | null): string | null => {
-    if (!date) return null;
 
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-
-    return `${year}${month}`;
-  };
   const fetchData = async () => {
     if (date) {
       try {
@@ -114,13 +92,7 @@ const ApplicationBook: React.FC = () => {
       setDate(value);
     }
   };
-  const beforeToday = (date: Date) => {
-    return (
-      date.getDate() < today.getDate() &&
-      date.getMonth() === today.getMonth() &&
-      date.getFullYear() === today.getFullYear()
-    );
-  };
+
   const handleSubmit = async () => {
     if (!date || !startTime || !endTime) return;
     const inst = Object.keys(instruments).find(([value]) => value);
@@ -142,22 +114,6 @@ const ApplicationBook: React.FC = () => {
       alert("다시 시도 해주세요.");
     }
   };
-  const UnvailableMonth = (date: Date): boolean => {
-    if (monthData) {
-      for (const month of monthData) {
-        if (isSameDay(new Date(TransDate(month.date)), date)) {
-          if (!month.isActive) {
-            return true;
-          }
-        }
-      }
-    }
-    return (
-      date.getMonth() - 1 > today.getMonth() ||
-      date.getMonth() < today.getMonth() ||
-      date.getFullYear() !== today.getFullYear()
-    );
-  };
 
   useEffect(() => {
     fetchData();
@@ -165,79 +121,13 @@ const ApplicationBook: React.FC = () => {
   return (
     <>
       <OutContainer>
-        <MidContainer>
-          <ButtonContainer>
-            <TypeContainer>유형</TypeContainer>
-            <Button
-              isActive={team}
-              isMobile={isMobile}
-              onClick={onClick}
-              data-action="team"
-            >
-              팀
-            </Button>
-            <Button
-              isActive={individual}
-              isMobile={isMobile}
-              onClick={onClick}
-              data-action="individual"
-            >
-              개인
-            </Button>
-          </ButtonContainer>
-          {(team || individual) && (
-            <>
-              <ButtonContainer>
-                <TypeContainer>악기</TypeContainer>
-                <Button
-                  isActive={instruments["guitar"]}
-                  disabled={team}
-                  isMobile={isMobile}
-                  value="guitar"
-                  onClick={onClickInstrument}
-                >
-                  기타
-                </Button>
-                <Button
-                  isActive={instruments["vocal"]}
-                  disabled={team}
-                  isMobile={isMobile}
-                  value="vocal"
-                  onClick={onClickInstrument}
-                >
-                  보컬
-                </Button>
-                <Button
-                  isActive={instruments["bass"]}
-                  disabled={team}
-                  isMobile={isMobile}
-                  value="bass"
-                  onClick={onClickInstrument}
-                >
-                  베이스
-                </Button>
-                <Button
-                  isActive={instruments["drum"]}
-                  disabled={team}
-                  isMobile={isMobile}
-                  value="drum"
-                  onClick={onClickInstrument}
-                >
-                  드럼
-                </Button>
-                <Button
-                  isActive={instruments["keyboard"]}
-                  disabled={team}
-                  isMobile={isMobile}
-                  value="keyboard"
-                  onClick={onClickInstrument}
-                >
-                  키보드
-                </Button>
-              </ButtonContainer>
-            </>
-          )}
-        </MidContainer>
+        <ButtonsContainer
+          team={team}
+          individual={individual}
+          instruments={instruments}
+          onClick={onClick}
+          onClickInstrument={onClickInstrument}
+        />
         {instruments["guitar"] ||
         instruments["vocal"] ||
         instruments["bass"] ||
@@ -246,20 +136,7 @@ const ApplicationBook: React.FC = () => {
         team ? (
           <InContainer isMobile={isMobile}>
             <Container isMobile={isMobile}>
-              <CalendarStyles isMobile={isMobile}>
-                <Calendar
-                  calendarType="gregory"
-                  view="month"
-                  value={date}
-                  onChange={handleDateChange}
-                  prev2Label={null}
-                  next2Label={null}
-                  formatDay={(_locale, date) => date.getDate().toString()}
-                  tileDisabled={({ date }: { date: Date }) =>
-                    beforeToday(date) || UnvailableMonth(date)
-                  }
-                />
-              </CalendarStyles>
+              <CalendarComponent date={date} onDateChange={handleDateChange} />
               {isMobile && (
                 <Reservation date={date} instrument={instrument} team={team} />
               )}
