@@ -36,7 +36,7 @@ const NavBar2: React.FC = () => {
         `}
         style={{ cursor: "pointer" }}
       >
-        <Link to="/book">
+        <Link to="/member-management">
           <img
             className={css`
               width: 60px;
