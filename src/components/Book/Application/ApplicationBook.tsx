@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 import ReservationModal from "./ReservationModal.tsx";
 import TimeContainer from "./TimeContainer.tsx";
 import { formatDate } from "../../../utils/dateUtils.ts";
-import CalendarComponent from "./CalendarComponent.tsx";
+import CalendarComponent from "./Calendar/CalendarComponent.tsx";
 import ButtonsContainer from "./ButtonsComponent.tsx";
 
 const ApplicationBook: React.FC = () => {
