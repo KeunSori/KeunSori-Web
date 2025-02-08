@@ -56,8 +56,8 @@ const Button = styled.button<ButttonProps>`
 const ReservationButton = styled.button<{ isMobile?: boolean }>`
   @media (max-width: 768px) {
     width: 120px;
-    background-color: #ffe493;
-    color: black;
+    background-color: #fbe59d;
+    color: #505050;
   }
   width: 200px;
   height: ${({ isMobile }) => (isMobile ? "40px" : "50px")};
@@ -70,17 +70,17 @@ const ReservationButton = styled.button<{ isMobile?: boolean }>`
   cursor: pointer;
   margin-top: ${({ isMobile }) => (isMobile ? "20px" : "100px")};
   :disabled {
-    background-color: #f1f1f1;
-    color: #b0b0b0;
+    background-color: #f0f0f0;
+    color: #505050;
     cursor: not-allowed;
     &:hover {
-      background-color: #f1f1f1;
-      color: #b0b0b0;
+      background-color: #f0f0f0;
+      color: #505050;
     }
   }
   &:hover {
-    background-color: #ffe493;
-    color: black;
+    background-color: #fbe59d;
+    color: #505050;
   }
 `;
 
