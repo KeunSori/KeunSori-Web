@@ -4,7 +4,41 @@ import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import logo from "/image/logo.svg";
 import heart from "/image/heart.svg";
+import Activity from "../components/Home/Activity.tsx";
+import timeline from "/image/timeline.svg";
+interface FolderDetailInfo {
+  color: string;
+  type: string;
+  image: string;
+  content: string;
+  number: number;
+}
+
 const HomePage = () => {
+  const DetailNote: FolderDetailInfo[] = [
+    {
+      color: "#EBE8DE",
+      type: "따뜻한 분위기",
+      image: "image",
+      content: "따뜻하고 가족 같은 분위기로 선배들과 친구들을 사귀기 쉬워요",
+      number: 1,
+    },
+    {
+      color: "#F4E170",
+      type: "좋은 장비",
+      image: "image",
+      content: "개인 악기가 없어도 학회에 있는 악기들로 활동 할 수 잇어요",
+      number: 2,
+    },
+    {
+      color: "#DCAB53",
+      type: "다양한 장르",
+      image: "image",
+      content:
+        "부원이 많아 음악장르가 다양해요 취향이 맞는 친구와 합주를 즐길 수 있어요",
+      number: 3,
+    },
+  ];
   return (
     <>
       <NavBar />
@@ -36,18 +70,50 @@ const HomePage = () => {
           </Details>
         </Detail>
         <Detail>큰소리를 소개합니다</Detail>
-        <div
-          className={css`
-            margin: 150px;
-          `}
-        ></div>
-        <FolderCard />
+        <Cards>
+          {DetailNote.map((details) => (
+            <div key={details.number}>
+              <FolderCard details={details} />
+            </div>
+          ))}
+        </Cards>
+        <Detail>큰소리 활동</Detail>
+        <ActivityContainer>
+          <Activity />
+        </ActivityContainer>
+        <Detail>1학기 큰소리 일정</Detail>
+        <TimeLine src={timeline} />
+        <Detail>큰소리의 실력이 궁금하다면?</Detail>
       </Wrapper>
     </>
   );
 };
 
 export default HomePage;
+const TimeLine = styled.img`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 60%;
+  margin-top: 80px;
+  margin-bottom: 150px;
+`;
+
+const ActivityContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 150px;
+`;
+const Cards = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 50px;
+  margin-bottom: 150px;
+`;
 const Details = styled.div`
   text-align: center;
   font-size: 20px;

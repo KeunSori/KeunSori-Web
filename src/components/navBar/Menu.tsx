@@ -29,7 +29,7 @@ const Menu = styled.div<MenuProps>`
   @media (max-width: 768px) {
     gap: 0px;
   }
-  z-index: 3;
+  z-index: 30;
   width: calc(100%);
   height: 55px;
   background-color: white;
