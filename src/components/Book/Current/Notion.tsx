@@ -1,7 +1,9 @@
 import { css } from "@emotion/css";
-import styled from "@emotion/styled";
 import { UserInfo } from "../../../data/user.ts";
 import { useEffect, useState } from "react";
+import { transInstrument } from "../../../utils/instrumentUtils.ts";
+import { transDate } from "../../../utils/dateUtils.ts";
+import { Detail, NotionItem, Title } from "./NotionStyle.tsx";
 
 interface NotionProps {
   user: UserInfo;
@@ -9,28 +11,14 @@ interface NotionProps {
 const Notion: React.FC<NotionProps> = ({ user }) => {
   const [instrument, setInstrument] = useState<string>("");
   const TransInstrument = (session: string) => {
-    if (session == "vocal") {
-      setInstrument("보컬");
-    } else if (session == "guitar") {
-      setInstrument("기타");
-    } else if (session == "bass") {
-      setInstrument("베이스");
-    } else if (session == "keyboard") {
-      setInstrument("키보드");
-    } else if (session == "drum") {
-      setInstrument("드럼");
-    } else {
-      setInstrument("합주");
-    }
+    setInstrument(transInstrument(session));
   };
 
   const [date, setDate] = useState<Date | null>(null);
-  const TransDate = (userDate: string) => {
-    return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
-  };
+
   useEffect(() => {
     TransInstrument(user.reservationSession);
-    setDate(new Date(TransDate(user.reservationDate)));
+    setDate(new Date(transDate(user.reservationDate)));
   }, []);
   return (
     <>
@@ -66,33 +54,3 @@ const Notion: React.FC<NotionProps> = ({ user }) => {
   );
 };
 export default Notion;
-
-const Title = styled.div`
-  font-size: 11px;
-  font-weight: 300;
-  margin-top: 15px;
-  color: #7f8fa4;
-`;
-const Detail = styled.div`
-  font-size: 14px;
-  font-weight: 300;
-  margin-top: 5px;
-`;
-
-const NotionItem = styled.div`
-  @media (max-width: 768px) {
-    width: 280px;
-  }
-  padding: 20px 30px;
-  width: 320px;
-  max-width: 100%;
-  height:100%
-  min-height: 150px;
-  border-radius: 10px;
-  border: 1px solid rgb(218, 218, 218);
-  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
-  padding: 15px px;
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 20px;
-`;

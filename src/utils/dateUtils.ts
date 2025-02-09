@@ -24,3 +24,10 @@ export const beforeToday = (date: Date) => {
     date.getFullYear() === today.getFullYear()
   );
 };
+export const unvailableMonth = (date: Date) => {
+  return (
+    date.getMonth() - 1 > today.getMonth() ||
+    date.getMonth() < today.getMonth() ||
+    date.getFullYear() !== today.getFullYear()
+  );
+};
