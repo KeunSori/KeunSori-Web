@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import authApi from "../../api/Instance/authApi";
+import ManageModal from "./ManageModal";
 ///import { fetchRows } from "./api"; // API 요청 분리된 파일
 
 interface memberResponse {
@@ -77,6 +78,7 @@ const Scroll = styled.div`
 
 const DynamicTable: React.FC = () => {
   const [rows, setRows] = useState<Row[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   // 데이터 불러오기
   useEffect(() => {
@@ -151,6 +153,8 @@ const DynamicTable: React.FC = () => {
     } catch (error) {
       console.error("탈퇴 처리 실패:", error);
     }
+
+    window.location.href = "/member-management";
   };
 
   return (
@@ -187,7 +191,16 @@ const DynamicTable: React.FC = () => {
           </tbody>
         </Table>
       </Scroll>
-      <ActionButton onClick={handleDelete}>탈퇴 처리</ActionButton>
+      <ActionButton onClick={() => setIsModalOpen(true)}>
+        탈퇴 처리
+      </ActionButton>
+      {isModalOpen && (
+        <ManageModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onDelete={handleDelete}
+        />
+      )}
     </TableContainer>
   );
 };
