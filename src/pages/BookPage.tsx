@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
 import NavBar2 from "../components/navBar/navBar2.tsx";
-import CurrentBook from "../components/Book/Current/CurrentBook.tsx";
+import CurrentBook from "../components/Book/Current/CurrentBook/CurrentBook.tsx";
 import ApplicationBook from "../components/Book/Application/ApplicationBook.tsx";
 import MyBook from "../components/Book/My/MyBook.tsx";
 import { useLocation, useNavigate } from "react-router-dom";

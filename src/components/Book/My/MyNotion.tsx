@@ -2,6 +2,8 @@ import { UserInfo } from "../../../data/user.ts";
 import { useEffect, useState } from "react";
 import authApi from "../../../api/Instance/authApi.ts";
 import NotionCard from "./NotionCard.tsx";
+import { transInstrument } from "../../../utils/instrumentUtils.ts";
+import { transDate } from "../../../utils/dateUtils.ts";
 
 interface MyNotionProps {
   user: UserInfo;
@@ -9,24 +11,8 @@ interface MyNotionProps {
 const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
   const [instrument, setInstrument] = useState<string>("");
 
-  const TransDate = (userDate: string) => {
-    return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
-  };
-
   const TransInstrument = (session: string) => {
-    if (session == "vocal") {
-      setInstrument("보컬");
-    } else if (session == "guitar") {
-      setInstrument("기타");
-    } else if (session == "bass") {
-      setInstrument("베이스");
-    } else if (session == "keyboard") {
-      setInstrument("키보드");
-    } else if (session == "drum") {
-      setInstrument("드럼");
-    } else {
-      setInstrument("합주");
-    }
+    setInstrument(transInstrument(session));
   };
   const [date, setDate] = useState<Date | null>(null);
 
@@ -36,7 +22,7 @@ const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
   };
   useEffect(() => {
     TransInstrument(user.reservationSession);
-    setDate(new Date(TransDate(user.reservationDate)));
+    setDate(new Date(transDate(user.reservationDate)));
   }, []);
   return (
     <>

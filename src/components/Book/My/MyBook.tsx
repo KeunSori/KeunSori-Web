@@ -7,6 +7,7 @@ import { UserInfo } from "../../../data/user.ts";
 import { InstrumentDropBox, TeamDropBox } from "../DropBox/DropBox.tsx";
 import OutContainer from "../OutContainer.tsx";
 import { useNavigate } from "react-router-dom";
+import { transInstrumentToEng } from "../../../utils/instrumentUtils.ts";
 
 const MyBook: React.FC = () => {
   const [team, setTeam] = useState(false);
@@ -29,19 +30,7 @@ const MyBook: React.FC = () => {
     }
   };
   const onInstrumentClick = (value: string) => {
-    if (value === "보컬") {
-      setInstrument("vocal");
-    } else if (value === "기타") {
-      setInstrument("guitar");
-    } else if (value === "베이스") {
-      setInstrument("bass");
-    } else if (value === "드럼") {
-      setInstrument("drum");
-    } else if (value === "키보드") {
-      setInstrument("keyboard");
-    } else {
-      setInstrument("");
-    }
+    setInstrument(transInstrumentToEng(value));
   };
   const [userData, setUserData] = useState<UserInfo[] | null>(null);
 

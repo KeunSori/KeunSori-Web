@@ -1,8 +1,8 @@
 import { css } from "@emotion/css";
-import { UserInfo } from "../../../data/user.ts";
+import { UserInfo } from "../../../../data/user.ts";
 import { useEffect, useState } from "react";
-import { transInstrument } from "../../../utils/instrumentUtils.ts";
-import { transDate } from "../../../utils/dateUtils.ts";
+import { transInstrument } from "../../../../utils/instrumentUtils.ts";
+import { transDate } from "../../../../utils/dateUtils.ts";
 import { Detail, NotionItem, Title } from "./NotionStyle.tsx";
 
 interface NotionProps {

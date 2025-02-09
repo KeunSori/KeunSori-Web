@@ -6,8 +6,7 @@ import { Value } from "react-calendar/src/shared/types.js";
 import authApi from "../../../api/Instance/authApi.ts";
 import { UserInfo } from "../../../data/user.ts";
 import OutContainer from "../../Book/OutContainer.tsx";
-import NotionContainer from "../../Book/Current/NotionContainer.tsx";
-import TimePicker from "../TImePicker.tsx";
+import TimePicker from "../TimePicker.tsx";
 import ManageNotion from "./ManageNotion.tsx";
 import {
   CalendarContainer,
@@ -19,6 +18,8 @@ import {
 import { useAtom } from "jotai";
 import { Month, MonthDataAtom } from "./monthData.ts";
 import ManageModal from "../ManageModal.tsx";
+import { formatDate, isSameDate, transDate } from "../../../utils/dateUtils.ts";
+import { NotionContainer } from "../../Book/Current/CurrentBook/CurrentBookStyle.tsx";
 
 const today = new Date();
 
@@ -31,9 +32,7 @@ const DateManage: React.FC = () => {
     UserData
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const isSameDay = (d1: Date, d2: Date) => {
-    return d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
-  };
+
   const handleClick =
     (timeType: "startTime" | "endTime") =>
     (e: React.MouseEvent<HTMLButtonElement>): void => {
@@ -46,14 +45,7 @@ const DateManage: React.FC = () => {
         }
       }
     };
-  const formatDate = (date: Date | null): string | null => {
-    if (!date) return null;
 
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-
-    return `${year}${month}`;
-  };
   const fetchData = async () => {
     try {
       const response = await authApi.get(
@@ -62,8 +54,8 @@ const DateManage: React.FC = () => {
       setmonthData(response.data);
       if (date) {
         const filteredData = response.data?.find((data: Month) => {
-          const dataDate = new Date(TransDate(data.date));
-          return isSameDay(dataDate, date);
+          const dataDate = new Date(transDate(data.date));
+          return isSameDate(dataDate, date);
         });
         setFilterDate(filteredData);
       }
@@ -78,8 +70,8 @@ const DateManage: React.FC = () => {
       setUserData(response.data);
       if (date) {
         const filteredData = response.data?.filter((user: UserInfo) => {
-          const userDate = new Date(TransDate(user.reservationDate));
-          return isSameDay(userDate, date);
+          const userDate = new Date(transDate(user.reservationDate));
+          return isSameDate(userDate, date);
         });
         setFilteredUserData(filteredData || null);
       }
@@ -87,9 +79,6 @@ const DateManage: React.FC = () => {
       console.log(`유저 정보 에러남:${error}`);
       alert("정보를 불러올 수 없습니다");
     }
-  };
-  const TransDate = (userDate: string) => {
-    return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
   };
 
   const UnvailableMonth = (date: Date) => {

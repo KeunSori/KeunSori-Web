@@ -3,26 +3,26 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { Value } from "react-calendar/src/shared/types.js";
-import Notion from "../Current/Notion.tsx";
-import authApi from "../../../api/Instance/authApi.ts";
-import { UserInfo } from "../../../data/user.ts";
-import { InstrumentDropBox, TeamDropBox } from "../DropBox/DropBox.tsx";
-import OutContainer from "../OutContainer.tsx";
+import Notion from "../Notion/Notion.tsx";
+import authApi from "../../../../api/Instance/authApi.ts";
+import { UserInfo } from "../../../../data/user.ts";
+import { InstrumentDropBox, TeamDropBox } from "../../DropBox/DropBox.tsx";
+import OutContainer from "../../OutContainer.tsx";
 import { useNavigate } from "react-router-dom";
-import NotionContainer from "./NotionContainer.tsx";
-import { transInstrumentToEng } from "../../../utils/instrumentUtils.ts";
+import { transInstrumentToEng } from "../../../../utils/instrumentUtils.ts";
 import {
   formatDate,
   isSameDate,
   transDate,
   unvailableMonth,
-} from "../../../utils/dateUtils.ts";
+} from "../../../../utils/dateUtils.ts";
 import {
   Application,
   CalendarContainer,
   Divider,
   InContainer,
   MobileNote,
+  NotionContainer,
 } from "./CurrentBookStyle.tsx";
 
 const today = new Date();

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import TimePicker from "../TImePicker";
+import TimePicker from "../TimePicker";
 import styled from "@emotion/styled";
 import { useAtom } from "jotai";
 import { Week, weekDataAtom } from "./weekData";

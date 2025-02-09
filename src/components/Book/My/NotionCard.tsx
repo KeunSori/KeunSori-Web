@@ -3,6 +3,7 @@ import { Detail, Notion, Title } from "./NotionStyle";
 import { UserInfo } from "../../../data/user.ts";
 import { useState } from "react";
 import Modal from "./Modal.tsx";
+import { isSameDate, transDate } from "../../../utils/dateUtils.ts";
 interface NotionCardProps {
   user: UserInfo;
   onDelete: () => void;
@@ -19,22 +20,14 @@ const NotionCard: React.FC<NotionCardProps> = ({
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const checkDate = () => {
     const now = new Date();
-
-    const date = new Date(TransDate(user.reservationDate));
-    if (
-      now.getFullYear() === date.getFullYear() &&
-      now.getMonth() === date.getMonth() &&
-      now.getDate() === date.getDate()
-    ) {
+    const date = new Date(transDate(user.reservationDate));
+    if (isSameDate(now, date)) {
       return false;
     }
     if (now > date) {
       return true;
     }
     return false;
-  };
-  const TransDate = (userDate: string) => {
-    return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
   };
 
   return (
