@@ -54,20 +54,23 @@ const Reservation: React.FC<ReservationProps> = ({
     const endIndex = endTime === "23:00" ? 25 : printEnd - 1;
     return { startIndex, endIndex };
   };
+  const updateSlot = (condition: (i: number) => boolean) => {
+    setSelectedtSlots((prev) =>
+      prev.map((slot, index) => {
+        if (condition(index)) {
+          return { ...slot, available: false };
+        }
+        return slot;
+      })
+    );
+  };
   const unAvailableSlots = (userData?: UserInfo[], monthData?: Month) => {
     if (monthData) {
       const { startIndex, endIndex } = getSlotIndex(
         monthData.startTime,
         monthData.endTime
       );
-      setSelectedtSlots((prev) =>
-        prev.map((slot, index) => {
-          if (index < startIndex || index > endIndex) {
-            return { ...slot, available: false };
-          }
-          return slot;
-        })
-      );
+      updateSlot((i) => i < startIndex || i > endIndex);
     } else if (userData) {
       if (date && isSameDate(today, date) && today.getHours() > 10) {
         const nowTime = `${today.getHours()}:${
@@ -75,21 +78,9 @@ const Reservation: React.FC<ReservationProps> = ({
         }`;
         const start = baseSlots.findIndex((slot) => slot.time === nowTime);
         if (start === -1) {
-          setSelectedtSlots((prev) =>
-            prev.map((slot) => {
-              return { ...slot, available: false };
-            })
-          );
+          updateSlot((i) => i >= 0);
         }
-
-        setSelectedtSlots((prev) =>
-          prev.map((slot, index) => {
-            if (index <= start) {
-              return { ...slot, available: false };
-            }
-            return slot;
-          })
-        );
+        updateSlot((i) => i <= start);
       }
 
       userData.forEach((user) => {
@@ -98,14 +89,7 @@ const Reservation: React.FC<ReservationProps> = ({
             user.reservationStartTime,
             user.reservationEndTime
           );
-          setSelectedtSlots((prev) =>
-            prev.map((slot, index) => {
-              if (index >= startIndex && index <= endIndex) {
-                return { ...slot, available: false };
-              }
-              return slot;
-            })
-          );
+          updateSlot((i) => i >= startIndex && i <= endIndex);
         } else if (
           user.reservationSession == instrument ||
           user.reservationSession == "all"
@@ -114,14 +98,7 @@ const Reservation: React.FC<ReservationProps> = ({
             user.reservationStartTime,
             user.reservationEndTime
           );
-          setSelectedtSlots((prev) =>
-            prev.map((slot, index) => {
-              if (index >= startIndex && index <= endIndex) {
-                return { ...slot, available: false };
-              }
-              return slot;
-            })
-          );
+          updateSlot((i) => i >= startIndex && i <= endIndex);
         }
       });
     }
