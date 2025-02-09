@@ -70,7 +70,7 @@ const NavBar: React.FC = () => {
               <IoClose size="30" fill="#919191" />
             )}
           </Button>
-          <MobileMenu isOpened={isOpen}>
+          <MobileMenu isOpened={isOpen} isSmall={true}>
             <Link to="/recruit">
               <Space isActive={location.pathname === "/recruit"}>
                 지원하기

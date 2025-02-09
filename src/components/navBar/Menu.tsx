@@ -2,14 +2,16 @@ import styled from "@emotion/styled";
 
 interface MobileMenuProps {
   isOpened: boolean;
+  isSmall?: boolean;
 }
 const MobileMenu = styled.div<MobileMenuProps>`
   display: flex;
   flex-direction: column;
   position: absolute;
   width: 100%;
-  height: ${({ isOpened }) => (isOpened ? "230px" : "0px")};
-  transition: height 0.3s ease-in-out;
+  max-height: ${({ isOpened }) => (isOpened ? "230px" : "0px")};
+  ${({ isSmall }) => (isSmall ? `height:170px` : null)};
+  transition: max-height 0.3s ease-in-out;
   z-index: 1;
   gap: 5px;
   top: 55px;
@@ -31,7 +33,7 @@ const Menu = styled.div<MenuProps>`
   }
   z-index: 30;
   width: calc(100%);
-  height: 55px;
+  height: 60px;
   background-color: white;
   box-sizing: border-box;
   top: 0px;
