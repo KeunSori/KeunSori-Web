@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import TimePicker from "../TimePicker.tsx";
+import TimeSelecter from "../TimeSelecter.tsx";
 import styled from "@emotion/styled";
 import { useAtom } from "jotai";
 import { Week, weekDataAtom } from "./weekData";
@@ -62,13 +62,13 @@ const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
       />
       <DayContainer isActive={isActive}>
         <span>{days[date.dayOfWeekNum]}</span>
-        <TimePicker
+        <TimeSelecter
           disabled={isActive}
           startTime={date.startTime}
           onClick={handleClick("startTime")}
         />
         부터
-        <TimePicker
+        <TimeSelecter
           disabled={isActive}
           endTime={date.endTime}
           onClick={handleClick("endTime")}

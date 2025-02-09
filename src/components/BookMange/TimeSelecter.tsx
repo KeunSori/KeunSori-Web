@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Button, Dropbox, SelectedButton } from "./DropBoxStyle";
-interface TimePickerProps {
+interface TimeSelecterProps {
   startTime?: string;
   endTime?: string;
   disabled?: boolean;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
-const TimePicker: React.FC<TimePickerProps> = ({
+const TimeSelecter: React.FC<TimeSelecterProps> = ({
   startTime,
   endTime,
   disabled,
@@ -92,4 +92,4 @@ const TimePicker: React.FC<TimePickerProps> = ({
   );
 };
 
-export default TimePicker;
+export default TimeSelecter;
