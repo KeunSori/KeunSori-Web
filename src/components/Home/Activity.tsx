@@ -85,4 +85,5 @@ const ImageDetail = styled.div`
   font-size: 20px;
   width: 350px;
   line-height: 1.5;
+  margin-bottom: 30px;
 `;

@@ -9,7 +9,7 @@ const Apply = () => {
         <ApplyDetail>
           음악을 사랑한다면, <br />
           당신은 이미 큰소리!{" "}
-          <Link to="/apply">
+          <Link to="/recruit">
             <ApplyLink>지원하러 가기 -{`>`}</ApplyLink>
           </Link>
         </ApplyDetail>

@@ -85,7 +85,7 @@ const HomePage = () => {
         <Detail>1학기 큰소리 일정</Detail>
         <TimeLine src={timeline} />
         <Detail>큰소리의 실력이 궁금하다면?</Detail>
-        <Apply></Apply>
+        <Apply />
       </Wrapper>
     </>
   );
@@ -97,7 +97,8 @@ const TimeLine = styled.img`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 60%;
+  min-width: 400px;
+  max-width: 80%;
   margin-top: 80px;
   margin-bottom: 150px;
 `;
