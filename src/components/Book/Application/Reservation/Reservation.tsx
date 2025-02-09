@@ -3,16 +3,15 @@ import { useAtom } from "jotai";
 import { endTimeAtom, printEndTimeAtom, startTimeAtom } from "../../Time.ts";
 import { UserInfo } from "../../../../data/user.ts";
 import { useEffect, useState } from "react";
-import authApi from "../../../../api/Instance/authApi.ts";
 import { useNavigate } from "react-router-dom";
 import { SlotContainer } from "../styles/Containers.tsx";
 import { Month } from "../../../BookMange/DateMange/monthData.ts";
-import {
-  formatDate,
-  isSameDate,
-  transDate,
-} from "../../../../utils/dateUtils.ts";
+import { isSameDate } from "../../../../utils/dateUtils.ts";
 import { TimeSlotsGrid } from "./TimeSlotsGrid.tsx";
+import {
+  fetchMonthReservation,
+  fetchReservationList,
+} from "../../../../api/reservationSevice.ts";
 
 const baseSlots = Array.from({ length: 26 }, (_, index) => ({
   time: `${10 + Math.floor(index / 2)}:${index % 2 === 0 ? "00" : "30"}`,
@@ -38,35 +37,17 @@ const Reservation: React.FC<ReservationProps> = ({
   const fetchData = async () => {
     if (!date) return;
     try {
-      const response = await authApi.get(
-        `/reservation?month=${formatDate(date)}`
-      );
-      if (date) {
-        const newfilteredData = response.data.find((data: Month) => {
-          return isSameDate(new Date(transDate(data.date)), date);
-        });
-        unAvailableSlots(undefined, newfilteredData);
-      }
-    } catch (error) {
-      console.log(`에러남:${error}`);
-    }
-    try {
-      const response = await authApi.get(
-        `/reservation/list?month=${formatDate(date)}`
-      );
-
-      if (date) {
-        const newfilteredData = response.data.filter((user: UserInfo) => {
-          return isSameDate(new Date(transDate(user.reservationDate)), date);
-        });
-        unAvailableSlots(newfilteredData);
-      }
-    } catch (error) {
-      console.log(`에러남:${error}`);
-      alert("정보를 불러올 수 없습니다");
+      const [newfilteredMonthData, newfilteredData] = await Promise.all([
+        fetchMonthReservation(date),
+        fetchReservationList(date),
+      ]);
+      unAvailableSlots(undefined, newfilteredMonthData);
+      unAvailableSlots(newfilteredData);
+    } catch {
       navigate("/login");
     }
   };
+
   const getSlotIndex = (startTime: string, endTime: string) => {
     const startIndex = baseSlots.findIndex((slot) => slot.time === startTime);
     const printEnd = baseSlots.findIndex((slot) => slot.time === endTime);
