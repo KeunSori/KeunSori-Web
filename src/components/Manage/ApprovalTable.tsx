@@ -85,7 +85,6 @@ const ApprovalTable: React.FC = () => {
     const fetchData = async () => {
       try {
         const members = await fetchApplicants();
-        console.log(members);
 
         const resultRows = members.map((item) => ({
           ...item,
