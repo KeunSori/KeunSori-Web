@@ -2,7 +2,7 @@
 name: "❓ Question"
 about: 궁금한 부분이 있어요.
 title: "❓ Question: "
-labels: question
+labels: ''
 assignees: ''
 
 ---

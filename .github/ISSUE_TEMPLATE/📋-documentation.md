@@ -2,7 +2,7 @@
 name: "\U0001F4CB Documentation"
 about: 문서화
 title: "\U0001F4CB Docs: "
-labels: documentation, enhancement
+labels: ''
 assignees: ''
 
 ---
