@@ -2,7 +2,7 @@
 name: "\U0001F527 Refactoring"
 about: 리팩토링
 title: "\U0001F527 Refactoring: "
-labels: refactoring
+labels: ''
 assignees: ''
 
 ---
