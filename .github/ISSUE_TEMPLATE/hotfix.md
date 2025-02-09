@@ -1,7 +1,7 @@
 ---
-name: "✅ Feature"
-about: 새로운 기능 추가
-title: "✅ Feature: "
+name: HotFix
+about: 치명적인 버그
+title: 'Hotfix:'
 labels: ''
 assignees: ''
 
@@ -9,10 +9,6 @@ assignees: ''
 
 ## Description
 설명을 작성해주세요.
-
-## To Do
-- [ ] todo
-- [ ] todo
 
 ## ETC
 기타사항을 작성해주세요.

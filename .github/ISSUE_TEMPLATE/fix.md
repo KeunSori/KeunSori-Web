@@ -1,8 +1,8 @@
 ---
-name: "\U0001F41BHotFix"
-about: 치명적인 버그
-title: "\U0001F41B Hot-Fix: "
-labels: bug
+name: Fix
+about: 트러블 슈팅
+title: 'Fix:'
+labels: ''
 assignees: ''
 
 ---

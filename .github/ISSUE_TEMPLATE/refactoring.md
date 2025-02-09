@@ -1,8 +1,8 @@
 ---
-name: "\U0001F527 Refactoring"
+name: Refactoring
 about: 리팩토링
-title: "\U0001F527 Refactoring: "
-labels: ''
+title: 'Refactoring:'
+labels: refactor
 assignees: ''
 
 ---
