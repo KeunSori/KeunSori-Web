@@ -11,7 +11,7 @@ export const transInstrument = (instrument: string) => {
     case "drum":
       return "드럼";
     default:
-      return "악기";
+      return "합주";
   }
 };
 export const transInstrumentToEng = (instrument: string) => {
