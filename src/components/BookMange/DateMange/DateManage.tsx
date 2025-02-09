@@ -104,7 +104,6 @@ const DateManage: React.FC = () => {
   };
   const handleSubmit = async () => {
     try {
-      console.log(filterDate);
       await authApi.put(`/admin/reservation/daily-schedule`, filterDate);
       window.location.reload();
     } catch (e) {

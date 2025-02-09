@@ -85,7 +85,6 @@ const DynamicTable: React.FC = () => {
     const fetchData = async () => {
       try {
         const members = await fetchMembers();
-        console.log(members);
 
         const resultRows = members.map((item) => {
           const dateArray = item.approvalDate || [2002, 1, 4, 0, 0, 0, 0];
