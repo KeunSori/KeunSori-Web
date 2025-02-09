@@ -9,7 +9,7 @@ interface NavProps {
 }
 const Nav = styled.button<NavProps>`
   font-size: 17px;
-  background-color: ${({ isActive }) => (isActive ? "FFF4D5" : "transparent")};
+  background-color: ${({ isActive }) => (isActive ? "#FFF4D5" : "transparent")};
   font-weight: 300;
   border-radius: 10px;
   padding: 10px;
