@@ -3,6 +3,36 @@ const GlobalStyle = () => (
   <Global
     styles={css`
       @font-face {
+        font-family: "LeeSeoyun";
+        src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "DNFForgedBlade";
+        font-style: normal;
+        font-weight: 300;
+        src: url("//cdn.df.nexon.com/img/common/font/DNFForgedBlade-Light.otf")
+          format("opentype");
+      }
+
+      @font-face {
+        font-family: "DNFForgedBlade";
+        font-style: normal;
+        font-weight: 500;
+        src: url("//cdn.df.nexon.com/img/common/font/DNFForgedBlade-Medium.otf")
+          format("opentype");
+      }
+
+      @font-face {
+        font-family: "DNFForgedBlade";
+        font-style: normal;
+        font-weight: 700;
+        src: url("//cdn.df.nexon.com/img/common/font/DNFForgedBlade-Bold.otf")
+          format("opentype");
+      }
+      @font-face {
         font-family: "S-CoreDream";
         src: url(/fonts/S-Core_Dream/SCDream2.ttf) format("trueType");
         font-weight: 200;
