@@ -6,7 +6,7 @@ import { Value } from "react-calendar/src/shared/types.js";
 import authApi from "../../../api/Instance/authApi.ts";
 import { UserInfo } from "../../../data/user.ts";
 import OutContainer from "../../Book/OutContainer.tsx";
-import TimePicker from "../TimePicker.tsx";
+import TimeSelecter from "../TimeSelecter.tsx";
 import ManageNotion from "./ManageNotion.tsx";
 import {
   CalendarContainer,
@@ -153,13 +153,13 @@ const DateManage: React.FC = () => {
                   >
                     {date.getMonth() + 1}월 {date.getDate()}일
                   </div>
-                  <TimePicker
+                  <TimeSelecter
                     onClick={handleClick("startTime")}
                     disabled={filterDate?.isActive}
                     startTime={filterDate?.startTime}
                   />
                   부터
-                  <TimePicker
+                  <TimeSelecter
                     onClick={handleClick("endTime")}
                     disabled={filterDate?.isActive}
                     endTime={filterDate?.endTime}
