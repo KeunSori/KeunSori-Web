@@ -25,9 +25,7 @@ const SignUpForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await registerUser(formData);
-      console.log("응답: ", response);
-      setMessage(response.message);
+      await registerUser(formData);
       navigate("/login");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
