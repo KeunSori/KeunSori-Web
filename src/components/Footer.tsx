@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import KakaoTalk from "/image/kakaotalk.png";
-import Instagram from "/image/instagram.png";
-import Youtube from "/image/youtube.png";
+import KakaoTalk from "/image/kakaotalk.svg";
+import Instagram from "/image/instagram.svg";
+import Youtube from "/image/youtube.svg";
 
 const Footer: React.FC = () => {
   return (
