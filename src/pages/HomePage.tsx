@@ -8,6 +8,8 @@ import Activity from "../components/Home/Activity.tsx";
 import timeline from "/image/timeline.svg";
 import Apply from "../components/Home/Apply.tsx";
 import YoutubeContents from "../components/Home/YoutubeContents.tsx";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 interface FolderDetailInfo {
   color: string;
   type: string;
@@ -17,6 +19,10 @@ interface FolderDetailInfo {
 }
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("/login");
+  }, []);
   const DetailNote: FolderDetailInfo[] = [
     {
       color: "#EBE8DE",
