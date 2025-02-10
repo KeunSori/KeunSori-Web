@@ -100,6 +100,7 @@ const Image = styled.div`
 const ImageTitle = styled.div`
   font-size: 30px;
   margin-top: 30px;
+  margin-bottom: 20px;
   font-family: LeeSeoyun, sans-serif;
   color: #505050;
   text-align: center;

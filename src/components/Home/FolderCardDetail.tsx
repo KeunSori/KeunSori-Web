@@ -88,6 +88,7 @@ const NameTag = styled.div<{ detailColor: string }>`
   width: 120px;
   height: 25px;
   padding: 5px;
+  font-size: 15px;
   border-radius: 15px;
   background: ${(prop) => prop.detailColor};
   z-index: 20;
