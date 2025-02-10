@@ -21,14 +21,14 @@ const Apply = () => {
 const ApplyLink = styled.div`
   margin-top: 20px;
   font-family: LeeSeoyun, sans-serif;
-  font-size: 20px;
+  font-size: 23px;
   :hover {
     color: rgb(180, 173, 159);
   }
 `;
 const ApplyDetail = styled.div`
   font-family: LeeSeoyun, sans-serif;
-  font-size: 20px;
+  font-size: 25px;
   margin-right: 50px;
 `;
 const ApplyContainer = styled.div`
@@ -37,7 +37,6 @@ const ApplyContainer = styled.div`
   align-items: center;
 `;
 const Poster = styled.img`
-  width: 100px;
-  height: 200px;
+  height: 250px;
 `;
 export default Apply;

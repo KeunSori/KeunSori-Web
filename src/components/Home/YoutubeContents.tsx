@@ -1,15 +1,17 @@
 import styled from "@emotion/styled";
 import YouTube from "react-youtube";
+import useIsMobile from "../mobile/useIsMobile";
 
 const YoutubeContents = () => {
+  const isMobile = useIsMobile();
   return (
     <YouTubeContainer>
       <YouTube
         videoId="keNGC4VB3BU"
         opts={{
           host: "https://www.youtube-nocookie.com",
-          width: "500",
-          height: "100%",
+          width: `${isMobile ? "300" : "550"}`,
+          height: `${isMobile ? "200" : "350"}`,
           playerVars: {
             autoplay: 0,
             rel: 0,
@@ -21,7 +23,7 @@ const YoutubeContents = () => {
 };
 export default YoutubeContents;
 const YouTubeContainer = styled.div`
-  width: 500px;
+  width: 800px;
   display: flex;
   justify-content: center;
   margin-bottom: 100px;
