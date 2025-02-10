@@ -26,6 +26,7 @@ const SignUpForm: React.FC = () => {
     e.preventDefault();
     try {
       await registerUser(formData);
+      setMessage("회원가입에 성공했습니다.");
       navigate("/login");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -112,7 +113,7 @@ const SignUpForm: React.FC = () => {
             `}
           >
             <Input
-              name="hongikgmail"
+              name="email"
               placeholder="개인 이메일"
               type="email"
               value={formData.email}
