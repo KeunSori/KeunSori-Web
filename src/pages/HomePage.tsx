@@ -61,7 +61,6 @@ const HomePage = () => {
         </Intro>
         <HeartImg src={heart} />
         <Detail>
-          큰소리
           <Details>
             홍익대학교 컴퓨터공학과 밴드 학회 큰소리는
             <br />
@@ -111,8 +110,6 @@ const TimeLine = styled.img`
 const ActivityContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
   margin-bottom: 150px;
 `;
 const Cards = styled.div`
