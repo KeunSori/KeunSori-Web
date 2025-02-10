@@ -7,6 +7,7 @@ import heart from "/image/heart.svg";
 import Activity from "../components/Home/Activity.tsx";
 import timeline from "/image/timeline.svg";
 import Apply from "../components/Home/Apply.tsx";
+import YoutubeContents from "../components/Home/YoutubeContents.tsx";
 interface FolderDetailInfo {
   color: string;
   type: string;
@@ -85,6 +86,7 @@ const HomePage = () => {
         <Detail>1학기 큰소리 일정</Detail>
         <TimeLine src={timeline} />
         <Detail>큰소리의 실력이 궁금하다면?</Detail>
+        <YoutubeContents />
         <Apply />
       </Wrapper>
     </>

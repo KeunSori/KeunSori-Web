@@ -17,7 +17,7 @@ const LoginPage = () => {
           margin-top: -10vh;
         `}
       >
-        <Link to="/login">
+        <Link to="/">
           <img
             className={css`
               margin-top: 60px;
