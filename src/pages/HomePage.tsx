@@ -8,8 +8,7 @@ import Activity from "../components/Home/Activity.tsx";
 import timeline from "/image/timeline.svg";
 import Apply from "../components/Home/Apply.tsx";
 import YoutubeContents from "../components/Home/YoutubeContents.tsx";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import Wrapper from "../components/Wrapper.tsx";
 interface FolderDetailInfo {
   color: string;
   type: string;
@@ -19,10 +18,6 @@ interface FolderDetailInfo {
 }
 
 const HomePage = () => {
-  const navigate = useNavigate();
-  useEffect(() => {
-    navigate("/login");
-  }, []);
   const DetailNote: FolderDetailInfo[] = [
     {
       color: "#EBE8DE",
@@ -172,16 +167,6 @@ const ImageContainer = styled.div`
   transform: rotate(-10deg);
 `;
 const Image = styled.img`
-  width: 100%;
-  height: 100%;
-`;
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background: #fffbf3;
-  margin-top: 50px;
   width: 100%;
   height: 100%;
 `;
