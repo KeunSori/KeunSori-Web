@@ -9,7 +9,12 @@ const Footer: React.FC = () => {
       <Wrapper>
         <Ptag>홍익대학교 컴퓨터공학과 밴드 학회 큰소리</Ptag>
         <Apps>
-          <AppImg src={KakaoTalk} onClick={() => window.open("", "_blank")} />
+          <AppImg
+            src={KakaoTalk}
+            onClick={() =>
+              window.open("https://pf.kakao.com/_xmDfsn", "_blank")
+            }
+          />
           <AppImg
             src={Instagram}
             onClick={() =>
@@ -63,6 +68,7 @@ const Apps = styled.div`
 const AppImg = styled.img`
   width: 40px;
   height: 40px;
+  cursor: pointer;
 `;
 
 const Copyright = styled.div`
