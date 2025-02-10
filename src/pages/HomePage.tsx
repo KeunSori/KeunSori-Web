@@ -21,21 +21,21 @@ interface FolderDetailInfo {
 const HomePage = () => {
   const DetailNote: FolderDetailInfo[] = [
     {
-      color: "#EBE8DE",
+      color: "#FEC039",
       type: "따뜻한 분위기",
       image: "image",
       content: "따뜻하고 가족 같은 분위기로 선배들과 친구들을 사귀기 쉬워요",
       number: 1,
     },
     {
-      color: "#F4E170",
+      color: "#FFE33A",
       type: "좋은 장비",
       image: "image",
       content: "개인 악기가 없어도 학회에 있는 악기들로 활동 할 수 잇어요",
       number: 2,
     },
     {
-      color: "#DCAB53",
+      color: "#E6CE86",
       type: "다양한 장르",
       image: "image",
       content:
@@ -61,7 +61,6 @@ const HomePage = () => {
         </Intro>
         <HeartImg src={heart} />
         <Detail>
-          큰소리
           <Details>
             홍익대학교 컴퓨터공학과 밴드 학회 큰소리는
             <br />
@@ -111,8 +110,6 @@ const TimeLine = styled.img`
 const ActivityContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
   margin-bottom: 150px;
 `;
 const Cards = styled.div`
