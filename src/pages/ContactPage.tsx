@@ -1,5 +1,6 @@
 import { css } from "@emotion/css";
 import NavBar from "../components/navBar/navBar.tsx";
+import Footer from "../components/Footer.tsx";
 const ContactPage = () => {
   return (
     <>
@@ -23,6 +24,7 @@ const ContactPage = () => {
           찾아오시는 길
         </div>
       </div>
+      <Footer />
     </>
   );
 };

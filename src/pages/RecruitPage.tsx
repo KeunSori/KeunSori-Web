@@ -3,6 +3,7 @@ import Wrapper from "../components/Wrapper.tsx";
 import recruit from "/image/Recruit.svg";
 import styled from "@emotion/styled";
 import poster from "/image/poster.svg";
+import Footer from "../components/Footer.tsx";
 const RecruitPage = () => {
   return (
     <>
@@ -51,6 +52,7 @@ const RecruitPage = () => {
           </RecruitContent>
         </SubContent>
         <Poster src={poster} />
+        <Footer />
       </Wrapper>
     </>
   );
