@@ -72,17 +72,13 @@ const NavBar: React.FC = () => {
           </Button>
           <MobileMenu isOpened={isOpen} isSmall={true}>
             <Link to="/recruit">
-              <Space isActive={location.pathname === "/recruit"}>
-                지원하기
-              </Space>
+              <Space isActive={false}>지원하기</Space>
             </Link>
             <Link to="/contact">
-              <Space isActive={location.pathname === "/contact"}>
-                문의하기
-              </Space>
+              <Space isActive={false}>문의하기</Space>
             </Link>
             <Link to="/login">
-              <Space isActive={location.pathname === "/login"}>my keun</Space>
+              <Space isActive={false}>my keun</Space>
             </Link>
           </MobileMenu>
         </>
