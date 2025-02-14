@@ -31,7 +31,12 @@ const Footer: React.FC = () => {
             }
           />
         </Apps>
-        <Copyright>Copyright ⓒ 2025 KEUN. All Rights Reserved</Copyright>
+        <Copyright>
+          <Ptag className="copy">
+            {" "}
+            Copyright ⓒ 2025 KEUN. All Rights Reserved
+          </Ptag>
+        </Copyright>
       </Wrapper>
     </>
   );
@@ -58,6 +63,15 @@ const Ptag = styled.p`
   font-size: 18px;
   font-family: LeeSeoyun, sans-serif;
   color: #505050;
+
+  &.copy {
+    @media (max-width: 768px) {
+      width: 90%;
+    }
+    color: #8e8e8e;
+    font-size: 20px;
+    font-family: LeeSeoyun, sans-serif;
+  }
 `;
 
 const Apps = styled.div`
@@ -75,9 +89,6 @@ const Copyright = styled.div`
   background-color: #f0f0f0;
   width: 100%;
   height: 80px;
-  color: #8e8e8e;
-  font-size: 20px;
-  font-family: LeeSeoyun, sans-serif;
 
   display: flex;
   justify-content: center;
