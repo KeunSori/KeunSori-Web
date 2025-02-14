@@ -94,17 +94,6 @@ const LoginForm: React.FC = () => {
             placeholder="비밀번호"
             required
           ></Input>
-          {capsLockOn && (
-            <div
-              style={{
-                color: "red",
-                fontSize: "14px",
-                marginTop: "5px",
-              }}
-            >
-              ⚠️ Caps Lock이 켜져 있습니다!
-            </div>
-          )}
           <Button
             className={css`
               @media (max-width: 768px) {
@@ -117,6 +106,17 @@ const LoginForm: React.FC = () => {
           </Button>
         </div>
       </form>
+      {capsLockOn && (
+        <div
+          style={{
+            color: "red",
+            fontSize: "14px",
+            marginTop: "5px",
+          }}
+        >
+          ⚠️ Caps Lock이 켜져 있습니다!
+        </div>
+      )}
       {message && (
         <p
           className={css`
