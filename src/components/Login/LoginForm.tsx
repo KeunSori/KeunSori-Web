@@ -11,6 +11,7 @@ const LoginForm: React.FC = () => {
   const [password, setPassword] = useState("");
   const authContext = useContext(AuthContext);
   const [message, setMessage] = useState("");
+  const [capsLockOn, setCapsLockOn] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,6 +41,14 @@ const LoginForm: React.FC = () => {
       alert("승인 대기 중입니다. 다른 계정으로 다시 시도해주세요.");
       authContext.logoutUser();
     }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    setCapsLockOn(e.getModifierState("CapsLock"));
+  };
+
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    setCapsLockOn(e.getModifierState("CapsLock"));
   };
 
   return (
@@ -80,6 +89,8 @@ const LoginForm: React.FC = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onKeyUp={handleKeyUp}
             placeholder="비밀번호"
             required
           ></Input>
@@ -95,6 +106,17 @@ const LoginForm: React.FC = () => {
           </Button>
         </div>
       </form>
+      {capsLockOn && (
+        <div
+          style={{
+            color: "red",
+            fontSize: "14px",
+            marginTop: "5px",
+          }}
+        >
+          ⚠️ Caps Lock이 켜져 있습니다!
+        </div>
+      )}
       {message && (
         <p
           className={css`

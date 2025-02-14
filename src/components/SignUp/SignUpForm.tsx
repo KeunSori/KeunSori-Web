@@ -16,6 +16,7 @@ const SignUpForm: React.FC = () => {
   });
 
   const [message, setMessage] = useState("");
+  const [capsLockOn, setCapsLockOn] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,6 +39,14 @@ const SignUpForm: React.FC = () => {
         setMessage("Unexpected error occured.");
       }
     }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    setCapsLockOn(e.getModifierState("CapsLock"));
+  };
+
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    setCapsLockOn(e.getModifierState("CapsLock"));
   };
 
   return (
@@ -145,6 +154,8 @@ const SignUpForm: React.FC = () => {
               type="password"
               value={formData.password}
               onChange={handleChange}
+              onKeyUp={handleKeyUp}
+              onKeyDown={handleKeyDown}
               required
             ></Input>
           </div>
@@ -198,6 +209,18 @@ const SignUpForm: React.FC = () => {
           </div>
         </div>
       </form>
+      {capsLockOn && (
+        <div
+          style={{
+            color: "red",
+            fontSize: "14px",
+            marginTop: "5px",
+            marginBottom: "5px",
+          }}
+        >
+          ⚠️ Caps Lock이 켜져 있습니다!
+        </div>
+      )}
       {message && (
         <p
           className={css`
