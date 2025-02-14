@@ -59,7 +59,7 @@ const faqData: Record<string, { question: string; answer: string }[]> = {
       answer: "아니요! 합주 외에도 MT, 버스킹, 공연 등 다양한 활동이 있어요!",
     },
   ],
-  "연기 & 공연": [
+  "악기 & 공연": [
     {
       question: "다른 학회 소속인데 가입할 수 있나요?",
       answer: "네! 다른 학회 소속이어도 충분히 활동이 가능합니다!",
