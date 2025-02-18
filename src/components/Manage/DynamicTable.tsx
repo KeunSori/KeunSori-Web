@@ -20,6 +20,8 @@ interface Row {
   checked?: boolean;
 }
 
+type SortKeys = "name" | "StudentId" | "date";
+
 const fetchMembers = async (): Promise<memberResponse[]> => {
   const response = await authApi.get<memberResponse[]>("/admin/members/list");
   return response.data;
@@ -78,6 +80,7 @@ const Scroll = styled.div`
 
 const DynamicTable: React.FC = () => {
   const [rows, setRows] = useState<Row[]>([]);
+  const [sortKey, setSortKey] = useState<SortKeys>("date");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   // 데이터 불러오기
@@ -105,6 +108,7 @@ const DynamicTable: React.FC = () => {
         });
 
         setRows(resultRows);
+        sortMembers(sortKey);
       } catch (error) {
         console.error("Fetch error: ", error);
       }
@@ -112,6 +116,20 @@ const DynamicTable: React.FC = () => {
 
     fetchData();
   }, []);
+
+  // 정렬
+  const sortMembers = (key: SortKeys) => {
+    const sorted = [...rows].sort((a, b) => {
+      if (key === "name") return a.name.localeCompare(b.name);
+      if (key === "date")
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      if (key === "StudentId") return a.StudentId.localeCompare(b.StudentId);
+      return 0;
+    });
+
+    setSortKey(key);
+    setRows(sorted);
+  };
 
   // 체크박스 상태 변경
   const handleCheckboxChange = (id: number) => {
@@ -165,14 +183,13 @@ const DynamicTable: React.FC = () => {
               <TableHeadCell>
                 <input type="checkbox" disabled />
               </TableHeadCell>
-              <TableHeadCell>번호</TableHeadCell>
               <TableHeadCell>이름</TableHeadCell>
-              <TableHeadCell>아이디</TableHeadCell>
+              <TableHeadCell>학번</TableHeadCell>
               <TableHeadCell>가입일</TableHeadCell>
             </TableRow>
           </thead>
           <tbody>
-            {rows.map((row, index) => (
+            {rows.map((row) => (
               <TableRow key={row.id}>
                 <TableCell>
                   <input
@@ -181,7 +198,6 @@ const DynamicTable: React.FC = () => {
                     onChange={() => handleCheckboxChange(row.id)}
                   />
                 </TableCell>
-                <TableCell>{index + 1}</TableCell>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.StudentId}</TableCell>
                 <TableCell>{row.date.toLocaleDateString()}</TableCell>
