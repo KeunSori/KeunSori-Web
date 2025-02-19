@@ -3,13 +3,17 @@ import FolderCard from "../components/Home/FolderCard.tsx";
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import logo from "/image/logo.svg";
-import heart from "/image/heart.svg";
+import heart from "/image/home/heart.svg";
 import Activity from "../components/Home/Activity.tsx";
-import timeline from "/image/timeline.svg";
+import timeline from "/image/home/timeline.svg";
 import Apply from "../components/Home/Apply.tsx";
 import YoutubeContents from "../components/Home/YoutubeContents.tsx";
 import Wrapper from "../components/Wrapper.tsx";
 import Footer from "../components/Footer.tsx";
+import room from "/image/home/room.jpeg";
+import family from "/image/home/family.jpeg";
+import kawai from "/image/home/kawai.png";
+
 interface FolderDetailInfo {
   color: string;
   type: string;
@@ -23,21 +27,21 @@ const HomePage = () => {
     {
       color: "#FEC039",
       type: "따뜻한 분위기",
-      image: "image",
+      image: `${family}`,
       content: "따뜻하고 가족 같은 분위기로 선배들과 친구들을 사귀기 쉬워요",
       number: 1,
     },
     {
       color: "#FFE33A",
       type: "좋은 장비",
-      image: "image",
+      image: `${room}`,
       content: "개인 악기가 없어도 학회에 있는 악기들로 활동 할 수 잇어요",
       number: 2,
     },
     {
       color: "#E6CE86",
       type: "다양한 장르",
-      image: "image",
+      image: `${kawai}`,
       content:
         "부원이 많아 음악장르가 다양해요 취향이 맞는 친구와 합주를 즐길 수 있어요",
       number: 3,

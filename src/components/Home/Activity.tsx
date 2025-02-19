@@ -1,10 +1,15 @@
 import styled from "@emotion/styled";
+import musicClass from "/image/home/musicClass.jpeg";
+import concert from "/image/home/concert.jpeg";
+import MT from "/image/home/MT.jpeg";
+import practice from "/image/home/practice.jpeg";
+import activity from "/image/home/activity.png";
 const Activity = () => {
   return (
     <>
       <ImagesContainer>
         <ImageContainer>
-          <Image />
+          <Image src={musicClass} />
 
           <ImageTitle>교습</ImageTitle>
           <ImageDetail>
@@ -16,7 +21,7 @@ const Activity = () => {
           </ImageDetail>
         </ImageContainer>
         <ImageContainer>
-          <Image />
+          <Image src={activity} />
           <ImageTitle>정기 모임</ImageTitle>
           <ImageDetail>
             보드 게임, 볼링부터 롯데 월드까지
@@ -32,7 +37,7 @@ const Activity = () => {
 
       <ImagesContainer>
         <ImageContainer>
-          <Image />
+          <Image src={MT} />
           <ImageTitle>MT</ImageTitle>
           <ImageDetail>
             봄, 가을에 진행되는 MT
@@ -44,7 +49,7 @@ const Activity = () => {
         </ImageContainer>
         <ImageContainer>
           <ImageDetail>
-            <Image />
+            <Image src={practice} />
 
             <ImageTitle>학기 중 합주</ImageTitle>
             <ImageDetail>
@@ -57,7 +62,7 @@ const Activity = () => {
       </ImagesContainer>
       <ImagesContainer>
         <ImageContainer>
-          <Image />
+          <Image src={concert} />
           <ImageDetail>
             <ImageTitle>공연</ImageTitle>
             봄, 가을 정기공연은 물론
@@ -91,7 +96,7 @@ const ImageContainer = styled.div`
   flex-wrap: wrap;
   margin-top: 100px;
 `;
-const Image = styled.div`
+const Image = styled.img`
   background: #e0e0e0;
   width: 350px;
   max-width: 350px;

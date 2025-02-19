@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import YouTube from "react-youtube";
-import useIsMobile from "../mobile/useIsMobile";
+import useIsMobile from "../../hooks/useIsMobile";
 
 const YoutubeContents = () => {
   const isMobile = useIsMobile();
