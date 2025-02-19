@@ -21,6 +21,7 @@ interface Row {
 }
 
 type SortKeys = "name" | "StudentId" | "date";
+type SortDirection = "asc" | "desc";
 
 const fetchMembers = async (): Promise<memberResponse[]> => {
   const response = await authApi.get<memberResponse[]>("/admin/members/list");
@@ -44,7 +45,7 @@ const TableRow = styled.tr`
   border-bottom: 1px solid #e6e8ea;
 `;
 
-const TableHeadCell = styled.th`
+const TableHeadCell = styled.th<{ isActive: boolean}>`
   padding: 10px;
   text-align: center;
   font-weight: bold;
@@ -81,6 +82,7 @@ const Scroll = styled.div`
 const DynamicTable: React.FC = () => {
   const [rows, setRows] = useState<Row[]>([]);
   const [sortKey, setSortKey] = useState<SortKeys>("date");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   // 데이터 불러오기
@@ -108,7 +110,7 @@ const DynamicTable: React.FC = () => {
         });
 
         setRows(resultRows);
-        sortMembers(sortKey);
+        sortMembers(rows, sortKey, sortDirection);
       } catch (error) {
         console.error("Fetch error: ", error);
       }
@@ -118,18 +120,29 @@ const DynamicTable: React.FC = () => {
   }, []);
 
   // 정렬
-  const sortMembers = (key: SortKeys) => {
-    const sorted = [...rows].sort((a, b) => {
-      if (key === "name") return a.name.localeCompare(b.name);
+  const sortMembers = (data: Row[], key: SortKeys, direction: SortDirection) => {
+    return [...data].sort((a, b) => {
+      const multiplier = direction === "asc" ? 1 : -1;
+      if (key === "name") return a.name.localeCompare(b.name) * multiplier;
       if (key === "date")
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
-      if (key === "StudentId") return a.StudentId.localeCompare(b.StudentId);
+        return new Date(a.date).getTime() - new Date(b.date).getTime() * multiplier;
+      if (key === "StudentId") return a.StudentId.localeCompare(b.StudentId) * multiplier;
       return 0;
     });
-
-    setSortKey(key);
-    setRows(sorted);
   };
+
+  // 테이블 헤더 클릭 시 정렬 변경
+  const handleSort = (key: SortKeys) => {
+    let newDirection: SortDirection = "asc";
+
+    if (sortKey === key) {
+      newDirection = sortDirection === "asc" ? "desc" : "asc";
+    }
+      
+    setSortKey(key);
+    setSortDirection(newDirection);
+    setRows(sortMembers(rows, key, newDirection));
+  }
 
   // 체크박스 상태 변경
   const handleCheckboxChange = (id: number) => {
@@ -180,12 +193,15 @@ const DynamicTable: React.FC = () => {
         <Table>
           <thead>
             <TableRow>
-              <TableHeadCell>
+              <TableHeadCell isActive={false}>
                 <input type="checkbox" disabled />
               </TableHeadCell>
-              <TableHeadCell>이름</TableHeadCell>
-              <TableHeadCell>학번</TableHeadCell>
-              <TableHeadCell>가입일</TableHeadCell>
+              <TableHeadCell isActive={sortKey === "name"} onClick={() => handleSort("name")}>
+                이름 {sortKey === "name" && (sortDirection === "asc" ? "↑" : "↓")}</TableHeadCell>
+              <TableHeadCell isActive={sortKey === "StudentId"} onClick={() => handleSort("StudentId")}>
+                학번 {sortKey === "StudentId" && (sortDirection === "asc" ? "↑" : "↓")}</TableHeadCell>
+              <TableHeadCell isActive={sortKey === "date"} onClick={() => handleSort("date")}>
+                가입일 {sortKey === "date" && (sortDirection === "asc" ? "↑" : "↓")}</TableHeadCell>
             </TableRow>
           </thead>
           <tbody>
