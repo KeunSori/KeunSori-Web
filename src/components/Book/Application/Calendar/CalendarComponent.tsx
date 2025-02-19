@@ -1,5 +1,5 @@
 import Calendar from "react-calendar";
-import useIsMobile from "../../../../utils/useIsMobile.tsx";
+import useIsMobile from "../../../../hooks/useIsMobile.tsx";
 import CalendarStyles from "./CalenderStyles.tsx";
 import { useAtom } from "jotai";
 import { monthDataAtom } from "../../Time";
