@@ -2,7 +2,7 @@ import { css } from "@emotion/css";
 import { TimeInfo } from "../../Time";
 import { TimeSlots } from "../styles/Times";
 import { SlotButton } from "../styles/Button";
-import useIsMobile from "../../../mobile/useIsMobile";
+import useIsMobile from "../../../../utils/useIsMobile";
 interface TimeSlot {
   time: string;
   available: boolean;

@@ -13,7 +13,7 @@ import { ReservationButton } from "./styles/Button.tsx";
 import authApi from "../../../api/Instance/authApi.ts";
 import { InstrumentInfo } from "../../../data/user.ts";
 import OutContainer from "../OutContainer.tsx";
-import useIsMobile from "../../mobile/useIsMobile.tsx";
+import useIsMobile from "../../../utils/useIsMobile.tsx";
 import { SelectedTime } from "./styles/Times.tsx";
 import { Container, InContainer } from "./styles/Containers.tsx";
 import { useNavigate } from "react-router-dom";

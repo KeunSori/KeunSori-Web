@@ -1,5 +1,5 @@
 import { InstrumentInfo } from "../../../data/user";
-import useIsMobile from "../../mobile/useIsMobile";
+import useIsMobile from "../../../utils/useIsMobile";
 import { Button } from "./styles/Button";
 import {
   MidContainer,
