@@ -5,7 +5,6 @@ const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
   background: #fffbf3;
-  margin-top: 50px;
   width: 100%;
   overflow-x: hidden;
   height: 100%;

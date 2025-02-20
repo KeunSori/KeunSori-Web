@@ -7,6 +7,7 @@ import useIsMobile from "../../hooks/useIsMobile.tsx";
 import { IoClose, IoMenu } from "react-icons/io5";
 import Space from "./Space.tsx";
 import { Menu, MobileMenu } from "./Menu.tsx";
+import logowhite from "/image/logowhite.svg";
 
 const NavBar: React.FC = () => {
   const [isMove, setIsMove] = useState(false);
@@ -23,7 +24,7 @@ const NavBar: React.FC = () => {
   }, []);
 
   return (
-    <Menu isMove={isMove}>
+    <Menu isMove={isMove} isHome={true}>
       <div
         className={css`
           margin: auto;
@@ -34,13 +35,23 @@ const NavBar: React.FC = () => {
         style={{ cursor: "pointer" }}
       >
         <Link to="/">
-          <img
-            className={css`
-              width: 60px;
-            `}
-            src={logo}
-            alt="logo"
-          />
+          {!isMove ? (
+            <img
+              className={css`
+                width: 80px;
+              `}
+              src={logowhite}
+              alt="logo"
+            />
+          ) : (
+            <img
+              className={css`
+                width: 80px;
+              `}
+              src={logo}
+              alt="logo"
+            />
+          )}
         </Link>
       </div>
       {!isMobile ? (

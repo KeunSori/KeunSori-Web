@@ -40,11 +40,17 @@ const Menu = styled.div<MenuProps>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  ${({ isMove }) =>
-    isMove ? `border-bottom:1px solid #E6E8EA` : `box-shadow:none`}
+  ${({ isMove, isHome }) =>
+    isMove
+      ? `border-bottom:1px solid #E6E8EA
+  `
+      : isHome
+      ? `background: transparent; color: white`
+      : ``};
 `;
 interface MenuProps {
   isMove: boolean;
+  isHome?: boolean;
 }
 
 export { MobileMenu, Menu };

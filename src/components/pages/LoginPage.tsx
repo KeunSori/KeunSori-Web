@@ -1,7 +1,7 @@
 import { css } from "@emotion/css";
 import logo from "/image/logo.svg";
 import { Link } from "react-router-dom";
-import LoginForm from "../components/Login/LoginForm.tsx";
+import LoginForm from "../Login/LoginForm.tsx";
 
 const LoginPage = () => {
   return (
@@ -21,8 +21,8 @@ const LoginPage = () => {
           <img
             className={css`
               margin-top: 60px;
-              margin-bottom: 10px;
-              width: 210px;
+              margin-bottom: 30px;
+              width: 250px;
               max-width: 90%;
               @media (max-width: 768px) {
                 width: 150px;

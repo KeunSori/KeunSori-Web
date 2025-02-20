@@ -1,6 +1,6 @@
 //import { css } from "@emotion/css";
-import NavBar from "../components/navBar/navBar.tsx";
-import Footer from "../components/Footer.tsx";
+import NavBar from "../navBar/navBar.tsx";
+import Footer from "../Footer.tsx";
 import { useState } from "react";
 
 import {
@@ -12,7 +12,7 @@ import {
   FAQItem,
   Question,
   Answer,
-} from "../components/Contact/ContactStyles.tsx";
+} from "../Contact/ContactStyles.tsx";
 
 const ContactPage = () => {
   const [activeTab, setActiveTab] = useState("동아리 활동");
