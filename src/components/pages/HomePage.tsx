@@ -12,8 +12,7 @@ import Footer from "../Footer.tsx";
 import room from "/image/home/room.jpeg";
 import family from "/image/home/family.jpeg";
 import kawai from "/image/home/kawai.png";
-import { RiArrowDownWideFill } from "react-icons/ri";
-import backgroundimg from "/image/concert.png";
+import Intro from "../Home/Intro.tsx";
 
 interface FolderDetailInfo {
   color: string;
@@ -51,36 +50,7 @@ const HomePage = () => {
   return (
     <>
       <NavBar />
-      <div
-        className={css`
-          position: relative;
-          height: calc(100vh - 100px);
-          background: linear-gradient(#ffffff00, rgb(50, 50, 50)),
-            url(${backgroundimg});
-          background-size: cover;
-          background-position: center;
-          background-attachment: fixed;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-        `}
-      >
-        <RiArrowDownWideFill
-          className={css`
-            position: absolute;
-            bottom: 0;
-            right: 50%;
-            transform: translateX(50%);
-          `}
-          size={100}
-          color="white"
-        />
-        <Intro>
-          작은 소리들의 화합
-          <Title>큰소리</Title>
-        </Intro>
-      </div>
+      <Intro />
       <Wrapper>
         <div
           className={css`
@@ -166,20 +136,4 @@ const Detail = styled.div`
 const HeartImg = styled.img`
   width: 220px;
   margin-top: 100px;
-`;
-const Intro = styled.div`
-  font-size: 25px;
-  font-weight: bold;
-  font-weight: 300;
-  font-family: DNFForgedBlade, sans-serif;
-  color: white;
-`;
-const Title = styled.div`
-  font-size: 50px;
-  font-weight: bold;
-  margin-top: 25px;
-  text-align: center;
-  font-weight: 500;
-  font-family: DNFForgedBlade, sans-serif;
-  color: white;
 `;
