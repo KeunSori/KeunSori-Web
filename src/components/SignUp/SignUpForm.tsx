@@ -5,6 +5,7 @@ import Input from "../Input.tsx";
 import Button from "../Button.tsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import styled from "@emotion/styled";
 
 interface FormData {
   name: string;
@@ -59,31 +60,9 @@ const SignUpForm: React.FC = () => {
 
   return (
     <>
-      <form
-        className={css`
-          width: 100%;
-        `}
-        onSubmit={handleSubmit}
-      >
-        <div
-          className={css`
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            gap: 1px;
-          `}
-        >
-          <div
-            className={css`
-              display: flex;
-              align-items: center;
-              width: 410px;
-              @media (max-width: 768px) {
-                max-width: 90%;
-              }
-            `}
-          >
+      <Form onSubmit={handleSubmit}>
+        <Ground>
+          <Slot>
             <Input
               className={css`
                 width: 100%;
@@ -95,17 +74,8 @@ const SignUpForm: React.FC = () => {
               onChange={handleChange}
               required
             ></Input>
-          </div>
-          <div
-            className={css`
-              display: flex;
-              align-items: center;
-              width: 410px;
-              @media (max-width: 768px) {
-                max-width: 90%;
-              }
-            `}
-          >
+          </Slot>
+          <Slot>
             <Input
               className={css`
                 width: 100%;
@@ -117,18 +87,9 @@ const SignUpForm: React.FC = () => {
               onChange={handleChange}
               required
             ></Input>
-          </div>
+          </Slot>
 
-          <div
-            className={css`
-              display: flex;
-              align-items: center;
-              width: 410px;
-              @media (max-width: 768px) {
-                max-width: 90%;
-              }
-            `}
-          >
+          <Slot>
             <Input
               name="email"
               placeholder="개인 이메일"
@@ -141,18 +102,9 @@ const SignUpForm: React.FC = () => {
                 border-right: none;
               `}
             ></Input>
-          </div>
+          </Slot>
 
-          <div
-            className={css`
-              display: flex;
-              align-items: center;
-              width: 410px;
-              @media (max-width: 768px) {
-                max-width: 90%;
-              }
-            `}
-          >
+          <Slot>
             <Input
               className={css`
                 width: 100%;
@@ -166,17 +118,8 @@ const SignUpForm: React.FC = () => {
               onKeyDown={handleKeyDown}
               required
             ></Input>
-          </div>
-          <div
-            className={css`
-              display: flex;
-              align-items: center;
-              width: 410px;
-              @media (max-width: 768px) {
-                max-width: 90%;
-              }
-            `}
-          >
+          </Slot>
+          <Slot>
             <Input
               className={css`
                 width: 100%;
@@ -188,7 +131,7 @@ const SignUpForm: React.FC = () => {
               onChange={handleChange}
               required
             ></Input>
-          </div>
+          </Slot>
 
           <div
             className={css`
@@ -196,16 +139,7 @@ const SignUpForm: React.FC = () => {
             `}
           ></div>
 
-          <div
-            className={css`
-              display: flex;
-              align-items: center;
-              width: 410px;
-              @media (max-width: 768px) {
-                max-width: 90%;
-              }
-            `}
-          >
+          <Slot>
             <Button
               className={css`
                 width: 100%;
@@ -214,33 +148,46 @@ const SignUpForm: React.FC = () => {
             >
               큰소리 회원가입
             </Button>
-          </div>
-        </div>
-      </form>
-      {capsLockOn && (
-        <div
-          style={{
-            color: "red",
-            fontSize: "14px",
-            marginTop: "5px",
-            marginBottom: "5px",
-          }}
-        >
-          ⚠️ Caps Lock이 켜져 있습니다!
-        </div>
-      )}
-      {message && (
-        <p
-          className={css`
-            text-align: center;
-            color: red;
-          `}
-        >
-          {message}
-        </p>
-      )}
+          </Slot>
+        </Ground>
+      </Form>
+      {capsLockOn && <Notice>⚠️ Caps Lock이 켜져 있습니다!</Notice>}
+      {message && <Message>{message}</Message>}
     </>
   );
 };
 
 export default SignUpForm;
+
+const Slot = styled.div`
+  display: flex;
+  align-items: center;
+  width: 410px;
+  @media (max-width: 768px) {
+    max-width: 90%;
+  }
+`;
+
+const Form = styled.form`
+  width: 100%;
+`;
+
+const Ground = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1px;
+`;
+
+const Notice = styled.div`
+  color: "red";
+  fontsize: "14px";
+  margintop: "5px";
+  marginbottom: "5px";
+`;
+
+const Message = styled.p`
+  text-align: center;
+  color: red;
+`;
