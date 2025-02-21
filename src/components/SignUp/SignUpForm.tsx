@@ -6,8 +6,16 @@ import Button from "../Button.tsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+interface FormData {
+  name: string;
+  studentId: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+}
+
 const SignUpForm: React.FC = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     studentId: "",
     email: "",
