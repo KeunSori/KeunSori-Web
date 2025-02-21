@@ -102,6 +102,18 @@ const SignUpForm: React.FC = () => {
                 border-right: none;
               `}
             ></Input>
+            <CustomButton>인증번호발송</CustomButton>
+          </Slot>
+
+          <Slot>
+            <CustomInput
+              name="authCode"
+              placeholder="인증 번호 입력"
+              type="string"
+              required
+            ></CustomInput>
+            <CustomButton>확인</CustomButton>
+            <CustomButton>재전송</CustomButton>
           </Slot>
 
           <Slot>
@@ -178,6 +190,15 @@ const Ground = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 1px;
+`;
+
+const CustomInput = styled(Input)`
+  width: 150px;
+`;
+
+const CustomButton = styled(Button)`
+  margin: 5px;
+  font-size: 15px;
 `;
 
 const Notice = styled.div`
