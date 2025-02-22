@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import NavBar2 from "../navBar/navBar2";
-import Footer from "../Footer";
+import NavBar2 from "../components/navBar/navBar2";
+import Footer from "../components/Footer";
 
 const PasswordChange = () => {
   return (
@@ -23,10 +23,10 @@ const PasswordChange = () => {
               <PassBox />
             </Flex>
           </Content>
-          <ButtonDiv>
-            <ChangeButton>변경하기</ChangeButton>
-          </ButtonDiv>
         </ContentBox>
+        <ButtonDiv>
+          <ChangeButton>변경하기</ChangeButton>
+        </ButtonDiv>
       </Container>
       <Footer />
     </>
@@ -41,6 +41,7 @@ const Container = styled.div`
   align-items: center;
   height: 100vh;
   padding: 0 200px;
+  gap: 100px;
   @media (max-width: 768px) {
     padding: 0 20px;
     height: auto; // 내용에 맞게 자동 조정
@@ -64,7 +65,6 @@ const Content = styled.div`
 `;
 const Text = styled.div`
   font-size: 24px;
-  min-width: 100px;
   @media (max-width: 768px) {
     font-size: 16px;
   }
@@ -80,30 +80,23 @@ const PassBox = styled.input`
   border-radius: 15px;
   border: none;
   padding: 20px;
-  font-size: 24px;
   &:focus {
     border: none;
   }
   background-color: #f1f1f1;
   @media (max-width: 768px) {
-    min-width: 200px;
+    min-width: 100px;
     height: 20px;
-    padding: 20px;
   }
 `;
 const ContentBox = styled.div`
-  margin-top: 200px;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   gap: 60px;
 
   width: 100%;
-  min-width: 870px;
-  max-width: 1100px;
-  @media (max-width: 768px) {
-    margin-top: 70px;
-    min-width: auto;
-  }
+  max-width: 1500px;
 `;
 const ChangeButton = styled.button`
   width: 150px;
@@ -118,7 +111,6 @@ const ChangeButton = styled.button`
   }
 `;
 const ButtonDiv = styled.div`
-  margin-top: 70px;
   width: 100%;
   display: flex;
   justify-content: flex-end;
