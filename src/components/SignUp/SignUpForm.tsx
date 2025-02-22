@@ -1,20 +1,29 @@
+// hook
 import { useState } from "react";
-import { registerUser } from "../../api/register.ts";
+import { useNavigate } from "react-router-dom";
+
+// style
 import { css } from "@emotion/css";
+import styled from "@emotion/styled";
 import Input from "../Input.tsx";
 import Button from "../Button.tsx";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import styled from "@emotion/styled";
 
+// api
+import axios from "axios";
+import { registerUser } from "../../api/register.ts";
+import { authNumberRequest, sendAuthNumber } from "../../api/emailAuth.ts";
+
+// interface
 interface FormData {
   name: string;
   studentId: string;
   email: string;
   password: string;
   passwordConfirm: string;
+  authNumber: string;
 }
 
+// component
 const SignUpForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     name: "",
@@ -22,6 +31,7 @@ const SignUpForm: React.FC = () => {
     email: "",
     password: "",
     passwordConfirm: "",
+    authNumber: "",
   });
 
   const [message, setMessage] = useState("");
@@ -40,12 +50,33 @@ const SignUpForm: React.FC = () => {
       navigate("/login");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        console.error("Error: ", error.message);
-        console.error("Server message: ", error.response?.data.message);
         setMessage(error.response?.data.message || "다시 시도해주세요.");
       } else {
-        console.error("Unexpected error: ", error);
-        setMessage("Unexpected error occured.");
+        setMessage("다시 시도해주세요.");
+      }
+    }
+  };
+
+  const handleSendEmail = async () => {
+    try {
+      await authNumberRequest(formData.email);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        setMessage(error.response?.data.message || "다시 시도해주세요.");
+      } else {
+        setMessage("다시 시도해주세요.");
+      }
+    }
+  };
+
+  const handleVerification = async () => {
+    try {
+      await sendAuthNumber(formData.email, formData.authNumber);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        setMessage(error.response?.data.message || "다시 시도해주세요.");
+      } else {
+        setMessage("다시 시도해주세요.");
       }
     }
   };
@@ -102,18 +133,20 @@ const SignUpForm: React.FC = () => {
                 border-right: none;
               `}
             ></Input>
-            <CustomButton>인증번호발송</CustomButton>
+            <CustomButton onClick={handleSendEmail}>인증번호발송</CustomButton>
           </Slot>
 
           <Slot>
             <CustomInput
-              name="authCode"
+              name="authNumber"
               placeholder="인증 번호 입력"
               type="string"
+              value={formData.authNumber}
+              onChange={handleChange}
               required
             ></CustomInput>
-            <CustomButton>확인</CustomButton>
-            <CustomButton>재전송</CustomButton>
+            <CustomButton onClick={handleVerification}>확인</CustomButton>
+            <CustomButton onClick={handleSendEmail}>재전송</CustomButton>
           </Slot>
 
           <Slot>
@@ -171,6 +204,7 @@ const SignUpForm: React.FC = () => {
 
 export default SignUpForm;
 
+// styled
 const Slot = styled.div`
   display: flex;
   align-items: center;
