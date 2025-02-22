@@ -8,6 +8,8 @@ const MyPage = () => {
   const navToLogin = () => {
     return nav("/login");
   };
+  const navToPassChange = () => nav("/password-change");
+  const navToBook = () => nav("/book"); // 나의 예약으로 수정할 예정
   return (
     <>
       <NavBar2 />
@@ -28,12 +30,14 @@ const MyPage = () => {
                 <Text className="gray">이메일</Text>
                 <Text>yujin123@gmail.com</Text>
               </Flex>
-              <Text className="gray-line">비밀번호 수정하기</Text>
+              <Text className="gray-line" onClick={navToPassChange}>
+                비밀번호 수정하기
+              </Text>
             </Information>
             <Logout onClick={navToLogin}>로그아웃</Logout>
           </FlexWrap>
         </InfoBox>
-        <ReserveView>내 예약 조회</ReserveView>
+        <ReserveView onClick={navToBook}>내 예약 조회</ReserveView>
       </Container>
       <Footer />
     </>
@@ -91,6 +95,7 @@ const InfoBox = styled.div`
 `;
 const Title = styled.p`
   font-size: 40px;
+  font-weight: 400;
   margin: 0px;
   @media (max-width: 768px) {
     font-size: 27px;
