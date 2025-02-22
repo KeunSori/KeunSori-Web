@@ -24,7 +24,7 @@ const NavBar: React.FC = () => {
   }, []);
 
   return (
-    <Menu isMove={isMove} isHome={true}>
+    <Menu isMove={isMove} isHome={location.pathname === "/"}>
       <div
         className={css`
           margin: auto;
@@ -35,7 +35,7 @@ const NavBar: React.FC = () => {
         style={{ cursor: "pointer" }}
       >
         <Link to="/">
-          {!isMove ? (
+          {!isMove && location.pathname === "/" ? (
             <img
               className={css`
                 width: 80px;
