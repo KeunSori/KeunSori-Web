@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import NavBar2 from "../components/navBar/navBar2";
-import Footer from "../components/Footer";
+import NavBar2 from "../navBar/navBar2";
+import Footer from "../Footer";
 
 const PasswordChange = () => {
   return (

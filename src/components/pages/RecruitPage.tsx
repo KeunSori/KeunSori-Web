@@ -1,9 +1,9 @@
-import NavBar from "../components/navBar/navBar.tsx";
-import Wrapper from "../components/Wrapper.tsx";
+import NavBar from "../navBar/navBar.tsx";
+import Wrapper from "../Wrapper.tsx";
 import recruit from "/image/Recruit.svg";
 import styled from "@emotion/styled";
 import poster from "/image/poster.svg";
-import Footer from "../components/Footer.tsx";
+import Footer from "../Footer.tsx";
 const RecruitPage = () => {
   return (
     <>

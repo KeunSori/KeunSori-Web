@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import NavBar2 from "../components/navBar/navBar2";
 import styled from "@emotion/styled";
-import Footer from "../components/Footer";
+//import Footer from "../components/Footer";
+import NavBar2 from "../navBar/navBar2";
+import Footer from "../Footer";
 
 const MyPage = () => {
   const nav = useNavigate();
