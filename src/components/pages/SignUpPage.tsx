@@ -1,8 +1,7 @@
 import logo from "/image/logo.svg";
 import { Link } from "react-router-dom";
-import SignUpForm from "../components/SignUp/SignUpForm.tsx";
+import SignUpForm from "../SignUp/SignUpForm.tsx";
 import styled from "@emotion/styled";
-
 const SignUpPage = () => {
   return (
     <>

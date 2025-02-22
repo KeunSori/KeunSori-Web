@@ -1,18 +1,18 @@
-import NavBar from "../components/navBar/navBar.tsx";
-import FolderCard from "../components/Home/FolderCard.tsx";
+import NavBar from "../navBar/navBar.tsx";
+import FolderCard from "../Home/FolderCard.tsx";
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
-import logo from "/image/logo.svg";
 import heart from "/image/home/heart.svg";
-import Activity from "../components/Home/Activity.tsx";
+import Activity from "../Home/Activity.tsx";
 import timeline from "/image/home/timeline.svg";
-import Apply from "../components/Home/Apply.tsx";
-import YoutubeContents from "../components/Home/YoutubeContents.tsx";
-import Wrapper from "../components/Wrapper.tsx";
-import Footer from "../components/Footer.tsx";
+import Apply from "../Home/Apply.tsx";
+import YoutubeContents from "../Home/YoutubeContents.tsx";
+import Wrapper from "../Wrapper.tsx";
+import Footer from "../Footer.tsx";
 import room from "/image/home/room.jpeg";
 import family from "/image/home/family.jpeg";
 import kawai from "/image/home/kawai.png";
+import Intro from "../Home/Intro.tsx";
 
 interface FolderDetailInfo {
   color: string;
@@ -50,19 +50,13 @@ const HomePage = () => {
   return (
     <>
       <NavBar />
+      <Intro />
       <Wrapper>
         <div
           className={css`
             margin: 50px;
           `}
-        ></div>
-        <ImageContainer>
-          <Image src={logo} />
-        </ImageContainer>
-        <Intro>
-          작은 소리들의 화합
-          <Title>큰소리</Title>
-        </Intro>
+        />
         <HeartImg src={heart} />
         <Detail>
           <Details>
@@ -142,34 +136,4 @@ const Detail = styled.div`
 const HeartImg = styled.img`
   width: 220px;
   margin-top: 100px;
-`;
-const Intro = styled.div`
-  font-size: 25px;
-  font-weight: bold;
-  margin-top: 60px;
-  font-weight: 300;
-  font-family: DNFForgedBlade, sans-serif;
-  color: #505050;
-`;
-const Title = styled.div`
-  font-size: 50px;
-  font-weight: bold;
-  margin-top: 25px;
-  text-align: center;
-  font-weight: 500;
-  font-family: DNFForgedBlade, sans-serif;
-  color: #505050;
-`;
-const ImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 150px;
-  height: 100px;
-  align-items: center;
-  background: white;
-  transform: rotate(-10deg);
-`;
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
 `;
