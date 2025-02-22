@@ -80,6 +80,7 @@ const PassBox = styled.input`
   border-radius: 15px;
   border: none;
   padding: 20px;
+  font-size: 24px;
   &:focus {
     border: none;
   }
