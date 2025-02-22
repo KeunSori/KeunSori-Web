@@ -12,6 +12,7 @@ import BookManagePage from "./pages/BookManagePage.tsx";
 import BoardPage from "./pages/BoardPage.tsx";
 import MyPage from "./pages/MyPage.tsx";
 import ManagePage from "./pages/ManagePage.tsx";
+import PasswordChange from "./pages/PasswordChange.tsx";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/board" element={<BoardPage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/member-management" element={<ManagePage />} />
+            <Route path="/password-change" element={<PasswordChange />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
