@@ -23,10 +23,10 @@ const PasswordChange = () => {
               <PassBox />
             </Flex>
           </Content>
+          <ButtonDiv>
+            <ChangeButton>변경하기</ChangeButton>
+          </ButtonDiv>
         </ContentBox>
-        <ButtonDiv>
-          <ChangeButton>변경하기</ChangeButton>
-        </ButtonDiv>
       </Container>
       <Footer />
     </>
@@ -41,7 +41,6 @@ const Container = styled.div`
   align-items: center;
   height: 100vh;
   padding: 0 200px;
-  gap: 100px;
   @media (max-width: 768px) {
     padding: 0 20px;
     height: auto; // 내용에 맞게 자동 조정
@@ -90,13 +89,14 @@ const PassBox = styled.input`
   }
 `;
 const ContentBox = styled.div`
-  margin-top: 100px;
+  margin-top: 200px;
   display: flex;
   flex-direction: column;
   gap: 60px;
 
   width: 100%;
-  max-width: 1500px;
+  min-width: 870px;
+  max-width: 1100px;
 `;
 const ChangeButton = styled.button`
   width: 150px;
@@ -111,6 +111,7 @@ const ChangeButton = styled.button`
   }
 `;
 const ButtonDiv = styled.div`
+  margin-top: 70px;
   width: 100%;
   display: flex;
   justify-content: flex-end;
