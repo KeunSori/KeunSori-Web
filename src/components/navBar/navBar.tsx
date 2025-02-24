@@ -74,13 +74,17 @@ const NavBar: React.FC = () => {
         </div>
       ) : (
         <>
-          <Button onClick={() => setIsOpen(!isOpen)}>
-            {!isOpen ? (
-              <IoMenu size="30" stroke="#919191" />
-            ) : (
-              <IoClose size="30" fill="#919191" />
-            )}
-          </Button>
+          {isMove && (
+            <>
+              <Button onClick={() => setIsOpen(!isOpen)}>
+                {!isOpen ? (
+                  <IoMenu size="30" stroke="#919191" />
+                ) : (
+                  <IoClose size="30" fill="#919191" />
+                )}
+              </Button>
+            </>
+          )}
           <MobileMenu isOpened={isOpen} isSmall={true}>
             <Link to="/recruit">
               <Space isActive={false}>지원하기</Space>
