@@ -49,6 +49,7 @@ export default MyPage;
 const ReserveView = styled.div`
   width: 100%;
   max-width: 1500px;
+  min-width: 750px;
   background-color: #ffc927;
   padding: 20px;
   text-align: center;
@@ -57,6 +58,7 @@ const ReserveView = styled.div`
   font-size: 24px;
   cursor: pointer;
   @media (max-width: 768px) {
+    min-width: 300px;
     width: 90%;
     padding: 10px;
     font-size: 16px;
@@ -81,6 +83,7 @@ const InfoBox = styled.div`
   margin-top: 190px;
   width: 100%; // 부모 요소의 너비에 따라 조정되도록
   max-width: 1500px;
+  min-width: 750px;
   height: 380px;
   border: 2px solid #a1a1a1;
   border-radius: 30px;
@@ -88,6 +91,7 @@ const InfoBox = styled.div`
   padding: 40px;
 
   @media (max-width: 768px) {
+    min-width: 300px;
     margin-top: 80px;
     width: 90%;
     height: auto;
