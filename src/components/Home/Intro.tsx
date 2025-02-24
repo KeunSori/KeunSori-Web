@@ -32,6 +32,7 @@ const Intro = () => {
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        overflow: hidden;
       `}
     >
       <Slider currentSlide={currentSlide}>
