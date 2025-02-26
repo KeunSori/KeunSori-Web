@@ -2,7 +2,11 @@ import baseApi from "./Instance/baseApi";
 
 export const authNumberRequest = async (email: string) => {
   try {
-    const response = await baseApi.post("/email/auth-number/send", email);
+    const response = await baseApi.post("/email/auth-number/send", { email: email }, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
     return response.data;
   } catch (error) {
     console.error("error: ", error);
@@ -13,9 +17,12 @@ export const authNumberRequest = async (email: string) => {
 export const sendAuthNumber = async (email: string, authNumber: string) => {
   try {
     const response = await baseApi.post("/email/auth-number/verify", {
-      email,
-      authNumber,
-    });
+      email: email,
+      authNumber: authNumber,
+    }, 
+    {headers: {
+      "Content-Type": "application/json"
+    }});
     return response.data;
   } catch (error) {
     console.error("error: ", error);

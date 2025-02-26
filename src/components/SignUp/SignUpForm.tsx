@@ -20,7 +20,6 @@ interface FormData {
   email: string;
   password: string;
   passwordConfirm: string;
-  authNumber: string;
 }
 
 // component
@@ -31,8 +30,9 @@ const SignUpForm: React.FC = () => {
     email: "",
     password: "",
     passwordConfirm: "",
-    authNumber: "",
   });
+
+  const [authNumber, setAuthNumber] = useState<string>("");
 
   const [message, setMessage] = useState("");
   const [capsLockOn, setCapsLockOn] = useState(false);
@@ -41,6 +41,10 @@ const SignUpForm: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const handleAuthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAuthNumber(e.target.value);
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,7 +75,7 @@ const SignUpForm: React.FC = () => {
 
   const handleVerification = async () => {
     try {
-      await sendAuthNumber(formData.email, formData.authNumber);
+      await sendAuthNumber(formData.email, authNumber);
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         setMessage(error.response?.data.message || "다시 시도해주세요.");
@@ -141,8 +145,8 @@ const SignUpForm: React.FC = () => {
               name="authNumber"
               placeholder="인증 번호 입력"
               type="string"
-              value={formData.authNumber}
-              onChange={handleChange}
+              value={authNumber}
+              onChange={handleAuthChange}
               required
             ></CustomInput>
             <CustomButton onClick={handleVerification}>확인</CustomButton>
