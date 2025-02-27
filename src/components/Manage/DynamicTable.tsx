@@ -45,7 +45,7 @@ const TableRow = styled.tr`
   border-bottom: 1px solid #e6e8ea;
 `;
 
-const TableHeadCell = styled.th<{ isActive: boolean}>`
+const TableHeadCell = styled.th<{ isActive: boolean }>`
   padding: 10px;
   text-align: center;
   font-weight: bold;
@@ -120,13 +120,20 @@ const DynamicTable: React.FC = () => {
   }, []);
 
   // 정렬
-  const sortMembers = (data: Row[], key: SortKeys, direction: SortDirection) => {
+  const sortMembers = (
+    data: Row[],
+    key: SortKeys,
+    direction: SortDirection
+  ) => {
     return [...data].sort((a, b) => {
       const multiplier = direction === "asc" ? 1 : -1;
       if (key === "name") return a.name.localeCompare(b.name) * multiplier;
       if (key === "date")
-        return new Date(a.date).getTime() - new Date(b.date).getTime() * multiplier;
-      if (key === "StudentId") return a.StudentId.localeCompare(b.StudentId) * multiplier;
+        return (
+          new Date(a.date).getTime() - new Date(b.date).getTime() * multiplier
+        );
+      if (key === "StudentId")
+        return a.StudentId.localeCompare(b.StudentId) * multiplier;
       return 0;
     });
   };
@@ -138,11 +145,11 @@ const DynamicTable: React.FC = () => {
     if (sortKey === key) {
       newDirection = sortDirection === "asc" ? "desc" : "asc";
     }
-      
+
     setSortKey(key);
     setSortDirection(newDirection);
     setRows(sortMembers(rows, key, newDirection));
-  }
+  };
 
   // 체크박스 상태 변경
   const handleCheckboxChange = (id: number) => {
@@ -196,12 +203,28 @@ const DynamicTable: React.FC = () => {
               <TableHeadCell isActive={false}>
                 <input type="checkbox" disabled />
               </TableHeadCell>
-              <TableHeadCell isActive={sortKey === "name"} onClick={() => handleSort("name")}>
-                이름 {sortKey === "name" && (sortDirection === "asc" ? "↑" : "↓")}</TableHeadCell>
-              <TableHeadCell isActive={sortKey === "StudentId"} onClick={() => handleSort("StudentId")}>
-                학번 {sortKey === "StudentId" && (sortDirection === "asc" ? "↑" : "↓")}</TableHeadCell>
-              <TableHeadCell isActive={sortKey === "date"} onClick={() => handleSort("date")}>
-                가입일 {sortKey === "date" && (sortDirection === "asc" ? "↑" : "↓")}</TableHeadCell>
+              <TableHeadCell
+                isActive={sortKey === "name"}
+                onClick={() => handleSort("name")}
+              >
+                이름{" "}
+                {sortKey === "name" && (sortDirection === "asc" ? "↓" : "↑")}
+              </TableHeadCell>
+              <TableHeadCell
+                isActive={sortKey === "StudentId"}
+                onClick={() => handleSort("StudentId")}
+              >
+                학번{" "}
+                {sortKey === "StudentId" &&
+                  (sortDirection === "asc" ? "↓" : "↑")}
+              </TableHeadCell>
+              <TableHeadCell
+                isActive={sortKey === "date"}
+                onClick={() => handleSort("date")}
+              >
+                가입일{" "}
+                {sortKey === "date" && (sortDirection === "asc" ? "↓" : "↑")}
+              </TableHeadCell>
             </TableRow>
           </thead>
           <tbody>
