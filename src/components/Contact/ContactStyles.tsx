@@ -67,19 +67,20 @@ const Question = styled.div`
 `;
 
 const Answer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   margin: 10px 0 0;
   padding: 10px;
   border: 1px solid #c7c7c7;
   border-radius: 20px;
-  height: 72px;
+  min-height: 72px;
   cursor: default;
   font-size: 16px;
-  display: flex;
   align-items: center;
   justify-content: center;
   @media (max-width: 768px) {
     font-size: 13px;
-    height: 60px;
+    min-height: 60px;
   }
 `;
 
