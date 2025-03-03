@@ -1,4 +1,3 @@
-//import { css } from "@emotion/css";
 import NavBar from "../components/navBar/navBar.tsx";
 import Footer from "../components/Footer.tsx";
 import { useEffect, useState } from "react";
