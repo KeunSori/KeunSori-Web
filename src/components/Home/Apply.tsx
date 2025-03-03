@@ -37,7 +37,6 @@ const ApplyContainer = styled.div`
   align-items: center;
 `;
 const Poster = styled.img`
-  width: 100px;
   height: 200px;
 `;
 export default Apply;
