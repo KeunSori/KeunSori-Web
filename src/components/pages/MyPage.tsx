@@ -1,16 +1,51 @@
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
-//import Footer from "../components/Footer";
 import NavBar2 from "../navBar/navBar2";
 import Footer from "../Footer";
+import { useEffect, useState } from "react";
+import { getMemberStatus } from "../../utils/jwt.ts";
+import authApi from "../../api/Instance/authApi.ts";
+
+interface UserInfo {
+  name: string;
+  studentId: string;
+  email: string;
+}
 
 const MyPage = () => {
+  const [info, setInfo] = useState<UserInfo>({
+    name: "",
+    studentId: "",
+    email: "",
+  });
+
   const nav = useNavigate();
-  const navToLogin = () => {
-    return nav("/login");
-  };
+  const navToLogin = () => nav("/login");
   const navToPassChange = () => nav("/password-change");
-  const navToBook = () => nav("/book"); // 나의 예약으로 수정할 예정
+  const navToBook = () => nav("/book?type=my");
+
+  const memberStatus = getMemberStatus();
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        if (memberStatus === "일반") {
+          const response = await authApi.get<UserInfo>("/members/me");
+          setInfo(response.data);
+        }
+        if (memberStatus === "관리자") {
+          const response = await authApi.get<UserInfo>("/admin/me");
+          setInfo(response.data);
+        }
+      } catch (e) {
+        console.error(e);
+        alert("마이페이지 정보를 불러오는데 실패했습니다.");
+        nav("/login");
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <>
       <NavBar2 />
@@ -21,15 +56,15 @@ const MyPage = () => {
             <Information>
               <Flex>
                 <Text className="gray">이름</Text>
-                <Text>김유진</Text>
+                <Text>{info.name || "정보 없음"}</Text>
               </Flex>
               <Flex>
                 <Text className="gray">학번</Text>
-                <Text>C123456</Text>
+                <Text>{info.studentId || "정보 없음"}</Text>
               </Flex>
               <Flex className="email">
                 <Text className="gray">이메일</Text>
-                <Text>yujin123@gmail.com</Text>
+                <Text>{info.email || "정보 없음"}</Text>
               </Flex>
               <Text className="gray-line" onClick={navToPassChange}>
                 비밀번호 수정하기
