@@ -1,8 +1,73 @@
 import styled from "@emotion/styled";
 import NavBar2 from "../navBar/navBar2";
 import Footer from "../Footer";
+import { useState } from "react";
+import { getMemberStatus } from "../../utils/jwt";
+import axios from "axios";
+import authApi from "../../api/Instance/authApi";
+import { useNavigate } from "react-router-dom";
 
 const PasswordChange = () => {
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const nav = useNavigate();
+
+  const memberStatus = getMemberStatus();
+  console.log(memberStatus);
+
+  async function handlePasswordChange() {
+    if (!currentPassword || !newPassword || !passwordConfirm) {
+      alert("모든 필드를 입력해주세요.");
+      return;
+    }
+    try {
+      if (memberStatus === "일반") {
+        //const requestData = { currentPassword, newPassword, passwordConfirm };
+        //console.log("보내는 데이터:", requestData);
+        await authApi.patch("/members/me/password", {
+          currentPassword,
+          newPassword,
+          passwordConfirm,
+        });
+      } else if (memberStatus === "관리자") {
+        await authApi.patch("/admin/me/password", {
+          currentPassword,
+          newPassword,
+          passwordConfirm,
+        });
+      } else {
+        alert("가입 승인 대기 중입니다. 다른 계정으로 다시 시도하세요.");
+        return;
+      }
+      alert("비밀번호가 변경되었습니다.");
+      nav("/mypage");
+    } catch (e) {
+      console.error("비밀번호 변경 오류:", e);
+      if (axios.isAxiosError(e)) {
+        console.log("서버 응답 데이터:", e.response?.data);
+        if (e.response?.status === 401) {
+          alert("현재 비밀번호가 틀렸습니다.");
+          setErrorMessage(e.response.data.message);
+        } else if (e.response?.status === 400) {
+          setErrorMessage(e.response.data.message);
+        } else {
+          alert(
+            `비밀번호 변경 요청을 실패했습니다. 오류 코드: ${e.response?.status}`
+          );
+        }
+      } else if (e instanceof Error) {
+        alert(`오류 발생: ${e.message}`);
+      } else {
+        alert("알 수 없는 오류가 발생했습니다.");
+      }
+    }
+  }
+  console.log("currentPassword:", currentPassword);
+  console.log("newPassword:", newPassword);
+  console.log("passwordConfirm:", passwordConfirm);
+
   return (
     <>
       <NavBar2 />
@@ -12,19 +77,32 @@ const PasswordChange = () => {
           <Content>
             <Flex>
               <Text>현재 비밀번호</Text>
-              <PassBox />
+              <PassBox
+                type="password"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+              />
             </Flex>
             <Flex>
               <Text>새 비밀번호</Text>
-              <PassBox />
+              <PassBox
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
             </Flex>
             <Flex>
               <Text>새 비밀번호 확인</Text>
-              <PassBox />
+              <PassBox
+                type="password"
+                value={passwordConfirm}
+                onChange={(e) => setPasswordConfirm(e.target.value)}
+              />
             </Flex>
           </Content>
+          <div>{errorMessage}</div>
           <ButtonDiv>
-            <ChangeButton>변경하기</ChangeButton>
+            <ChangeButton onClick={handlePasswordChange}>변경하기</ChangeButton>
           </ButtonDiv>
         </ContentBox>
       </Container>
