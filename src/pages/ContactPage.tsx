@@ -1,7 +1,7 @@
 //import { css } from "@emotion/css";
 import NavBar from "../components/navBar/navBar.tsx";
 import Footer from "../components/Footer.tsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Ground,
@@ -15,6 +15,9 @@ import {
 } from "../components/Contact/ContactStyles.tsx";
 
 const ContactPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [activeTab, setActiveTab] = useState("동아리 활동");
 
   return (

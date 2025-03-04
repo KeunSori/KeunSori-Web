@@ -13,6 +13,7 @@ import room from "/image/home/room.jpeg";
 import family from "/image/home/family.jpeg";
 import kawai from "/image/home/kawai.png";
 import Intro from "../components/Home/Intro.tsx";
+import { useEffect } from "react";
 
 interface FolderDetailInfo {
   color: string;
@@ -23,6 +24,9 @@ interface FolderDetailInfo {
 }
 
 const HomePage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const DetailNote: FolderDetailInfo[] = [
     {
       color: "#FEC039",
