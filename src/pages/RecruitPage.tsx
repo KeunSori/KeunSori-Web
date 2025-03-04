@@ -29,7 +29,7 @@ const RecruitPage = () => {
             모집 대상: 컴퓨터공학과, 컴퓨터 공학과 진입 예정 자율 전공 재학생
             <br />
             모집 세션: 드럼, 베이스, 기타, 키보드, 보컬
-            <MoreDetail>* 여설 보컬, 드럼, 경력자 우대</MoreDetail>
+            <MoreDetail>* 여성 보컬, 드럼, 경력자 우대</MoreDetail>
             모집 기간: 1/27(월) ~ 3/12(수)
             <br />
             면접 기간: 3/14(금) ~ 3/17(월)
@@ -95,7 +95,7 @@ const MoreDetail = styled.div`
   font-family: LeeSeoyun, sans-serif;
   font-size: 20px;
   @media (max-width: 768px) {
-    font-size: 12px;
+    font-size: 16px;
   }
   width: 100%;
   text-align: center;
@@ -113,7 +113,7 @@ const RecruitDetail = styled.div`
   font-family: LeeSeoyun, sans-serif;
   font-size: 23px;
   @media (max-width: 768px) {
-    font-size: 13px;
+    font-size: 17px;
     line-height: 2;
   }
   width: 100%;
@@ -127,6 +127,9 @@ const RecruitContent = styled.div<{ isSmail?: boolean }>`
   flex-direction: column;
   align-items: center;
   gap: ${(prop) => (prop.isSmail ? "30px" : "50px")};
+  @media (max-width: 768px) {
+    gap: 30px;
+  }
   ${(prop) =>
     prop.isSmail
       ? `@media (max-width:768px){
@@ -144,7 +147,11 @@ const RecruitContent = styled.div<{ isSmail?: boolean }>`
   text-align: center;
   border: 1px solid #c7c7c7;
   border-radius: 25px;
-  color: #505050;
+  color: rgb(140, 140, 140);
+  @media (max-width: 768px) {
+    width: 80%;
+    padding: 20px;
+  }
 `;
 const Image = styled.img`
   margin-top: 50px;
