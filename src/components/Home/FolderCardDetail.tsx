@@ -9,7 +9,7 @@ const FolderCardDetail: React.FC<FolderCardDetailProps> = ({ details }) => {
       <Rectangle detailColor={details.color} />
       <Text />
       <NameTag detailColor={details.color}>{details.type}</NameTag>
-      <ContentStyle img={details.image} />
+      <ContentStyle src={details.image} />
       <TextStyle>{details.content}</TextStyle>
       <NumberStyle detailColor={details.color}>{details.number}</NumberStyle>
       <LongRectangle detailColor={details.color} />
@@ -109,10 +109,11 @@ const Rectangle = styled.div<{ detailColor: string }>`
   height: 30px;
   background: ${(prop) => prop.detailColor};
 `;
-const ContentStyle = styled.div<{ img: string }>`
-  background: #e0e0e0;
-  height: 150px;
-  padding: 30px;
+const ContentStyle = styled.img`
+  width: 100%;
+  height: 185px;
+  padding: 15px;
+  padding-bottom: 25px;
   border-radius: 10px;
   text-align: center;
 `;

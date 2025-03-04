@@ -2,14 +2,19 @@ import NavBar from "../components/navBar/navBar.tsx";
 import FolderCard from "../components/Home/FolderCard.tsx";
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
-import logo from "/image/logo.svg";
-import heart from "/image/heart.svg";
+import heart from "/image/home/heart.svg";
 import Activity from "../components/Home/Activity.tsx";
-import timeline from "/image/timeline.svg";
+import timeline from "/image/home/timeline.svg";
 import Apply from "../components/Home/Apply.tsx";
 import YoutubeContents from "../components/Home/YoutubeContents.tsx";
+import Wrapper from "../components/Wrapper.tsx";
+import Footer from "../components/Footer.tsx";
+import room from "/image/home/room.jpeg";
+import family from "/image/home/family.jpeg";
+import kawai from "/image/home/kawai.png";
+import Intro from "../components/Home/Intro.tsx";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+
 interface FolderDetailInfo {
   color: string;
   type: string;
@@ -19,29 +24,28 @@ interface FolderDetailInfo {
 }
 
 const HomePage = () => {
-  const navigate = useNavigate();
   useEffect(() => {
-    navigate("/login");
+    window.scrollTo(0, 0);
   }, []);
   const DetailNote: FolderDetailInfo[] = [
     {
-      color: "#EBE8DE",
+      color: "#FEC039",
       type: "따뜻한 분위기",
-      image: "image",
+      image: `${family}`,
       content: "따뜻하고 가족 같은 분위기로 선배들과 친구들을 사귀기 쉬워요",
       number: 1,
     },
     {
-      color: "#F4E170",
+      color: "#FFE33A",
       type: "좋은 장비",
-      image: "image",
+      image: `${room}`,
       content: "개인 악기가 없어도 학회에 있는 악기들로 활동 할 수 잇어요",
       number: 2,
     },
     {
-      color: "#DCAB53",
+      color: "#E6CE86",
       type: "다양한 장르",
-      image: "image",
+      image: `${kawai}`,
       content:
         "부원이 많아 음악장르가 다양해요 취향이 맞는 친구와 합주를 즐길 수 있어요",
       number: 3,
@@ -50,22 +54,15 @@ const HomePage = () => {
   return (
     <>
       <NavBar />
+      <Intro />
       <Wrapper>
         <div
           className={css`
             margin: 50px;
           `}
-        ></div>
-        <ImageContainer>
-          <Image src={logo} />
-        </ImageContainer>
-        <Intro>
-          작은 소리들의 화합
-          <Title>큰소리</Title>
-        </Intro>
+        />
         <HeartImg src={heart} />
         <Detail>
-          큰소리
           <Details>
             홍익대학교 컴퓨터공학과 밴드 학회 큰소리는
             <br />
@@ -94,6 +91,7 @@ const HomePage = () => {
         <Detail>큰소리의 실력이 궁금하다면?</Detail>
         <YoutubeContents />
         <Apply />
+        <Footer />
       </Wrapper>
     </>
   );
@@ -114,8 +112,6 @@ const TimeLine = styled.img`
 const ActivityContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
   margin-bottom: 150px;
 `;
 const Cards = styled.div`
@@ -144,44 +140,4 @@ const Detail = styled.div`
 const HeartImg = styled.img`
   width: 220px;
   margin-top: 100px;
-`;
-const Intro = styled.div`
-  font-size: 25px;
-  font-weight: bold;
-  margin-top: 60px;
-  font-weight: 300;
-  font-family: DNFForgedBlade, sans-serif;
-  color: #505050;
-`;
-const Title = styled.div`
-  font-size: 50px;
-  font-weight: bold;
-  margin-top: 25px;
-  text-align: center;
-  font-weight: 500;
-  font-family: DNFForgedBlade, sans-serif;
-  color: #505050;
-`;
-const ImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 150px;
-  height: 100px;
-  align-items: center;
-  background: white;
-  transform: rotate(-10deg);
-`;
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-`;
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background: #fffbf3;
-  margin-top: 50px;
-  width: 100%;
-  height: 100%;
 `;

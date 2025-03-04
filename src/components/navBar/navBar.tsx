@@ -3,10 +3,11 @@ import { css } from "@emotion/css";
 import React, { useEffect, useState } from "react";
 import logo from "/image/logo.svg";
 import { Link, useLocation } from "react-router-dom";
-import useIsMobile from "../mobile/useIsMobile";
+import useIsMobile from "../../hooks/useIsMobile.tsx";
 import { IoClose, IoMenu } from "react-icons/io5";
 import Space from "./Space.tsx";
 import { Menu, MobileMenu } from "./Menu.tsx";
+import logowhite from "/image/logowhite.svg";
 
 const NavBar: React.FC = () => {
   const [isMove, setIsMove] = useState(false);
@@ -17,13 +18,20 @@ const NavBar: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsMove(window.scrollY > 0);
+      if (window.scrollY === 0 && location.pathname === "/") {
+        setIsOpen(false);
+      }
     };
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
-    <Menu isMove={isMove}>
+    <Menu isMove={isMove} isHome={location.pathname === "/"}>
       <div
         className={css`
           margin: auto;
@@ -34,13 +42,23 @@ const NavBar: React.FC = () => {
         style={{ cursor: "pointer" }}
       >
         <Link to="/">
-          <img
-            className={css`
-              width: 60px;
-            `}
-            src={logo}
-            alt="logo"
-          />
+          {!isMove && location.pathname === "/" ? (
+            <img
+              className={css`
+                width: 80px;
+              `}
+              src={logowhite}
+              alt="logo"
+            />
+          ) : (
+            <img
+              className={css`
+                width: 80px;
+              `}
+              src={logo}
+              alt="logo"
+            />
+          )}
         </Link>
       </div>
       {!isMobile ? (
@@ -63,26 +81,27 @@ const NavBar: React.FC = () => {
         </div>
       ) : (
         <>
-          <Button onClick={() => setIsOpen(!isOpen)}>
-            {!isOpen ? (
-              <IoMenu size="30" stroke="#919191" />
-            ) : (
-              <IoClose size="30" fill="#919191" />
-            )}
-          </Button>
+          {((isMove && location.pathname === "/") ||
+            !(location.pathname === "/")) && (
+            <>
+              <Button onClick={() => setIsOpen(!isOpen)}>
+                {!isOpen ? (
+                  <IoMenu size="30" stroke="#919191" />
+                ) : (
+                  <IoClose size="30" fill="#919191" />
+                )}
+              </Button>
+            </>
+          )}
           <MobileMenu isOpened={isOpen} isSmall={true}>
             <Link to="/recruit">
-              <Space isActive={location.pathname === "/recruit"}>
-                지원하기
-              </Space>
+              <Space isActive={false}>지원하기</Space>
             </Link>
             <Link to="/contact">
-              <Space isActive={location.pathname === "/contact"}>
-                문의하기
-              </Space>
+              <Space isActive={false}>문의하기</Space>
             </Link>
             <Link to="/login">
-              <Space isActive={location.pathname === "/login"}>my keun</Space>
+              <Space isActive={false}>my keun</Space>
             </Link>
           </MobileMenu>
         </>
