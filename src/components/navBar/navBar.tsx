@@ -18,20 +18,16 @@ const NavBar: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsMove(window.scrollY > 0);
-      if (window.scrollY === 0 && location.pathname === "/") {
-        setIsOpen(false);
-      }
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   return (
-    <Menu isMove={isMove} isHome={location.pathname === "/"}>
+    <Menu isMove={isMove} isOpen={isOpen} isHome={location.pathname === "/"}>
       <div
         className={css`
           margin: auto;
@@ -42,7 +38,7 @@ const NavBar: React.FC = () => {
         style={{ cursor: "pointer" }}
       >
         <Link to="/">
-          {!isMove && location.pathname === "/" ? (
+          {!isMove && location.pathname === "/" && !isOpen ? (
             <img
               className={css`
                 width: 80px;
@@ -81,18 +77,16 @@ const NavBar: React.FC = () => {
         </div>
       ) : (
         <>
-          {((isMove && location.pathname === "/") ||
-            !(location.pathname === "/")) && (
-            <>
-              <Button onClick={() => setIsOpen(!isOpen)}>
-                {!isOpen ? (
-                  <IoMenu size="30" stroke="#919191" />
-                ) : (
-                  <IoClose size="30" fill="#919191" />
-                )}
-              </Button>
-            </>
-          )}
+          <Button onClick={() => setIsOpen(!isOpen)}>
+            {!isMove && !isOpen && location.pathname === "/" ? (
+              <IoMenu size="30" stroke="#ffffff" />
+            ) : !isOpen ? (
+              <IoMenu size="30" stroke="#919191" />
+            ) : (
+              <IoClose size="30" fill="#919191" />
+            )}
+          </Button>
+
           <MobileMenu isOpened={isOpen} isSmall={true}>
             <Link to="/recruit">
               <Space isActive={false}>지원하기</Space>

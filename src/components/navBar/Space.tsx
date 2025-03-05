@@ -16,6 +16,7 @@ const Space = styled.div<{ isActive?: boolean }>`
   @media (max-width: 768px) {
     padding: 10px 30px;
     margin-top: 10px;
+    color: black;
     &:hover {
       background-color: #f1f1f1;
       border-bottom: none;

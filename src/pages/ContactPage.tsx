@@ -1,4 +1,3 @@
-//import { css } from "@emotion/css";
 import NavBar from "../components/navBar/navBar.tsx";
 import Footer from "../components/Footer.tsx";
 import { useEffect, useState } from "react";
@@ -55,7 +54,7 @@ const faqData: Record<string, { question: string; answer: string }[]> = {
     {
       question: "큰소리는 뭐하는 곳인가요??",
       answer:
-        "저희는 1990년에 만들어진 학회예요.  큰소리는 음악을 좋아하는 사람들이 모여 함께 악기를 연주하고 노래를 부르는 밴드입니다!",
+        "저희는 1987년에 만들어진 학회예요.  큰소리는 음악을 좋아하는 사람들이 모여 함께 악기를 연주하고 노래를 부르는 밴드입니다!",
     },
     {
       question: "밴드부 합주 연습하다 보면 공부하는데 지장이 갈까요?",
@@ -68,7 +67,7 @@ const faqData: Record<string, { question: string; answer: string }[]> = {
         "다른 동아리 하면서 활동해도 충분히 대학 밴드 생활의 낭만을 실현할 수 있어요!",
     },
     {
-      question: "학회 활동은 합주, 연습으로만 이루어지나요",
+      question: "학회 활동은 합주, 연습으로만 이루어지나요?",
       answer:
         "정기공연을 위한 합주, 악기 교습도 진행하지만 이외에도 학기 중 정기모임, 번개모임, MT 등 다같이 즐겁게 놀면서 친해질 기회가 많아요! 또한 악기 실력을 기르고 선배들과 친해지기 위한 멘토멘티 활동도 진행할 예정이니 기대해주세요😊😊",
     },
