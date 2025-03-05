@@ -30,7 +30,7 @@ const RecruitPage = () => {
         <RecruitContent>
           <RecruitTitle>모집 안내</RecruitTitle>
           <RecruitDetail>
-            모집 대상: 컴퓨터공학과, 컴퓨터 공학과 진입 예정 자율 전공 재학생
+            모집 대상: 컴퓨터 공학과, 컴퓨터 공학과 진입 예정 자율 전공 재학생
             <br />
             모집 세션: 드럼, 베이스, 기타, 키보드, 보컬
             <MoreDetail>* 여성 보컬, 드럼, 경력자 우대</MoreDetail>
@@ -158,7 +158,7 @@ const RecruitContent = styled.div<{ isSmail?: boolean }>`
   }
 `;
 const Image = styled.img`
-  margin-top: 50px;
+  margin-top: 100px;
   width: 70%;
   height: 100%;
 `;
