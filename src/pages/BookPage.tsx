@@ -4,13 +4,13 @@ import CurrentBook from "../components/Book/Current/CurrentBook/CurrentBook.tsx"
 import ApplicationBook from "../components/Book/Application/ApplicationBook.tsx";
 import MyBook from "../components/Book/My/MyBook.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
-
 import { useEffect } from "react";
 import Nav from "../components/Nav.tsx";
 import {
   ContainerStyle,
   InnerContainerStyle,
 } from "../components/Container.tsx";
+import { getToken } from "../utils/jwt.ts";
 
 const BookPage = () => {
   const locaiton = useLocation();
@@ -22,6 +22,10 @@ const BookPage = () => {
     navigate(`/book?type=${e.currentTarget.dataset.action}`);
   };
   useEffect(() => {
+    const token = getToken();
+    if (!token) {
+      navigate("/login");
+    }
     if (!component) {
       navigate("/book?type=current");
     }
