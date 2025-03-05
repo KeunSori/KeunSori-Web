@@ -69,9 +69,7 @@ const CurrentBook: React.FC = () => {
         });
         setFilteredUserData(filteredData || null);
       }
-    } catch (error) {
-      console.log(`에러남:${error}`);
-      alert("정보를 불러올 수 없습니다");
+    } catch {
       navigate("/login");
     }
   }
