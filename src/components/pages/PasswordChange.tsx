@@ -1,21 +1,24 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
 import { getMemberStatus } from "../../utils/jwt";
-import axios from "axios";
-import authApi from "../../api/Instance/authApi";
 import { useNavigate } from "react-router-dom";
 import NavBar2 from "../navBar/navBar2";
 import Footer from "../Footer";
+import { changePassword } from "../../api/password";
 
 const PasswordChange = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  // 에러 메시지 말풍선
+  const [curPassError, setCurPassError] = useState("");
+  const [newPassError, setNewPassError] = useState("");
+  const [passConfirmError, setPassConfirmError] = useState("");
   const nav = useNavigate();
 
-  const memberStatus = getMemberStatus();
-  console.log(memberStatus);
+  const checkShort = newPassword.length > 0 && newPassword.length < 8; // 글자수 확인
+
+  const memberStatus = getMemberStatus() as string;
 
   async function handlePasswordChange() {
     if (!currentPassword || !newPassword || !passwordConfirm) {
@@ -23,38 +26,23 @@ const PasswordChange = () => {
       return;
     }
     try {
-      if (memberStatus === "일반") {
-        //const requestData = { currentPassword, newPassword, passwordConfirm };
-        //console.log("보내는 데이터:", requestData);
-        await authApi.patch("/members/me/password", {
-          currentPassword,
-          newPassword,
-          passwordConfirm,
-        });
-      } else if (memberStatus === "관리자") {
-        await authApi.patch("/admin/me/password", {
-          currentPassword,
-          newPassword,
-          passwordConfirm,
-        });
-      } else {
-        alert("가입 승인 대기 중입니다. 다른 계정으로 다시 시도하세요.");
-        return;
-      }
+      await changePassword(memberStatus, {
+        currentPassword,
+        newPassword,
+        passwordConfirm,
+      });
       alert("비밀번호가 변경되었습니다.");
       nav("/mypage");
-    } catch (e) {
+    } catch (e: any) {
       console.error("비밀번호 변경 오류:", e);
-      if (axios.isAxiosError(e)) {
-        console.log("서버 응답 데이터:", e.response?.data);
-        if (e.response?.status === 401) {
-          alert("현재 비밀번호가 틀렸습니다.");
-          setErrorMessage(e.response.data.message);
-        } else if (e.response?.status === 400) {
-          setErrorMessage(e.response.data.message);
+      if (e.response) {
+        if (e.response.status === 401) {
+          setCurPassError(e.response.data.message);
+        } else if (e.response.status === 400) {
+          setPassConfirmError(e.response.data.message);
         } else {
           alert(
-            `비밀번호 변경 요청을 실패했습니다. 오류 코드: ${e.response?.status}`
+            `비밀번호 변경 요청을 실패했습니다. 오류 코드: ${e.response.status}`
           );
         }
       } else if (e instanceof Error) {
@@ -64,6 +52,7 @@ const PasswordChange = () => {
       }
     }
   }
+
   console.log("currentPassword:", currentPassword);
   console.log("newPassword:", newPassword);
   console.log("passwordConfirm:", passwordConfirm);
@@ -82,25 +71,36 @@ const PasswordChange = () => {
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
               />
+              {curPassError && <ErrorMes>{curPassError}</ErrorMes>}
             </Flex>
             <Flex>
               <Text>새 비밀번호</Text>
               <PassBox
                 type="password"
                 value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
+                onChange={(e) => {
+                  setNewPassword(e.target.value);
+                  setNewPassError(""); // 에러 메시지 없애기
+                }}
               />
+              {checkShort && (
+                <ErrorMes>비밀번호는 8자리 이상 입력하셔야 합니다.</ErrorMes>
+              )}
+              {newPassError && <ErrorMes>{newPassError}</ErrorMes>}
             </Flex>
             <Flex>
               <Text>새 비밀번호 확인</Text>
               <PassBox
                 type="password"
                 value={passwordConfirm}
-                onChange={(e) => setPasswordConfirm(e.target.value)}
+                onChange={(e) => {
+                  setPasswordConfirm(e.target.value);
+                  setPassConfirmError("");
+                }}
               />
+              {passConfirmError && <ErrorMes>{passConfirmError}</ErrorMes>}
             </Flex>
           </Content>
-          <div>{errorMessage}</div>
           <ButtonDiv>
             <ChangeButton onClick={handlePasswordChange}>변경하기</ChangeButton>
           </ButtonDiv>
@@ -111,6 +111,42 @@ const PasswordChange = () => {
   );
 };
 export default PasswordChange;
+
+const ErrorMes = styled.div`
+  background-color: #fff;
+  border: solid 1px #ff5757;
+  color: #ff5757;
+  padding: 10px;
+  font-size: 20px;
+  z-index: 100;
+
+  position: absolute;
+  top: 100%;
+  left: 600px;
+  max-width: 400px;
+  min-width: 200px;
+
+  // 말풍선 화살표
+  &::after {
+    content: "";
+    position: absolute;
+    border-style: solid;
+    border-color: transparent transparent #ff5757 transparent;
+    top: -13px;
+    left: 16px;
+    border-width: 10px;
+  }
+  @media (max-width: 768px) {
+    padding: 7px;
+    font-size: 12px;
+    max-width: 200px;
+    min-width: 170px;
+    left: 50%;
+  }
+  &::after {
+    border-width: 7px;
+  }
+`;
 
 const Container = styled.div`
   margin-top: 60px;
@@ -148,6 +184,7 @@ const Text = styled.div`
   }
 `;
 const Flex = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -163,6 +200,7 @@ const PassBox = styled.input`
     border: none;
   }
   background-color: #f1f1f1;
+  position: relative;
   @media (max-width: 768px) {
     min-width: 200px;
     height: 20px;
