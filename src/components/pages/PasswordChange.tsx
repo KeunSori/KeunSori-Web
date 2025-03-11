@@ -16,7 +16,34 @@ const PasswordChange = () => {
   const [passConfirmError, setPassConfirmError] = useState("");
   const nav = useNavigate();
 
-  const checkShort = newPassword.length > 0 && newPassword.length < 8; // 글자수 확인
+  const checkPasswordValidity = (password: string) => {
+    const minLength = password.length >= 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasDigits = /\d/.test(password);
+    const hasSpecialChars = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    return (
+      minLength &&
+      (hasUpperCase || hasLowerCase) &&
+      hasDigits &&
+      hasSpecialChars
+    );
+  };
+
+  const handleNewPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const password = e.target.value;
+    setNewPassword(password);
+
+    if (!checkPasswordValidity(password)) {
+      setNewPassError(
+        "비밀번호는 영문자, 숫자, 특수문자를 포함하고 8자 이상이어야 합니다."
+      );
+    } else {
+      // 유효하면 초기화
+      setNewPassError("");
+    }
+  };
 
   const memberStatus = getMemberStatus() as string;
 
@@ -78,14 +105,8 @@ const PasswordChange = () => {
               <PassBox
                 type="password"
                 value={newPassword}
-                onChange={(e) => {
-                  setNewPassword(e.target.value);
-                  setNewPassError(""); // 에러 메시지 없애기
-                }}
+                onChange={handleNewPasswordChange}
               />
-              {checkShort && (
-                <ErrorMes>비밀번호는 8자리 이상 입력하셔야 합니다.</ErrorMes>
-              )}
               {newPassError && <ErrorMes>{newPassError}</ErrorMes>}
             </Flex>
             <Flex>
