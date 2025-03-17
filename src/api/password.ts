@@ -6,7 +6,8 @@ interface PasswordChangeParams {
   passwordConfirm: string;
 }
 
-export const changePassword = async (
+// 비밀번호 변경 API 호출
+const changePassword = async (
   memberStatus: string,
   params: PasswordChangeParams
 ) => {
@@ -18,3 +19,18 @@ export const changePassword = async (
   const response = await authApi.patch(endpoint, params);
   return response;
 };
+
+// 비밀번호 생성 규칙을 만족하는지 유효성 검사 - 특수문자, 8자리 이상, 영문자
+const checkPasswordValidity = (password: string) => {
+  const minLength = password.length >= 8;
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasLowerCase = /[a-z]/.test(password);
+  const hasDigits = /\d/.test(password);
+  const hasSpecialChars = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+  return (
+    minLength && (hasUpperCase || hasLowerCase) && hasDigits && hasSpecialChars
+  );
+};
+
+export { changePassword, checkPasswordValidity };
