@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import NavBar2 from "../navBar/navBar2";
 import Footer from "../Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getMemberStatus } from "../../utils/jwt";
 import { useNavigate } from "react-router-dom";
 import { changePassword } from "../../api/password";
@@ -14,7 +14,13 @@ const PasswordChange = () => {
   const [curPassError, setCurPassError] = useState("");
   const [newPassError, setNewPassError] = useState("");
   const [passConfirmError, setPassConfirmError] = useState("");
+  // '변경하기' 버튼 비활성화 여부
+  const [isDisabled, setIsDisabled] = useState(true);
   const nav = useNavigate();
+
+  useEffect(() => {
+    setIsDisabled(!checkPasswordValidity(newPassword));
+  }, [newPassword]);
 
   const checkPasswordValidity = (password: string) => {
     const minLength = password.length >= 8;
@@ -37,7 +43,7 @@ const PasswordChange = () => {
 
     if (!checkPasswordValidity(password)) {
       setNewPassError(
-        "비밀번호는 영문자, 숫자, 특수문자를 포함하고 8자 이상이어야 합니다."
+        "비밀번호는 특수문자, 영문자, 숫자를 포함한 8자 이상 문자열 입니다."
       );
     } else {
       // 유효하면 초기화
@@ -64,8 +70,10 @@ const PasswordChange = () => {
       console.error("비밀번호 변경 오류:", e);
       if (e.response) {
         if (e.response.status === 401) {
+          // 현재 비밀번호 불일치 에러
           setCurPassError(e.response.data.message);
         } else if (e.response.status === 400) {
+          // 새 비밀번호 확인 에러
           setPassConfirmError(e.response.data.message);
         } else {
           alert(
@@ -123,7 +131,13 @@ const PasswordChange = () => {
             </Flex>
           </Content>
           <ButtonDiv>
-            <ChangeButton onClick={handlePasswordChange}>변경하기</ChangeButton>
+            <ChangeButton
+              className={isDisabled ? "gray" : "orange"}
+              onClick={handlePasswordChange}
+              disabled={isDisabled}
+            >
+              변경하기
+            </ChangeButton>
           </ButtonDiv>
         </ContentBox>
       </Container>
@@ -247,7 +261,14 @@ const ChangeButton = styled.button`
   padding: 15px;
   border-radius: 15px;
   font-size: 24px;
-  background-color: #ffc927;
+  &.orange {
+    background-color: #ffc927;
+    cursor: pointer;
+  }
+  &.gray {
+    background-color: #d0d0d0;
+    color: gray;
+  }
   @media (max-width: 768px) {
     font-size: 16px;
     width: 100%;
