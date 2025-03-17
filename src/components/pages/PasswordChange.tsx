@@ -16,6 +16,8 @@ const PasswordChange = () => {
   const [passConfirmError, setPassConfirmError] = useState("");
   // '변경하기' 버튼 비활성화 여부
   const [isDisabled, setIsDisabled] = useState(true);
+  // '변경되었습니다' 나타났다가 사라지게 하기
+  const [changedMessage, setChangedMessage] = useState("");
   const nav = useNavigate();
 
   useEffect(() => {
@@ -64,8 +66,13 @@ const PasswordChange = () => {
         newPassword,
         passwordConfirm,
       });
-      alert("비밀번호가 변경되었습니다.");
-      nav("/mypage");
+      //alert("비밀번호가 변경되었습니다.");
+      setChangedMessage("변경되었습니다.");
+      setTimeout(() => {
+        // 3.5초 후 메시지 제거
+        setChangedMessage("");
+        nav("/mypage");
+      }, 3500);
     } catch (e: any) {
       console.error("비밀번호 변경 오류:", e);
       if (e.response) {
@@ -73,6 +80,7 @@ const PasswordChange = () => {
           // 현재 비밀번호 불일치 에러
           setCurPassError(e.response.data.message);
         } else if (e.response.status === 400) {
+          // 없어질 코드
           // 새 비밀번호 확인 에러
           setPassConfirmError(e.response.data.message);
         } else {
@@ -88,15 +96,21 @@ const PasswordChange = () => {
     }
   }
 
-  console.log("currentPassword:", currentPassword);
-  console.log("newPassword:", newPassword);
-  console.log("passwordConfirm:", passwordConfirm);
+  // 엔터치면 변경하기 버튼 클릭됨
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !isDisabled) {
+      handlePasswordChange();
+    }
+  };
 
   return (
     <>
       <NavBar2 />
       <Container>
         <ContentBox>
+          <MessageCenter>
+            {changedMessage && <Message>{changedMessage}</Message>}
+          </MessageCenter>
           <Title>비밀번호 변경</Title>
           <Content>
             <Flex>
@@ -105,6 +119,7 @@ const PasswordChange = () => {
                 type="password"
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
+                onKeyDown={handleKeyDown}
               />
               {curPassError && <ErrorMes>{curPassError}</ErrorMes>}
             </Flex>
@@ -114,6 +129,7 @@ const PasswordChange = () => {
                 type="password"
                 value={newPassword}
                 onChange={handleNewPasswordChange}
+                onKeyDown={handleKeyDown}
               />
               {newPassError && <ErrorMes>{newPassError}</ErrorMes>}
             </Flex>
@@ -126,6 +142,7 @@ const PasswordChange = () => {
                   setPasswordConfirm(e.target.value);
                   setPassConfirmError("");
                 }}
+                onKeyDown={handleKeyDown}
               />
               {passConfirmError && <ErrorMes>{passConfirmError}</ErrorMes>}
             </Flex>
@@ -146,6 +163,20 @@ const PasswordChange = () => {
   );
 };
 export default PasswordChange;
+
+const MessageCenter = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const Message = styled.div`
+  background-color: #fceca5;
+  color: rgb(103, 103, 103);
+  width: 200px;
+  padding: 10px;
+  font-size: 23px;
+  text-align: center;
+`;
 
 const ErrorMes = styled.div`
   background-color: #fff;
@@ -243,7 +274,7 @@ const PassBox = styled.input`
   }
 `;
 const ContentBox = styled.div`
-  margin-top: 200px;
+  margin-top: 120px;
   display: flex;
   flex-direction: column;
   gap: 60px;
