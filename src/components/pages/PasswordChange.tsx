@@ -80,7 +80,6 @@ const PasswordChange = () => {
           // 현재 비밀번호 불일치 에러
           setCurPassError(e.response.data.message);
         } else if (e.response.status === 400) {
-          // 없어질 코드
           // 새 비밀번호 확인 에러
           setPassConfirmError(e.response.data.message);
         } else {
