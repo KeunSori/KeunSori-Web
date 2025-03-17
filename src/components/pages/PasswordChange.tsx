@@ -170,10 +170,10 @@ const MessageCenter = styled.div`
 
 const Message = styled.div`
   background-color: #fceca5;
-  color: rgb(103, 103, 103);
-  width: 200px;
-  padding: 10px;
-  font-size: 23px;
+  color: rgb(123, 123, 123);
+  width: 150px;
+  padding: 7px;
+  font-size: 14px;
   text-align: center;
 `;
 
@@ -227,7 +227,7 @@ const Container = styled.div`
   }
 `;
 const Title = styled.div`
-  font-size: 40px;
+  font-size: 23px;
   font-weight: 400;
   @media (max-width: 768px) {
     font-size: 27px;
@@ -236,13 +236,13 @@ const Title = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 10px;
   @media (max-width: 768px) {
     gap: 15px;
   }
 `;
 const Text = styled.div`
-  font-size: 24px;
+  font-size: 16px;
   min-width: 100px;
   @media (max-width: 768px) {
     font-size: 16px;
@@ -255,42 +255,42 @@ const Flex = styled.div`
   align-items: center;
 `;
 const PassBox = styled.input`
-  min-width: 588px;
-  height: 64px;
+  min-width: 350px;
+  height: 40px;
   border-radius: 15px;
   border: none;
   padding: 20px;
-  font-size: 24px;
+  font-size: 16px;
   &:focus {
     border: none;
   }
   background-color: #f1f1f1;
   position: relative;
   @media (max-width: 768px) {
-    min-width: 200px;
+    min-width: 250px;
     height: 20px;
     padding: 20px;
   }
 `;
 const ContentBox = styled.div`
-  margin-top: 120px;
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
   gap: 60px;
 
   width: 100%;
-  min-width: 870px;
-  max-width: 1100px;
+  min-width: 500px;
+  max-width: 670px;
   @media (max-width: 768px) {
     margin-top: 70px;
     min-width: auto;
   }
 `;
 const ChangeButton = styled.button`
-  width: 150px;
-  padding: 15px;
+  width: 100px;
+  padding: 9px;
   border-radius: 15px;
-  font-size: 24px;
+  font-size: 16px;
   &.orange {
     background-color: #ffc927;
     cursor: pointer;
@@ -306,7 +306,7 @@ const ChangeButton = styled.button`
   }
 `;
 const ButtonDiv = styled.div`
-  margin-top: 70px;
+  margin-top: 20px;
   width: 100%;
   display: flex;
   justify-content: flex-end;
