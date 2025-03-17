@@ -89,7 +89,7 @@ const ReserveView = styled.div`
   text-align: center;
   border-radius: 20px;
 
-  font-size: 20px;
+  font-size: 16px;
   cursor: pointer;
   @media (max-width: 768px) {
     min-width: 300px;
