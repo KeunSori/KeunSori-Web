@@ -171,14 +171,15 @@ const ErrorMes = styled.div`
   border: solid 1px #ff5757;
   color: #ff5757;
   padding: 7px;
-  font-size: 14px;
+  font-size: 11px;
   z-index: 100;
 
   position: absolute;
   top: 100%;
-  left: 500px; // 화면 너비에 맞게 중앙 정렬 -> calc로 adsolute가 동적으로 잘 조정되도록 한다
-  max-width: 400px;
-  min-width: 200px;
+  left: calc(
+    75% + 10px
+  ); // 화면 너비에 맞게 중앙 정렬 -> calc로 adsolute가 동적으로 잘 조정되도록 한다
+  width: 200px;
 
   // 말풍선 화살표
   &::after {
@@ -191,11 +192,10 @@ const ErrorMes = styled.div`
     border-width: 10px;
   }
   @media (max-width: 768px) {
-    padding: 7px;
-    font-size: 12px;
-    max-width: 200px;
-    min-width: 170px;
-    left: 50%;
+    padding: 5px;
+    font-size: 10px;
+    width: 171px;
+    left: 60%;
   }
   &::after {
     border-width: 7px;
