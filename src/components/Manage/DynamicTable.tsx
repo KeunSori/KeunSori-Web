@@ -20,61 +20,11 @@ interface Row {
   checked?: boolean;
 }
 
+// 회원 리스트 불러오기
 const fetchMembers = async (): Promise<memberResponse[]> => {
   const response = await authApi.get<memberResponse[]>("/admin/members/list");
   return response.data;
 };
-
-const TableContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow-x: auto;
-`;
-
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-`;
-
-const TableRow = styled.tr`
-  border-bottom: 1px solid #e6e8ea;
-`;
-
-const TableHeadCell = styled.th`
-  padding: 10px;
-  text-align: center;
-  font-weight: bold;
-`;
-
-const TableCell = styled.td`
-  padding: 10px;
-  text-align: center;
-`;
-
-const ActionButton = styled.button`
-  background-color: #ffaa00;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 20px;
-  margin-left: auto;
-
-  &:hover {
-    background-color: #e69900;
-  }
-`;
-
-const Scroll = styled.div`
-  @media (max-width: 768px) {
-    height: 500px;
-  }
-  overflow: auto;
-`;
 
 const DynamicTable: React.FC = () => {
   const [rows, setRows] = useState<Row[]>([]);
@@ -205,3 +155,54 @@ const DynamicTable: React.FC = () => {
 };
 
 export default DynamicTable;
+
+const TableContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+`;
+
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+`;
+
+const TableRow = styled.tr`
+  border-bottom: 1px solid #e6e8ea;
+`;
+
+const TableHeadCell = styled.th`
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+`;
+
+const TableCell = styled.td`
+  padding: 10px;
+  text-align: center;
+`;
+
+const ActionButton = styled.button`
+  background-color: #ffaa00;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-left: auto;
+
+  &:hover {
+    background-color: #e69900;
+  }
+`;
+
+const Scroll = styled.div`
+  @media (max-width: 768px) {
+    height: 500px;
+  }
+  overflow: auto;
+`;

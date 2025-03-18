@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import authApi from "../../api/Instance/authApi";
-///import { fetchRows } from "./api"; // API 요청 분리된 파일
 
 interface applicantResponse {
   id: number;
@@ -25,57 +24,6 @@ interface Row {
   date: Date; // 서버에서 날짜를 문자열로 전달한다고 가정
   checked?: boolean;
 }
-
-const TableContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow-x: auto;
-`;
-
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-`;
-
-const TableRow = styled.tr`
-  border-bottom: 1px solid #e6e8ea;
-`;
-
-const TableHeadCell = styled.th`
-  padding: 10px;
-  text-align: center;
-  font-weight: bold;
-`;
-
-const TableCell = styled.td`
-  padding: 10px;
-  text-align: center;
-`;
-
-const ActionButton = styled.button`
-  background-color: #ffaa00;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 20px;
-  margin-left: auto;
-
-  &:hover {
-    background-color: #e69900;
-  }
-`;
-
-const Scroll = styled.div`
-  @media (max-width: 768px) {
-    height: 500px;
-  }
-  overflow: auto;
-`;
 
 const ApprovalTable: React.FC = () => {
   const [rows, setRows] = useState<Row[]>([]);
@@ -199,3 +147,54 @@ const ApprovalTable: React.FC = () => {
 };
 
 export default ApprovalTable;
+
+const TableContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+`;
+
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+`;
+
+const TableRow = styled.tr`
+  border-bottom: 1px solid #e6e8ea;
+`;
+
+const TableHeadCell = styled.th`
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+`;
+
+const TableCell = styled.td`
+  padding: 10px;
+  text-align: center;
+`;
+
+const ActionButton = styled.button`
+  background-color: #ffaa00;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-left: auto;
+
+  &:hover {
+    background-color: #e69900;
+  }
+`;
+
+const Scroll = styled.div`
+  @media (max-width: 768px) {
+    height: 500px;
+  }
+  overflow: auto;
+`;
