@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
-import NavBar2 from "../navBar/navBar2";
-import Footer from "../Footer";
+import NavBar2 from "../components/navBar/navBar2";
+import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
-import { getMemberStatus } from "../../utils/jwt";
+import { getMemberStatus } from "../utils/jwt";
 import { useNavigate } from "react-router-dom";
-import { changePassword, checkPasswordValidity } from "../../api/password";
+import { changePassword, checkPasswordValidity } from "../api/password";
 
 const PasswordChange = () => {
   const nav = useNavigate();
