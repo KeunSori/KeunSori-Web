@@ -1,4 +1,4 @@
-import NavBar2 from "../navBar/navBar2";
+import NavBar2 from "../components/navBar/navBar2";
 
 const BoardPage = () => {
   return (
