@@ -85,7 +85,7 @@ export default MyPage;
 const ReserveView = styled.div`
   width: 100%;
   width: 690px;
-  background-color: #ffc927;
+  background-color: #ffd65c;
   padding: 14px;
   text-align: center;
   border-radius: 20px;
