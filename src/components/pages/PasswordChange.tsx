@@ -13,10 +13,8 @@ const PasswordChange = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  // 에러 메시지 말풍선
-  const [curPassError, setCurPassError] = useState("");
-  const [newPassError, setNewPassError] = useState("");
-  const [passConfirmError, setPassConfirmError] = useState("");
+  // 에러 메시지
+  const [errorMessage, setErrorMessage] = useState("");
   // '변경하기' 버튼 비활성화 여부
   const [isDisabled, setIsDisabled] = useState(true);
   // '변경되었습니다' 팝업 나타났다가 사라지게 하기
@@ -28,17 +26,23 @@ const PasswordChange = () => {
   }, [newPassword]);
 
   const handleNewPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 유효해지면 에러 말풍선 없애기
+    // 유효해지면 에러 없애기
     const password = e.target.value;
     setNewPassword(password);
 
+    if (password.length === 0) {
+      // 입력 안한 경우에는 에러 메시지 없음
+      setErrorMessage("");
+      return;
+    }
+
     if (!checkPasswordValidity(password)) {
-      setNewPassError(
+      setErrorMessage(
         "비밀번호는 특수문자, 영문자, 숫자를 포함한 8자 이상 문자열 입니다."
       );
     } else {
       // 유효해지면 에러 없애기 (초기화)
-      setNewPassError("");
+      setErrorMessage("");
     }
   };
 
@@ -50,15 +54,15 @@ const PasswordChange = () => {
       return;
     }
     if (newPassword !== passwordConfirm) {
-      setPassConfirmError("새 비밀번호 확인 값이 다릅니다.");
+      setErrorMessage("새 비밀번호 확인 값이 다릅니다.");
       return;
     }
     try {
       await changePassword(memberStatus, {
         currentPassword,
         newPassword,
-        passwordConfirm, // 나중에 없애기
       });
+      setErrorMessage("");
       setChangedMessage("변경되었습니다.");
       setTimeout(() => {
         setChangedMessage(""); // 3.5초 후 변경 확인 메시지 사라짐
@@ -67,12 +71,8 @@ const PasswordChange = () => {
     } catch (e: any) {
       console.error("비밀번호 변경 오류:", e);
       if (e.response.status === 400) {
-        // 현재 비밀번호 불일치 오류
-        setCurPassError(e.response.data.message);
-      } else if (e.response.status === 409) {
-        // 변경될 예정
-        // [현재 비밀번호]와 [새 비밀번호] 일치 오류
-        alert(e.response.data.message);
+        // 오류
+        setErrorMessage(e.response.data.message);
       } else {
         alert(
           `비밀번호 변경 요청을 실패했습니다. 오류 코드: ${e.response.status}`
@@ -94,7 +94,7 @@ const PasswordChange = () => {
       <Container>
         <ContentBox>
           <MessageCenter>
-            {changedMessage && <Message>{changedMessage}</Message>}
+            {changedMessage && <PopUpMessage>{changedMessage}</PopUpMessage>}
           </MessageCenter>
           <Title>비밀번호 변경</Title>
           <Content>
@@ -105,11 +105,9 @@ const PasswordChange = () => {
                 value={currentPassword}
                 onChange={(e) => {
                   setCurrentPassword(e.target.value);
-                  setCurPassError("");
                 }}
                 onKeyDown={handleKeyDown}
               />
-              {curPassError && <ErrorMes>{curPassError}</ErrorMes>}
             </Flex>
             <Flex>
               <Text>새 비밀번호</Text>
@@ -119,7 +117,6 @@ const PasswordChange = () => {
                 onChange={handleNewPasswordChange}
                 onKeyDown={handleKeyDown}
               />
-              {newPassError && <ErrorMes>{newPassError}</ErrorMes>}
             </Flex>
             <Flex>
               <Text>새 비밀번호 확인</Text>
@@ -128,12 +125,11 @@ const PasswordChange = () => {
                 value={passwordConfirm}
                 onChange={(e) => {
                   setPasswordConfirm(e.target.value);
-                  setPassConfirmError("");
                 }}
                 onKeyDown={handleKeyDown}
               />
-              {passConfirmError && <ErrorMes>{passConfirmError}</ErrorMes>}
             </Flex>
+            <Error>{errorMessage}</Error>
           </Content>
           <ButtonDiv>
             <ChangeButton
@@ -155,51 +151,26 @@ export default PasswordChange;
 const MessageCenter = styled.div`
   display: flex;
   justify-content: center;
+  position: relative;
 `;
 
-const Message = styled.div`
+const PopUpMessage = styled.div`
   background-color: #fceca5;
   color: rgb(123, 123, 123);
   width: 150px;
   padding: 7px;
   font-size: 14px;
   text-align: center;
+  position: absolute;
 `;
 
-const ErrorMes = styled.div`
-  background-color: #fff;
-  border: solid 1px #ff5757;
+const Error = styled.div`
+  margin-top: 10px;
+  font-size: 12px;
   color: #ff5757;
-  padding: 7px;
-  font-size: 11px;
-  z-index: 100;
-
-  position: absolute;
-  top: 100%;
-  left: calc(
-    75% + 10px
-  ); // 화면 너비에 맞게 중앙 정렬 -> calc로 adsolute가 동적으로 잘 조정되도록 한다
-  width: 200px;
-
-  // 말풍선 화살표
-  &::after {
-    content: "";
-    position: absolute;
-    border-style: solid;
-    border-color: transparent transparent #ff5757 transparent;
-    top: -13px;
-    left: 16px;
-    border-width: 10px;
-  }
-  @media (max-width: 768px) {
-    padding: 5px;
-    font-size: 10px;
-    width: 171px;
-    left: 60%;
-  }
-  &::after {
-    border-width: 7px;
-  }
+  display: flex;
+  justify-content: center;
+  min-height: 20px; // 최소 공간을 차지하도록
 `;
 
 const Container = styled.div`
