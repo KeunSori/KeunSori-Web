@@ -128,7 +128,7 @@ const InfoBox = styled.div`
     margin-top: 80px;
     width: 90%;
     height: auto;
-    padding: 20px;
+    padding: 25px;
   }
 `;
 const Title = styled.p`
@@ -154,14 +154,14 @@ const Flex = styled.div`
   padding: 0px;
   display: flex;
   flex-direction: row;
-  gap: 150px;
+  gap: 130px;
   &.email {
-    gap: 135px;
+    gap: 115px;
   }
   @media (max-width: 768px) {
-    gap: 50px;
+    gap: 80px;
     &.email {
-      gap: 35px;
+      gap: 67px;
     }
   }
 `;
@@ -182,7 +182,7 @@ const Logout = styled.div`
   color: #838383;
   font-size: 16px;
   @media (max-width: 768px) {
-    font-size: 16px;
+    font-size: 15px;
   }
 `;
 const Text = styled.div`
@@ -197,9 +197,9 @@ const Text = styled.div`
     cursor: pointer;
   }
   @media (max-width: 768px) {
-    font-size: 16px;
+    font-size: 15px;
     &.gray-line {
-      width: 130px;
+      width: 121px;
     }
   }
 `;
