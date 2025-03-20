@@ -3,7 +3,6 @@ import authApi from "./Instance/authApi";
 interface PasswordChangeParams {
   currentPassword: string;
   newPassword: string;
-  passwordConfirm: string;
 }
 
 // 비밀번호 변경 API 호출
