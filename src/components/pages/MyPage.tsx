@@ -1,16 +1,52 @@
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
-//import Footer from "../components/Footer";
 import NavBar2 from "../navBar/navBar2";
 import Footer from "../Footer";
+import { useEffect, useState } from "react";
+import { getMemberStatus } from "../../utils/jwt.ts";
+import authApi from "../../api/Instance/authApi.ts";
+
+interface UserInfo {
+  name: string;
+  studentId: string;
+  email: string;
+}
 
 const MyPage = () => {
+  // 회원 정보
+  const [info, setInfo] = useState<UserInfo>({
+    name: "",
+    studentId: "",
+    email: "",
+  });
+
   const nav = useNavigate();
-  const navToLogin = () => {
-    return nav("/login");
-  };
-  const navToPassChange = () => nav("/password-change");
-  const navToBook = () => nav("/book"); // 나의 예약으로 수정할 예정
+  const navToLogin = () => nav("/login");
+  const navToPassChange = () => nav("/password-change"); // '비밀번호 변경하기' 클릭 시 이동
+  const navToBook = () => nav("/book?type=my"); // '내 예약 조회' 클릭 시 이동
+
+  const memberStatus = getMemberStatus();
+
+  useEffect(() => {
+    async function fetchPersonData() {
+      try {
+        if (memberStatus === "일반") {
+          const response = await authApi.get<UserInfo>("/members/me");
+          setInfo(response.data);
+        }
+        if (memberStatus === "관리자") {
+          const response = await authApi.get<UserInfo>("/admin/me");
+          setInfo(response.data);
+        }
+      } catch (e) {
+        console.error(e);
+        alert("마이페이지 정보를 불러오는데 실패했습니다.");
+        nav("/login");
+      }
+    }
+    fetchPersonData();
+  }, []); // 페이지 랜더링 시 한번 실행
+
   return (
     <>
       <NavBar2 />
@@ -21,15 +57,15 @@ const MyPage = () => {
             <Information>
               <Flex>
                 <Text className="gray">이름</Text>
-                <Text>김유진</Text>
+                <Text>{info.name || "정보 없음"}</Text>
               </Flex>
               <Flex>
                 <Text className="gray">학번</Text>
-                <Text>C123456</Text>
+                <Text>{info.studentId || "정보 없음"}</Text>
               </Flex>
               <Flex className="email">
                 <Text className="gray">이메일</Text>
-                <Text>yujin123@gmail.com</Text>
+                <Text>{info.email || "정보 없음"}</Text>
               </Flex>
               <Text className="gray-line" onClick={navToPassChange}>
                 비밀번호 수정하기
@@ -48,14 +84,13 @@ export default MyPage;
 
 const ReserveView = styled.div`
   width: 100%;
-  max-width: 1500px;
-  min-width: 750px;
-  background-color: #ffc927;
-  padding: 20px;
+  width: 690px;
+  background-color: #ffd65c;
+  padding: 14px;
   text-align: center;
   border-radius: 20px;
 
-  font-size: 24px;
+  font-size: 16px;
   cursor: pointer;
   @media (max-width: 768px) {
     min-width: 300px;
@@ -80,26 +115,24 @@ const Container = styled.div`
   }
 `;
 const InfoBox = styled.div`
-  margin-top: 190px;
-  width: 100%; // 부모 요소의 너비에 따라 조정되도록
-  max-width: 1500px;
-  min-width: 750px;
-  height: 380px;
+  margin-top: 100px;
+  width: 690px;
+  min-width: 600px;
+  height: 260px;
   border: 2px solid #a1a1a1;
   border-radius: 30px;
-
-  padding: 40px;
+  padding: 35px;
 
   @media (max-width: 768px) {
     min-width: 300px;
     margin-top: 80px;
     width: 90%;
     height: auto;
-    padding: 20px;
+    padding: 25px;
   }
 `;
 const Title = styled.p`
-  font-size: 40px;
+  font-size: 23px;
   font-weight: 400;
   margin: 0px;
   @media (max-width: 768px) {
@@ -107,10 +140,10 @@ const Title = styled.p`
   }
 `;
 const Information = styled.div`
-  margin-top: 50px;
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
-  gap: 17px;
+  gap: 10px;
   @media (max-width: 768px) {
     margin-top: 25px;
     gap: 10px;
@@ -121,14 +154,14 @@ const Flex = styled.div`
   padding: 0px;
   display: flex;
   flex-direction: row;
-  gap: 200px;
+  gap: 130px;
   &.email {
-    gap: 178px;
+    gap: 115px;
   }
   @media (max-width: 768px) {
-    gap: 50px;
+    gap: 80px;
     &.email {
-      gap: 35px;
+      gap: 67px;
     }
   }
 `;
@@ -147,26 +180,26 @@ const FlexWrap = styled.div`
 
 const Logout = styled.div`
   color: #838383;
-  font-size: 24px;
+  font-size: 16px;
   @media (max-width: 768px) {
-    font-size: 16px;
+    font-size: 15px;
   }
 `;
 const Text = styled.div`
-  font-size: 24px;
+  font-size: 16px;
   &.gray {
     color: #838383;
   }
   &.gray-line {
     color: #838383;
     border-bottom: 1px solid #838383;
-    width: 193px;
+    width: 130px;
     cursor: pointer;
   }
   @media (max-width: 768px) {
-    font-size: 16px;
+    font-size: 15px;
     &.gray-line {
-      width: 130px;
+      width: 121px;
     }
   }
 `;
