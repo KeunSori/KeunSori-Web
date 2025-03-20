@@ -13,6 +13,7 @@ interface UserInfo {
 }
 
 const MyPage = () => {
+  // 회원 정보
   const [info, setInfo] = useState<UserInfo>({
     name: "",
     studentId: "",
@@ -21,13 +22,13 @@ const MyPage = () => {
 
   const nav = useNavigate();
   const navToLogin = () => nav("/login");
-  const navToPassChange = () => nav("/password-change");
-  const navToBook = () => nav("/book?type=my");
+  const navToPassChange = () => nav("/password-change"); // '비밀번호 변경하기' 클릭 시 이동
+  const navToBook = () => nav("/book?type=my"); // '내 예약 조회' 클릭 시 이동
 
   const memberStatus = getMemberStatus();
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchPersonData() {
       try {
         if (memberStatus === "일반") {
           const response = await authApi.get<UserInfo>("/members/me");
@@ -43,8 +44,8 @@ const MyPage = () => {
         nav("/login");
       }
     }
-    fetchData();
-  }, []);
+    fetchPersonData();
+  }, []); // 페이지 랜더링 시 한번 실행
 
   return (
     <>
