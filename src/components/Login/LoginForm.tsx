@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { css } from "@emotion/css";
+import styled from "@emotion/styled";
 import { AuthContext } from "../../contexts/AuthContext";
 import Input from "../Input.tsx";
 import Button from "../Button.tsx";
@@ -54,38 +54,15 @@ const LoginForm: React.FC = () => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div
-          className={css`
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            width: 100%;
-            max-width: 400px;
-            margin: auto;
-            @media (max-width: 768px) {
-              max-width: 90%;
-            }
-          `}
-        >
-          <Input
-            className={css`
-              @media (max-width: 768px) {
-                max-width: 90%;
-              }
-            `}
+        <ContentSection>
+          <ReactiveInput
             type="string"
             value={studentId}
             onChange={(e) => setStudentId(e.target.value)}
             placeholder="학번"
             required
-          ></Input>
-          <Input
-            className={css`
-              @media (max-width: 768px) {
-                max-width: 90%;
-              }
-            `}
+          ></ReactiveInput>
+          <ReactiveInput
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -93,42 +70,52 @@ const LoginForm: React.FC = () => {
             onKeyUp={handleKeyUp}
             placeholder="비밀번호"
             required
-          ></Input>
-          <Button
-            className={css`
-              @media (max-width: 768px) {
-                max-width: 90%;
-              }
-            `}
-            type="submit"
-          >
-            로그인
-          </Button>
-        </div>
+          ></ReactiveInput>
+          <ReactiveButton type="submit">로그인</ReactiveButton>
+        </ContentSection>
       </form>
       {capsLockOn && (
-        <div
-          style={{
-            color: "red",
-            fontSize: "14px",
-            marginTop: "5px",
-          }}
-        >
-          ⚠️ Caps Lock이 켜져 있습니다!
-        </div>
+        <CapsLockWarning>⚠️ Caps Lock이 켜져 있습니다!</CapsLockWarning>
       )}
-      {message && (
-        <p
-          className={css`
-            text-align: center;
-            color: red;
-          `}
-        >
-          {message}
-        </p>
-      )}
+      {message && <Message>{message}</Message>}
     </>
   );
 };
 
 export default LoginForm;
+
+const ContentSection = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  @media (max-width: 768px) {
+    max-width: 90%;
+  }
+`;
+
+const ReactiveInput = styled(Input)`
+  @media (max-width: 768px) {
+    max-width: 90%;
+  }
+`;
+
+const ReactiveButton = styled(Button)`
+  @media (max-width: 768px) {
+    max-width: 90%;
+  }
+`;
+
+const CapsLockWarning = styled.div`
+  color: "red";
+  fontsize: "14px";
+  margintop: "5px";
+`;
+
+const Message = styled.p`
+  text-align: center;
+  color: red;
+`;
