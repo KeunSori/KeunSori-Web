@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 
 // images
 import logo from "/image/logo.svg";
-import singmonkey from "/image/singmonkey.svg";
+import singmonkey from "../../public/image/monkey/singmonkey.svg";
 
 const UserPage = () => {
   return (
