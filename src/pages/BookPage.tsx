@@ -1,16 +1,20 @@
-import { css } from "@emotion/css";
-import NavBar2 from "../components/navBar/navBar2.tsx";
-import CurrentBook from "../components/Book/Current/CurrentBook/CurrentBook.tsx";
-import ApplicationBook from "../components/Book/Application/ApplicationBook.tsx";
-import MyBook from "../components/Book/My/MyBook.tsx";
-import { useLocation, useNavigate } from "react-router-dom";
-
+// libraries
 import { useEffect } from "react";
-import Nav from "../components/Nav.tsx";
+import { useLocation, useNavigate } from "react-router-dom";
+import { css } from "@emotion/css";
+
+// shared
+import Nav from "../styles/Nav.tsx";
+import NavBar2 from "../components/navBar/navBar2.tsx";
+
+// this
+import CurrentBook from "../components/Book/BookPage/Current/CurrentBook/CurrentBook.tsx";
+import ApplicationBook from "../components/Book/BookPage/Application/ApplicationBook.tsx";
+import MyBook from "../components/Book/BookPage/My/MyBook.tsx";
 import {
   ContainerStyle,
   InnerContainerStyle,
-} from "../components/Container.tsx";
+} from "../components/Book/BookPage/Container.tsx";
 
 const BookPage = () => {
   const locaiton = useLocation();

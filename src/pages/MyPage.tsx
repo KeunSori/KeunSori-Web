@@ -1,8 +1,11 @@
+// libraries
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
+
+// shared
 import NavBar2 from "../components/navBar/navBar2";
-import Footer from "../components/Footer";
-import { useEffect, useState } from "react";
+import Footer from "../styles/Footer.tsx";
 import { getMemberStatus } from "../utils/jwt.ts";
 import authApi from "../api/Instance/authApi.ts";
 

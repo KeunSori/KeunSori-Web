@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { Month } from "../BookMange/DateMange/monthData";
+import { Month } from "./BookManage/DateManage/monthData";
 
 export interface instrument {
   vocal: boolean;

@@ -1,6 +1,6 @@
 import authApi from "./Instance/authApi";
 import { UserInfo } from "../data/user";
-import { Month } from "../components/BookMange/DateMange/monthData";
+import { Month } from "../components/Book/BookManage/DateManage/monthData";
 import { formatDate, isSameDate, transDate } from "../utils/dateUtils";
 
 export const fetchMonthReservation = async (date: Date | null) => {

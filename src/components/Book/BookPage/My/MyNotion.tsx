@@ -1,14 +1,14 @@
 import { UserInfo } from "../../../../data/user.ts";
 import { useEffect, useState } from "react";
 import authApi from "../../../../api/Instance/authApi.ts";
-import NotionCard from "../../BookPage/My/NotionCard.tsx";
+import NotionCard from "./NotionCard.tsx";
 import { transInstrument } from "../../../../utils/instrumentUtils.ts";
 import { transDate } from "../../../../utils/dateUtils.ts";
 
-interface ManageNotionProps {
+interface MyNotionProps {
   user: UserInfo;
 }
-const ManageNotion: React.FC<ManageNotionProps> = ({ user }) => {
+const MyNotion: React.FC<MyNotionProps> = ({ user }) => {
   const [instrument, setInstrument] = useState<string>("");
 
   const TransInstrument = (session: string) => {
@@ -17,7 +17,7 @@ const ManageNotion: React.FC<ManageNotionProps> = ({ user }) => {
   const [date, setDate] = useState<Date | null>(null);
 
   const handleDelete = async () => {
-    await authApi.delete(`/admin/reservation/${user.reservationId}`);
+    await authApi.delete(`/reservation/${user.reservationId}`);
     window.location.reload();
   };
   useEffect(() => {
@@ -35,4 +35,4 @@ const ManageNotion: React.FC<ManageNotionProps> = ({ user }) => {
     </>
   );
 };
-export default ManageNotion;
+export default MyNotion;

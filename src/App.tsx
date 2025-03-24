@@ -1,18 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomePage from "./components/pages/HomePage.tsx";
-import GlobalStyle from "./styles/GlobalStyle.tsx";
-import LoginPage from "./components/pages/LoginPage.tsx";
-import SignUpPage from "./components/pages/SignUpPage.tsx";
-import UserPage from "./components/pages/UserPage.tsx";
-import ContactPage from "./components/pages/ContactPage.tsx";
-import RecruitPage from "./components/pages/RecruitPage.tsx";
-import BookPage from "./components/pages/BookPage.tsx";
+import HomePage from "./pages/HomePage.tsx";
+import GlobalStyle from "./styles/Global/GlobalStyle.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
+import SignUpPage from "./pages/SignUpPage.tsx";
+import UserPage from "./pages/UserPage.tsx";
+import ContactPage from "./pages/ContactPage.tsx";
+import RecruitPage from "./pages/RecruitPage.tsx";
+import BookPage from "./pages/BookPage.tsx";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
-import BookManagePage from "./components/pages/BookManagePage.tsx";
-import BoardPage from "./components/pages/BoardPage.tsx";
-import MyPage from "./components/pages/MyPage.tsx";
-import ManagePage from "./components/pages/ManagePage.tsx";
-import PasswordChange from "./components/pages/PasswordChange.tsx";
+import BookManagePage from "./pages/BookManagePage.tsx";
+import MyPage from "./pages/MyPage.tsx";
+import ManagePage from "./pages/ManagePage.tsx";
+import PasswordChange from "./pages/PasswordChange.tsx";
 
 function App() {
   return (
@@ -32,7 +31,6 @@ function App() {
             <Route path="/recruit" element={<RecruitPage />} />
             <Route path="/book" element={<BookPage />} />
             <Route path="/bookmanagement" element={<BookManagePage />} />
-            <Route path="/board" element={<BoardPage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/member-management" element={<ManagePage />} />
             <Route path="/password-change" element={<PasswordChange />} />

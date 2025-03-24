@@ -1,8 +1,13 @@
+// libraries
 import { useState } from "react";
-import NavBar3 from "../components/navBar/navBar3.tsx";
-import DynamicTable from "../components/Manage/DynamicTable.tsx";
-import ApprovalTable from "../components/Manage/ApprovalTable.tsx";
 import styled from "@emotion/styled";
+
+// shared
+import NavBar3 from "../components/navBar/navBar3.tsx";
+
+// this
+import DynamicTable from "../components/ManagePage/DynamicTable.tsx";
+import ApprovalTable from "../components/ManagePage/ApprovalTable.tsx";
 
 interface NavProps {
   isActive: boolean;
