@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
-import NavBar2 from "../navBar/navBar2";
-import Footer from "../Footer";
+import NavBar2 from "../components/navBar/navBar2";
+import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
-import { getMemberStatus } from "../../utils/jwt.ts";
-import authApi from "../../api/Instance/authApi.ts";
+import { getMemberStatus } from "../utils/jwt.ts";
+import authApi from "../api/Instance/authApi.ts";
 
 interface UserInfo {
   name: string;

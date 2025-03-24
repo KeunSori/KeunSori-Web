@@ -1,13 +1,16 @@
 import { css } from "@emotion/css";
-import NavBar2 from "../navBar/navBar2.tsx";
-import CurrentBook from "../Book/Current/CurrentBook/CurrentBook.tsx";
-import ApplicationBook from "../Book/Application/ApplicationBook.tsx";
-import MyBook from "../Book/My/MyBook.tsx";
+import NavBar2 from "../components/navBar/navBar2.tsx";
+import CurrentBook from "../components/Book/Current/CurrentBook/CurrentBook.tsx";
+import ApplicationBook from "../components/Book/Application/ApplicationBook.tsx";
+import MyBook from "../components/Book/My/MyBook.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { useEffect } from "react";
-import Nav from "../Nav.tsx";
-import { ContainerStyle, InnerContainerStyle } from "../Container.tsx";
+import Nav from "../components/Nav.tsx";
+import {
+  ContainerStyle,
+  InnerContainerStyle,
+} from "../components/Container.tsx";
 
 const BookPage = () => {
   const locaiton = useLocation();

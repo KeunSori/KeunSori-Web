@@ -1,18 +1,18 @@
-import NavBar from "../navBar/navBar.tsx";
-import FolderCard from "../Home/FolderCard.tsx";
+import NavBar from "../components/navBar/navBar.tsx";
+import FolderCard from "../components/Home/FolderCard.tsx";
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import heart from "/image/home/heart.svg";
-import Activity from "../Home/Activity.tsx";
+import Activity from "../components/Home/Activity.tsx";
 import timeline from "/image/home/timeline.svg";
-import Apply from "../Home/Apply.tsx";
-import YoutubeContents from "../Home/YoutubeContents.tsx";
-import Wrapper from "../Wrapper.tsx";
-import Footer from "../Footer.tsx";
+import Apply from "../components/Home/Apply.tsx";
+import YoutubeContents from "../components/Home/YoutubeContents.tsx";
+import Wrapper from "../components/Wrapper.tsx";
+import Footer from "../components/Footer.tsx";
 import room from "/image/home/room.jpeg";
 import family from "/image/home/family.jpeg";
 import kawai from "/image/home/kawai.png";
-import Intro from "../Home/Intro.tsx";
+import Intro from "../components/Home/Intro.tsx";
 
 interface FolderDetailInfo {
   color: string;

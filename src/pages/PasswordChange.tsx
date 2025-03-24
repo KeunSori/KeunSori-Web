@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
-import NavBar2 from "../navBar/navBar2";
-import Footer from "../Footer";
+import NavBar2 from "../components/navBar/navBar2";
+import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
-import { getMemberStatus } from "../../utils/jwt";
+import { getMemberStatus } from "../utils/jwt";
 import { useNavigate } from "react-router-dom";
-import { changePassword, checkPasswordValidity } from "../../api/password";
+import { changePassword, checkPasswordValidity } from "../api/password";
+import axios from "axios";
 
 const PasswordChange = () => {
   const nav = useNavigate();
@@ -68,15 +69,18 @@ const PasswordChange = () => {
         setChangedMessage(""); // 3.5초 후 변경 확인 메시지 사라짐
         nav("/mypage"); // 변경되면 마이페이지로 돌아감
       }, 3500);
-    } catch (e: any) {
+    } catch (e) {
       console.error("비밀번호 변경 오류:", e);
-      if (e.response.status === 400) {
-        // 오류
-        setErrorMessage(e.response.data.message);
+      if (axios.isAxiosError(e)) {
+        if (e.response?.status === 400) {
+          setErrorMessage(e.response.data.message);
+        } else {
+          alert(
+            `비밀번호 변경 요청을 실패했습니다. 오류 코드: ${e.response?.status}`
+          );
+        }
       } else {
-        alert(
-          `비밀번호 변경 요청을 실패했습니다. 오류 코드: ${e.response.status}`
-        );
+        console.error("예상치 못한 에러", e);
       }
     }
   }
