@@ -1,9 +1,15 @@
-import NavBar from "../components/navBar/navBar.tsx";
-import Wrapper from "../components/Wrapper.tsx";
-import recruit from "/image/Recruit.svg";
+// libraries
 import styled from "@emotion/styled";
+
+// images
+import recruit from "/image/Recruit.svg";
 import poster from "/image/poster.svg";
-import Footer from "../components/Footer.tsx";
+
+// shared
+import NavBar from "../components/navBar/navBar.tsx";
+import Wrapper from "../styles/Wrapper.tsx";
+import Footer from "../styles/Footer.tsx";
+
 const RecruitPage = () => {
   return (
     <>
@@ -58,6 +64,7 @@ const RecruitPage = () => {
   );
 };
 export default RecruitPage;
+
 const Poster = styled.img`
   margin: 50px;
   height: 300px;

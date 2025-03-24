@@ -1,25 +1,11 @@
-import { css } from "@emotion/css";
-import logo from "/image/logo.svg";
+// libraries
 import { Link } from "react-router-dom";
+import { css } from "@emotion/css";
 import styled from "@emotion/styled";
-import singmonkey from "/image/singmonkey.svg";
 
-const Nav = styled.a`
-  font-size: 22px;
-  font-weight: 500;
-  width: 100px;
-  text-align: center;
-  cursor: pointer;
-  &:hover {
-    color: #ffaa00;
-    border-bottom: 4px solid #ffaa00;
-  }
-`;
-const Image = styled.img`
-  width: 400px;
-  height: 400px;
-  margin-top: 70px;
-`;
+// images
+import logo from "/image/logo.svg";
+import singmonkey from "/image/singmonkey.svg";
 
 const UserPage = () => {
   return (
@@ -82,3 +68,20 @@ const UserPage = () => {
 };
 
 export default UserPage;
+
+const Nav = styled.a`
+  font-size: 22px;
+  font-weight: 500;
+  width: 100px;
+  text-align: center;
+  cursor: pointer;
+  &:hover {
+    color: #ffaa00;
+    border-bottom: 4px solid #ffaa00;
+  }
+`;
+const Image = styled.img`
+  width: 400px;
+  height: 400px;
+  margin-top: 70px;
+`;

@@ -1,14 +1,16 @@
+// external
 import { css } from "@emotion/css";
-import NavBar3 from "../components/navBar/navBar3.tsx";
 import { useEffect } from "react";
-import BasicManage from "../components/BookManage/BasicManage/BasicManage.tsx";
-import DateManage from "../components/BookManage/DateManage/DateManage.tsx";
-import Nav from "../components//Nav.tsx";
+import { useLocation, useNavigate } from "react-router-dom";
+// internal
+import NavBar3 from "../components/navBar/navBar3.tsx";
+import BasicManage from "../components/Book/BookManage/BasicManage/BasicManage.tsx";
+import DateManage from "../components/Book/BookManage/DateManage/DateManage.tsx";
+import Nav from "../styles/Nav.tsx";
 import {
   ContainerStyle,
   InnerContainerStyle,
-} from "../components/Container.tsx";
-import { useLocation, useNavigate } from "react-router-dom";
+} from "../components/Book/BookPage/Container.tsx";
 
 const BookManagePage = () => {
   const locaiton = useLocation();

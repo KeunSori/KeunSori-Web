@@ -1,7 +1,11 @@
-import logo from "/image/logo.svg";
-import { Link } from "react-router-dom";
-import SignUpForm from "../components/SignUp/SignUpForm.tsx";
+// external
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
+
+// internal
+import logo from "/image/logo.svg";
+import SignUpForm from "../components/SignUpPage/SignUpForm.tsx";
+
 const SignUpPage = () => {
   return (
     <>

@@ -1,11 +1,16 @@
-import styled from "@emotion/styled";
-import NavBar2 from "../components/navBar/navBar2";
-import Footer from "../components/Footer";
+// libraries
 import { useEffect, useState } from "react";
-import { getMemberStatus } from "../utils/jwt";
 import { useNavigate } from "react-router-dom";
-import { changePassword, checkPasswordValidity } from "../api/password";
 import axios from "axios";
+import styled from "@emotion/styled";
+
+// shared
+import { getMemberStatus } from "../utils/jwt";
+import Footer from "../styles/Footer";
+import NavBar2 from "../components/navBar/navBar2";
+
+// this
+import { changePassword, checkPasswordValidity } from "../api/password";
 
 const PasswordChange = () => {
   const nav = useNavigate();

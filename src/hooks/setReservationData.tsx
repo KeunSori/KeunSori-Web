@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Month } from "../components/BookMange/DateMange/monthData";
+import { Month } from "../components/Book/BookManage/DateManage/monthData";
 import { formatDate, isSameDate, transDate } from "../utils/dateUtils";
 import authApi from "../api/Instance/authApi";
 

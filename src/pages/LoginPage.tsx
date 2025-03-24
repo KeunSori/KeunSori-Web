@@ -1,7 +1,10 @@
+// external
 import styled from "@emotion/styled";
-import logo from "/image/logo.svg";
 import { Link } from "react-router-dom";
-import LoginForm from "../components/Login/LoginForm.tsx";
+
+// internal
+import logo from "/image/logo.svg";
+import LoginForm from "../components/LoginPage/LoginForm.tsx";
 
 const LoginPage = () => {
   return (

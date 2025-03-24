@@ -1,27 +1,28 @@
 import ReactDOM from "react-dom";
 import {
-  Text,
   Button,
   ButtonWrapper,
   ModalWrapper,
   Overlay,
-} from "../../ModalStyle";
-interface ManageModalProps {
+  Text,
+} from "../../../ModalStyle";
+
+interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onStore: () => void;
+  onDelete: () => void;
 }
-const ManageModal: React.FC<ManageModalProps> = ({ onClose, onStore }) => {
+const Modal: React.FC<ModalProps> = ({ onClose, onDelete }) => {
   const modalRoot = document.getElementById("modal-root");
   if (!modalRoot) return null;
   return ReactDOM.createPortal(
     <Overlay onClick={onClose}>
       <ModalWrapper>
-        <Text>기존 예약이 삭제될 수 있습니다</Text>
+        <Text>예약을 취소하시겠습니까?</Text>
         <ButtonWrapper>
           <Button onClick={onClose}>닫기</Button>
-          <Button onClick={onStore} isDelete={true}>
-            진짜 저장하기
+          <Button onClick={onDelete} isDelete={true}>
+            확인
           </Button>
         </ButtonWrapper>
       </ModalWrapper>
@@ -29,4 +30,4 @@ const ManageModal: React.FC<ManageModalProps> = ({ onClose, onStore }) => {
     modalRoot
   );
 };
-export default ManageModal;
+export default Modal;
