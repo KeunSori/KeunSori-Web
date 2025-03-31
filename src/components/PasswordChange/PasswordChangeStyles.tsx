@@ -16,15 +16,6 @@ const PopUpMessage = styled.div`
   position: absolute;
 `;
 
-const Error = styled.div`
-  margin-top: 10px;
-  font-size: 12px;
-  color: #ff5757;
-  display: flex;
-  justify-content: center;
-  min-height: 20px; // 최소 공간을 차지하도록
-`;
-
 const Container = styled.div`
   margin-top: 60px;
   display: flex;
@@ -45,45 +36,7 @@ const Title = styled.div`
     font-size: 27px;
   }
 `;
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  @media (max-width: 768px) {
-    gap: 15px;
-  }
-`;
-const Text = styled.div`
-  font-size: 16px;
-  min-width: 100px;
-  @media (max-width: 768px) {
-    font-size: 16px;
-  }
-`;
-const Flex = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-const PassBox = styled.input`
-  min-width: 350px;
-  height: 40px;
-  border-radius: 15px;
-  border: none;
-  padding: 20px;
-  font-size: 16px;
-  &:focus {
-    border: none;
-  }
-  background-color: #f1f1f1;
-  position: relative;
-  @media (max-width: 768px) {
-    min-width: 250px;
-    height: 20px;
-    padding: 20px;
-  }
-`;
+
 const ContentBox = styled.div`
   margin-top: 30px;
   display: flex;
@@ -123,16 +76,12 @@ const ButtonDiv = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+
 export {
   MessageCenter,
   PopUpMessage,
-  Error,
   Container,
   Title,
-  Content,
-  Text,
-  Flex,
-  PassBox,
   ContentBox,
   ChangeButton,
   ButtonDiv,
