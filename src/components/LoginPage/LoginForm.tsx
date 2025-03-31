@@ -111,8 +111,8 @@ const ReactiveButton = styled(Button)`
 
 const CapsLockWarning = styled.div`
   color: "red";
-  fontsize: "14px";
-  margintop: "5px";
+  font-size: "14px";
+  margin-top: "5px";
 `;
 
 const Message = styled.p`
