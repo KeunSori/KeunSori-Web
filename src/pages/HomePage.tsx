@@ -1,6 +1,5 @@
 // libraries
 import { css } from "@emotion/css";
-import styled from "@emotion/styled";
 
 // images
 import heart from "/image/home/heart.svg";
@@ -20,6 +19,14 @@ import Activity from "../components/HomePage/Activity.tsx";
 import Apply from "../components/HomePage/Apply.tsx";
 import YoutubeContents from "../components/HomePage/YoutubeContents.tsx";
 import Intro from "../components/HomePage/Intro.tsx";
+import {
+  TimeLine,
+  ActivityContainer,
+  Cards,
+  Details,
+  Detail,
+  HeartImg,
+} from "../components/HomePage/HomePageStyles.tsx";
 
 interface FolderDetailInfo {
   color: string;
@@ -101,46 +108,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-const TimeLine = styled.img`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  min-width: 400px;
-  max-width: 80%;
-  margin-top: 80px;
-  margin-bottom: 150px;
-`;
-
-const ActivityContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 150px;
-`;
-const Cards = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 50px;
-  margin-bottom: 150px;
-`;
-const Details = styled.div`
-  text-align: center;
-  font-size: 20px;
-  margin-top: 20px;
-  margin-bottom: 120px;
-  font-family: LeeSeoyun, sans-serif;
-  color: #505050;
-  line-height: 1.5;
-`;
-const Detail = styled.div`
-  text-align: center;
-  font-size: 35px;
-  margin-top: 30px;
-  font-family: LeeSeoyun, sans-serif;
-  color: #505050;
-`;
-const HeartImg = styled.img`
-  width: 220px;
-  margin-top: 100px;
-`;
