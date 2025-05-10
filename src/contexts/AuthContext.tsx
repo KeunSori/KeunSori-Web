@@ -1,8 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { login, logout } from "../api/auth";
-import { getToken, setToken, removeToken } from "../utils/jwt";
 import axios from "axios";
-import { setMemberStatus, removeMemberStatus } from "../utils/jwt";
+import { setMemberStatus, removeMemberStatus } from "../utils/memberStatus";
 
 interface AuthContextProps {
   user: User;
@@ -34,12 +33,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = getToken();
+    // const token = getToken();
+    // if (token) {
+    //   setUser({ isLoggedIn: true });
+    //   setIsLoading(false);
+    // }
 
-    if (token) {
-      setUser({ isLoggedIn: true });
-      setIsLoading(false);
-    }
+    // refresh 로직 api 기반 마련되면 바꿀거임
+    setUser({ isLoggedIn: false });
+    setIsLoading(false);
   }, []);
 
   const loginUser = async (
@@ -47,8 +49,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     password: string
   ): Promise<{ success: boolean; message?: string }> => {
     try {
-      const data = await login(studentId, password);
-      setToken(data);
+      const data = await login(studentId, password); // 지금 data 반환 안 됨
+
       setUser({ isLoggedIn: true });
 
       if (data.memberStatus === "관리자") {
@@ -56,7 +58,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       } else if (data.memberStatus === "일반") {
         setMemberStatus("일반");
       } else {
-        setMemberStatus("승인 대기");
+        // setMemberStatus("승인 대기");
+
+        // 회원 유형 정보 조회 api 만들어지면 바꿀거임
+        setMemberStatus("일반");
       }
       return { success: true };
     } catch (error) {
@@ -74,10 +79,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logoutUser = async () => {
-    removeToken();
     setUser({ isLoggedIn: false });
     removeMemberStatus();
-    console.log("해치웠나?");
     window.location.href = "/login";
     await logout();
   };

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 // shared
 import NavBar2 from "../components/navBar/navBar2";
 import Footer from "../styles/Footer.tsx";
-import { getMemberStatus } from "../utils/jwt.ts";
+import { getMemberStatus } from "../utils/memberStatus.ts";
 import authApi from "../api/Instance/authApi.ts";
 
 // this

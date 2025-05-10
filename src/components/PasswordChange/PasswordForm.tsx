@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // shared
-import { getMemberStatus } from "../../utils/jwt";
+import { getMemberStatus } from "../../utils/memberStatus";
 
 // this
 import { changePassword } from "../../api/password";
