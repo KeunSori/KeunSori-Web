@@ -40,6 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // }
 
     // refresh 로직 api 기반 마련되면 바꿀거임
+    // 일단 지금은 refresh 비활성화
     setUser({ isLoggedIn: false });
     setIsLoading(false);
   }, []);

@@ -31,6 +31,8 @@ const LoginForm: React.FC = () => {
       return;
     }
 
+    // /members/me 를 호출?
+
     const memberStatus = getMemberStatus();
 
     if (memberStatus === "관리자") {
