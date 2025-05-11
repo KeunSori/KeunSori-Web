@@ -24,6 +24,7 @@ authApi.interceptors.response.use(
     const statusCode = error.response?.status;
 
     if (statusCode === 401 || statusCode === 403) {
+      alert(`http status: ${statusCode}`);  // 페이지 넘김 방지, 오류 메시지 확인용
       logout();
       window.location.href = "/login";
     }

@@ -37,6 +37,7 @@ const LoginForm: React.FC = () => {
 
     if (memberStatus === "관리자") {
       navigate("/member-management");
+      console.log("hi");
     } else if (memberStatus === "일반") {
       navigate("/book");
     } else {

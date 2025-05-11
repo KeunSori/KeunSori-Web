@@ -1,32 +1,28 @@
-// external
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 
-// internal
 import logo from "/image/logo.svg";
-import LoginForm from "../components/LoginPage/LoginForm.tsx";
+import PasswordResetForm from "../components/PasswordReset/PasswordResetForm";
 
-const LoginPage = () => {
-  return (
-    <>
-      <Main>
-        <Link to="/">
-          <Logo src={logo} alt="logo" />
-        </Link>
-        <LoginForm />
+const PasswordResetPage = () => {
+    return (
+        <>
+        <Main>
+            <Link to="/">
+                <Logo src={logo} alt="logo" />
+            </Link>
+            
+            {/* <PasswordResetForm /> */}
+            <PasswordResetForm />
+            <Link to="/login">
+                <LinkText>로그인 하러가기</LinkText>
+            </Link>
+        </Main>
+        </>
+    );
+}
 
-        <Link to="/signup">
-          <LinkText>회원가입 하러가기</LinkText>
-        </Link>
-        <Link to="/password-reset">
-          <LinkText>아이디/비밀번호 찾기</LinkText>
-        </Link>
-      </Main>
-    </>
-  );
-};
-
-export default LoginPage;
+export default PasswordResetPage;
 
 const Main = styled.main`
   display: flex;

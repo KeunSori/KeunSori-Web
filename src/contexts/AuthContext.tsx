@@ -62,7 +62,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         // setMemberStatus("승인 대기");
 
         // 회원 유형 정보 조회 api 만들어지면 바꿀거임
-        setMemberStatus("일반");
+        setMemberStatus("관리자");
       }
       return { success: true };
     } catch (error) {
