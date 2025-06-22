@@ -5,7 +5,8 @@ export const login = async (studentId: string, password: string) => {
   const response = await baseApi.post(`/auth/login`, {
     studentId,
     password,
-  });
+  },
+  { withCredentials: true });
   return response.data;
 };
 

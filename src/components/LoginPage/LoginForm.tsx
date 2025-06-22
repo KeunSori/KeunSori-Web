@@ -4,7 +4,7 @@ import { AuthContext } from "../../contexts/AuthContext.tsx";
 import Input from "../Input.tsx";
 import Button from "../../styles/Button.tsx";
 import { useNavigate } from "react-router-dom";
-import { getMemberStatus } from "../../utils/memberStatus.ts";
+// import { getMemberStatus } from "../../utils/memberStatus.ts";
 
 const LoginForm: React.FC = () => {
   const [studentId, setStudentId] = useState("");
@@ -33,16 +33,19 @@ const LoginForm: React.FC = () => {
 
     // /members/me 를 호출?
 
-    const memberStatus = getMemberStatus();
+    // const memberStatus = getMemberStatus();
 
-    if (memberStatus === "관리자") {
-      navigate("/member-management");
-    } else if (memberStatus === "일반") {
-      navigate("/book");
-    } else {
-      alert("승인 대기 중입니다. 다른 계정으로 다시 시도해주세요.");
-      authContext.logoutUser();
-    }
+    navigate("/member-management");
+    alert("관리자 페이지 진입할게요");
+
+    // if (memberStatus === "관리자") {
+    //   navigate("/member-management");
+    // } else if (memberStatus === "일반") {
+    //   navigate("/book");
+    // } else {
+    //   alert("승인 대기 중입니다. 다른 계정으로 다시 시도해주세요.");
+    //   authContext.logoutUser();
+    // }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

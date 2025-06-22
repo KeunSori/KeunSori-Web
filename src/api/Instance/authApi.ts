@@ -22,6 +22,7 @@ authApi.interceptors.response.use(
   (response) => response,
   async (error) => {
     const statusCode = error.response?.status;
+    alert(statusCode);
 
     if (statusCode === 401 || statusCode === 403) {
       logout();
