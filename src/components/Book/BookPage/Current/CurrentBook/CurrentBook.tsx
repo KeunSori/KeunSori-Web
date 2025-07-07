@@ -26,7 +26,7 @@ import {
   InContainer,
   MobileNote,
   NotionContainer,
-} from "@/styles/Book/currentBook/CurrentBookStyle.tsx";
+} from "@/styles/Book/currentBook/CurrentBookStyle.ts";
 
 const today = new Date();
 

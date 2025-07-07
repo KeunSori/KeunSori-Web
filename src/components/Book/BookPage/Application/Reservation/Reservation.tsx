@@ -4,7 +4,7 @@ import { endTimeAtom, printEndTimeAtom, startTimeAtom } from "@/store/Time.ts";
 import { UserInfo } from "@/data/user.ts";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { SlotContainer } from "@/styles/Book/Containers.tsx";
+import { SlotContainer } from "@/styles/Book/Containers.ts";
 import { Month } from "@/store/monthData.ts";
 import { isSameDate } from "@/utils/dateUtils.ts";
 import { TimeSlotsGrid } from "@/components/Book/BookPage/Application/Reservation/TimeSlotsGrid.tsx";
