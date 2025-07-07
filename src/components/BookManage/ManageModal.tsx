@@ -5,7 +5,7 @@ import {
   ButtonWrapper,
   ModalWrapper,
   Overlay,
-} from "../../ModalStyle";
+} from "@/styles/ModalStyle";
 interface ManageModalProps {
   isOpen: boolean;
   onClose: () => void;

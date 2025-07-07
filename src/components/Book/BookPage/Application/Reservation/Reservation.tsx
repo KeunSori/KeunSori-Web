@@ -1,21 +1,17 @@
 import styled from "@emotion/styled";
 import { useAtom } from "jotai";
-import {
-  endTimeAtom,
-  printEndTimeAtom,
-  startTimeAtom,
-} from "../../../../../store/Time.ts";
-import { UserInfo } from "../../../../../data/user.ts";
+import { endTimeAtom, printEndTimeAtom, startTimeAtom } from "@/store/Time.ts";
+import { UserInfo } from "@/data/user.ts";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { SlotContainer } from "../styles/Containers.tsx";
-import { Month } from "../../../BookManage/DateManage/monthData.ts";
-import { isSameDate } from "../../../../../utils/dateUtils.ts";
-import { TimeSlotsGrid } from "./TimeSlotsGrid.tsx";
+import { SlotContainer } from "@/styles/Book/Containers.tsx";
+import { Month } from "@/store/monthData.ts";
+import { isSameDate } from "@/utils/dateUtils.ts";
+import { TimeSlotsGrid } from "@/components/Book/BookPage/Application/Reservation/TimeSlotsGrid.tsx";
 import {
   fetchMonthReservation,
   fetchReservationList,
-} from "../../../../../api/reservationSevice.ts";
+} from "@/api/reservationSevice.ts";
 
 const baseSlots = Array.from({ length: 26 }, (_, index) => ({
   time: `${10 + Math.floor(index / 2)}:${index % 2 === 0 ? "00" : "30"}`,

@@ -1,13 +1,9 @@
 import Calendar from "react-calendar";
-import useIsMobile from "../../../../../hooks/useIsMobile.tsx";
-import CalendarStyles from "./CalenderStyles.tsx";
+import useIsMobile from "@/hooks/useIsMobile.ts";
+import CalendarStyles from "@/styles/CalenderStyles.ts";
 import { useAtom } from "jotai";
-import { monthDataAtom } from "../../../../../store/Time.ts";
-import {
-  beforeToday,
-  isSameDate,
-  transDate,
-} from "../../../../../utils/dateUtils.ts";
+import { monthDataAtom } from "@/store/Time.ts";
+import { beforeToday, isSameDate, transDate } from "@/utils/dateUtils.ts";
 import { Value } from "react-calendar/src/shared/types.js";
 interface CalendarComponentProps {
   date: Date | null;

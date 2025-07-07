@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import Input from "../Input.tsx";
-import Button from "../../styles/Button.tsx";
+import Button from "../../styles/Button.ts";
 
 // api
 import axios from "axios";

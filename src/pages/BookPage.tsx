@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { css } from "@emotion/css";
 
 // shared
-import Nav from "../styles/Nav.tsx";
+import Nav from "../styles/Nav.ts";
 import NavBar2 from "../components/navBar/navBar2.tsx";
 
 // this

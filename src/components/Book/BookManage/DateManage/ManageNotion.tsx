@@ -1,9 +1,9 @@
-import { UserInfo } from "../../../../data/user.ts";
+import { UserInfo } from "@/data/user.ts";
 import { useEffect, useState } from "react";
-import authApi from "../../../../api/Instance/authApi.ts";
-import NotionCard from "../../BookPage/My/NotionCard.tsx";
-import { transInstrument } from "../../../../utils/instrumentUtils.ts";
-import { transDate } from "../../../../utils/dateUtils.ts";
+import authApi from "@/api/Instance/authApi.ts";
+import NotionCard from "@/components/Book/BookPage/My/NotionCard.tsx";
+import { transInstrument } from "@/utils/instrumentUtils.ts";
+import { transDate } from "@/utils/dateUtils.ts";
 
 interface ManageNotionProps {
   user: UserInfo;

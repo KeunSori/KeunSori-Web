@@ -1,11 +1,11 @@
-import { InstrumentInfo } from "../../../../data/user";
-import useIsMobile from "../../../../hooks/useIsMobile";
-import { Button } from "./styles/Button";
+import { InstrumentInfo } from "@/data/user";
+import useIsMobile from "@/hooks/useIsMobile";
+import { Button } from "@/styles/Book/Button";
 import {
   MidContainer,
   TypeContainer,
   ButtonContainer,
-} from "./styles/Containers";
+} from "@/styles/Book/Containers";
 
 interface ButtonsContainerProps {
   team: boolean;

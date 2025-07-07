@@ -1,7 +1,7 @@
 import authApi from "./Instance/authApi";
-import { UserInfo } from "../data/user";
-import { Month } from "../components/Book/BookManage/DateManage/monthData";
-import { formatDate, isSameDate, transDate } from "../utils/dateUtils";
+import { UserInfo } from "@/data/user.ts";
+import { Month } from "@/store/monthData";
+import { formatDate, isSameDate, transDate } from "@/utils/dateUtils";
 
 export const fetchMonthReservation = async (date: Date | null) => {
   try {
@@ -14,7 +14,10 @@ export const fetchMonthReservation = async (date: Date | null) => {
   }
 };
 
-const filterMonthData = (dataArray: Month[], date: Date | null) => {
+const filterMonthData = (
+  dataArray: Month[],
+  date: Date | null
+): Month | undefined => {
   if (!date) return;
   return dataArray.find((data: Month) => {
     return isSameDate(new Date(transDate(data.date)), date);

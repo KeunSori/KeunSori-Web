@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Reservation from "./Reservation/Reservation.tsx";
+import Reservation from "@/components/Book/BookPage/Application/Reservation/Reservation.tsx";
 import { useAtom } from "jotai";
 import {
   endTimeAtom,
@@ -7,21 +7,21 @@ import {
   instrument,
   printEndTimeAtom,
   monthDataAtom,
-} from "../../../../store/Time.ts";
+} from "@/store/Time.ts";
 import { Value } from "react-calendar/src/shared/types.js";
-import { ReservationButton } from "./styles/Button.tsx";
-import authApi from "../../../../api/Instance/authApi.ts";
-import { InstrumentInfo } from "../../../../data/user.ts";
-import OutContainer from "../../OutContainer.tsx";
-import useIsMobile from "../../../../hooks/useIsMobile.tsx";
-import { SelectedTime } from "./styles/Times.tsx";
-import { Container, InContainer } from "./styles/Containers.tsx";
+import { ReservationButton } from "@/styles/Book/Button.ts";
+import authApi from "@/api/Instance/authApi.ts";
+import { InstrumentInfo } from "@/data/user.ts";
+import OutContainer from "@/components/Book/OutContainer.tsx";
+import useIsMobile from "@/hooks/useIsMobile.tsx";
+import { SelectedTime } from "@/styles/Book/Times.ts";
+import { Container, InContainer } from "@/styles/Book/Containers.tsx";
 import { useNavigate } from "react-router-dom";
-import ReservationModal from "./ReservationModal.tsx";
-import TimeContainer from "./TimeContainer.tsx";
-import { formatDate } from "../../../../utils/dateUtils.ts";
-import CalendarComponent from "./Calendar/CalendarComponent.tsx";
-import ButtonsContainer from "./ButtonsComponent.tsx";
+import ReservationModal from "@/components/Book/BookPage/Application/ReservationModal.tsx";
+import TimeContainer from "@/components/Book/BookPage/Application/TimeContainer.tsx";
+import { formatDate } from "@/utils/dateUtils.ts";
+import CalendarComponent from "@/components/Book/BookPage/Application/Calendar/CalendarComponent.tsx";
+import ButtonsContainer from "@/components/Book/BookPage/Application/ButtonsComponent.tsx";
 
 const ApplicationBook: React.FC = () => {
   const defaultInstruments: InstrumentInfo = {

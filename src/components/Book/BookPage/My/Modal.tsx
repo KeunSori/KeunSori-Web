@@ -5,7 +5,7 @@ import {
   ModalWrapper,
   Overlay,
   Text,
-} from "../../../ModalStyle";
+} from "../../../../styles/ModalStyle";
 
 interface ModalProps {
   isOpen: boolean;

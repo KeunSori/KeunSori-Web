@@ -6,8 +6,8 @@ import {
   Overlay,
   Text,
   DetailText,
-} from "../../../ModalStyle";
-import { transInstrument } from "../../../../utils/instrumentUtils";
+} from "@/styles/ModalStyle.ts";
+import { transInstrument } from "@/utils/instrumentUtils.ts";
 
 interface ReservatiionModalProps {
   isOpen: boolean;
