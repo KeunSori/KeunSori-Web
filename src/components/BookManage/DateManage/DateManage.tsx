@@ -7,7 +7,7 @@ import authApi from "@/api/Instance/authApi.ts";
 import { UserInfo } from "@/data/user.ts";
 import OutContainer from "@/components/Book/OutContainer.tsx";
 import TimeSelecter from "@/components/Book/BookManage/TimeSelecter.tsx";
-import ManageNotion from "./ManageNotion.tsx";
+import ManageNotion from "@/components/BookManage/DateManage/ManageNotion.tsx";
 import {
   CalendarContainer,
   Divider,
