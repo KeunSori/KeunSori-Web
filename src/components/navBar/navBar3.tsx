@@ -36,7 +36,7 @@ const NavBar2: React.FC = () => {
         `}
         style={{ cursor: "pointer" }}
       >
-        <Link to="/member-management">
+        <Link to="/admin/member-management">
           <img
             className={css`
               width: 60px;
@@ -54,13 +54,13 @@ const NavBar2: React.FC = () => {
             margin: auto;
           `}
         >
-          <Link to="/member-management">
-            <Space isActive={location.pathname === "/member-management"}>
+          <Link to="/admin/member-management">
+            <Space isActive={location.pathname === "/admin/member-management"}>
               회원관리
             </Space>
           </Link>
-          <Link to="/bookmanagement">
-            <Space isActive={location.pathname === "/bookmanagement"}>
+          <Link to="/admin/bookmanagement">
+            <Space isActive={location.pathname === "/admin/bookmanagement"}>
               예약관리
             </Space>
           </Link>
@@ -77,10 +77,10 @@ const NavBar2: React.FC = () => {
             )}
           </Button>
           <MobileMenu isOpened={isOpen}>
-            <Link to="/member-management">
+            <Link to="/admin/member-management">
               <Space isActive={false}>회원관리</Space>
             </Link>
-            <Link to="/bookmanagement">
+            <Link to="/admin/bookmanagement">
               <Space isActive={false}>예약관리</Space>
             </Link>
             <Space onClick={logoutUser}>로그아웃</Space>

@@ -184,6 +184,9 @@ const GlobalStyle = () => (
       .react-calendar__navigation__label {
         pointer-events: none;
       }
+      .html {
+        scroll-behavior: smooth;
+      }
     `}
   />
 );

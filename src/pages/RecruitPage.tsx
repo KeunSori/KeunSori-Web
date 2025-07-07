@@ -20,10 +20,33 @@ import {
   Image,
   Go,
 } from "@/components/RecruitPage/RecruitPageStyles.tsx";
+import { Helmet } from "react-helmet";
 
 const RecruitPage = () => {
   return (
     <>
+      <Helmet>
+        <title>큰소리 – 홍익대 컴퓨터공학과 밴드학회(컴공)</title>
+        <meta
+          name="description"
+          content="홍익대학교 컴퓨터공학과 밴드학회 '큰소리'는 음악을 사랑하는 컴공인을 위한 밴드 동아리입니다."
+        />
+        <meta
+          name="description"
+          content="2025년 큰소리 밴드학회 신입 모집! 음악을 사랑하는 컴공인을 기다립니다."
+        />
+        <meta property="og:title" content="2025 모집 – 큰소리 밴드학회" />
+        <meta
+          property="og:description"
+          content="컴공 밴드학회 '큰소리'에서 신입 부원을 모집합니다! 드럼, 기타, 보컬 등 다양한 세션을 경험해보세요."
+        />
+        <meta
+          property="og:image"
+          content="https://keunsori.com/image/Recruit.svg"
+        />
+        <meta property="og:url" content="https://keunsori.com/recruit" />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <NavBar />
       <Wrapper>
         <Image src={recruit} />

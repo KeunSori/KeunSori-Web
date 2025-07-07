@@ -57,9 +57,6 @@ const NavBar2: React.FC = () => {
           <Link to={{ pathname: "/book", search: "?type=current" }}>
             <Space isActive={location.pathname === "/book"}>연습실</Space>
           </Link>
-          <Link to="/board">
-            <Space isActive={location.pathname === "/board"}>게시판</Space>
-          </Link>
           <Link to="/mypage">
             <Space isActive={location.pathname === "/mypage"}>마이페이지</Space>
           </Link>
