@@ -31,6 +31,9 @@ const LoginForm: React.FC = () => {
       return;
     }
 
+    const data = await getUserInfo();
+    setMemberStatus(data.status);
+
     const memberStatus = getMemberStatus();
 
     if (memberStatus === "관리자") {
