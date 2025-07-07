@@ -1,8 +1,8 @@
 import { css } from "@emotion/css";
-import { TimeInfo } from "../../../../../store/Time";
-import { TimeSlots } from "../styles/Times";
-import { SlotButton } from "../styles/Button";
-import useIsMobile from "../../../../../hooks/useIsMobile";
+import { TimeInfo } from "@/store/Time";
+import { TimeSlots } from "@/styles/Book/Times";
+import { SlotButton } from "@/styles/Book/Button";
+import useIsMobile from "@/hooks/useIsMobile";
 interface TimeSlot {
   time: string;
   available: boolean;

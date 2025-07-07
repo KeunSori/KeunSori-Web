@@ -3,27 +3,23 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { Value } from "react-calendar/src/shared/types.js";
-import authApi from "../../../../api/Instance/authApi.ts";
-import { UserInfo } from "../../../../data/user.ts";
-import OutContainer from "../../OutContainer.tsx";
-import TimeSelecter from "../TimeSelecter.tsx";
-import ManageNotion from "./ManageNotion.tsx";
+import authApi from "@/api/Instance/authApi.ts";
+import { UserInfo } from "@/data/user.ts";
+import OutContainer from "@/components/Book/OutContainer.tsx";
+import TimeSelecter from "@/components/Book/BookManage/TimeSelecter.tsx";
+import ManageNotion from "@/components/Book/BookManage/DateManage/ManageNotion.tsx";
 import {
   CalendarContainer,
   Divider,
   InContainer,
   Input,
   StoreButton,
-} from "./DateManageStyle.tsx";
+} from "@/styles/Book/DateManageStyle";
 import { useAtom } from "jotai";
-import { Month, MonthDataAtom } from "./monthData.ts";
-import ManageModal from "../ManageModal.tsx";
-import {
-  formatDate,
-  isSameDate,
-  transDate,
-} from "../../../../utils/dateUtils.ts";
-import { NotionContainer } from "../../BookPage/Current/CurrentBook/CurrentBookStyle.tsx";
+import { Month, MonthDataAtom } from "@/store/monthData.ts";
+import ManageModal from "@/components/Book/BookManage/ManageModal.tsx";
+import { formatDate, isSameDate, transDate } from "@/utils/dateUtils.ts";
+import { NotionContainer } from "@/styles/Book/currentBook/CurrentBookStyle";
 
 const today = new Date();
 

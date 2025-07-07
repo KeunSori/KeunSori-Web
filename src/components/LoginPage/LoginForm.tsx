@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import styled from "@emotion/styled";
 import { AuthContext } from "../../contexts/AuthContext.tsx";
 import Input from "../Input.tsx";
-import Button from "../../styles/Button.tsx";
+import Button from "../../styles/Button.ts";
 import { useNavigate } from "react-router-dom";
 import { getMemberStatus } from "../../utils/jwt.ts";
 

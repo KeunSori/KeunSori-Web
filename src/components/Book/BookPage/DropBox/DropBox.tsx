@@ -5,7 +5,7 @@ import {
   Container,
   Dropbox,
   SelectedButton,
-} from "./DropBoxStyles";
+} from "@/styles/DropBoxStyles.ts";
 
 const instruments: string[] = [
   "악기",

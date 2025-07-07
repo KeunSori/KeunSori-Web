@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import NavBar3 from "../components/navBar/navBar3.tsx";
 import BasicManage from "../components/Book/BookManage/BasicManage/BasicManage.tsx";
 import DateManage from "../components/Book/BookManage/DateManage/DateManage.tsx";
-import Nav from "../styles/Nav.tsx";
+import Nav from "../styles/Nav.ts";
 import {
   ContainerStyle,
   InnerContainerStyle,

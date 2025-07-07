@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Button, Dropbox, SelectedButton } from "./DropBoxStyle";
+import { Button, Dropbox, SelectedButton } from "@/styles/DropBoxStyle.ts";
 interface TimeSelecterProps {
   startTime?: string;
   endTime?: string;
