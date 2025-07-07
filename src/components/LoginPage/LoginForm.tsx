@@ -4,8 +4,7 @@ import { AuthContext } from "../../contexts/AuthContext.tsx";
 import Input from "../Input.tsx";
 import Button from "../../styles/Button.ts";
 import { useNavigate } from "react-router-dom";
-import { getUserInfo } from "../../api/member.ts";
-import { getMemberStatus, setMemberStatus } from "@/utils/jwt.ts";
+import { getMemberStatus } from "@/utils/jwt.ts";
 
 const LoginForm: React.FC = () => {
   const [studentId, setStudentId] = useState("");
@@ -31,9 +30,6 @@ const LoginForm: React.FC = () => {
       setMessage(message || "로그인 실패. 다시 시도해주세요.");
       return;
     }
-
-    const data = await getUserInfo();
-    setMemberStatus(data.status);
 
     const memberStatus = getMemberStatus();
 
