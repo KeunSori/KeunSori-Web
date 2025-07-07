@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import TimeSelecter from "../TimeSelecter.tsx";
 import styled from "@emotion/styled";
 import { useAtom } from "jotai";
-import { Week, weekDataAtom } from "./weekData.ts";
+import { Week, weekDataAtom } from "../../../../store/weekData.ts";
 interface DayNotionProps {
   date: Week;
 }
