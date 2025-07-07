@@ -2,8 +2,8 @@
 import { useState } from "react";
 
 // shared
-import Footer from "../styles/Footer";
-import NavBar2 from "../components/navBar/navBar2";
+import Footer from "@/styles/Footer";
+import NavBar2 from "@/components/navBar/navBar2";
 
 // this
 import {
@@ -14,8 +14,8 @@ import {
   ContentBox,
   ChangeButton,
   ButtonDiv,
-} from "../components/PasswordChange/PasswordChangeStyles";
-import PasswordForm from "../components/PasswordChange/PasswordForm";
+} from "@/components/PasswordChange/PasswordChangeStyles";
+import PasswordForm from "@/components/PasswordChange/PasswordForm";
 
 const PasswordChange = () => {
   // '변경하기' 버튼 비활성화 여부

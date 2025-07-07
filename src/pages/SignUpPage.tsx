@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 // internal
 import logo from "/image/logo.svg";
-import SignUpForm from "../components/SignUpPage/SignUpForm.tsx";
+import SignUpForm from "@/components/SignUpPage/SignUpForm.tsx";
 
 const SignUpPage = () => {
   return (

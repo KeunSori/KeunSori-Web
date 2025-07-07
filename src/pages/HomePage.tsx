@@ -9,16 +9,16 @@ import family from "/image/home/family.jpeg";
 import kawai from "/image/home/kawai.png";
 
 // shared
-import NavBar from "../components/navBar/navBar.tsx";
-import Wrapper from "../styles/Wrapper.tsx";
-import Footer from "../styles/Footer.tsx";
+import NavBar from "@/components/navBar/navBar.tsx";
+import Wrapper from "@/styles/Wrapper.tsx";
+import Footer from "@/styles/Footer.tsx";
 
 // this
-import FolderCard from "../components/HomePage/FolderCard.tsx";
-import Activity from "../components/HomePage/Activity.tsx";
-import Apply from "../components/HomePage/Apply.tsx";
-import YoutubeContents from "../components/HomePage/YoutubeContents.tsx";
-import Intro from "../components/HomePage/Intro.tsx";
+import FolderCard from "@/components/HomePage/FolderCard.tsx";
+import Activity from "@/components/HomePage/Activity.tsx";
+import Apply from "@/components/HomePage/Apply.tsx";
+import YoutubeContents from "@/components/HomePage/YoutubeContents.tsx";
+import Intro from "@/components/HomePage/Intro.tsx";
 import {
   TimeLine,
   ActivityContainer,

@@ -3,9 +3,9 @@ import recruit from "/image/Recruit.svg";
 import poster from "/image/poster.svg";
 
 // shared
-import NavBar from "../components/navBar/navBar.tsx";
-import Wrapper from "../styles/Wrapper.tsx";
-import Footer from "../styles/Footer.tsx";
+import NavBar from "@/components/navBar/navBar.tsx";
+import Wrapper from "@/styles/Wrapper.tsx";
+import Footer from "@/styles/Footer.tsx";
 
 //this
 import {
@@ -19,7 +19,7 @@ import {
   RecruitContent,
   Image,
   Go,
-} from "../components/RecruitPage/RecruitPageStyles.tsx";
+} from "@/components/RecruitPage/RecruitPageStyles.tsx";
 
 const RecruitPage = () => {
   return (

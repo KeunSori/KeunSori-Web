@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 // internal
 import logo from "/image/logo.svg";
-import LoginForm from "../components/LoginPage/LoginForm.tsx";
+import LoginForm from "@/components/LoginPage/LoginForm.tsx";
 
 const LoginPage = () => {
   return (

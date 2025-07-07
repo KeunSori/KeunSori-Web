@@ -4,17 +4,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { css } from "@emotion/css";
 
 // shared
-import Nav from "../styles/Nav.ts";
-import NavBar2 from "../components/navBar/navBar2.tsx";
+import Nav from "@/styles/Nav.ts";
+import NavBar2 from "@/components/navBar/navBar2.tsx";
 
 // this
-import CurrentBook from "../components/Book/BookPage/Current/CurrentBook/CurrentBook.tsx";
-import ApplicationBook from "../components/Book/BookPage/Application/ApplicationBook.tsx";
-import MyBook from "../components/Book/BookPage/My/MyBook.tsx";
+import CurrentBook from "@/components/Book/BookPage/Current/CurrentBook/CurrentBook.tsx";
+import ApplicationBook from "@/components/Book/BookPage/Application/ApplicationBook.tsx";
+import MyBook from "@/components/Book/BookPage/My/MyBook.tsx";
 import {
   ContainerStyle,
   InnerContainerStyle,
-} from "../components/Book/BookPage/Container.tsx";
+} from "@/components/Book/BookPage/Container.tsx";
 
 const BookPage = () => {
   const locaiton = useLocation();
