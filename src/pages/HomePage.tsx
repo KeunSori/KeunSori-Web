@@ -65,7 +65,7 @@ const HomePage = () => {
   return (
     <>
       <Helmet>
-        <title>큰소리 – 홍익대 컴퓨터공학과 밴드학회</title>
+        <title>큰소리 – 홍익대 컴퓨터공학과 밴드학회(컴공)</title>
         <meta
           name="description"
           content="홍익대학교 컴퓨터공학과 밴드학회 '큰소리'를 소개합니다!"
