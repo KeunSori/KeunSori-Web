@@ -17,10 +17,8 @@ import { registerUser } from "../../api/register.ts";
 interface FormData {
   name: string;
   studentId: string;
-  email: string;
   password: string;
   passwordConfirm: string;
-  authNumber: string;
 }
 
 // component
@@ -28,10 +26,8 @@ const SignUpForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     studentId: "",
-    email: "",
     password: "",
     passwordConfirm: "",
-    authNumber: "",
   });
 
   const [message, setMessage] = useState("");
