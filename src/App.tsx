@@ -13,6 +13,8 @@ import MyPage from "./pages/MyPage.tsx";
 import ManagePage from "./pages/ManagePage.tsx";
 import PasswordChange from "./pages/PasswordChange.tsx";
 
+import { Analytics } from "@vercel/analytics/react";
+
 function App() {
   return (
     <>
@@ -36,6 +38,7 @@ function App() {
             <Route path="/password-change" element={<PasswordChange />} />
           </Routes>
         </BrowserRouter>
+        <Analytics />
       </AuthProvider>
     </>
   );
