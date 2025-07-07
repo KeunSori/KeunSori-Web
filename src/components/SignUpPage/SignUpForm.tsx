@@ -17,6 +17,7 @@ import { registerUser } from "../../api/register.ts";
 interface FormData {
   name: string;
   studentId: string;
+  email: string;
   password: string;
   passwordConfirm: string;
 }
@@ -28,6 +29,7 @@ const SignUpForm: React.FC = () => {
     studentId: "",
     password: "",
     passwordConfirm: "",
+    email: "", // 이메일 필드 추가
   });
 
   const [message, setMessage] = useState("");
@@ -115,8 +117,7 @@ const SignUpForm: React.FC = () => {
               required
             ></Input>
           </Slot>
-
-          {/* <Slot>
+          <Slot>
             <Input
               name="email"
               placeholder="개인 이메일"
@@ -129,8 +130,10 @@ const SignUpForm: React.FC = () => {
                 border-right: none;
               `}
             ></Input>
-            <CustomButton onClick={handleSendEmail}>인증번호발송</CustomButton>
+            {/* <CustomButton onClick={handleSendEmail}>인증번호발송</CustomButton> */}
           </Slot>
+
+          {/* 
 
           <Slot>
             <CustomInput

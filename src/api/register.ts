@@ -5,6 +5,7 @@ export const registerUser = async (data: {
   studentId: string;
   password: string;
   passwordConfirm: string;
+  email: string;
 }) => {
   try {
     const response = await baseApi.post("/signup", data);
