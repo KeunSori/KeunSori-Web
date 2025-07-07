@@ -1,5 +1,5 @@
 import axios from "axios";
-import { logout } from "../auth";
+// import { logout } from "../auth";
 
 const API_URL = import.meta.env.VITE_API_URL as string;
 
@@ -24,7 +24,7 @@ authApi.interceptors.response.use(
     const statusCode = error.response?.status;
 
     if (statusCode === 401 || statusCode === 403) {
-      logout();
+      // logout();
       console.error("인증 오류 발생:", error);
     }
 
