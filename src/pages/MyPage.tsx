@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // shared
-import NavBar2 from "../components/navBar/navBar2";
-import Footer from "../styles/Footer.tsx";
-import { getMemberStatus } from "../utils/jwt.ts";
-import authApi from "../api/Instance/authApi.ts";
+import NavBar2 from "@/components/navBar/navBar2";
+import Footer from "@/styles/Footer.tsx";
+import { getMemberStatus } from "@/utils/jwt.ts";
+import authApi from "@/api/Instance/authApi.ts";
 
 // this
 import {
@@ -19,7 +19,7 @@ import {
   FlexWrap,
   Logout,
   Text,
-} from "../components/Mypage/MyPageStyles.tsx";
+} from "@/components/Mypage/MyPageStyles.tsx";
 
 interface UserInfo {
   name: string;
