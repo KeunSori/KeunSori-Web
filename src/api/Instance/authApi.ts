@@ -26,7 +26,6 @@ authApi.interceptors.response.use(
     if (statusCode === 401 || statusCode === 403) {
       logout();
       console.error("인증 오류 발생:", error);
-      window.location.href = "/login";
     }
 
     throw error;

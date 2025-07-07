@@ -11,7 +11,7 @@ import Button from "../../styles/Button.ts";
 // api
 import axios from "axios";
 import { registerUser } from "../../api/register.ts";
-import { authNumberRequest, sendAuthNumber } from "../../api/emailAuth.ts";
+// import { authNumberRequest, sendAuthNumber } from "../../api/emailAuth.ts";
 
 // interface
 interface FormData {
@@ -57,29 +57,29 @@ const SignUpForm: React.FC = () => {
     }
   };
 
-  const handleSendEmail = async () => {
-    try {
-      await authNumberRequest(formData.email);
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        setMessage(error.response?.data.message || "다시 시도해주세요.");
-      } else {
-        setMessage("다시 시도해주세요.");
-      }
-    }
-  };
+  // const handleSendEmail = async () => {
+  //   try {
+  //     await authNumberRequest(formData.email);
+  //   } catch (error: unknown) {
+  //     if (axios.isAxiosError(error)) {
+  //       setMessage(error.response?.data.message || "다시 시도해주세요.");
+  //     } else {
+  //       setMessage("다시 시도해주세요.");
+  //     }
+  //   }
+  // };
 
-  const handleVerification = async () => {
-    try {
-      await sendAuthNumber(formData.email, formData.authNumber);
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        setMessage(error.response?.data.message || "다시 시도해주세요.");
-      } else {
-        setMessage("다시 시도해주세요.");
-      }
-    }
-  };
+  // const handleVerification = async () => {
+  //   try {
+  //     await sendAuthNumber(formData.email, formData.authNumber);
+  //   } catch (error: unknown) {
+  //     if (axios.isAxiosError(error)) {
+  //       setMessage(error.response?.data.message || "다시 시도해주세요.");
+  //     } else {
+  //       setMessage("다시 시도해주세요.");
+  //     }
+  //   }
+  // };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     setCapsLockOn(e.getModifierState("CapsLock"));
@@ -120,7 +120,7 @@ const SignUpForm: React.FC = () => {
             ></Input>
           </Slot>
 
-          <Slot>
+          {/* <Slot>
             <Input
               name="email"
               placeholder="개인 이메일"
@@ -147,7 +147,7 @@ const SignUpForm: React.FC = () => {
             ></CustomInput>
             <CustomButton onClick={handleVerification}>확인</CustomButton>
             <CustomButton onClick={handleSendEmail}>재전송</CustomButton>
-          </Slot>
+          </Slot> */}
 
           <Slot>
             <Input
@@ -226,14 +226,14 @@ const Ground = styled.div`
   gap: 1px;
 `;
 
-const CustomInput = styled(Input)`
-  width: 150px;
-`;
+// const CustomInput = styled(Input)`
+//   width: 150px;
+// `;
 
-const CustomButton = styled(Button)`
-  margin: 5px;
-  font-size: 15px;
-`;
+// const CustomButton = styled(Button)`
+//   margin: 5px;
+//   font-size: 15px;
+// `;
 
 const Notice = styled.div`
   color: "red";
