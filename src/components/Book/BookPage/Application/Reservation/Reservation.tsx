@@ -1,6 +1,10 @@
 import styled from "@emotion/styled";
 import { useAtom } from "jotai";
-import { endTimeAtom, printEndTimeAtom, startTimeAtom } from "../../../Time.ts";
+import {
+  endTimeAtom,
+  printEndTimeAtom,
+  startTimeAtom,
+} from "../../../../../store/Time.ts";
 import { UserInfo } from "../../../../../data/user.ts";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";

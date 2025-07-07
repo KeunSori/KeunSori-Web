@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/css";
-import Container from "../Container.tsx";
-import DayNotion from "./DayNotion.tsx";
-import authApi from "../../../../api/Instance/authApi.ts";
+import Container from "@/components/Book/BookManage/Container.tsx";
+import DayNotion from "@/components/Book/BookManage/BasicManage/DayNotion.tsx";
+import authApi from "@/api/Instance/authApi.ts";
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { weekDataAtom } from "./weekData.ts";
+import { weekDataAtom } from "@/store/weekData.ts";
 import ManageModal from "../ManageModal.tsx";
 
 const BasicManage: React.FC = () => {

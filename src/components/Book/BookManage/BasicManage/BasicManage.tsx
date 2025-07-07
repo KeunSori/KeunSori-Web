@@ -5,7 +5,7 @@ import DayNotion from "./DayNotion.tsx";
 import authApi from "../../../../api/Instance/authApi.ts";
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { weekDataAtom } from "./weekData.ts";
+import { weekDataAtom } from "../../../../store/weekData.ts";
 import ManageModal from "../ManageModal.tsx";
 
 const BasicManage: React.FC = () => {

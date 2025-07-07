@@ -7,7 +7,7 @@ import {
   instrument,
   printEndTimeAtom,
   monthDataAtom,
-} from "../../Time.ts";
+} from "../../../../store/Time.ts";
 import { Value } from "react-calendar/src/shared/types.js";
 import { ReservationButton } from "./styles/Button.tsx";
 import authApi from "../../../../api/Instance/authApi.ts";

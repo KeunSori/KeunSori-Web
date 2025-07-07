@@ -1,5 +1,5 @@
 import { Times, Time } from "./styles/Times.tsx";
-import { TimeInfo } from "../../Time.ts";
+import { TimeInfo } from "../../../../store/Time.ts";
 
 interface TimeContainerProps {
   date: Date | null;
