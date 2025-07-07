@@ -32,9 +32,9 @@ function App() {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/recruit" element={<RecruitPage />} />
             <Route path="/book" element={<BookPage />} />
-            <Route path="/bookmanagement" element={<BookManagePage />} />
+            <Route path="/admin/bookmanagement" element={<BookManagePage />} />
             <Route path="/mypage" element={<MyPage />} />
-            <Route path="/member-management" element={<ManagePage />} />
+            <Route path="/admin/member-management" element={<ManagePage />} />
             <Route path="/password-change" element={<PasswordChange />} />
           </Routes>
         </BrowserRouter>
