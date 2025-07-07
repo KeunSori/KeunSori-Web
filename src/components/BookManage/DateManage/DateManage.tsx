@@ -19,7 +19,7 @@ import { useAtom } from "jotai";
 import { Month, MonthDataAtom } from "@/store/monthData.ts";
 import ManageModal from "../ManageModal.tsx";
 import { formatDate, isSameDate, transDate } from "@/utils/dateUtils.ts";
-import { NotionContainer } from "@/styles/Book/currentBook/CurrentBookStyle.tsx";
+import { NotionContainer } from "@/styles/Book/currentBook/CurrentBookStyle.ts";
 
 const today = new Date();
 

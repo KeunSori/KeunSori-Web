@@ -3,14 +3,14 @@ import { css } from "@emotion/css";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 // internal
-import NavBar3 from "../components/navBar/navBar3.tsx";
-import BasicManage from "../components/Book/BookManage/BasicManage/BasicManage.tsx";
-import DateManage from "../components/Book/BookManage/DateManage/DateManage.tsx";
-import Nav from "../styles/Nav.ts";
+import NavBar3 from "@/components/navBar/navBar3.tsx";
+import BasicManage from "@/components/Book/BookManage/BasicManage/BasicManage.tsx";
+import DateManage from "@/components/Book/BookManage/DateManage/DateManage.tsx";
+import Nav from "@/styles/Nav.ts";
 import {
   ContainerStyle,
   InnerContainerStyle,
-} from "../components/Book/BookPage/Container.tsx";
+} from "@/components/Book/BookPage/Container.tsx";
 
 const BookManagePage = () => {
   const locaiton = useLocation();

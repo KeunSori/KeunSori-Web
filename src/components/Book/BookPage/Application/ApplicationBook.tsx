@@ -15,7 +15,7 @@ import { InstrumentInfo } from "@/data/user.ts";
 import OutContainer from "@/components/Book/OutContainer.tsx";
 import useIsMobile from "@/hooks/useIsMobile.tsx";
 import { SelectedTime } from "@/styles/Book/Times.ts";
-import { Container, InContainer } from "@/styles/Book/Containers.tsx";
+import { Container, InContainer } from "@/styles/Book/Containers.ts";
 import { useNavigate } from "react-router-dom";
 import ReservationModal from "@/components/Book/BookPage/Application/ReservationModal.tsx";
 import TimeContainer from "@/components/Book/BookPage/Application/TimeContainer.tsx";
