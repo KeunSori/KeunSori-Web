@@ -103,7 +103,7 @@ const DynamicTable: React.FC = () => {
       console.error("탈퇴 처리 실패:", error);
     }
 
-    window.location.href = "/member-management";
+    window.location.href = "/admin/member-management";
   };
 
   return (

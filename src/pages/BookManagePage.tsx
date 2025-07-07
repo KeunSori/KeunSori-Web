@@ -18,11 +18,11 @@ const BookManagePage = () => {
   const component = query.get("type");
   const navigate = useNavigate();
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    navigate(`/bookmanagement?type=${e.currentTarget.dataset.action}`);
+    navigate(`/admin/bookmanagement?type=${e.currentTarget.dataset.action}`);
   };
   useEffect(() => {
     if (!component) {
-      navigate("/bookmanagement?type=basic");
+      navigate("/admin/bookmanagement?type=basic");
     }
   }, []);
 

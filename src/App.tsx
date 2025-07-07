@@ -32,10 +32,12 @@ function App() {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/recruit" element={<RecruitPage />} />
             <Route path="/book" element={<BookPage />} />
-            <Route path="/admin/bookmanagement" element={<BookManagePage />} />
             <Route path="/mypage" element={<MyPage />} />
-            <Route path="/admin/member-management" element={<ManagePage />} />
             <Route path="/password-change" element={<PasswordChange />} />
+
+            {/* 관리자 페이지 */}
+            <Route path="/admin/bookmanagement" element={<BookManagePage />} />
+            <Route path="/admin/member-management" element={<ManagePage />} />
           </Routes>
         </BrowserRouter>
         <Analytics />

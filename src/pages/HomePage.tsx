@@ -27,6 +27,7 @@ import {
   Detail,
   HeartImg,
 } from "../components/HomePage/HomePageStyles.tsx";
+import { Helmet } from "react-helmet";
 
 interface FolderDetailInfo {
   color: string;
@@ -63,6 +64,27 @@ const HomePage = () => {
   ];
   return (
     <>
+      <Helmet>
+        <title>큰소리 – 홍익대 컴퓨터공학과 밴드학회</title>
+        <meta
+          name="description"
+          content="홍익대학교 컴퓨터공학과 밴드학회 '큰소리'를 소개합니다!"
+        />
+        <meta
+          property="og:title"
+          content="큰소리 – 홍익대 컴퓨터공학과 밴드학회"
+        />
+        <meta
+          property="og:description"
+          content="1999년부터 이어진 홍익대 컴공 밴드학회, 지금 바로 만나보세요!"
+        />
+        <meta
+          property="og:image"
+          content="https://keunsori.com/image/logo.svg"
+        />
+        <meta property="og:url" content="https://keunsori.com/" />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <NavBar />
       <Intro />
       <Wrapper>
