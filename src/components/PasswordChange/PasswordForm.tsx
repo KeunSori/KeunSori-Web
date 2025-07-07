@@ -13,13 +13,9 @@ import { checkPasswordValidity } from "../../api/password";
 
 interface PasswordFormProps {
   setIsDisabled: Dispatch<SetStateAction<boolean>>;
-  setChangedMessage: Dispatch<SetStateAction<string>>;
 }
 
-const PasswordForm: React.FC<PasswordFormProps> = ({
-  setIsDisabled,
-  setChangedMessage,
-}) => {
+const PasswordForm: React.FC<PasswordFormProps> = ({ setIsDisabled }) => {
   const nav = useNavigate();
 
   // 주요 변수들 - 현재 비밀번호, 새 비밀번호, 새 비밀번호 확인
@@ -73,11 +69,8 @@ const PasswordForm: React.FC<PasswordFormProps> = ({
         newPassword,
       });
       setErrorMessage("");
-      setChangedMessage("변경되었습니다.");
-      setTimeout(() => {
-        setChangedMessage(""); // 3.5초 후 변경 확인 메시지 사라짐
-        nav("/mypage"); // 변경되면 마이페이지로 돌아감
-      }, 3500);
+      alert("비밀번호가 성공적으로 변경되었습니다.");
+      nav("/mypage"); // 비밀번호 변경 후 로그인 페이지로 이동
     } catch (e) {
       console.error("비밀번호 변경 오류:", e);
       if (axios.isAxiosError(e)) {

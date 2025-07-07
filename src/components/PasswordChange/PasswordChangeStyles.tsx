@@ -11,7 +11,7 @@ const PopUpMessage = styled.div`
   color: rgb(123, 123, 123);
   width: 150px;
   padding: 7px;
-  font-size: 14px;
+  font-size: 30px;
   text-align: center;
   position: absolute;
 `;

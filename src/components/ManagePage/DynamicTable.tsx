@@ -8,7 +8,6 @@ interface memberResponse {
   id: number;
   name: string;
   StudentId: string;
-  status: string;
   approvalDate: number[];
 }
 

@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import styled from "@emotion/styled";
-import { AuthContext } from "../../contexts/AuthContext.tsx";
-import Input from "../Input.tsx";
-import Button from "../../styles/Button.ts";
+import { AuthContext } from "@/contexts/AuthContext.tsx";
+import Input from "@/components/Input.tsx";
+import Button from "@/styles/Button.ts";
 import { useNavigate } from "react-router-dom";
-import { getMemberStatus } from "../../utils/jwt.ts";
+import { getMemberStatus } from "@/utils/jwt.ts";
 
 const LoginForm: React.FC = () => {
   const [studentId, setStudentId] = useState("");
@@ -38,7 +38,7 @@ const LoginForm: React.FC = () => {
     } else if (memberStatus === "일반") {
       navigate("/book");
     } else {
-      alert("승인 대기 중입니다. 다른 계정으로 다시 시도해주세요.");
+      alert("승인 대기 중입니다. 다른 계정으로 다시 시도해주세요. 테스트 실패");
       authContext.logoutUser();
     }
   };

@@ -1,6 +1,6 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 import { login, logout } from "../api/auth";
-import { getToken, setToken, removeToken } from "../utils/jwt";
+import { removeToken } from "../utils/jwt";
 import axios from "axios";
 import { setMemberStatus, removeMemberStatus } from "../utils/jwt";
 
@@ -31,16 +31,16 @@ export const AuthContext = createContext<AuthContextProps>({
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User>({ isLoggedIn: false });
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading] = useState(true);
 
-  useEffect(() => {
-    const token = getToken();
+  // useEffect(() => {
+  //   const token = getToken();
 
-    if (token) {
-      setUser({ isLoggedIn: true });
-      setIsLoading(false);
-    }
-  }, []);
+  //   if (token) {
+  //     setUser({ isLoggedIn: true });
+  //     setIsLoading(false);
+  //   }
+  // }, []);
 
   const loginUser = async (
     studentId: string,
@@ -48,12 +48,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   ): Promise<{ success: boolean; message?: string }> => {
     try {
       const data = await login(studentId, password);
-      setToken(data);
       setUser({ isLoggedIn: true });
 
-      if (data.memberStatus === "관리자") {
+      if (data.status === "관리자") {
         setMemberStatus("관리자");
-      } else if (data.memberStatus === "일반") {
+      } else if (data.status === "일반") {
         setMemberStatus("일반");
       } else {
         setMemberStatus("승인 대기");

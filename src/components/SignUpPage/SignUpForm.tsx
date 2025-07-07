@@ -11,7 +11,7 @@ import Button from "../../styles/Button.ts";
 // api
 import axios from "axios";
 import { registerUser } from "../../api/register.ts";
-import { authNumberRequest, sendAuthNumber } from "../../api/emailAuth.ts";
+// import { authNumberRequest, sendAuthNumber } from "../../api/emailAuth.ts";
 
 // interface
 interface FormData {
@@ -20,7 +20,6 @@ interface FormData {
   email: string;
   password: string;
   passwordConfirm: string;
-  authNumber: string;
 }
 
 // component
@@ -28,10 +27,9 @@ const SignUpForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     studentId: "",
-    email: "",
     password: "",
     passwordConfirm: "",
-    authNumber: "",
+    email: "", // 이메일 필드 추가
   });
 
   const [message, setMessage] = useState("");
@@ -57,29 +55,29 @@ const SignUpForm: React.FC = () => {
     }
   };
 
-  const handleSendEmail = async () => {
-    try {
-      await authNumberRequest(formData.email);
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        setMessage(error.response?.data.message || "다시 시도해주세요.");
-      } else {
-        setMessage("다시 시도해주세요.");
-      }
-    }
-  };
+  // const handleSendEmail = async () => {
+  //   try {
+  //     await authNumberRequest(formData.email);
+  //   } catch (error: unknown) {
+  //     if (axios.isAxiosError(error)) {
+  //       setMessage(error.response?.data.message || "다시 시도해주세요.");
+  //     } else {
+  //       setMessage("다시 시도해주세요.");
+  //     }
+  //   }
+  // };
 
-  const handleVerification = async () => {
-    try {
-      await sendAuthNumber(formData.email, formData.authNumber);
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        setMessage(error.response?.data.message || "다시 시도해주세요.");
-      } else {
-        setMessage("다시 시도해주세요.");
-      }
-    }
-  };
+  // const handleVerification = async () => {
+  //   try {
+  //     await sendAuthNumber(formData.email, formData.authNumber);
+  //   } catch (error: unknown) {
+  //     if (axios.isAxiosError(error)) {
+  //       setMessage(error.response?.data.message || "다시 시도해주세요.");
+  //     } else {
+  //       setMessage("다시 시도해주세요.");
+  //     }
+  //   }
+  // };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     setCapsLockOn(e.getModifierState("CapsLock"));
@@ -119,7 +117,6 @@ const SignUpForm: React.FC = () => {
               required
             ></Input>
           </Slot>
-
           <Slot>
             <Input
               name="email"
@@ -133,8 +130,10 @@ const SignUpForm: React.FC = () => {
                 border-right: none;
               `}
             ></Input>
-            <CustomButton onClick={handleSendEmail}>인증번호발송</CustomButton>
+            {/* <CustomButton onClick={handleSendEmail}>인증번호발송</CustomButton> */}
           </Slot>
+
+          {/* 
 
           <Slot>
             <CustomInput
@@ -147,7 +146,7 @@ const SignUpForm: React.FC = () => {
             ></CustomInput>
             <CustomButton onClick={handleVerification}>확인</CustomButton>
             <CustomButton onClick={handleSendEmail}>재전송</CustomButton>
-          </Slot>
+          </Slot> */}
 
           <Slot>
             <Input
@@ -226,14 +225,14 @@ const Ground = styled.div`
   gap: 1px;
 `;
 
-const CustomInput = styled(Input)`
-  width: 150px;
-`;
+// const CustomInput = styled(Input)`
+//   width: 150px;
+// `;
 
-const CustomButton = styled(Button)`
-  margin: 5px;
-  font-size: 15px;
-`;
+// const CustomButton = styled(Button)`
+//   margin: 5px;
+//   font-size: 15px;
+// `;
 
 const Notice = styled.div`
   color: "red";
