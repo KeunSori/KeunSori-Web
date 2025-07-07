@@ -20,7 +20,6 @@ interface FormData {
   email: string;
   password: string;
   passwordConfirm: string;
-  authNumber: string;
 }
 
 // component
@@ -28,10 +27,9 @@ const SignUpForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     studentId: "",
-    email: "",
     password: "",
     passwordConfirm: "",
-    authNumber: "",
+    email: "", // 이메일 필드 추가
   });
 
   const [message, setMessage] = useState("");
@@ -119,8 +117,7 @@ const SignUpForm: React.FC = () => {
               required
             ></Input>
           </Slot>
-
-          {/* <Slot>
+          <Slot>
             <Input
               name="email"
               placeholder="개인 이메일"
@@ -133,8 +130,10 @@ const SignUpForm: React.FC = () => {
                 border-right: none;
               `}
             ></Input>
-            <CustomButton onClick={handleSendEmail}>인증번호발송</CustomButton>
+            {/* <CustomButton onClick={handleSendEmail}>인증번호발송</CustomButton> */}
           </Slot>
+
+          {/* 
 
           <Slot>
             <CustomInput
