@@ -5,10 +5,33 @@ import { Link } from "react-router-dom";
 // internal
 import logo from "/image/logo.svg";
 import LoginForm from "@/components/LoginPage/LoginForm.tsx";
+import { Helmet } from "react-helmet";
 
 const LoginPage = () => {
   return (
     <>
+      <Helmet>
+        <title>큰소리 – 홍익대 컴퓨터공학과 밴드학회(컴공)</title>
+        <meta
+          name="description"
+          content="홍익대학교 컴퓨터공학과 밴드학회 '큰소리'는 음악을 사랑하는 컴공인을 위한 밴드 동아리입니다."
+        />
+        <meta
+          name="description"
+          content="큰소리 밴드학회 회원 로그인 페이지입니다. 로그인하고 밴드 예약 및 활동 정보를 확인하세요!"
+        />
+        <meta property="og:title" content="로그인 – 큰소리 밴드학회" />
+        <meta
+          property="og:description"
+          content="큰소리 밴드학회 회원 전용 로그인 페이지입니다."
+        />
+        <meta
+          property="og:image"
+          content="https://keunsori.com/image/logo.svg"
+        />
+        <meta property="og:url" content="https://keunsori.com/login" />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <Main>
         <Link to="/">
           <Logo src={logo} alt="logo" />
