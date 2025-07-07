@@ -4,7 +4,8 @@ import { AuthContext } from "../../contexts/AuthContext.tsx";
 import Input from "../Input.tsx";
 import Button from "../../styles/Button.ts";
 import { useNavigate } from "react-router-dom";
-import { getMemberStatus } from "../../utils/jwt.ts";
+import { getUserInfo } from "../../api/member.ts";
+import { getMemberStatus, setMemberStatus } from "@/utils/jwt.ts";
 
 const LoginForm: React.FC = () => {
   const [studentId, setStudentId] = useState("");
@@ -31,6 +32,9 @@ const LoginForm: React.FC = () => {
       return;
     }
 
+    const data = await getUserInfo();
+    setMemberStatus(data.status);
+
     const memberStatus = getMemberStatus();
 
     if (memberStatus === "관리자") {
@@ -38,7 +42,7 @@ const LoginForm: React.FC = () => {
     } else if (memberStatus === "일반") {
       navigate("/book");
     } else {
-      alert("승인 대기 중입니다. 다른 계정으로 다시 시도해주세요.");
+      alert("승인 대기 중입니다. 다른 계정으로 다시 시도해주세요. 테스트 실패");
       authContext.logoutUser();
     }
   };
