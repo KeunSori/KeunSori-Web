@@ -4,8 +4,7 @@ import { AuthContext } from "../../contexts/AuthContext.tsx";
 import Input from "../Input.tsx";
 import Button from "../../styles/Button.ts";
 import { useNavigate } from "react-router-dom";
-import { getUserInfo } from "../../api/member.ts";
-import { getMemberStatus, setMemberStatus } from "@/utils/jwt.ts";
+import { getMemberStatus } from "@/utils/jwt.ts";
 
 const LoginForm: React.FC = () => {
   const [studentId, setStudentId] = useState("");
