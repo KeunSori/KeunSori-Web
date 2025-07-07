@@ -10,7 +10,7 @@ import kawai from "/image/home/kawai.png";
 
 // shared
 import NavBar from "@/components/navBar/navBar.tsx";
-import Wrapper from "@/styles/Wrapper.tsx";
+import Wrapper from "@/styles/Wrapper.ts";
 import Footer from "@/styles/Footer.tsx";
 
 // this
