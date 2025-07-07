@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import styled from "@emotion/styled";
-import { AuthContext } from "../../contexts/AuthContext.tsx";
-import Input from "../Input.tsx";
-import Button from "../../styles/Button.ts";
+import { AuthContext } from "@/contexts/AuthContext.tsx";
+import Input from "@/components/Input.tsx";
+import Button from "@/styles/Button.ts";
 import { useNavigate } from "react-router-dom";
 import { getMemberStatus } from "@/utils/jwt.ts";
 
@@ -30,9 +30,6 @@ const LoginForm: React.FC = () => {
       setMessage(message || "로그인 실패. 다시 시도해주세요.");
       return;
     }
-
-    const data = await getUserInfo();
-    setMemberStatus(data.status);
 
     const memberStatus = getMemberStatus();
 
