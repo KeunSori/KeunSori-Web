@@ -6,7 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 import useIsMobile from "@/hooks/useIsMobile.tsx";
 import { IoClose, IoMenu } from "react-icons/io5";
 import Space from "@/styles/NavBar/Space.tsx";
-import { Menu, MobileMenu } from "../../styles/NavBar/Menu.tsx";
+import { Menu, MobileMenu } from "@/styles/NavBar/Menu.tsx";
 import logowhite from "/image/logowhite.svg";
 
 const NavBar: React.FC = () => {
