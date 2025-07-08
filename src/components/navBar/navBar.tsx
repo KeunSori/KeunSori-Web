@@ -19,12 +19,15 @@ const NavBar: React.FC = () => {
     const handleScroll = () => {
       setIsMove(window.scrollY > 0);
     };
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
-    <Menu isMove={isMove} isHome={location.pathname === "/"}>
+    <Menu isMove={isMove} isOpen={isOpen} isHome={location.pathname === "/"}>
       <div
         className={css`
           margin: auto;
@@ -35,7 +38,7 @@ const NavBar: React.FC = () => {
         style={{ cursor: "pointer" }}
       >
         <Link to="/">
-          {!isMove && location.pathname === "/" ? (
+          {!isMove && location.pathname === "/" && !isOpen ? (
             <img
               className={css`
                 width: 80px;
@@ -68,23 +71,22 @@ const NavBar: React.FC = () => {
           <Link to="/contact">
             <Space isActive={location.pathname === "/contact"}>문의하기</Space>
           </Link>
-          <Link to="/login">
-            <Space isActive={location.pathname === "/login"}>my keun</Space>
+          <Link to="/book">
+            <Space isActive={location.pathname === "/book"}>my keun</Space>
           </Link>
         </div>
       ) : (
         <>
-          {isMove && (
-            <>
-              <Button onClick={() => setIsOpen(!isOpen)}>
-                {!isOpen ? (
-                  <IoMenu size="30" stroke="#919191" />
-                ) : (
-                  <IoClose size="30" fill="#919191" />
-                )}
-              </Button>
-            </>
-          )}
+          <Button onClick={() => setIsOpen(!isOpen)}>
+            {!isMove && !isOpen && location.pathname === "/" ? (
+              <IoMenu size="30" stroke="#ffffff" />
+            ) : !isOpen ? (
+              <IoMenu size="30" stroke="#919191" />
+            ) : (
+              <IoClose size="30" fill="#919191" />
+            )}
+          </Button>
+
           <MobileMenu isOpened={isOpen} isSmall={true}>
             <Link to="/recruit">
               <Space isActive={false}>지원하기</Space>
@@ -92,7 +94,7 @@ const NavBar: React.FC = () => {
             <Link to="/contact">
               <Space isActive={false}>문의하기</Space>
             </Link>
-            <Link to="/login">
+            <Link to="/book">
               <Space isActive={false}>my keun</Space>
             </Link>
           </MobileMenu>

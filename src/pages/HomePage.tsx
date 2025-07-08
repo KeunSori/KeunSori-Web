@@ -29,6 +29,7 @@ import {
 } from "../components/HomePage/HomePageStyles.tsx";
 import { Helmet } from "react-helmet";
 
+import { useEffect } from "react";
 interface FolderDetailInfo {
   color: string;
   type: string;
@@ -38,6 +39,9 @@ interface FolderDetailInfo {
 }
 
 const HomePage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const DetailNote: FolderDetailInfo[] = [
     {
       color: "#FEC039",
@@ -98,7 +102,7 @@ const HomePage = () => {
           <Details>
             홍익대학교 컴퓨터공학과 밴드 학회 큰소리는
             <br />
-            1999년에 만들어진 전통 있는 학회로,
+            1987년에 만들어진 전통 있는 학회로,
             <br />
             음악을 좋아하는 사람들이 모여 함께 악기를 연주하며 노래를 부르는
             밴드 입니다

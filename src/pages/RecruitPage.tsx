@@ -22,7 +22,12 @@ import {
 } from "@/components/RecruitPage/RecruitPageStyles.tsx";
 import { Helmet } from "react-helmet";
 
+import { useEffect } from "react";
+
 const RecruitPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <Helmet>
@@ -66,7 +71,8 @@ const RecruitPage = () => {
         <RecruitContent>
           <RecruitTitle>모집 안내</RecruitTitle>
           <RecruitDetail>
-            모집 대상: 컴퓨터공학과, 컴퓨터 공학과 진입 예정 자율 전공 재학생
+            모집 대상: 홍익대 컴퓨터공학과, 컴퓨터 공학과 진입 예정 자율 전공
+            재학생
             <br />
             모집 세션: 드럼, 베이스, 기타, 키보드, 보컬
             <MoreDetail>* 여설 보컬, 드럼, 경력자 우대</MoreDetail>

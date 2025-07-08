@@ -15,7 +15,6 @@ const MobileMenu = styled.div<MobileMenuProps>`
   z-index: 1;
   gap: 5px;
   top: 55px;
-
   overflow: hidden;
   background-color: #fff;
   ${({ isOpened }) =>
@@ -47,10 +46,15 @@ const Menu = styled.div<MenuProps>`
       : isHome
       ? `background: transparent; color: white`
       : ``};
+  ${({ isOpen }) =>
+    isOpen &&
+    `background-color: #fff; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);`};
+  transition: background-color 0.3s;
 `;
 interface MenuProps {
   isMove: boolean;
   isHome?: boolean;
+  isOpen?: boolean;
 }
 
 export { MobileMenu, Menu };
