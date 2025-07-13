@@ -20,18 +20,19 @@ const LoginForm: React.FC = () => {
       return;
     }
 
-    const { success, message } = await authContext.loginUser(studentId, password);
+    const { success, message, user } = await authContext.loginUser(studentId, password);
 
     if (!success) {
       setMessage(message || "로그인 실패. 다시 시도해주세요.");
       return;
     }
 
-    if (authContext.user.memberStatus === "관리자") {
+    console.log("로그인 성공:", user?.memberStatus);
+    if (user?.memberStatus === "관리자") {
       navigate("/admin/member-management");
-    } else if (authContext.user.memberStatus === "일반") {
+    } else if (user?.memberStatus === "일반") {
       navigate("/book");
-    } else if (authContext.user.memberStatus === "승인 대기") {
+    } else if (user?.memberStatus === "승인 대기") {
       alert("승인 대기 중입니다. 다른 계정으로 다시 시도해주세요.");
       authContext.logoutUser();
     } else {
