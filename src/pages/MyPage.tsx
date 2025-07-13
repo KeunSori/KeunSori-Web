@@ -1,11 +1,10 @@
 // libraries
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 // shared
 import NavBar2 from "@/components/navBar/navBar2";
 import Footer from "@/styles/Footer.tsx";
-import { getMemberStatus } from "@/utils/jwt.ts";
 import authApi from "@/api/Instance/authApi.ts";
 
 // this
@@ -20,6 +19,8 @@ import {
   Logout,
   Text,
 } from "@/components/Mypage/MyPageStyles.tsx";
+
+import { AuthContext } from "@/contexts/AuthContext.tsx";
 
 interface UserInfo {
   name: string;
@@ -40,19 +41,20 @@ const MyPage = () => {
   const navToPassChange = () => nav("/password-change"); // '비밀번호 변경하기' 클릭 시 이동
   const navToBook = () => nav("/book?type=my"); // '내 예약 조회' 클릭 시 이동
 
-  const memberStatus = getMemberStatus();
+  const authContext = useContext(AuthContext);
 
   useEffect(() => {
     async function fetchPersonData() {
       try {
-        if (memberStatus === "일반") {
+        if (authContext.user.memberStatus === "일반") {
           const response = await authApi.get<UserInfo>("/members/me");
           setInfo(response.data);
-        }
-        if (memberStatus === "관리자") {
+        } else if (authContext.user.memberStatus === "관리자") {
           const response = await authApi.get<UserInfo>("/admin/me");
           setInfo(response.data);
         } else {
+          console.log(authContext.user.memberStatus === "일반");
+          alert("로그인이 필요합니다.");
           nav("/login");
         }
       } catch (e) {

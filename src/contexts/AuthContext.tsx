@@ -20,17 +20,18 @@ interface AuthProviderProps {
 
 interface User {
   isLoggedIn: boolean;
+  memberStatus: string;
 }
 
 export const AuthContext = createContext<AuthContextProps>({
-  user: { isLoggedIn: false },
+  user: { isLoggedIn: false, memberStatus: "" },
   isLoading: true,
   loginUser: async () => ({ success: false, message: "초기값" }),
   logoutUser: () => {},
 });
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User>({ isLoggedIn: false });
+  const [user, setUser] = useState<User>({ isLoggedIn: false, memberStatus: "" });
   const [isLoading] = useState(true);
 
   // useEffect(() => {
@@ -48,7 +49,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   ): Promise<{ success: boolean; message?: string }> => {
     try {
       const data = await login(studentId, password);
-      setUser({ isLoggedIn: true });
+      setUser({ isLoggedIn: true, memberStatus: data.status });
 
       if (data.status === "관리자") {
         setMemberStatus("관리자");
@@ -64,8 +65,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         return {
           success: false,
-          message:
-            error.response?.data?.message || "로그인 실패. 다시 시도해주세요.",
+          message: error.response?.data?.message || "로그인 실패. 다시 시도해주세요.",
         };
       }
       return { success: false, message: "예기치 않은 오류가 발생했습니다." };
@@ -74,7 +74,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logoutUser = async () => {
     removeToken();
-    setUser({ isLoggedIn: false });
+    setUser({ isLoggedIn: false, memberStatus: "" });
     removeMemberStatus();
     console.log("해치웠나?");
     window.location.href = "/login";
