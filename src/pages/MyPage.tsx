@@ -52,6 +52,8 @@ const MyPage = () => {
         if (memberStatus === "관리자") {
           const response = await authApi.get<UserInfo>("/admin/me");
           setInfo(response.data);
+        } else {
+          nav("/login");
         }
       } catch (e) {
         console.error(e);

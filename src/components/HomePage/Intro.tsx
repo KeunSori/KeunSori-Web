@@ -6,7 +6,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useEffect, useState } from "react";
 import bass from "/image/home/bass.jpeg";
 import vocal from "/image/home/vocal.jpeg";
-
+import logo from "/image/logowhite.svg";
 const Intro = () => {
   const slides = [backgroundimg, concert, bass, vocal];
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -57,13 +57,22 @@ const Intro = () => {
           onClick={() => handleClick("right")}
           size={70}
         />
-        작은 소리들의 화합
-        <Title>큰소리</Title>
+        <Title>
+          <Img src={logo} />
+        </Title>
       </IntroText>
     </div>
   );
 };
 export default Intro;
+
+const Img = styled.img`
+  width: 100%;
+  max-width: 300px;
+  height: 100%;
+  object-fit: cover;
+`;
+
 const Slider = styled.div<{ currentSlide: number }>`
   position: absolute;
   top: 0;
@@ -89,17 +98,15 @@ const IntroText = styled.div`
   font-size: 25px;
   font-weight: bold;
   font-weight: 300;
-  font-family: DNFForgedBlade, sans-serif;
   color: white;
   z-index: 1;
 `;
 const Title = styled.div`
-  font-size: 50px;
-  font-weight: bold;
-  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  font-weight: 500;
-  font-family: DNFForgedBlade, sans-serif;
-  color: white;
-  z-index: 1;
+  gap: 10px;
+  text-size: 30px;
 `;
