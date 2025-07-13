@@ -53,7 +53,6 @@ const MyPage = () => {
           const response = await authApi.get<UserInfo>("/admin/me");
           setInfo(response.data);
         } else {
-          console.log(authContext.user.memberStatus === "일반");
           alert("로그인이 필요합니다.");
           nav("/login");
         }
