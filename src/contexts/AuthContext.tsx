@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 import { login, logout } from "../api/auth";
 import { removeToken } from "../utils/jwt";
 import axios from "axios";
-import { setMemberStatus, removeMemberStatus } from "../utils/jwt";
+import { removeMemberStatus } from "../utils/jwt";
 
 interface AuthContextProps {
   user: User;
@@ -10,7 +10,7 @@ interface AuthContextProps {
   loginUser: (
     studentId: string,
     password: string
-  ) => Promise<{ success: boolean; message?: string }>;
+  ) => Promise<{ success: boolean; message?: string; user?: User }>;
   logoutUser: () => void;
 }
 
@@ -46,19 +46,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const loginUser = async (
     studentId: string,
     password: string
-  ): Promise<{ success: boolean; message?: string }> => {
+  ): Promise<{ success: boolean; message?: string; user?: User }> => {
     try {
       const data = await login(studentId, password);
       setUser({ isLoggedIn: true, memberStatus: data.status });
-
-      if (data.status === "관리자") {
-        setMemberStatus("관리자");
-      } else if (data.status === "일반") {
-        setMemberStatus("일반");
-      } else {
-        setMemberStatus("승인 대기");
-      }
-      return { success: true };
+      console.log("로그인 성공:", data.status);
+      return { success: true, user: { isLoggedIn: true, memberStatus: data.status } };
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("login failed:", error.response?.data || error.message);
