@@ -1,5 +1,4 @@
 // libraries
-import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { css } from "@emotion/css";
 
@@ -15,6 +14,7 @@ import {
   ContainerStyle,
   InnerContainerStyle,
 } from "@/components/Book/BookPage/Container.tsx";
+import { useEffect } from "react";
 
 const BookPage = () => {
   const locaiton = useLocation();
@@ -25,11 +25,13 @@ const BookPage = () => {
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     navigate(`/book?type=${e.currentTarget.dataset.action}`);
   };
+
   useEffect(() => {
     if (!component) {
       navigate("/book?type=current");
     }
-  }, []);
+  }, [component, navigate]);
+
   return (
     <>
       <NavBar2 />
