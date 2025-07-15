@@ -1,6 +1,7 @@
 import React, { createContext, useState } from "react";
 import { login, logout } from "../api/auth";
 import { removeToken } from "../utils/jwt";
+import { getUserInfo } from "../api/member";
 import axios from "axios";
 
 interface AuthContextProps {
@@ -49,9 +50,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     password: string
   ): Promise<{ success: boolean; message?: string; user?: User }> => {
     try {
-      const data = await login(studentId, password);
-      setUser({ isLoggedIn: true, memberStatus: data.status });
-      return { success: true, user: { isLoggedIn: true, memberStatus: data.status } };
+      await login(studentId, password);
+      const memberResponse = await getUserInfo();
+      setUser({ isLoggedIn: true, memberStatus: memberResponse.status });
+      return { success: true, user: { isLoggedIn: true, memberStatus: memberResponse.status } };
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("login failed:", error.response?.data || error.message);
