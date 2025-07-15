@@ -51,9 +51,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   ): Promise<{ success: boolean; message?: string; user?: User }> => {
     try {
       await login(studentId, password);
-      alert("로그인 성공");
       const memberResponse = await getUserInfo();
-      alert("memberResponse: " + memberResponse.status);
       setUser({ isLoggedIn: true, memberStatus: memberResponse.status });
       return { success: true, user: { isLoggedIn: true, memberStatus: memberResponse.status } };
     } catch (error) {
