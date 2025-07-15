@@ -36,7 +36,6 @@ const LoginForm: React.FC = () => {
       alert("승인 대기 중입니다. 다른 계정으로 다시 시도해주세요.");
       authContext.logoutUser();
     } else {
-      console.log("user status: ", user?.memberStatus);
       alert("알 수 없는 오류가 발생했습니다. 다시 시도해주세요.");
       authContext.logoutUser();
       navigate("/login");
