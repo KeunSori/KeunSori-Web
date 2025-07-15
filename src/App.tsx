@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage.tsx";
-import GlobalStyle from "./styles/Global/GlobalStyle.tsx";
+import GlobalStyle from "./styles/GlobalStyle.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import SignUpPage from "./pages/SignUpPage.tsx";
 import UserPage from "./pages/UserPage.tsx";
@@ -9,11 +9,9 @@ import RecruitPage from "./pages/RecruitPage.tsx";
 import BookPage from "./pages/BookPage.tsx";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 import BookManagePage from "./pages/BookManagePage.tsx";
+import BoardPage from "./pages/BoardPage.tsx";
 import MyPage from "./pages/MyPage.tsx";
 import ManagePage from "./pages/ManagePage.tsx";
-import PasswordChange from "./pages/PasswordChange.tsx";
-
-import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   return (
@@ -32,15 +30,12 @@ function App() {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/recruit" element={<RecruitPage />} />
             <Route path="/book" element={<BookPage />} />
+            <Route path="/bookmanagement" element={<BookManagePage />} />
+            <Route path="/board" element={<BoardPage />} />
             <Route path="/mypage" element={<MyPage />} />
-            <Route path="/password-change" element={<PasswordChange />} />
-
-            {/* 관리자 페이지 */}
-            <Route path="/admin/bookmanagement" element={<BookManagePage />} />
-            <Route path="/admin/member-management" element={<ManagePage />} />
+            <Route path="/member-management" element={<ManagePage />} />
           </Routes>
         </BrowserRouter>
-        <Analytics />
       </AuthProvider>
     </>
   );

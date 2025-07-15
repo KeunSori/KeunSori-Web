@@ -1,16 +1,14 @@
-// external
 import { css } from "@emotion/css";
+import NavBar3 from "../components/navBar/navBar3.tsx";
 import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-// internal
-import NavBar3 from "@/components/navBar/navBar3.tsx";
-import BasicManage from "@/components/Book/BookManage/BasicManage/BasicManage.tsx";
-import DateManage from "@/components/Book/BookManage/DateManage/DateManage.tsx";
-import Nav from "@/styles/Nav.ts";
+import BasicManage from "../components/BookMange/BasicManage/BasicManage.tsx";
+import DateManage from "../components/BookMange/DateMange/DateManage.tsx";
+import Nav from "../components/Nav.tsx";
 import {
   ContainerStyle,
   InnerContainerStyle,
-} from "@/components/Book/BookPage/Container.tsx";
+} from "../components/Container.tsx";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const BookManagePage = () => {
   const locaiton = useLocation();
@@ -18,11 +16,11 @@ const BookManagePage = () => {
   const component = query.get("type");
   const navigate = useNavigate();
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    navigate(`/admin/bookmanagement?type=${e.currentTarget.dataset.action}`);
+    navigate(`/bookmanagement?type=${e.currentTarget.dataset.action}`);
   };
   useEffect(() => {
     if (!component) {
-      navigate("/admin/bookmanagement?type=basic");
+      navigate("/bookmanagement?type=basic");
     }
   }, []);
 

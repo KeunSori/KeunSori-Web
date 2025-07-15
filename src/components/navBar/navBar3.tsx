@@ -3,11 +3,11 @@ import { css } from "@emotion/css";
 import React, { useEffect, useState, useContext } from "react";
 import logo from "/image/logo.svg";
 import { Link, useLocation } from "react-router-dom";
-import useIsMobile from "@/hooks/useIsMobile.tsx";
+import useIsMobile from "../mobile/useIsMobile";
 import { IoClose, IoMenu } from "react-icons/io5";
-import Space from "@/styles/NavBar/Space.tsx";
-import { Menu, MobileMenu } from "@/styles/NavBar/Menu.tsx";
-import { AuthContext } from "@/contexts/AuthContext.tsx";
+import Space from "./Space.tsx";
+import { Menu, MobileMenu } from "./Menu.tsx";
+import { AuthContext } from "../../contexts/AuthContext.tsx";
 
 const NavBar2: React.FC = () => {
   const [isMove, setIsMove] = useState(false);
@@ -36,7 +36,7 @@ const NavBar2: React.FC = () => {
         `}
         style={{ cursor: "pointer" }}
       >
-        <Link to="/admin/member-management">
+        <Link to="/member-management">
           <img
             className={css`
               width: 60px;
@@ -54,13 +54,13 @@ const NavBar2: React.FC = () => {
             margin: auto;
           `}
         >
-          <Link to="/admin/member-management">
-            <Space isActive={location.pathname === "/admin/member-management"}>
+          <Link to="/member-management">
+            <Space isActive={location.pathname === "/member-management"}>
               회원관리
             </Space>
           </Link>
-          <Link to="/admin/bookmanagement">
-            <Space isActive={location.pathname === "/admin/bookmanagement"}>
+          <Link to="/bookmanagement">
+            <Space isActive={location.pathname === "/bookmanagement"}>
               예약관리
             </Space>
           </Link>
@@ -77,10 +77,10 @@ const NavBar2: React.FC = () => {
             )}
           </Button>
           <MobileMenu isOpened={isOpen}>
-            <Link to="/admin/member-management">
+            <Link to="/member-management">
               <Space isActive={false}>회원관리</Space>
             </Link>
-            <Link to="/admin/bookmanagement">
+            <Link to="/bookmanagement">
               <Space isActive={false}>예약관리</Space>
             </Link>
             <Space onClick={logoutUser}>로그아웃</Space>

@@ -16,5 +16,3 @@ export interface InstrumentInfo {
   keyboard: boolean;
   drum: boolean;
 }
-
-export type memberStatus = "일반" | "관리자" | "승인 대기";

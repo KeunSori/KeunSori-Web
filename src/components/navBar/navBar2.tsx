@@ -3,11 +3,11 @@ import { css } from "@emotion/css";
 import React, { useEffect, useState, useContext } from "react";
 import logo from "/image/logo.svg";
 import { Link, useLocation } from "react-router-dom";
-import useIsMobile from "@/hooks/useIsMobile.tsx";
+import useIsMobile from "../mobile/useIsMobile";
 import { IoClose, IoMenu } from "react-icons/io5";
-import Space from "@/styles/NavBar/Space.tsx";
-import { Menu, MobileMenu } from "@/styles/NavBar/Menu.tsx";
-import { AuthContext } from "@/contexts/AuthContext.tsx";
+import Space from "./Space.tsx";
+import { Menu, MobileMenu } from "./Menu.tsx";
+import { AuthContext } from "../../contexts/AuthContext.tsx";
 
 const NavBar2: React.FC = () => {
   const [isMove, setIsMove] = useState(false);
