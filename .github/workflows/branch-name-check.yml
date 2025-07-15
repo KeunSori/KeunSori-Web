@@ -1,0 +1,29 @@
+name: Lint branch name
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  check-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch name format
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          echo "🔍 Branch name: $BRANCH_NAME"
+
+          # dev 또는 main 브랜치는 검사 제외
+          if [[ "$BRANCH_NAME" == "develop" || "$BRANCH_NAME" == "main" ]]; then
+            echo "✅ 'dev' 또는 'main' 브랜치이므로 검사 제외"
+            exit 0
+          fi
+
+          # 브랜치 이름 규칙 검사 (예: feat/#123-기능이름)
+          if [[ ! "$BRANCH_NAME" =~ ^(feat|fix|chore|docs|refactor)/#([0-9]+)-.+$ ]]; then
+            echo "❌ 브랜치 이름 규칙을 지키지 않았습니다!"
+            echo "✅ 예: feat/#123-로그인-버그-수정"
+            exit 1
+          fi
+
+          echo "✅ 브랜치 이름 규칙을 통과했습니다!"
