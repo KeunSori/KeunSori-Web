@@ -1,20 +1,35 @@
-import NavBar from "../components/navBar/navBar.tsx";
-import FolderCard from "../components/Home/FolderCard.tsx";
+// libraries
 import { css } from "@emotion/css";
-import styled from "@emotion/styled";
+
+// images
 import heart from "/image/home/heart.svg";
-import Activity from "../components/Home/Activity.tsx";
 import timeline from "/image/home/timeline.svg";
-import Apply from "../components/Home/Apply.tsx";
-import YoutubeContents from "../components/Home/YoutubeContents.tsx";
-import Wrapper from "../components/Wrapper.tsx";
-import Footer from "../components/Footer.tsx";
 import room from "/image/home/room.jpeg";
 import family from "/image/home/family.jpeg";
 import kawai from "/image/home/kawai.png";
-import Intro from "../components/Home/Intro.tsx";
-import { useEffect } from "react";
 
+// shared
+import NavBar from "@/components/navBar/navBar.tsx";
+import Wrapper from "@/styles/Wrapper.ts";
+import Footer from "@/styles/Footer.tsx";
+
+// this
+import FolderCard from "@/components/HomePage/FolderCard.tsx";
+import Activity from "@/components/HomePage/Activity.tsx";
+import Apply from "@/components/HomePage/Apply.tsx";
+import YoutubeContents from "@/components/HomePage/YoutubeContents.tsx";
+import Intro from "@/components/HomePage/Intro.tsx";
+import {
+  TimeLine,
+  ActivityContainer,
+  Cards,
+  Details,
+  Detail,
+  HeartImg,
+} from "../components/HomePage/HomePageStyles.tsx";
+import { Helmet } from "react-helmet";
+
+import { useEffect } from "react";
 interface FolderDetailInfo {
   color: string;
   type: string;
@@ -53,6 +68,27 @@ const HomePage = () => {
   ];
   return (
     <>
+      <Helmet>
+        <title>큰소리 – 홍익대 컴퓨터공학과 밴드학회(컴공)</title>
+        <meta
+          name="description"
+          content="홍익대학교 컴퓨터공학과 밴드학회 '큰소리'를 소개합니다!"
+        />
+        <meta
+          property="og:title"
+          content="큰소리 – 홍익대 컴퓨터공학과 밴드학회"
+        />
+        <meta
+          property="og:description"
+          content="1999년부터 이어진 홍익대 컴공 밴드학회, 지금 바로 만나보세요!"
+        />
+        <meta
+          property="og:image"
+          content="https://keunsori.com/image/logo.svg"
+        />
+        <meta property="og:url" content="https://keunsori.com/" />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <NavBar />
       <Intro />
       <Wrapper>
@@ -98,46 +134,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-const TimeLine = styled.img`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  min-width: 400px;
-  max-width: 80%;
-  margin-top: 80px;
-  margin-bottom: 150px;
-`;
-
-const ActivityContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 150px;
-`;
-const Cards = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 50px;
-  margin-bottom: 150px;
-`;
-const Details = styled.div`
-  text-align: center;
-  font-size: 20px;
-  margin-top: 20px;
-  margin-bottom: 120px;
-  font-family: LeeSeoyun, sans-serif;
-  color: #505050;
-  line-height: 1.5;
-`;
-const Detail = styled.div`
-  text-align: center;
-  font-size: 35px;
-  margin-top: 30px;
-  font-family: LeeSeoyun, sans-serif;
-  color: #505050;
-`;
-const HeartImg = styled.img`
-  width: 220px;
-  margin-top: 100px;
-`;
