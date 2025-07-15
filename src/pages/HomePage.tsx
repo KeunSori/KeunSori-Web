@@ -92,6 +92,9 @@ const HomePage = () => {
       <NavBar />
       <Intro />
       <Wrapper>
+        <h1 style={{ display: "none" }}>
+          홍익대학교 컴퓨터공학과 밴드학회 큰소리 (KeunSori)
+        </h1>
         <div
           className={css`
             margin: 50px;
