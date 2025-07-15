@@ -1,9 +1,9 @@
 import { memberStatus } from "@/data/user";
-import authApi from "@/api/Instance/authApi";
+import baseApi from "@/api/Instance/baseApi";
 
 export const getUserInfo = async (): Promise<UserInfo> => {
   try {
-    const response = await authApi.get("/members/me");
+    const response = await baseApi.get("/members/me");
     return response.data;
   } catch (error) {
     console.error("error: ", error);
