@@ -1,11 +1,11 @@
 // libraries
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // shared
-import { getMemberStatus } from "../../utils/jwt";
+import { AuthContext } from "../../contexts/AuthContext";
 
 // this
 import { changePassword } from "../../api/password";
@@ -24,6 +24,7 @@ const PasswordForm: React.FC<PasswordFormProps> = ({ setIsDisabled }) => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   // 에러 메시지
   const [errorMessage, setErrorMessage] = useState("");
+  const authContext = useContext(AuthContext);
 
   useEffect(() => {
     // 새 비밀번호가 변경될 때마다 실시간 유효성 검사
@@ -51,8 +52,6 @@ const PasswordForm: React.FC<PasswordFormProps> = ({ setIsDisabled }) => {
     }
   };
 
-  const memberStatus = getMemberStatus() as string;
-
   // 비밀번호 변경하기
   async function handlePasswordChange() {
     if (!currentPassword || !newPassword || !passwordConfirm) {
@@ -64,7 +63,7 @@ const PasswordForm: React.FC<PasswordFormProps> = ({ setIsDisabled }) => {
       return;
     }
     try {
-      await changePassword(memberStatus, {
+      await changePassword(authContext?.user?.memberStatus, {
         currentPassword,
         newPassword,
       });

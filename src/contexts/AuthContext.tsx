@@ -20,18 +20,20 @@ interface AuthProviderProps {
 
 interface User {
   isLoggedIn: boolean;
-  memberStatus: string;
+  memberStatus: memberStatus;
 }
 
+type memberStatus = "일반" | "관리자" | "승인 대기" | "알 수 없음";
+
 export const AuthContext = createContext<AuthContextProps>({
-  user: { isLoggedIn: false, memberStatus: "" },
+  user: { isLoggedIn: false, memberStatus: "알 수 없음" },
   isLoading: true,
   loginUser: async () => ({ success: false, message: "초기값" }),
   logoutUser: () => {},
 });
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User>({ isLoggedIn: false, memberStatus: "" });
+  const [user, setUser] = useState<User>({ isLoggedIn: false, memberStatus: "알 수 없음" });
   const [isLoading] = useState(true);
 
   // useEffect(() => {
@@ -67,7 +69,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logoutUser = async () => {
     removeToken();
-    setUser({ isLoggedIn: false, memberStatus: "" });
+    setUser({ isLoggedIn: false, memberStatus: "알 수 없음" });
     removeMemberStatus();
     console.log("해치웠나?");
     window.location.href = "/login";
