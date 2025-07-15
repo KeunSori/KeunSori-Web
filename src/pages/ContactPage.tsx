@@ -1,9 +1,6 @@
-// external
-import { useState } from "react";
-
-// internal
-import Footer from "@/styles/Footer.tsx";
-import NavBar from "@/components/navBar/navBar.tsx";
+import NavBar from "../components/navBar/navBar.tsx";
+import Footer from "../components/Footer.tsx";
+import { useEffect, useState } from "react";
 
 import {
   Ground,
@@ -14,63 +11,41 @@ import {
   FAQItem,
   Question,
   Answer,
-} from "@/components/ContactPage/ContactStyles.tsx";
-import { Helmet } from "react-helmet";
+} from "../components/Contact/ContactStyles.tsx";
 
 const ContactPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [activeTab, setActiveTab] = useState("동아리 활동");
 
   return (
-    <>
-      <Helmet>
-        <title>큰소리 – 홍익대 컴퓨터공학과 밴드학회(컴공)</title>
-        <meta
-          name="description"
-          content="홍익대학교 컴퓨터공학과 밴드학회 '큰소리'는 음악을 사랑하는 컴공인을 위한 밴드 동아리입니다."
-        />
-        <meta
-          name="description"
-          content="큰소리 밴드학회에 대해 궁금한 점들을 FAQ에서 확인해보세요. 동아리 활동, 공연, 악기 등 다양한 질문에 대한 답변을 제공합니다."
-        />
-        <meta property="og:title" content="자주 묻는 질문 – 큰소리 밴드학회" />
-        <meta
-          property="og:description"
-          content="밴드학회 큰소리에 대해 자주 묻는 질문을 모았습니다. 악기, 공연, 지원에 대해 더 알아보세요!"
-        />
-        <meta
-          property="og:image"
-          content="https://keunsori.com/image/logo.svg"
-        />
-        <meta property="og:url" content="https://keunsori.com/contact" />
-        <meta property="og:type" content="website" />
-      </Helmet>
-      <Ground>
-        <NavBar />
-        <FAQWrapper>
-          <Title>자주 묻는 질문</Title>
+    <Ground>
+      <NavBar />
+      <FAQWrapper>
+        <Title>자주 묻는 질문</Title>
 
-          <Tabs>
-            {Object.keys(faqData).map((tab) => (
-              <TabButton
-                key={tab}
-                active={activeTab === tab}
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab}
-              </TabButton>
-            ))}
-          </Tabs>
-
-          {faqData[activeTab].map((item, index) => (
-            <FAQItem key={index}>
-              <Question>Q. {item.question}</Question>
-              <Answer>A. {item.answer}</Answer>
-            </FAQItem>
+        <Tabs>
+          {Object.keys(faqData).map((tab) => (
+            <TabButton
+              key={tab}
+              active={activeTab === tab}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab}
+            </TabButton>
           ))}
-        </FAQWrapper>
-        <Footer />
-      </Ground>
-    </>
+        </Tabs>
+
+        {faqData[activeTab].map((item, index) => (
+          <FAQItem key={index}>
+            <Question>Q. {item.question}</Question>
+            <Answer>A. {item.answer}</Answer>
+          </FAQItem>
+        ))}
+      </FAQWrapper>
+      <Footer />
+    </Ground>
   );
 };
 

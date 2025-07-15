@@ -17,18 +17,15 @@
     "@emotion/css": "^11.13.5",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@vercel/analytics": "^1.5.0",
     "axios": "^1.7.9",
     "jotai": "^2.11.0",
     "react": "^18.3.1",
     "react-calendar": "^5.1.0",
     "react-dom": "^18.3.1",
     "react-dropdown": "^1.11.0",
-    "react-helmet": "^6.1.0",
     "react-icons": "^5.4.0",
     "react-router-dom": "^7.1.1",
-    "react-youtube": "^10.1.0",
-    "sitemap": "^8.0.0"
+    "react-youtube": "^10.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.6.1",
@@ -36,7 +33,6 @@
     "@eslint/js": "^9.17.0",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
-    "@types/react-helmet": "^6.1.11",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.17.0",
     "eslint-plugin-react": "^7.37.3",

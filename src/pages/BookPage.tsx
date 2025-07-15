@@ -1,20 +1,16 @@
-// libraries
-import { useLocation, useNavigate } from "react-router-dom";
 import { css } from "@emotion/css";
-
-// shared
-import Nav from "@/styles/Nav.ts";
-import NavBar2 from "@/components/navBar/navBar2.tsx";
-
-// this
-import CurrentBook from "@/components/Book/BookPage/Current/CurrentBook/CurrentBook.tsx";
-import ApplicationBook from "@/components/Book/BookPage/Application/ApplicationBook.tsx";
-import MyBook from "@/components/Book/BookPage/My/MyBook.tsx";
+import NavBar2 from "../components/navBar/navBar2.tsx";
+import CurrentBook from "../components/Book/Current/CurrentBook/CurrentBook.tsx";
+import ApplicationBook from "../components/Book/Application/ApplicationBook.tsx";
+import MyBook from "../components/Book/My/MyBook.tsx";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import Nav from "../components/Nav.tsx";
 import {
   ContainerStyle,
   InnerContainerStyle,
-} from "@/components/Book/BookPage/Container.tsx";
-import { useEffect } from "react";
+} from "../components/Container.tsx";
+import { getToken } from "../utils/jwt.ts";
 
 const BookPage = () => {
   const locaiton = useLocation();
@@ -25,13 +21,15 @@ const BookPage = () => {
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     navigate(`/book?type=${e.currentTarget.dataset.action}`);
   };
-
   useEffect(() => {
+    const token = getToken();
+    if (!token) {
+      navigate("/login");
+    }
     if (!component) {
       navigate("/book?type=current");
     }
-  }, [component, navigate]);
-
+  }, []);
   return (
     <>
       <NavBar2 />
