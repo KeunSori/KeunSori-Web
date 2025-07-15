@@ -33,7 +33,10 @@ export const AuthContext = createContext<AuthContextProps>({
 });
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User>({ isLoggedIn: false, memberStatus: "알 수 없음" });
+  const [user, setUser] = useState<User>({
+    isLoggedIn: false,
+    memberStatus: "알 수 없음",
+  });
   const [isLoading] = useState(true);
 
   // useEffect(() => {
@@ -53,14 +56,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await login(studentId, password);
       const memberResponse = await getUserInfo();
       setUser({ isLoggedIn: true, memberStatus: memberResponse.status });
-      return { success: true, user: { isLoggedIn: true, memberStatus: memberResponse.status } };
+      return {
+        success: true,
+        user: { isLoggedIn: true, memberStatus: memberResponse.status },
+      };
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("login failed:", error.response?.data || error.message);
 
         return {
           success: false,
-          message: error.response?.data?.message || "로그인 실패. 다시 시도해주세요.",
+          message:
+            error.response?.data?.message || "로그인 실패. 다시 시도해주세요.",
         };
       }
       return { success: false, message: "예기치 않은 오류가 발생했습니다." };
