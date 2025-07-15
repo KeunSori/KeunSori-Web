@@ -2,7 +2,6 @@ import React, { createContext, useState } from "react";
 import { login, logout } from "../api/auth";
 import { removeToken } from "../utils/jwt";
 import axios from "axios";
-import { removeMemberStatus } from "../utils/jwt";
 
 interface AuthContextProps {
   user: User;
@@ -52,7 +51,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const data = await login(studentId, password);
       setUser({ isLoggedIn: true, memberStatus: data.status });
-      console.log("로그인 성공:", data.status);
       return { success: true, user: { isLoggedIn: true, memberStatus: data.status } };
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -70,8 +68,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logoutUser = async () => {
     removeToken();
     setUser({ isLoggedIn: false, memberStatus: "알 수 없음" });
-    removeMemberStatus();
-    console.log("해치웠나?");
     window.location.href = "/login";
     await logout();
   };
