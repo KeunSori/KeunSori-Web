@@ -1,5 +1,6 @@
 import baseApi from "./Instance/baseApi";
 import authApi from "./Instance/authApi";
+import { memberStatus } from "@/data/user";
 
 export const login = async (studentId: string, password: string): Promise<LoginResponse> => {
   const response = await baseApi.post(`/auth/login`, {
@@ -17,5 +18,5 @@ export const logout = async () => {
 interface LoginResponse {
   name: string;
   studentId: string;
-  status: string;
+  status: memberStatus;
 }

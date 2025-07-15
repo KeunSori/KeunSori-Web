@@ -4,7 +4,6 @@ import { AuthContext } from "@/contexts/AuthContext.tsx";
 import Input from "@/components/Input.tsx";
 import Button from "@/styles/Button.ts";
 import { useNavigate } from "react-router-dom";
-import { getMemberStatus } from "@/utils/jwt.ts";
 
 const LoginForm: React.FC = () => {
   const [studentId, setStudentId] = useState("");
@@ -21,25 +20,25 @@ const LoginForm: React.FC = () => {
       return;
     }
 
-    const { success, message } = await authContext.loginUser(
-      studentId,
-      password
-    );
+    const { success, message, user } = await authContext.loginUser(studentId, password);
 
     if (!success) {
       setMessage(message || "로그인 실패. 다시 시도해주세요.");
       return;
     }
 
-    const memberStatus = getMemberStatus();
-
-    if (memberStatus === "관리자") {
+    console.log("로그인 성공:", user?.memberStatus);
+    if (user?.memberStatus === "관리자") {
       navigate("/admin/member-management");
-    } else if (memberStatus === "일반") {
+    } else if (user?.memberStatus === "일반") {
       navigate("/book");
-    } else {
-      alert("승인 대기 중입니다. 다른 계정으로 다시 시도해주세요. 테스트 실패");
+    } else if (user?.memberStatus === "승인 대기") {
+      alert("승인 대기 중입니다. 다른 계정으로 다시 시도해주세요.");
       authContext.logoutUser();
+    } else {
+      alert("알 수 없는 오류가 발생했습니다. 다시 시도해주세요.");
+      authContext.logoutUser();
+      navigate("/login");
     }
   };
 
@@ -74,9 +73,7 @@ const LoginForm: React.FC = () => {
           <ReactiveButton type="submit">로그인</ReactiveButton>
         </ContentSection>
       </form>
-      {capsLockOn && (
-        <CapsLockWarning>⚠️ Caps Lock이 켜져 있습니다!</CapsLockWarning>
-      )}
+      {capsLockOn && <CapsLockWarning>⚠️ Caps Lock이 켜져 있습니다!</CapsLockWarning>}
       {message && <Message>{message}</Message>}
     </>
   );

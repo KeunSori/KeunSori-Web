@@ -2,7 +2,6 @@ import React, { createContext, useState } from "react";
 import { login, logout } from "../api/auth";
 import { removeToken } from "../utils/jwt";
 import axios from "axios";
-import { setMemberStatus, removeMemberStatus } from "../utils/jwt";
 
 interface AuthContextProps {
   user: User;
@@ -10,7 +9,7 @@ interface AuthContextProps {
   loginUser: (
     studentId: string,
     password: string
-  ) => Promise<{ success: boolean; message?: string }>;
+  ) => Promise<{ success: boolean; message?: string; user?: User }>;
   logoutUser: () => void;
 }
 
@@ -20,17 +19,20 @@ interface AuthProviderProps {
 
 interface User {
   isLoggedIn: boolean;
+  memberStatus: memberStatus;
 }
 
+type memberStatus = "일반" | "관리자" | "승인 대기" | "알 수 없음";
+
 export const AuthContext = createContext<AuthContextProps>({
-  user: { isLoggedIn: false },
+  user: { isLoggedIn: false, memberStatus: "알 수 없음" },
   isLoading: true,
   loginUser: async () => ({ success: false, message: "초기값" }),
   logoutUser: () => {},
 });
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User>({ isLoggedIn: false });
+  const [user, setUser] = useState<User>({ isLoggedIn: false, memberStatus: "알 수 없음" });
   const [isLoading] = useState(true);
 
   // useEffect(() => {
@@ -45,27 +47,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const loginUser = async (
     studentId: string,
     password: string
-  ): Promise<{ success: boolean; message?: string }> => {
+  ): Promise<{ success: boolean; message?: string; user?: User }> => {
     try {
       const data = await login(studentId, password);
-      setUser({ isLoggedIn: true });
-
-      if (data.status === "관리자") {
-        setMemberStatus("관리자");
-      } else if (data.status === "일반") {
-        setMemberStatus("일반");
-      } else {
-        setMemberStatus("승인 대기");
-      }
-      return { success: true };
+      setUser({ isLoggedIn: true, memberStatus: data.status });
+      return { success: true, user: { isLoggedIn: true, memberStatus: data.status } };
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("login failed:", error.response?.data || error.message);
 
         return {
           success: false,
-          message:
-            error.response?.data?.message || "로그인 실패. 다시 시도해주세요.",
+          message: error.response?.data?.message || "로그인 실패. 다시 시도해주세요.",
         };
       }
       return { success: false, message: "예기치 않은 오류가 발생했습니다." };
@@ -74,9 +67,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logoutUser = async () => {
     removeToken();
-    setUser({ isLoggedIn: false });
-    removeMemberStatus();
-    console.log("해치웠나?");
+    setUser({ isLoggedIn: false, memberStatus: "알 수 없음" });
     window.location.href = "/login";
     await logout();
   };
