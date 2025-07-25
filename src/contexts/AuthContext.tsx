@@ -1,7 +1,6 @@
 import React, { createContext, useState } from "react";
 import { login, logout } from "../api/auth";
 import { removeToken } from "../utils/jwt";
-import { getUserInfo } from "../api/member";
 import axios from "axios";
 
 interface AuthContextProps {
@@ -53,8 +52,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     password: string
   ): Promise<{ success: boolean; message?: string; user?: User }> => {
     try {
-      await login(studentId, password);
-      const memberResponse = await getUserInfo();
+      const memberResponse = await login(studentId, password);
       setUser({ isLoggedIn: true, memberStatus: memberResponse.status });
       return {
         success: true,
