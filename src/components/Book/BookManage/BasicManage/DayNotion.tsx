@@ -54,7 +54,7 @@ const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
   useEffect(() => {}, [weekData]);
 
   return (
-    <>
+    <Container>
       <Input
         type="checkbox"
         defaultChecked={isActive}
@@ -75,7 +75,7 @@ const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
         />
         까지
       </DayContainer>
-    </>
+    </Container>
   );
 };
 
@@ -90,4 +90,8 @@ const DayContainer = styled.div<{ isActive?: boolean }>`
   display: flex;
   align-items: center;
   gap: 10px;
+`;
+const Container = styled.div`
+  display: flex;
+  gap: 5px;
 `;

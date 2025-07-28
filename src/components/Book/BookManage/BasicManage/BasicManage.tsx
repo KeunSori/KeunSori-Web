@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { weekDataAtom } from "@/store/weekData.ts";
 import ManageModal from "@/components/Book/BookManage/ManageModal.tsx";
+import BookByWeek from "./BookByWeek";
 
 const BasicManage: React.FC = () => {
   const [weekData, setWeekData] = useAtom(weekDataAtom);
@@ -16,6 +17,7 @@ const BasicManage: React.FC = () => {
       const response = await authApi.get(`/admin/reservation/weekly-schedule`);
 
       setWeekData(response.data);
+      console.log(weekData);
     } catch (error) {
       console.log(`에러남:${error}`);
       alert("정보를 불러올 수 없습니다");
@@ -40,12 +42,15 @@ const BasicManage: React.FC = () => {
           <div
             key={date.dayOfWeekNum}
             className={css`
+              // border: 1px solid black;
+              width: 750px;
               display: flex;
-              align-items: center;
+              flex-direction: column;
               gap: 10px;
             `}
           >
             <DayNotion date={date} />
+            <BookByWeek date={date} isActive={date.isActive} />
           </div>
         ))}
         <SumbmitButton onClick={() => setIsModalOpen(true)}>저장</SumbmitButton>
