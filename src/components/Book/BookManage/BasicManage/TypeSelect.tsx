@@ -14,7 +14,7 @@ const TypeSelect = () => {
     setType(text);
   };
   return (
-    <div>
+    <Container>
       <div style={{ position: "relative" }}>
         <InputType onClick={() => setIsOpen(!isOpen)}>
           {type === null ? "예약 유형" : type}
@@ -26,11 +26,15 @@ const TypeSelect = () => {
           <InputType onClick={() => onClose("교습")}>교습</InputType>
         </div>
       )}
-    </div>
+    </Container>
   );
 };
 
 export default TypeSelect;
+
+const Container = styled.div`
+  z-index: 1;
+`;
 
 const InputType = styled.div`
   display: flex;

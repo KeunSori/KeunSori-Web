@@ -78,7 +78,6 @@ const Container = styled.div`
   background-color: #ececec;
   padding: 5px;
   border-radius: 10px;
-  z-index: 10;
 `;
 
 const InputName = styled.input`

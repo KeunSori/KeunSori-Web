@@ -8,7 +8,7 @@ import { useAtom } from "jotai";
 import { weekDataAtom } from "@/store/weekData.ts";
 import ManageModal from "@/components/Book/BookManage/ManageModal.tsx";
 import BookByWeek from "./BookByWeek";
-import CalendarInput from "./CalendarInput";
+import CalendarInput from "./CalendarInputs";
 
 const BasicManage: React.FC = () => {
   const [weekData, setWeekData] = useAtom(weekDataAtom);
