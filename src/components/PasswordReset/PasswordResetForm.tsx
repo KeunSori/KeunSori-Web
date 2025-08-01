@@ -4,6 +4,7 @@ import Input from "../Input";
 import Button from "../../styles/Button";
 import { passwordUpdateLink } from "@/api/auth";
 import { AxiosError } from "axios";
+import Toast from "../Toast";
 // import { showToast } from "../Toast.tsx";
 
 const PasswordResetForm = () => {
@@ -84,6 +85,14 @@ const PasswordResetForm = () => {
           </ReactiveButton>
         </ContentSection>
       </form>
+      {message && (
+        <Toast
+          message={message}
+          type="info"
+          duration={3000}
+          onClose={() => setMessage("")}
+        />
+      )}
     </>
   );
 };
