@@ -50,7 +50,7 @@ const BasicManage: React.FC = () => {
             `}
           >
             <DayNotion date={date} />
-            <BookByWeek date={date} isActive={date.isActive} />
+            <BookByWeek date={date} />
           </div>
         ))}
         <SumbmitButton onClick={() => setIsModalOpen(true)}>저장</SumbmitButton>

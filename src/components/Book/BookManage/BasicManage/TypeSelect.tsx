@@ -1,18 +1,24 @@
+import { typeAtom } from "@/store/teamData";
 import styled from "@emotion/styled";
+import { useAtom } from "jotai";
 import { useState } from "react";
 // 예약 유형 선택 토글
 
 const TypeSelect = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedVal, setSelectedVal] = useState("예약 유형");
-  const onClose = (text: string) => {
+  //const [selectedVal, setSelectedVal] = useState("예약 유형");
+
+  const [type, setType] = useAtom(typeAtom);
+  const onClose = (text: "합주" | "교습") => {
     setIsOpen(false);
-    setSelectedVal(text);
+    setType(text);
   };
   return (
     <div>
       <div style={{ position: "relative" }}>
-        <InputType onClick={() => setIsOpen(!isOpen)}>{selectedVal}</InputType>
+        <InputType onClick={() => setIsOpen(!isOpen)}>
+          {type === null ? "예약 유형" : type}
+        </InputType>
       </div>
       {isOpen && (
         <div style={{ position: "absolute" }}>

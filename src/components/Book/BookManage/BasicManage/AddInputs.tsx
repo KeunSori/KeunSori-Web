@@ -1,17 +1,71 @@
-import { SelectedButton } from "@/styles/DropBoxStyle";
 import styled from "@emotion/styled";
 import TypeSelect from "./TypeSelect";
+import TimeSelecter from "../TimeSelecter";
+import { useAtom } from "jotai";
+import { TeamWeek } from "@/store/weekData";
+import {
+  studentIdAtom,
+  teamEndTimeAtom,
+  teamNameAtom,
+  teamStartTimeAtom,
+} from "@/store/teamData";
 
-const AddInputs = () => {
+interface AddInputsProps {
+  teamDate?: TeamWeek;
+  isActive: boolean;
+  setTeamStartTime: (val: string) => void;
+  setTeamEndTime: (val: string) => void;
+}
+
+const AddInputs = ({
+  isActive,
+  setTeamStartTime,
+  setTeamEndTime,
+}: AddInputsProps) => {
+  const [teamName, setTeamName] = useAtom(teamNameAtom);
+  const [studentId, setStudentId] = useAtom(studentIdAtom);
+  const [teamStartTime] = useAtom(teamStartTimeAtom);
+  const [teamEndTime] = useAtom(teamEndTimeAtom);
+
+  const handleClick =
+    (timeType: "teamStartTime" | "teamEndTime") =>
+    (e: React.MouseEvent<HTMLButtonElement>): void => {
+      const value = e.currentTarget.getAttribute("value");
+      if (value) {
+        if (timeType === "teamStartTime") {
+          setTeamStartTime(value);
+        } else {
+          setTeamEndTime(value);
+        }
+      }
+    };
+
   return (
     <Container>
       <TypeSelect />
-      <InputName placeholder="팀명 입력" />
-      <InputName placeholder="팀장 학번" />
+      <InputName
+        placeholder="팀명 입력"
+        value={teamName}
+        onChange={(e) => setTeamName(e.target.value)}
+      />
+      <InputName
+        placeholder="팀장 학번"
+        value={studentId}
+        onChange={(e) => setStudentId(e.target.value)}
+      />
       <TimeContainer>
-        <SelectedButton>10:00</SelectedButton>
+        <TimeSelecter
+          disabled={isActive}
+          startTime={teamStartTime}
+          onClick={handleClick("teamStartTime")}
+        />
+
         <div>~</div>
-        <SelectedButton>23:00</SelectedButton>
+        <TimeSelecter
+          disabled={isActive}
+          startTime={teamEndTime}
+          onClick={handleClick("teamEndTime")}
+        />
       </TimeContainer>
     </Container>
   );

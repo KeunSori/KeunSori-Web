@@ -3,6 +3,7 @@ import TimeSelecter from "@/components/Book/BookManage/TimeSelecter.tsx";
 import styled from "@emotion/styled";
 import { useAtom } from "jotai";
 import { Week, weekDataAtom } from "@/store/weekData.ts";
+import { getUpdateWeekDateWithTime } from "@/utils/weekDataTimeUtils";
 interface DayNotionProps {
   date: Week;
 }
@@ -24,21 +25,13 @@ const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
     (e: React.MouseEvent<HTMLButtonElement>): void => {
       const value = e.currentTarget.getAttribute("value");
       if (value) {
-        if (timeType === "startTime") {
-          const newWeekData = weekData.map((data) =>
-            data.dayOfWeekNum === date.dayOfWeekNum
-              ? { ...data, startTime: value }
-              : data
-          );
-          setWeekData(newWeekData);
-        } else if (timeType === "endTime") {
-          const newWeekData = weekData.map((data) =>
-            data.dayOfWeekNum === date.dayOfWeekNum
-              ? { ...data, endTime: value }
-              : data
-          );
-          setWeekData(newWeekData);
-        }
+        const newWeekData = getUpdateWeekDateWithTime(
+          weekData,
+          date.dayOfWeekNum,
+          timeType,
+          value
+        );
+        setWeekData(newWeekData);
       }
     };
   const handleCheck = (isActive: boolean) => {

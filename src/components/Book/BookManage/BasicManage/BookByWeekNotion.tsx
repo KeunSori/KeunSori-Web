@@ -1,16 +1,32 @@
 import { SelectedButton } from "@/styles/DropBoxStyle";
 import styled from "@emotion/styled";
 
-const BookByWeekNotion = () => {
+interface BookByWeekNotionProps {
+  dayOfWeekNum: number;
+  teamName: string;
+  teamStartTime: string;
+  teamEndTime: string;
+  handleDeleteItem: (teamName: string, dayOfWeekNum: number) => void;
+}
+
+const BookByWeekNotion = ({
+  dayOfWeekNum,
+  teamName,
+  teamStartTime,
+  teamEndTime,
+  handleDeleteItem,
+}: BookByWeekNotionProps) => {
   return (
     <Container>
-      <UserName>사무라이하트</UserName>
+      <UserName>{teamName}</UserName>
       <TimeContainer>
-        <SelectedButton>16:00</SelectedButton>
+        <SelectedButton>{teamStartTime}</SelectedButton>
         <div>~</div>
-        <SelectedButton>18:00</SelectedButton>
+        <SelectedButton>{teamEndTime}</SelectedButton>
       </TimeContainer>
-      <DeleteButton>x</DeleteButton>
+      <DeleteButton onClick={() => handleDeleteItem(teamName, dayOfWeekNum)}>
+        x
+      </DeleteButton>
     </Container>
   );
 };
@@ -19,7 +35,7 @@ export default BookByWeekNotion;
 
 const Container = styled.div`
   display: flex;
-  margin-bottom: 10px;
+  margin-top: 10px;
   align-items: center;
 `;
 const TimeContainer = styled.div`
@@ -43,7 +59,7 @@ const UserName = styled.div`
 
   overflow: hidden;
 `;
-const DeleteButton = styled.div`
+const DeleteButton = styled.button`
   color: #d61b1b;
   font-weight: 400;
   font-size: 18px;
