@@ -14,6 +14,14 @@ export const logout = async () => {
   return await authApi.post("/auth/logout");
 };
 
+export const passwordUpdateLink = async (studentId: string, email: string) => {
+    const response = await authApi.post(`/auth/password/update-link/send`, {
+      studentId,
+      email,
+    });
+    return response.data;
+};
+
 // ToDo: 위치 옮기기
 interface LoginResponse {
   name: string;
