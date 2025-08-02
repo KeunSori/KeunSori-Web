@@ -3,10 +3,10 @@ import { useState } from "react";
 import styled from "@emotion/styled";
 import Input from "../Input";
 import Button from "../../styles/Button";
-// import { showToast } from "../Toast.tsx";
 import { useLocation } from "react-router-dom";
+import { useCapsLock } from "@/utils/useCapsLock.ts";
 
-const PasswordResetForm = () => {
+const PasswordResetRedirectForm = () => {
   const location = useLocation();
   const key = new URLSearchParams(
     location.search
@@ -14,6 +14,7 @@ const PasswordResetForm = () => {
 
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const { isCapsLockOn, capsLockProps } = useCapsLock();
 
   const handleSubmit = async (
     e: React.FormEvent
@@ -58,6 +59,9 @@ const PasswordResetForm = () => {
     }
   };
 
+  // CapsLock 알림
+  // 비밀번호 확인 불일치 알림
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -70,17 +74,19 @@ const PasswordResetForm = () => {
             }
             placeholder="변경할 비밀번호"
             required
+            {...capsLockProps}
           ></ReactiveInput>
           <ReactiveButton type="submit">
             비밀번호 변경하기
           </ReactiveButton>
         </ContentSection>
       </form>
+      {isCapsLockOn && <CapsLockWarning>⚠️ Caps Lock이 켜져 있습니다!</CapsLockWarning>}
     </>
   );
 };
 
-export default PasswordResetForm;
+export default PasswordResetRedirectForm;
 
 const ContentSection = styled.section`
   display: flex;
@@ -105,4 +111,10 @@ const ReactiveButton = styled(Button)`
   @media (max-width: 768px) {
     max-width: 90%;
   }
+`;
+
+const CapsLockWarning = styled.div`
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
 `;

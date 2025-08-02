@@ -11,6 +11,7 @@ import Button from "../../styles/Button.ts";
 // api
 import axios from "axios";
 import { registerUser } from "../../api/register.ts";
+import { useCapsLock } from "@/utils/useCapsLock.ts";
 // import { authNumberRequest, sendAuthNumber } from "../../api/emailAuth.ts";
 
 // interface
@@ -33,7 +34,7 @@ const SignUpForm: React.FC = () => {
   });
 
   const [message, setMessage] = useState("");
-  const [capsLockOn, setCapsLockOn] = useState(false);
+  const { isCapsLockOn, capsLockProps } = useCapsLock();
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,14 +79,6 @@ const SignUpForm: React.FC = () => {
   //     }
   //   }
   // };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    setCapsLockOn(e.getModifierState("CapsLock"));
-  };
-
-  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    setCapsLockOn(e.getModifierState("CapsLock"));
-  };
 
   return (
     <>
@@ -158,8 +151,7 @@ const SignUpForm: React.FC = () => {
               type="password"
               value={formData.password}
               onChange={handleChange}
-              onKeyUp={handleKeyUp}
-              onKeyDown={handleKeyDown}
+              {...capsLockProps}
               required
             ></Input>
           </Slot>
@@ -173,6 +165,7 @@ const SignUpForm: React.FC = () => {
               type="password"
               value={formData.passwordConfirm}
               onChange={handleChange}
+              {...capsLockProps}
               required
             ></Input>
           </Slot>
@@ -195,7 +188,7 @@ const SignUpForm: React.FC = () => {
           </Slot>
         </Ground>
       </Form>
-      {capsLockOn && <Notice>⚠️ Caps Lock이 켜져 있습니다!</Notice>}
+      {isCapsLockOn && <Notice>⚠️ Caps Lock이 켜져 있습니다!</Notice>}
       {message && <Message>{message}</Message>}
     </>
   );
@@ -235,10 +228,10 @@ const Ground = styled.div`
 // `;
 
 const Notice = styled.div`
-  color: "red";
-  fontsize: "14px";
-  margintop: "5px";
-  marginbottom: "5px";
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 `;
 
 const Message = styled.p`
