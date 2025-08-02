@@ -23,6 +23,14 @@ export const passwordUpdateLink = async (studentId: string, email: string): Prom
     return response;
 };
 
+export const passwordUpdate = async (token: string, newPassword: string): Promise<AxiosResponse> => {
+    const response = await authApi.patch(`/auth/password`, {
+      token,
+      newPassword,
+    });
+    return response;
+};
+
 // ToDo: 위치 옮기기
 interface LoginResponse {
   name: string;
