@@ -3,12 +3,22 @@ import { useEffect } from "react";
 
 interface ToastProps {
   message: string;
-  type?: "success" | "error" | "info";
+  type?: ToastType;
   duration?: number;
   onClose: () => void;
 }
 
-const Toast = ({ message, type = "info", duration = 3000, onClose }: ToastProps) => {
+export type ToastType =
+  | "success"
+  | "error"
+  | "info";
+
+const Toast = ({
+  message,
+  type = "info",
+  duration = 3000,
+  onClose,
+}: ToastProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
@@ -16,25 +26,47 @@ const Toast = ({ message, type = "info", duration = 3000, onClose }: ToastProps)
     return () => clearTimeout(timer);
   }, [duration, onClose]);
 
-  return <ToastBox type={type}>{message}</ToastBox>;
+  console.log("message", message);
+
+  return (
+    <ToastBox type={type}>
+      <WarningIcon type={type}>!</WarningIcon>
+      {message}
+    </ToastBox>
+  );
 };
 
 export default Toast;
 
 const ToastBox = styled.div<{ type: string }>`
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
   position: fixed;
   top: 2rem;
-  right: 2rem;
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1.25rem;
   background-color: ${({ type }) =>
     type === "success"
-      ? "#4caf50"
+      ? "#FFC9274D"
       : type === "error"
-      ? "#f44336"
+      ? "#FF61274D"
       : "#2196f3"};
-  color: white;
-  border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 1.5rem;
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+`;
+
+const WarningIcon = styled.div<{ type: string }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ type }) =>
+    type === "success"
+      ? "#FFC927"
+      : type === "error"
+      ? "#FF6127"
+      : "#2196f3"};
+  border-radius: 100%;
+  width: 3rem;
+  height: 3rem;
 `;
