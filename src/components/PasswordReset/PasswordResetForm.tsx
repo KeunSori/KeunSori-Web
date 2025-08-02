@@ -95,7 +95,7 @@ const PasswordResetForm = () => {
             required
           ></ReactiveInput>
           <ReactiveButton type="submit">
-            비밀번호 찾기
+            메일 전송하기
           </ReactiveButton>
         </ContentSection>
       </form>
