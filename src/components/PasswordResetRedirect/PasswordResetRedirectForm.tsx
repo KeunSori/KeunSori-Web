@@ -1,8 +1,6 @@
 import { passwordUpdate } from "@/api/auth";
 import { useState } from "react";
-import styled from "@emotion/styled";
-import Input from "@/components/Input";
-import Button from "@/styles/Button";
+import { ContentSection, ReactiveButton, ReactiveInput } from "@/styles/Auth/SharedStyle";
 import {
   useLocation,
   useNavigate,
@@ -11,6 +9,7 @@ import { useCapsLock } from "@/utils/useCapsLock.ts";
 import Toast from "@/components/Toast";
 import { AxiosError } from "axios";
 import { ToastType } from "@/components/Toast";
+import { CapsLockWarning } from "@/styles/Auth/Notice";
 
 const PasswordResetRedirectForm = () => {
   const location = useLocation();
@@ -94,9 +93,6 @@ const PasswordResetRedirectForm = () => {
     }
   };
 
-  // CapsLock 알림
-  // 비밀번호 확인 불일치 알림
-
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -143,34 +139,3 @@ const PasswordResetRedirectForm = () => {
 };
 
 export default PasswordResetRedirectForm;
-
-const ContentSection = styled.section`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  max-width: 400px;
-  margin: auto;
-  @media (max-width: 768px) {
-    max-width: 90%;
-  }
-`;
-
-const ReactiveInput = styled(Input)`
-  @media (max-width: 768px) {
-    max-width: 90%;
-  }
-`;
-
-const ReactiveButton = styled(Button)`
-  @media (max-width: 768px) {
-    max-width: 90%;
-  }
-`;
-
-const CapsLockWarning = styled.div`
-  color: red;
-  font-size: 14px;
-  margin-top: 5px;
-`;

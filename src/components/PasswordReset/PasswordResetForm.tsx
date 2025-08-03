@@ -1,11 +1,9 @@
 import { useState } from "react";
-import styled from "@emotion/styled";
-import Input from "@/components/Input";
-import Button from "@/styles/Button";
 import { passwordUpdateLink } from "@/api/auth";
 import { AxiosError } from "axios";
 import Toast from "@/components/Toast";
 import { ToastType } from "@/components/Toast";
+import { ContentSection, ReactiveButton, ReactiveInput } from "@/styles/Auth/SharedStyle";
 
 const PasswordResetForm = () => {
   const [studentId, setStudentId] = useState("");
@@ -118,28 +116,3 @@ const PasswordResetForm = () => {
 };
 
 export default PasswordResetForm;
-
-const ContentSection = styled.section`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  max-width: 400px;
-  margin: auto;
-  @media (max-width: 768px) {
-    max-width: 90%;
-  }
-`;
-
-const ReactiveInput = styled(Input)`
-  @media (max-width: 768px) {
-    max-width: 90%;
-  }
-`;
-
-const ReactiveButton = styled(Button)`
-  @media (max-width: 768px) {
-    max-width: 90%;
-  }
-`;

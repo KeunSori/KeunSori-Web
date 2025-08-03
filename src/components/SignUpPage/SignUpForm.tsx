@@ -1,18 +1,18 @@
 // hook
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCapsLock } from "@/utils/useCapsLock.ts";
 
 // style
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import Input from "@/components/Input.tsx";
 import Button from "@/styles/Button.ts";
+import { CapsLockWarning } from "@/styles/Auth/Notice";
 
 // api
 import axios from "axios";
 import { registerUser } from "@/api/register.ts";
-import { useCapsLock } from "@/utils/useCapsLock.ts";
-// import { authNumberRequest, sendAuthNumber } from "../../api/emailAuth.ts";
 
 // interface
 interface FormData {
@@ -201,9 +201,9 @@ const SignUpForm: React.FC = () => {
         </Ground>
       </Form>
       {isCapsLockOn && (
-        <Notice>
+        <CapsLockWarning>
           ⚠️ Caps Lock이 켜져 있습니다!
-        </Notice>
+        </CapsLockWarning>
       )}
       {message && <Message>{message}</Message>}
     </>
@@ -232,22 +232,6 @@ const Ground = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 1px;
-`;
-
-// const CustomInput = styled(Input)`
-//   width: 150px;
-// `;
-
-// const CustomButton = styled(Button)`
-//   margin: 5px;
-//   font-size: 15px;
-// `;
-
-const Notice = styled.div`
-  color: red;
-  font-size: 14px;
-  margin-top: 5px;
-  margin-bottom: 5px;
 `;
 
 const Message = styled.p`

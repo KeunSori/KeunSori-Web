@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import logo from "/image/logo.svg";
 import PasswordResetForm from "../components/PasswordReset/PasswordResetForm";
+import { Main, Logo, LinkText } from "@/styles/Auth/PageStyle";
 
 const PasswordResetPage = () => {
   return (
@@ -29,37 +30,6 @@ const PasswordResetPage = () => {
 };
 
 export default PasswordResetPage;
-
-const Main = styled.main`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100vh;
-  min-height: 100vh;
-  margin-top: -10vh;
-`;
-
-const Logo = styled.img`
-  margin-top: 60px;
-  margin-bottom: 30px;
-  width: 250px;
-  max-width: 90%;
-  @media (max-width: 768px) {
-    width: 150px;
-    margin-top: 40px;
-  }
-`;
-
-const LinkText = styled.div`
-  font-size: 16px;
-  margin-top: 13px;
-  color: #808080;
-  cursor: pointer;
-  &:hover {
-    color: black;
-  }
-`;
 
 const InfoText = styled.div`
   display: flex;
