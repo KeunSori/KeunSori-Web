@@ -4,14 +4,15 @@ import { AuthContext } from "@/contexts/AuthContext.tsx";
 import Input from "@/components/Input.tsx";
 import Button from "@/styles/Button.ts";
 import { useNavigate } from "react-router-dom";
+import { useCapsLock } from "@/utils/useCapsLock.ts";
 
 const LoginForm: React.FC = () => {
   const [studentId, setStudentId] = useState("");
   const [password, setPassword] = useState("");
   const authContext = useContext(AuthContext);
   const [message, setMessage] = useState("");
-  const [capsLockOn, setCapsLockOn] = useState(false);
   const navigate = useNavigate();
+  const { isCapsLockOn, capsLockProps } = useCapsLock();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,14 +43,6 @@ const LoginForm: React.FC = () => {
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    setCapsLockOn(e.getModifierState("CapsLock"));
-  };
-
-  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    setCapsLockOn(e.getModifierState("CapsLock"));
-  };
-
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -65,15 +58,14 @@ const LoginForm: React.FC = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={handleKeyDown}
-            onKeyUp={handleKeyUp}
+            {...capsLockProps}
             placeholder="비밀번호"
             required
           ></ReactiveInput>
           <ReactiveButton type="submit">로그인</ReactiveButton>
         </ContentSection>
       </form>
-      {capsLockOn && <CapsLockWarning>⚠️ Caps Lock이 켜져 있습니다!</CapsLockWarning>}
+      {isCapsLockOn && <CapsLockWarning>⚠️ Caps Lock이 켜져 있습니다!</CapsLockWarning>}
       {message && <Message>{message}</Message>}
     </>
   );
@@ -107,9 +99,9 @@ const ReactiveButton = styled(Button)`
 `;
 
 const CapsLockWarning = styled.div`
-  color: "red";
-  font-size: "14px";
-  margin-top: "5px";
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
 `;
 
 const Message = styled.p`

@@ -1,6 +1,7 @@
 import baseApi from "./Instance/baseApi";
 import authApi from "./Instance/authApi";
 import { memberStatus } from "@/data/user";
+import { AxiosResponse } from "axios";
 
 export const login = async (studentId: string, password: string): Promise<LoginResponse> => {
   const response = await baseApi.post(`/auth/login`, {
@@ -12,6 +13,22 @@ export const login = async (studentId: string, password: string): Promise<LoginR
 
 export const logout = async () => {
   return await authApi.post("/auth/logout");
+};
+
+export const passwordUpdateLink = async (studentId: string, email: string): Promise<AxiosResponse> => {
+    const response = await authApi.post(`/auth/password/update-link/send`, {
+      studentId,
+      email,
+    });
+    return response;
+};
+
+export const passwordUpdate = async (token: string, newPassword: string): Promise<AxiosResponse> => {
+    const response = await authApi.patch(`/auth/password`, {
+      token,
+      newPassword,
+    });
+    return response;
 };
 
 // ToDo: 위치 옮기기
