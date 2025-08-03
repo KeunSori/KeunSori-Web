@@ -41,7 +41,7 @@ const LoginPage = () => {
         <Link to="/signup">
           <SignUpText>회원가입 하러가기</SignUpText>
         </Link>
-        <Link to="/password-reset">
+        <Link to="/password/reset">
           <SignUpText>비밀번호를 잊으셨나요? {'->'}</SignUpText>
         </Link>
       </Main>
