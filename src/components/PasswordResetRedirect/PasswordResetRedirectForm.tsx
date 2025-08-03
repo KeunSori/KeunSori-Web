@@ -1,16 +1,16 @@
 import { passwordUpdate } from "@/api/auth";
 import { useState } from "react";
 import styled from "@emotion/styled";
-import Input from "../Input";
-import Button from "../../styles/Button";
+import Input from "@/components/Input";
+import Button from "@/styles/Button";
 import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
 import { useCapsLock } from "@/utils/useCapsLock.ts";
-import Toast from "../Toast";
+import Toast from "@/components/Toast";
 import { AxiosError } from "axios";
-import { ToastType } from "../Toast";
+import { ToastType } from "@/components/Toast";
 
 const PasswordResetRedirectForm = () => {
   const location = useLocation();
@@ -110,7 +110,7 @@ const PasswordResetRedirectForm = () => {
             placeholder="변경할 비밀번호"
             required
             {...capsLockProps}
-          ></ReactiveInput>
+          />
           <ReactiveInput
             type="password"
             value={passwordConfirm}
@@ -120,7 +120,7 @@ const PasswordResetRedirectForm = () => {
             placeholder="비밀번호 확인"
             required
             {...capsLockProps}
-          ></ReactiveInput>
+          />
           <ReactiveButton type="submit">
             비밀번호 변경하기
           </ReactiveButton>

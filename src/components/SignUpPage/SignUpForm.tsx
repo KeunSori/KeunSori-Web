@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 // style
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
-import Input from "../Input.tsx";
-import Button from "../../styles/Button.ts";
+import Input from "@/components/Input.tsx";
+import Button from "@/styles/Button.ts";
 
 // api
 import axios from "axios";
-import { registerUser } from "../../api/register.ts";
+import { registerUser } from "@/api/register.ts";
 import { useCapsLock } from "@/utils/useCapsLock.ts";
 // import { authNumberRequest, sendAuthNumber } from "../../api/emailAuth.ts";
 
@@ -25,23 +25,32 @@ interface FormData {
 
 // component
 const SignUpForm: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    studentId: "",
-    password: "",
-    passwordConfirm: "",
-    email: "", // 이메일 필드 추가
-  });
+  const [formData, setFormData] =
+    useState<FormData>({
+      name: "",
+      studentId: "",
+      password: "",
+      passwordConfirm: "",
+      email: "", // 이메일 필드 추가
+    });
 
   const [message, setMessage] = useState("");
-  const { isCapsLockOn, capsLockProps } = useCapsLock();
+  const { isCapsLockOn, capsLockProps } =
+    useCapsLock();
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (
+    e: React.FormEvent
+  ) => {
     e.preventDefault();
     try {
       await registerUser(formData);
@@ -49,7 +58,10 @@ const SignUpForm: React.FC = () => {
       navigate("/login");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        setMessage(error.response?.data.message || "다시 시도해주세요.");
+        setMessage(
+          error.response?.data.message ||
+            "다시 시도해주세요."
+        );
       } else {
         setMessage("다시 시도해주세요.");
       }
@@ -108,7 +120,7 @@ const SignUpForm: React.FC = () => {
               value={formData.studentId}
               onChange={handleChange}
               required
-            ></Input>
+            />
           </Slot>
           <Slot>
             <Input
@@ -122,7 +134,7 @@ const SignUpForm: React.FC = () => {
                 width: 100%;
                 border-right: none;
               `}
-            ></Input>
+            />
             {/* <CustomButton onClick={handleSendEmail}>인증번호발송</CustomButton> */}
           </Slot>
 
@@ -153,7 +165,7 @@ const SignUpForm: React.FC = () => {
               onChange={handleChange}
               {...capsLockProps}
               required
-            ></Input>
+            />
           </Slot>
           <Slot>
             <Input
@@ -167,7 +179,7 @@ const SignUpForm: React.FC = () => {
               onChange={handleChange}
               {...capsLockProps}
               required
-            ></Input>
+            />
           </Slot>
 
           <div
@@ -188,7 +200,11 @@ const SignUpForm: React.FC = () => {
           </Slot>
         </Ground>
       </Form>
-      {isCapsLockOn && <Notice>⚠️ Caps Lock이 켜져 있습니다!</Notice>}
+      {isCapsLockOn && (
+        <Notice>
+          ⚠️ Caps Lock이 켜져 있습니다!
+        </Notice>
+      )}
       {message && <Message>{message}</Message>}
     </>
   );

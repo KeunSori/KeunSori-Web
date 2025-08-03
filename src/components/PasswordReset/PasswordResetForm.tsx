@@ -1,11 +1,11 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
-import Input from "../Input";
-import Button from "../../styles/Button";
+import Input from "@/components/Input";
+import Button from "@/styles/Button";
 import { passwordUpdateLink } from "@/api/auth";
 import { AxiosError } from "axios";
-import Toast from "../Toast";
-import { ToastType } from "../Toast";
+import Toast from "@/components/Toast";
+import { ToastType } from "@/components/Toast";
 
 const PasswordResetForm = () => {
   const [studentId, setStudentId] = useState("");
@@ -58,7 +58,10 @@ const PasswordResetForm = () => {
       } else if (err instanceof Error) {
         setMessage(err.message); // JS Error 객체의 기본 메시지
         setToastType("error");
-        console.log("[catch-else if]", err.message);
+        console.log(
+          "[catch-else if]",
+          err.message
+        );
       } else {
         setMessage(
           "알 수 없는 오류가 발생했습니다."
@@ -84,7 +87,7 @@ const PasswordResetForm = () => {
             }
             placeholder="학번"
             required
-          ></ReactiveInput>
+          />
           <ReactiveInput
             type="string"
             value={email}
@@ -93,7 +96,7 @@ const PasswordResetForm = () => {
             }
             placeholder="이메일 주소"
             required
-          ></ReactiveInput>
+          />
           <ReactiveButton type="submit">
             메일 전송하기
           </ReactiveButton>
