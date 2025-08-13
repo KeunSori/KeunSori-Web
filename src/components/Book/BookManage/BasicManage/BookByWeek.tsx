@@ -1,6 +1,9 @@
 import styled from "@emotion/styled";
-// import { useAtom } from "jotai";
-import { TeamWeek, teamWeekDataAtom, Week } from "@/store/weekData.ts";
+import {
+  ReservationType,
+  TeamWeek,
+  teamWeekDataAtom,
+} from "@/store/weekData.ts";
 import BookByWeekNotion from "./BookByWeekNotion";
 import PlusButton from "../../../../../public/image/plus-black.svg";
 import MinusButton from "../../../../../public/image/minus-black.svg";
@@ -8,10 +11,9 @@ import MinusButton from "../../../../../public/image/minus-black.svg";
 import { useState } from "react";
 import AddInputs from "./AddInputs";
 import { useAtom } from "jotai";
-import { studentIdAtom, teamNameAtom, typeAtom } from "@/store/teamData";
 
 interface DayNotionProps {
-  date: Week;
+  date: TeamWeek;
 }
 
 const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
@@ -21,35 +23,64 @@ const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
   const [teamWeekItems, setTeamWeekItems] = useAtom(teamWeekDataAtom);
 
   // inputs
-  const [type] = useAtom(typeAtom);
-  const [teamName] = useAtom(teamNameAtom);
-  const [studentId] = useAtom(studentIdAtom);
-  const [teamStartTime, setTeamStartTime] = useState("10:00");
-  const [teamEndTime, setTeamEndTime] = useState("23:00");
+  const [regularReservationType, setRegularReservationType] =
+    useState<ReservationType>("예약 유형");
+  const [regularReservationTeamName, setRegularReservationTeamName] =
+    useState("");
+  const [reservationMemberStudentId, setReservationMemberStudentId] =
+    useState("");
+  const [
+    regularReservationApplyStartDate,
+    setRegularReservationApplyStartDate,
+  ] = useState("10:00");
+  const [regularReservationApplyEndDate, setRegularReservationApplyEndDate] =
+    useState("23:00");
 
   console.log(teamWeekItems);
   const onClickConfirm = () => {
-    if (!teamName || !teamStartTime || !teamEndTime || !studentId) {
+    if (
+      !regularReservationTeamName ||
+      !regularReservationApplyStartDate ||
+      !regularReservationApplyEndDate ||
+      !reservationMemberStudentId
+    ) {
       alert("모든 값을 입력하세요");
       return;
     }
 
     const newItem: TeamWeek = {
       dayOfWeekNum: date.dayOfWeekNum,
-      teamName,
-      teamStartTime,
-      teamEndTime,
-      type,
-      studentId,
+      isActive: date.isActive,
+      startTime: date.startTime,
+      endTime: date.endTime,
+      regularReservations: [
+        {
+          regularReservationId: 0,
+          dayOfWeek: date.dayOfWeekNum === 0 ? "MONDAY" : "TUESDAY", // 예시로 MONDAY와 TUESDAY 사용
+          regularReservationType: regularReservationType,
+          regularReservationSession: "보컬", // 예시로 보컬 사용
+          regularReservationTeamName: regularReservationTeamName,
+          regularReservationStartTime: regularReservationApplyStartDate,
+          regularReservationEndTime: regularReservationApplyEndDate,
+          reservationMemberId: 0,
+          reservationMemberStudentId: reservationMemberStudentId,
+          regularReservationApplyStartDate: "2025-08-13",
+          regularReservationApplyEndDate: "2025-08-20",
+        },
+      ],
     };
     setTeamWeekItems((prev) => [...prev, newItem]);
   };
 
   const handleDeleteItem = (teamNameToDelete: string, dayOfWeekNum: number) => {
-    const updated = teamWeekItems.filter(
-      (item) =>
-        item.teamName !== teamNameToDelete || item.dayOfWeekNum !== dayOfWeekNum
-    );
+    const updated = teamWeekItems.filter((item) => {
+      const reservation = item.regularReservations?.[0];
+      if (!reservation) return true; // 배열이 비어있으면 삭제하지 않음
+      return (
+        reservation.regularReservationTeamName !== teamNameToDelete &&
+        item.dayOfWeekNum === dayOfWeekNum
+      );
+    });
     setTeamWeekItems(updated);
   };
 
@@ -79,26 +110,38 @@ const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
         <div>
           <FlexStyle>
             <AddInputs
+              reservationType={regularReservationType}
+              setReservationType={setRegularReservationType}
               isActive={isActive}
-              teamDate={undefined}
-              setTeamStartTime={setTeamStartTime}
-              setTeamEndTime={setTeamEndTime}
+              studentId={reservationMemberStudentId}
+              setStudentId={setReservationMemberStudentId}
+              teamName={regularReservationTeamName}
+              setTeamName={setRegularReservationTeamName}
+              teamStartTime={regularReservationApplyStartDate}
+              teamEndTime={regularReservationApplyEndDate}
+              setTeamStartTime={setRegularReservationApplyStartDate}
+              setTeamEndTime={setRegularReservationApplyEndDate}
             />
             <ConfirmButton onClick={onClickConfirm}>확인</ConfirmButton>
           </FlexStyle>
 
           {teamWeekItems
             .filter((item) => item.dayOfWeekNum === date.dayOfWeekNum)
-            .map((item, idx) => (
-              <BookByWeekNotion
-                key={idx}
-                dayOfWeekNum={item.dayOfWeekNum}
-                teamName={item.teamName}
-                teamStartTime={item.teamStartTime}
-                teamEndTime={item.teamEndTime}
-                handleDeleteItem={handleDeleteItem}
-              />
-            ))}
+            .map((item, idx) => {
+              const reservation = item.regularReservations?.[0];
+              if (!reservation) return null; // 배열이 비어있으면 아무것도 렌더링 안 함
+
+              return (
+                <BookByWeekNotion
+                  key={idx}
+                  dayOfWeekNum={item.dayOfWeekNum}
+                  teamName={reservation.regularReservationTeamName}
+                  teamStartTime={reservation.regularReservationStartTime}
+                  teamEndTime={reservation.regularReservationEndTime}
+                  handleDeleteItem={handleDeleteItem}
+                />
+              );
+            })}
         </div>
       )}
     </Container>

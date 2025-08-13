@@ -1,23 +1,29 @@
-import { typeAtom } from "@/store/teamData";
+import { ReservationType } from "@/store/weekData";
 import styled from "@emotion/styled";
-import { useAtom } from "jotai";
 import { useState } from "react";
 // 예약 유형 선택 토글
 
-const TypeSelect = () => {
+interface TypeSelectProps {
+  reservationType: ReservationType;
+  setReservationType: (type: ReservationType) => void;
+}
+
+const TypeSelect = ({
+  reservationType,
+  setReservationType,
+}: TypeSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   //const [selectedVal, setSelectedVal] = useState("예약 유형");
 
-  const [type, setType] = useAtom(typeAtom);
-  const onClose = (text: "합주" | "교습") => {
+  const onClose = (text: ReservationType) => {
     setIsOpen(false);
-    setType(text);
+    setReservationType(text);
   };
   return (
     <Container>
       <div style={{ position: "relative" }}>
         <InputType onClick={() => setIsOpen(!isOpen)}>
-          {type === null ? "예약 유형" : type}
+          {reservationType === null ? "예약 유형" : reservationType}
         </InputType>
       </div>
       {isOpen && (

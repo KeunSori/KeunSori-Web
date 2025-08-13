@@ -5,13 +5,13 @@ import DayNotion from "@/components/Book/BookManage/BasicManage/DayNotion.tsx";
 import authApi from "@/api/Instance/authApi.ts";
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { weekDataAtom } from "@/store/weekData.ts";
 import ManageModal from "@/components/Book/BookManage/ManageModal.tsx";
 import BookByWeek from "./BookByWeek";
 import CalendarInput from "./CalendarInputs";
+import { teamWeekDataAtom } from "@/store/weekData";
 
 const BasicManage: React.FC = () => {
-  const [weekData, setWeekData] = useAtom(weekDataAtom);
+  const [weekData, setWeekData] = useAtom(teamWeekDataAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const fetchData = async () => {
     try {
@@ -26,7 +26,10 @@ const BasicManage: React.FC = () => {
   };
   const handleSubmit = async () => {
     try {
-      await authApi.put(`/admin/reservation/weekly-schedule`, weekData);
+      await authApi.put(
+        `/admin/reservation/weekly-schedule/management`,
+        weekData
+      );
       window.location.reload();
     } catch (error) {
       console.log(`에러남:${error}`);

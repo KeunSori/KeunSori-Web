@@ -1,32 +1,36 @@
 import styled from "@emotion/styled";
 import TypeSelect from "./TypeSelect";
 import TimeSelecter from "../TimeSelecter";
-import { useAtom } from "jotai";
-import { TeamWeek } from "@/store/weekData";
-import {
-  studentIdAtom,
-  teamEndTimeAtom,
-  teamNameAtom,
-  teamStartTimeAtom,
-} from "@/store/teamData";
+import { ReservationType, TeamWeek } from "@/store/weekData";
 
 interface AddInputsProps {
   teamDate?: TeamWeek;
   isActive: boolean;
+  reservationType: ReservationType;
+  setReservationType: (type: ReservationType) => void;
+  teamName: string;
+  setTeamName: (val: string) => void;
+  studentId: string;
+  setStudentId: (val: string) => void;
+  teamStartTime: string;
+  teamEndTime: string;
   setTeamStartTime: (val: string) => void;
   setTeamEndTime: (val: string) => void;
 }
 
 const AddInputs = ({
   isActive,
+  reservationType,
+  setReservationType,
+  teamName,
+  setTeamName,
+  studentId,
+  setStudentId,
+  teamStartTime,
+  teamEndTime,
   setTeamStartTime,
   setTeamEndTime,
 }: AddInputsProps) => {
-  const [teamName, setTeamName] = useAtom(teamNameAtom);
-  const [studentId, setStudentId] = useAtom(studentIdAtom);
-  const [teamStartTime] = useAtom(teamStartTimeAtom);
-  const [teamEndTime] = useAtom(teamEndTimeAtom);
-
   const handleClick =
     (timeType: "teamStartTime" | "teamEndTime") =>
     (e: React.MouseEvent<HTMLButtonElement>): void => {
@@ -42,7 +46,10 @@ const AddInputs = ({
 
   return (
     <Container>
-      <TypeSelect />
+      <TypeSelect
+        reservationType={reservationType}
+        setReservationType={setReservationType}
+      />
       <InputName
         placeholder="팀명 입력"
         value={teamName}

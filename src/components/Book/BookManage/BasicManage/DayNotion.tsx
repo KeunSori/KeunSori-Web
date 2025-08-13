@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import TimeSelecter from "@/components/Book/BookManage/TimeSelecter.tsx";
 import styled from "@emotion/styled";
 import { useAtom } from "jotai";
-import { Week, weekDataAtom } from "@/store/weekData.ts";
 import { getUpdateWeekDateWithTime } from "@/utils/weekDataTimeUtils";
+import { TeamWeek, teamWeekDataAtom } from "@/store/weekData";
 interface DayNotionProps {
-  date: Week;
+  date: TeamWeek;
 }
 
 const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
   const [isActive, setIsActive] = useState<boolean>(date.isActive);
-  const [weekData, setWeekData] = useAtom(weekDataAtom);
+  const [weekData, setWeekData] = useAtom(teamWeekDataAtom);
   const days = [
     "일요일",
     "월요일",
