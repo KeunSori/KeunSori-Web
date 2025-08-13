@@ -11,6 +11,10 @@ import MinusButton from "../../../../../public/image/minus-black.svg";
 import { useState } from "react";
 import AddInputs from "./AddInputs";
 import { useAtom } from "jotai";
+import {
+  endCalendarDateAtom,
+  startCalendarDateAtom,
+} from "@/store/calendarData";
 
 interface DayNotionProps {
   date: TeamWeek;
@@ -35,6 +39,20 @@ const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
   ] = useState("10:00");
   const [regularReservationApplyEndDate, setRegularReservationApplyEndDate] =
     useState("23:00");
+  const [startDate] = useAtom(startCalendarDateAtom);
+  const [endDate] = useAtom(endCalendarDateAtom);
+
+  // UTC 문제 해결
+  const formatDate = (dateStr: Date) => {
+    const d = new Date(dateStr);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 +1
+    const dd = String(d.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  const formattedStartDate = formatDate(startDate);
+  const formattedEndDate = formatDate(endDate);
 
   console.log(teamWeekItems);
   const onClickConfirm = () => {
@@ -48,6 +66,7 @@ const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
       return;
     }
 
+    // 팀별 예약 추가
     const newItem: TeamWeek = {
       dayOfWeekNum: date.dayOfWeekNum,
       isActive: date.isActive,
@@ -64,8 +83,8 @@ const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
           regularReservationEndTime: regularReservationApplyEndDate,
           reservationMemberId: 0,
           reservationMemberStudentId: reservationMemberStudentId,
-          regularReservationApplyStartDate: "2025-08-13",
-          regularReservationApplyEndDate: "2025-08-20",
+          regularReservationApplyStartDate: formattedStartDate,
+          regularReservationApplyEndDate: formattedEndDate,
         },
       ],
     };
