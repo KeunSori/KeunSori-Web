@@ -6,13 +6,13 @@ import authApi from "@/api/Instance/authApi.ts";
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import ManageModal from "@/components/Book/BookManage/ManageModal.tsx";
-import BookByWeek from "./BookByWeek";
 import CalendarInput from "./CalendarInputs";
-import { teamWeekDataAtom } from "@/store/weekData";
+import { deletedReservationIdsAtom, teamWeekDataAtom } from "@/store/weekData";
 
 const BasicManage: React.FC = () => {
   const [weekData, setWeekData] = useAtom(teamWeekDataAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deletedIds] = useAtom(deletedReservationIdsAtom);
   const fetchData = async () => {
     try {
       const response = await authApi.get(`/admin/reservation/weekly-schedule`);
@@ -24,12 +24,37 @@ const BasicManage: React.FC = () => {
       alert("정보를 불러올 수 없습니다");
     }
   };
+
+  // 팀별 예약 PUT 데이터 형식으로 변환
+  const weeklyScheduleUpdateRequestList = weekData.map((item) => ({
+    dayOfWeekNum: item.dayOfWeekNum,
+    isActive: item.isActive,
+    startTime: item.startTime,
+    endTime: item.endTime,
+  }));
+
+  const regularReservationCreateRequestList = weekData.flatMap((item) =>
+    item.regularReservations.map((r) => ({
+      dayOfWeek: r.dayOfWeek,
+      regularReservationStartTime: r.regularReservationStartTime,
+      regularReservationEndTime: r.regularReservationEndTime,
+      regularReservationType: r.regularReservationType,
+      regularReservationSession: r.regularReservationSession,
+      regularReservationTeamName: r.regularReservationTeamName,
+      regularReservationApplyStartDate: r.regularReservationApplyStartDate,
+      regularReservationApplyEndDate: r.regularReservationApplyEndDate,
+      reservationMemberStudentId: r.reservationMemberStudentId,
+    }))
+  );
+  const deleteRegularReservationIds = deletedIds; // 삭제 시 기록한 ID 배열
+
   const handleSubmit = async () => {
     try {
-      await authApi.put(
-        `/admin/reservation/weekly-schedule/management`,
-        weekData
-      );
+      await authApi.put(`/admin/reservation/weekly-schedule/management`, {
+        weeklyScheduleUpdateRequestList,
+        regularReservationCreateRequestList,
+        deleteRegularReservationIds,
+      });
       window.location.reload();
     } catch (error) {
       console.log(`에러남:${error}`);
@@ -55,7 +80,6 @@ const BasicManage: React.FC = () => {
             `}
           >
             <DayNotion date={date} />
-            <BookByWeek date={date} />
           </div>
         ))}
         <SumbmitButton onClick={() => setIsModalOpen(true)}>저장</SumbmitButton>

@@ -1,3 +1,6 @@
+import { DayOfWeek } from "@/mapper/regularReservation/convertDayOfWeek";
+import { ReservationType } from "@/mapper/regularReservation/convertResType";
+import { ReservationSession } from "@/mapper/regularReservation/convertSession";
 import { atom } from "jotai";
 // export interface Week {
 //   dayOfWeekNum: number;
@@ -7,37 +10,30 @@ import { atom } from "jotai";
 // }
 // export const weekDataAtom = atom<Week[]>([]);
 
-export type ReservationType = "합주" | "교습" | "예약 유형";
-export type ReservationSession = "보컬" | "키보드" | "드럼" | "기타" | "베이스";
-export type DayOfWeek =
-  | "MONDAY"
-  | "TUESDAY"
-  | "WEDNESDAY"
-  | "THURSDAY"
-  | "FRIDAY"
-  | "SATURDAY"
-  | "SUNDAY";
+interface RegularReservation {
+  dayOfWeek: DayOfWeek | string;
+  regularReservationStartTime: string;
+  regularReservationEndTime: string;
+  regularReservationType: ReservationType | string;
+  regularReservationSession: ReservationSession | string;
+  regularReservationTeamName: string;
+  regularReservationApplyStartDate: string;
+  regularReservationApplyEndDate: string;
+  reservationMemberStudentId: string;
+}
+
+interface DeleteReservation {
+  deletedId: number;
+}
 
 export interface TeamWeek {
   dayOfWeekNum: number; // 각 요일별 구분
   isActive: boolean;
   startTime: string;
   endTime: string;
+
   // 팀별 예약 정보
-  regularReservations: [
-    {
-      regularReservationId: number;
-      dayOfWeek: DayOfWeek;
-      regularReservationStartTime: string;
-      regularReservationEndTime: string;
-      regularReservationType: ReservationType;
-      regularReservationSession: ReservationSession;
-      regularReservationTeamName: string;
-      regularReservationApplyStartDate: string;
-      regularReservationApplyEndDate: string;
-      reservationMemberId: number;
-      reservationMemberStudentId: string;
-    }
-  ];
+  regularReservations: RegularReservation[]; // 각 요일별 예약 정보
 }
 export const teamWeekDataAtom = atom<TeamWeek[]>([]);
+export const deletedReservationIdsAtom = atom<DeleteReservation[]>([]);

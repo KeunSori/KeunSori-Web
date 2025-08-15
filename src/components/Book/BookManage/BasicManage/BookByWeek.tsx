@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import {
-  ReservationType,
+  deletedReservationIdsAtom,
   TeamWeek,
   teamWeekDataAtom,
 } from "@/store/weekData.ts";
@@ -15,6 +15,18 @@ import {
   endCalendarDateAtom,
   startCalendarDateAtom,
 } from "@/store/calendarData";
+import {
+  convertSession,
+  ReservationSession,
+} from "@/mapper/regularReservation/convertSession";
+import {
+  convertResType,
+  ReservationType,
+} from "@/mapper/regularReservation/convertResType";
+import {
+  convertDayOfWeek,
+  DayOfWeekNum,
+} from "@/mapper/regularReservation/convertDayOfWeek";
 
 interface DayNotionProps {
   date: TeamWeek;
@@ -31,6 +43,8 @@ const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
     useState<ReservationType>("예약 유형");
   const [regularReservationTeamName, setRegularReservationTeamName] =
     useState("");
+  const [regularReservationSession, setRegularReservationSession] =
+    useState<ReservationSession>("보컬");
   const [reservationMemberStudentId, setReservationMemberStudentId] =
     useState("");
   const [
@@ -41,6 +55,9 @@ const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
     useState("23:00");
   const [startDate] = useAtom(startCalendarDateAtom);
   const [endDate] = useAtom(endCalendarDateAtom);
+
+  // 삭제 id
+  const [deletedIds, setDeletedIds] = useAtom(deletedReservationIdsAtom);
 
   // UTC 문제 해결
   const formatDate = (dateStr: Date) => {
@@ -65,6 +82,13 @@ const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
       alert("모든 값을 입력하세요");
       return;
     }
+    // 확인 누르면 input 초기화
+    setRegularReservationType("예약 유형");
+    setRegularReservationTeamName("");
+    setReservationMemberStudentId("");
+    setRegularReservationApplyStartDate("10:00");
+    setRegularReservationApplyEndDate("23:00");
+    setRegularReservationSession("보컬");
 
     // 팀별 예약 추가
     const newItem: TeamWeek = {
@@ -74,37 +98,50 @@ const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
       endTime: date.endTime,
       regularReservations: [
         {
-          regularReservationId: 0,
-          dayOfWeek: date.dayOfWeekNum === 0 ? "MONDAY" : "TUESDAY", // 예시로 MONDAY와 TUESDAY 사용
-          regularReservationType: regularReservationType,
-          regularReservationSession: "보컬", // 예시로 보컬 사용
+          dayOfWeek: convertDayOfWeek(date.dayOfWeekNum as DayOfWeekNum),
+          regularReservationType: convertResType(regularReservationType),
+          regularReservationSession: convertSession(regularReservationSession),
           regularReservationTeamName: regularReservationTeamName,
           regularReservationStartTime: regularReservationApplyStartDate,
           regularReservationEndTime: regularReservationApplyEndDate,
-          reservationMemberId: 0,
+
           reservationMemberStudentId: reservationMemberStudentId,
           regularReservationApplyStartDate: formattedStartDate,
           regularReservationApplyEndDate: formattedEndDate,
         },
       ],
     };
-    setTeamWeekItems((prev) => [...prev, newItem]);
+    setTeamWeekItems((prev) => {
+      // 기존에 같은 요일이 있는지 확인
+      const existingItemIndex = prev.findIndex(
+        (item) => item.dayOfWeekNum === date.dayOfWeekNum
+      );
+
+      if (existingItemIndex !== -1) {
+        // 이미 존재하는 경우, 기존 아이템에 예약 추가
+        const updatedItems = [...prev];
+        updatedItems[existingItemIndex].regularReservations.push(
+          newItem.regularReservations[0]
+        );
+        return updatedItems;
+      } else {
+        // 새로운 아이템 추가
+        return [...prev, newItem];
+      }
+    });
   };
 
-  const handleDeleteItem = (teamNameToDelete: string, dayOfWeekNum: number) => {
-    const updated = teamWeekItems.filter((item) => {
-      const reservation = item.regularReservations?.[0];
-      if (!reservation) return true; // 배열이 비어있으면 삭제하지 않음
-      return (
-        reservation.regularReservationTeamName !== teamNameToDelete &&
-        item.dayOfWeekNum === dayOfWeekNum
-      );
-    });
-    setTeamWeekItems(updated);
+  const handleDeleteItem = (reservationId: number) => {
+    // 삭제된 아이템의 ID를 deletedIds에 추가
+
+    setDeletedIds((prev) => [...prev, { deletedId: reservationId }]);
+
+    console.log("삭제된 아이디들:", deletedIds);
+    console.log("삭제된 아이디:", reservationId);
   };
 
   return (
-    <Container>
+    <TeamContainer>
       {showInputs ? (
         <ButtonStyle
           isActive={isActive}
@@ -146,30 +183,27 @@ const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
 
           {teamWeekItems
             .filter((item) => item.dayOfWeekNum === date.dayOfWeekNum)
+            .flatMap((item) => item.regularReservations)
             .map((item, idx) => {
-              const reservation = item.regularReservations?.[0];
-              if (!reservation) return null; // 배열이 비어있으면 아무것도 렌더링 안 함
-
               return (
                 <BookByWeekNotion
                   key={idx}
-                  dayOfWeekNum={item.dayOfWeekNum}
-                  teamName={reservation.regularReservationTeamName}
-                  teamStartTime={reservation.regularReservationStartTime}
-                  teamEndTime={reservation.regularReservationEndTime}
+                  teamName={item.regularReservationTeamName}
+                  teamStartTime={item.regularReservationStartTime}
+                  teamEndTime={item.regularReservationEndTime}
                   handleDeleteItem={handleDeleteItem}
                 />
               );
             })}
         </div>
       )}
-    </Container>
+    </TeamContainer>
   );
 };
 
 export default BookByWeek;
 
-const Container = styled.div`
+const TeamContainer = styled.div`
   display: flex;
   gap: 20px;
   padding: 10px;

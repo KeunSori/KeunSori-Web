@@ -2,15 +2,13 @@ import { SelectedButton } from "@/styles/DropBoxStyle";
 import styled from "@emotion/styled";
 
 interface BookByWeekNotionProps {
-  dayOfWeekNum: number;
   teamName: string;
   teamStartTime: string;
   teamEndTime: string;
-  handleDeleteItem: (teamName: string, dayOfWeekNum: number) => void;
+  handleDeleteItem: (reservationId: number) => void;
 }
 
 const BookByWeekNotion = ({
-  dayOfWeekNum,
   teamName,
   teamStartTime,
   teamEndTime,
@@ -24,9 +22,7 @@ const BookByWeekNotion = ({
         <div>~</div>
         <SelectedButton>{teamEndTime}</SelectedButton>
       </TimeContainer>
-      <DeleteButton onClick={() => handleDeleteItem(teamName, dayOfWeekNum)}>
-        x
-      </DeleteButton>
+      <DeleteButton onClick={() => handleDeleteItem(0)}>x</DeleteButton>
     </Container>
   );
 };
