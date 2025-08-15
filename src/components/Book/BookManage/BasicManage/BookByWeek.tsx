@@ -19,10 +19,7 @@ import {
   convertSession,
   ReservationSession,
 } from "@/mapper/regularReservation/convertSession";
-import {
-  convertResType,
-  ReservationType,
-} from "@/mapper/regularReservation/convertResType";
+import { ReservationType } from "@/mapper/regularReservation/convertResType";
 import {
   convertDayOfWeek,
   DayOfWeekNum,
@@ -39,10 +36,12 @@ const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
   const [teamWeekItems, setTeamWeekItems] = useAtom(teamWeekDataAtom);
 
   // inputs
-  const [regularReservationType, setRegularReservationType] =
-    useState<ReservationType>("예약 유형");
+  const [regularReservationType, setRegularReservationType] = useState<
+    ReservationType | ReservationSession
+  >("예약 유형");
   const [regularReservationTeamName, setRegularReservationTeamName] =
     useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [regularReservationSession, setRegularReservationSession] =
     useState<ReservationSession>("보컬");
   const [reservationMemberStudentId, setReservationMemberStudentId] =
@@ -99,8 +98,13 @@ const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
       regularReservations: [
         {
           dayOfWeek: convertDayOfWeek(date.dayOfWeekNum as DayOfWeekNum),
-          regularReservationType: convertResType(regularReservationType),
-          regularReservationSession: convertSession(regularReservationSession),
+          regularReservationType:
+            regularReservationType === "합주" ? "TEAM" : "LESSON",
+          regularReservationSession:
+            regularReservationType === "합주"
+              ? "ALL"
+              : convertSession(regularReservationType as ReservationSession),
+
           regularReservationTeamName: regularReservationTeamName,
           regularReservationStartTime: regularReservationApplyStartDate,
           regularReservationEndTime: regularReservationApplyEndDate,

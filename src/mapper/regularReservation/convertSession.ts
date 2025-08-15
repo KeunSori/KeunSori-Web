@@ -4,7 +4,7 @@ const SESSION_MAP = {
   드럼: "DRUM",
   기타: "GUITAR",
   베이스: "BASS",
-  전체: "ALL",
+  // 전체: "ALL",
 } as const;
 
 export type ReservationSession = keyof typeof SESSION_MAP;
