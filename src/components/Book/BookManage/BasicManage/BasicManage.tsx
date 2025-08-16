@@ -7,27 +7,38 @@ import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import ManageModal from "@/components/Book/BookManage/ManageModal.tsx";
 import CalendarInput from "./CalendarInputs";
-import { teamWeekDataAtom } from "@/store/weekData";
+import {
+  deletedReservationIdsAtom,
+  fetchedTeamWeekDataAtom,
+  teamWeekDataAtom,
+} from "@/store/weekData";
 import BookByWeek from "./BookByWeek/BookByWeek";
 import {
-  deleteRegularReservationIds,
   regularReservationCreateRequestList,
   weeklyScheduleUpdateRequestList,
 } from "@/mapper/regularReservation/api/putReservationData";
 
 const BasicManage: React.FC = () => {
+  // 서버 + UI 상의 데이터
   const [teamWeekData, setTeamWeekData] = useAtom(teamWeekDataAtom);
+  // 서버에서 받은 실제 저장 데이터
+  const [fetchedTeamWeekData, setFetchedTeamWeekData] = useAtom(
+    fetchedTeamWeekDataAtom
+  );
+
+  const [deletedIds, setDeletedIds] = useAtom(deletedReservationIdsAtom);
+  console.log("deletedIds", deletedIds);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const weeklyList = weeklyScheduleUpdateRequestList();
-  const createList = regularReservationCreateRequestList();
-  const deleteIds = deleteRegularReservationIds();
 
   const fetchData = async () => {
     try {
       const response = await authApi.get(`/admin/reservation/weekly-schedule`);
       setTeamWeekData(response.data);
-      console.log(teamWeekData);
-    } catch (error) {
+      setFetchedTeamWeekData(response.data);
+      // console.log(teamWeekData);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.log(`에러남:${error}`);
       console.error("예약 관리 가져오기 실패:", error.response?.data || error);
       alert("정보를 불러올 수 없습니다");
@@ -35,15 +46,31 @@ const BasicManage: React.FC = () => {
   };
 
   const handleSubmit = async () => {
+    // 서버에서 받은 예약 id들
+    const originalIds = fetchedTeamWeekData
+      .flatMap((item) => item.regularReservations)
+      .map((r) => r.regularReservationId);
+    console.log("originalIds", originalIds);
+
+    const weeklyList = weeklyScheduleUpdateRequestList(teamWeekData);
+    const createList = regularReservationCreateRequestList(
+      teamWeekData,
+      originalIds
+    );
+
     try {
       await authApi.put(`/admin/reservation/weekly-schedule/management`, {
         weeklyScheduleUpdateRequestList: weeklyList,
         regularReservationCreateRequestList: createList,
-        deleteRegularReservationIds: deleteIds,
+        deleteRegularReservationIds: deletedIds,
       });
       alert("예약 관리 업데이트 성공");
-      window.location.reload();
-    } catch (error) {
+      setDeletedIds([]); // 초기화
+      fetchData();
+
+      //window.location.reload();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.log(`에러남:${error}`);
       console.error("예약 관리 업데이트 실패:", error.response?.data || error);
       alert("정보를 불러올 수 없습니다");
@@ -51,12 +78,17 @@ const BasicManage: React.FC = () => {
     console.log("주간 예약 업데이트 요청:", {
       weeklyScheduleUpdateRequestList: weeklyList,
       regularReservationCreateRequestList: createList,
-      deleteRegularReservationIds: deleteIds,
+      deleteRegularReservationIds: deletedIds,
     });
   };
+
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    console.log("fetchedTeamWeekData", fetchedTeamWeekData);
+  }, [fetchedTeamWeekData]);
   return (
     <>
       <Container>

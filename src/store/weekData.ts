@@ -13,7 +13,7 @@ interface RegularReservation {
   regularReservationTeamName: string;
   regularReservationApplyStartDate: string;
   regularReservationApplyEndDate: string;
-  reservationMemberStudentId: string;
+  TeamLeaderStudentId: string;
 }
 
 export interface TeamWeek {
@@ -25,5 +25,6 @@ export interface TeamWeek {
   regularReservations: RegularReservation[]; // 각 요일별 예약 정보
 }
 export const teamWeekDataAtom = atom<TeamWeek[]>([]);
+export const fetchedTeamWeekDataAtom = atom<TeamWeek[]>([]);
 export const reservationIdCounterAtom = atom(0);
 export const deletedReservationIdsAtom = atom<number[]>([]);

@@ -1,10 +1,9 @@
-import { deletedReservationIdsAtom, teamWeekDataAtom } from "@/store/weekData";
-import { useAtom } from "jotai";
+import { TeamWeek } from "@/store/weekData";
 
 // 팀별 예약 PUT 데이터 형식으로 변환
 
-export const weeklyScheduleUpdateRequestList = () => {
-  const [teamWeekData] = useAtom(teamWeekDataAtom);
+export const weeklyScheduleUpdateRequestList = (teamWeekData: TeamWeek[]) => {
+  if (!teamWeekData) return [];
 
   return teamWeekData.map((item) => ({
     dayOfWeekNum: item.dayOfWeekNum,
@@ -14,25 +13,23 @@ export const weeklyScheduleUpdateRequestList = () => {
   }));
 };
 
-export const regularReservationCreateRequestList = () => {
-  const [teamWeekData] = useAtom(teamWeekDataAtom);
-
+export const regularReservationCreateRequestList = (
+  teamWeekData: TeamWeek[],
+  originalIds: number[]
+) => {
   return teamWeekData.flatMap((item) =>
-    item.regularReservations.map((r) => ({
-      dayOfWeek: r.dayOfWeek,
-      regularReservationStartTime: r.regularReservationStartTime,
-      regularReservationEndTime: r.regularReservationEndTime,
-      reservationType: r.regularReservationType,
-      reservationSession: r.regularReservationSession,
-      regularReservationTeamName: r.regularReservationTeamName,
-      applyStartDate: r.regularReservationApplyStartDate,
-      applyEndDate: r.regularReservationApplyEndDate,
-      studentId: r.reservationMemberStudentId,
-    }))
+    item.regularReservations
+      .filter((r) => !originalIds.includes(r.regularReservationId)) // 서버에 없는 신규 예약만
+      .map((r) => ({
+        reservationType: r.regularReservationType,
+        reservationSession: r.regularReservationSession,
+        dayOfWeek: r.dayOfWeek,
+        regularReservationTeamName: r.regularReservationTeamName,
+        regularReservationStartTime: r.regularReservationStartTime,
+        regularReservationEndTime: r.regularReservationEndTime,
+        studentId: r.TeamLeaderStudentId, // 팀장 학생 ID
+        applyStartDate: r.regularReservationApplyStartDate,
+        applyEndDate: r.regularReservationApplyEndDate,
+      }))
   );
-};
-
-export const deleteRegularReservationIds = () => {
-  const [deletedIds] = useAtom(deletedReservationIdsAtom);
-  return deletedIds; // 삭제 시 기록한 ID 배열
 };

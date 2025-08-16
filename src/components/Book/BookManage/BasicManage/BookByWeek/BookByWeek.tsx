@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import {
   deletedReservationIdsAtom,
+  fetchedTeamWeekDataAtom,
   TeamWeek,
   teamWeekDataAtom,
 } from "@/store/weekData.ts";
@@ -31,15 +32,16 @@ const BookByWeek: React.FC<BookByWeekProps> = ({ date }) => {
     setRegularReservationType,
     regularReservationTeamName,
     setRegularReservationTeamName,
-    reservationMemberStudentId,
-    setReservationMemberStudentId,
+    teamLeaderStudentId,
+    setTeamLeaderStudentId,
     regularReservationApplyStartDate,
     setRegularReservationApplyStartDate,
     regularReservationApplyEndDate,
     setRegularReservationApplyEndDate,
   } = useTeamReservation(date);
 
-  // 삭제 id
+  const [fetchedTeamWeekData] = useAtom(fetchedTeamWeekDataAtom);
+  // 삭제 ids
   const [deletedIds, setDeletedIds] = useAtom(deletedReservationIdsAtom);
 
   const handleDeleteItem = (reservationId: number) => {
@@ -51,8 +53,14 @@ const BookByWeek: React.FC<BookByWeekProps> = ({ date }) => {
         ),
       }))
     );
-    // 삭제된 아이템의 ID를 deletedIds에 추가
-    setDeletedIds((prev) => [...prev, reservationId]);
+    // 서버에 존재하는 id만 삭제 ids 리스트에 추가
+    const originalIds = fetchedTeamWeekData
+      .flatMap((item) => item.regularReservations)
+      .map((r) => r.regularReservationId);
+
+    if (originalIds.includes(reservationId)) {
+      setDeletedIds((prev) => [...prev, reservationId]);
+    }
   };
 
   useEffect(() => {
@@ -88,8 +96,8 @@ const BookByWeek: React.FC<BookByWeekProps> = ({ date }) => {
               reservationType={regularReservationType}
               setReservationType={setRegularReservationType}
               isActive={isActive}
-              studentId={reservationMemberStudentId}
-              setStudentId={setReservationMemberStudentId}
+              studentId={teamLeaderStudentId}
+              setStudentId={setTeamLeaderStudentId}
               teamName={regularReservationTeamName}
               setTeamName={setRegularReservationTeamName}
               teamStartTime={regularReservationApplyStartDate}

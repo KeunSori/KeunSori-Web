@@ -39,8 +39,7 @@ export const useTeamReservation = (date: TeamWeek) => {
     useState("");
   const [regularReservationSession, setRegularReservationSession] =
     useState<ReservationSession>("보컬");
-  const [reservationMemberStudentId, setReservationMemberStudentId] =
-    useState("");
+  const [teamLeaderStudentId, setTeamLeaderStudentId] = useState("");
   const [
     regularReservationApplyStartDate,
     setRegularReservationApplyStartDate,
@@ -66,7 +65,8 @@ export const useTeamReservation = (date: TeamWeek) => {
         const maxId = Math.max(...allIds, 0); // 0을 기본값으로 사용하여 빈 배열 처리
         setRegularReservationId(maxId + 1); // 저장된 max id
         console.log("다음으로 저장할 예약 ID 값:", maxId);
-      } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         console.log(`에러남:${error}`);
         console.error("예약 id 가져오기 실패:", error.response?.data || error);
         alert("정보를 불러올 수 없습니다");
@@ -79,10 +79,11 @@ export const useTeamReservation = (date: TeamWeek) => {
   // 팀별 예약 확인 버튼 클릭 시 저장하는 함수
   const onClickConfirmReservation = () => {
     if (
+      regularReservationType === "예약 유형" ||
       !regularReservationTeamName ||
       !regularReservationApplyStartDate ||
       !regularReservationApplyEndDate ||
-      !reservationMemberStudentId
+      !teamLeaderStudentId
     ) {
       alert("모든 값을 입력하세요");
       return;
@@ -90,7 +91,7 @@ export const useTeamReservation = (date: TeamWeek) => {
     // 확인 누르면 input 초기화
     setRegularReservationType("예약 유형");
     setRegularReservationTeamName("");
-    setReservationMemberStudentId("");
+    setTeamLeaderStudentId("");
     setRegularReservationApplyStartDate("10:00");
     setRegularReservationApplyEndDate("23:00");
     setRegularReservationSession("보컬");
@@ -116,7 +117,7 @@ export const useTeamReservation = (date: TeamWeek) => {
           regularReservationStartTime: regularReservationApplyStartDate,
           regularReservationEndTime: regularReservationApplyEndDate,
 
-          reservationMemberStudentId: reservationMemberStudentId,
+          TeamLeaderStudentId: teamLeaderStudentId,
           regularReservationApplyStartDate: formattedStartDate,
           regularReservationApplyEndDate: formattedEndDate,
         },
@@ -135,9 +136,15 @@ export const useTeamReservation = (date: TeamWeek) => {
       if (existingItemIndex !== -1) {
         // 이미 존재하는 경우, 기존 아이템에 예약 추가
         const updatedItems = [...prev];
-        updatedItems[existingItemIndex].regularReservations.push(
-          newItem.regularReservations[0]
-        );
+        const existingItem = updatedItems[existingItemIndex];
+
+        updatedItems[existingItemIndex] = {
+          ...existingItem,
+          regularReservations: [
+            ...existingItem.regularReservations,
+            newItem.regularReservations[0],
+          ],
+        };
         return updatedItems;
       } else {
         // 새로운 아이템 추가
@@ -155,8 +162,8 @@ export const useTeamReservation = (date: TeamWeek) => {
     setRegularReservationType,
     regularReservationTeamName,
     setRegularReservationTeamName,
-    reservationMemberStudentId,
-    setReservationMemberStudentId,
+    teamLeaderStudentId,
+    setTeamLeaderStudentId,
     regularReservationApplyStartDate,
     setRegularReservationApplyStartDate,
     regularReservationApplyEndDate,
