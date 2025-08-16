@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import TypeSelect from "./TypeSelect";
-import TimeSelecter from "../TimeSelecter";
 import { TeamWeek } from "@/store/weekData";
 import { ReservationType } from "@/mapper/regularReservation/convertResType";
 import { ReservationSession } from "@/mapper/regularReservation/convertSession";
+import TypeSelect from "./TypeSelect";
+import TimeSelecter from "../../TimeSelecter";
 
 interface AddInputsProps {
   teamDate?: TeamWeek;

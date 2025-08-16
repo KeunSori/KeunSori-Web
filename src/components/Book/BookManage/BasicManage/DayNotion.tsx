@@ -4,7 +4,6 @@ import styled from "@emotion/styled";
 import { useAtom } from "jotai";
 import { getUpdateWeekDateWithTime } from "@/utils/weekDataTimeUtils";
 import { TeamWeek, teamWeekDataAtom } from "@/store/weekData";
-import BookByWeek from "./BookByWeek";
 interface DayNotionProps {
   date: TeamWeek;
 }
@@ -71,8 +70,6 @@ const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
           까지
         </DayContainer>
       </Container>
-
-      <BookByWeek date={date} />
     </>
   );
 };
