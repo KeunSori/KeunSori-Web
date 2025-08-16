@@ -2,6 +2,7 @@ import { SelectedButton } from "@/styles/DropBoxStyle";
 import styled from "@emotion/styled";
 
 interface BookByWeekNotionProps {
+  regularReservationId: number; // 예약 고유 ID
   teamName: string;
   teamStartTime: string;
   teamEndTime: string;
@@ -9,6 +10,7 @@ interface BookByWeekNotionProps {
 }
 
 const BookByWeekNotion = ({
+  regularReservationId,
   teamName,
   teamStartTime,
   teamEndTime,
@@ -22,7 +24,9 @@ const BookByWeekNotion = ({
         <div>~</div>
         <SelectedButton>{teamEndTime}</SelectedButton>
       </TimeContainer>
-      <DeleteButton onClick={() => handleDeleteItem(0)}>x</DeleteButton>
+      <DeleteButton onClick={() => handleDeleteItem(regularReservationId)}>
+        x
+      </DeleteButton>
     </Container>
   );
 };

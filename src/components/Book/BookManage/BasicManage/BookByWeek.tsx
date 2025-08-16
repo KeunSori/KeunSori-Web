@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import {
   deletedReservationIdsAtom,
+  reservationIdCounterAtom,
   TeamWeek,
   teamWeekDataAtom,
 } from "@/store/weekData.ts";
@@ -8,7 +9,7 @@ import BookByWeekNotion from "./BookByWeekNotion";
 import PlusButton from "../../../../../public/image/plus-black.svg";
 import MinusButton from "../../../../../public/image/minus-black.svg";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddInputs from "./AddInputs";
 import { useAtom } from "jotai";
 import {
@@ -36,6 +37,9 @@ const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
   const [teamWeekItems, setTeamWeekItems] = useAtom(teamWeekDataAtom);
 
   // inputs
+  const [regularReservationId, setRegularReservationId] = useAtom(
+    reservationIdCounterAtom
+  );
   const [regularReservationType, setRegularReservationType] = useState<
     ReservationType | ReservationSession
   >("예약 유형");
@@ -97,6 +101,7 @@ const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
       endTime: date.endTime,
       regularReservations: [
         {
+          regularReservationId: regularReservationId,
           dayOfWeek: convertDayOfWeek(date.dayOfWeekNum as DayOfWeekNum),
           regularReservationType:
             regularReservationType === "합주" ? "TEAM" : "LESSON",
@@ -133,16 +138,25 @@ const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
         return [...prev, newItem];
       }
     });
+    setRegularReservationId((prev) => prev + 1); // 예약 ID 증가
   };
 
   const handleDeleteItem = (reservationId: number) => {
+    setTeamWeekItems((prev) =>
+      prev.map((item) => ({
+        ...item,
+        regularReservations: item.regularReservations.filter(
+          (reservation) => reservation.regularReservationId !== reservationId
+        ),
+      }))
+    );
     // 삭제된 아이템의 ID를 deletedIds에 추가
-
-    setDeletedIds((prev) => [...prev, { deletedId: reservationId }]);
-
-    console.log("삭제된 아이디들:", deletedIds);
-    console.log("삭제된 아이디:", reservationId);
+    setDeletedIds((prev) => [...prev, reservationId]);
   };
+
+  useEffect(() => {
+    console.log("삭제된 아이디들:", deletedIds);
+  }, [deletedIds]);
 
   return (
     <TeamContainer>
@@ -192,6 +206,7 @@ const BookByWeek: React.FC<DayNotionProps> = ({ date }) => {
               return (
                 <BookByWeekNotion
                   key={idx}
+                  regularReservationId={item.regularReservationId}
                   teamName={item.regularReservationTeamName}
                   teamStartTime={item.regularReservationStartTime}
                   teamEndTime={item.regularReservationEndTime}

@@ -38,12 +38,12 @@ const BasicManage: React.FC = () => {
       dayOfWeek: r.dayOfWeek,
       regularReservationStartTime: r.regularReservationStartTime,
       regularReservationEndTime: r.regularReservationEndTime,
-      regularReservationType: r.regularReservationType,
-      regularReservationSession: r.regularReservationSession,
+      reservationType: r.regularReservationType,
+      reservationSession: r.regularReservationSession,
       regularReservationTeamName: r.regularReservationTeamName,
-      regularReservationApplyStartDate: r.regularReservationApplyStartDate,
-      regularReservationApplyEndDate: r.regularReservationApplyEndDate,
-      reservationMemberStudentId: r.reservationMemberStudentId,
+      applyStartDate: r.regularReservationApplyStartDate,
+      applyEndDate: r.regularReservationApplyEndDate,
+      studentId: r.reservationMemberStudentId,
     }))
   );
   const deleteRegularReservationIds = deletedIds; // 삭제 시 기록한 ID 배열
@@ -55,9 +55,11 @@ const BasicManage: React.FC = () => {
         regularReservationCreateRequestList,
         deleteRegularReservationIds,
       });
+      alert("예약 관리 업데이트 성공");
       window.location.reload();
     } catch (error) {
       console.log(`에러남:${error}`);
+      console.error("예약 관리 업데이트 실패:", error);
       alert("정보를 불러올 수 없습니다");
     }
   };
