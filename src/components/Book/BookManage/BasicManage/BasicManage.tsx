@@ -93,8 +93,11 @@ const BasicManage: React.FC = () => {
   return (
     <>
       <Container>
-        <CalendarFilter />
-        <CalendarInput />
+        <div>
+          <CalendarFilter />
+          <CalendarInput />
+        </div>
+
         {teamWeekData.map((date) => (
           <div
             key={date.dayOfWeekNum}

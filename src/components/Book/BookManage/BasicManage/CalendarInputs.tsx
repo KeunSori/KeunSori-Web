@@ -26,15 +26,15 @@ const CalendarInputs = () => {
   };
   return (
     <Container>
-      <Flex>
-        <div>예약할 기간을 입력하세요:</div>
+      <ContainerFlex>
+        <div>예약할 기간 입력:</div>
         <Flex>
           <div>{formatDateToString(startDate)}</div>
           <div>~</div>
           <div>{formatDateToString(endDate)}</div>
+          <CalendarIcon src={CalendarImg} onClick={onShowCalendar} />
         </Flex>
-        <CalendarIcon src={CalendarImg} onClick={onShowCalendar} />
-      </Flex>
+      </ContainerFlex>
       {showCalendar && (
         <div style={{ position: "absolute", marginLeft: 200 }}>
           <CalendarItem
@@ -53,9 +53,15 @@ export default CalendarInputs;
 
 const Container = styled.div`
   gap: 8px;
-  padding: 5px 0 15px 0;
+  padding: 5px 0 30px 0;
   position: relative;
   z-index: 10;
+`;
+
+const ContainerFlex = styled.div`
+  display: flex;
+  gap: 104px;
+  align-items: center;
 `;
 const Flex = styled.div`
   margin-left: 25px;

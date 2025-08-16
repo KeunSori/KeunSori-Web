@@ -18,15 +18,15 @@ const CalendarFilter = () => {
 
   return (
     <Container>
-      <Flex>
-        <div>해당 기간 내에 완료된 예약 보기</div>
+      <ContainerFlex>
+        <div>해당 기간 내에 완료된 예약 보기:</div>
         <Flex>
           <div>{formatDateYYYYMMDD(filterStartDate)}</div>
           <div>~</div>
           <div>{formatDateYYYYMMDD(filterEndDate)}</div>
+          <CalendarIcon src={CalendarImg} onClick={onShowCalendar} />
         </Flex>
-        <CalendarIcon src={CalendarImg} onClick={onShowCalendar} />
-      </Flex>
+      </ContainerFlex>
       {showCalendar && (
         <div style={{ position: "absolute", marginLeft: 200 }}>
           <CalendarItem
@@ -45,9 +45,15 @@ export default CalendarFilter;
 
 const Container = styled.div`
   gap: 8px;
-  padding: 5px 0 15px 0;
+  padding: 10px 0 0 0;
   position: relative;
   z-index: 15;
+`;
+
+const ContainerFlex = styled.div`
+  display: flex;
+  gap: 5px;
+  align-items: center;
 `;
 const Flex = styled.div`
   margin-left: 25px;
