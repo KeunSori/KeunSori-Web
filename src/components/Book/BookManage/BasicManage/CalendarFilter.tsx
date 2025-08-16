@@ -3,45 +3,37 @@ import CalendarImg from "../../../../../public/image/calendar-keun.svg";
 import CalendarItem from "./CalendarItem";
 import { useState } from "react";
 import { useAtom } from "jotai";
-import {
-  endCalendarDateAtom,
-  startCalendarDateAtom,
-} from "@/store/calendarData";
+import { filterEndDateAtom, filterStartDateAtom } from "@/store/calendarData";
+import { formatDateYYYYMMDD } from "@/utils/dateUtils";
 
-const CalendarInputs = () => {
+const CalendarFilter = () => {
   const [showCalendar, setShowCalendar] = useState(false);
 
-  const [startDate, setStartDate] = useAtom(startCalendarDateAtom);
-  const [endDate, setEndDate] = useAtom(endCalendarDateAtom);
+  const [filterStartDate, setFilterStartDate] = useAtom(filterStartDateAtom);
+  const [filterEndDate, setFilterEndDate] = useAtom(filterEndDateAtom);
 
   const onShowCalendar = () => {
     setShowCalendar(!showCalendar);
   };
 
-  const formatDateToString = (date: Date) => {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, "0");
-    const d = String(date.getDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`;
-  };
   return (
     <Container>
       <Flex>
-        <div>예약할 기간을 입력하세요:</div>
+        <div>해당 기간 내에 완료된 예약 보기</div>
         <Flex>
-          <div>{formatDateToString(startDate)}</div>
+          <div>{formatDateYYYYMMDD(filterStartDate)}</div>
           <div>~</div>
-          <div>{formatDateToString(endDate)}</div>
+          <div>{formatDateYYYYMMDD(filterEndDate)}</div>
         </Flex>
         <CalendarIcon src={CalendarImg} onClick={onShowCalendar} />
       </Flex>
       {showCalendar && (
         <div style={{ position: "absolute", marginLeft: 200 }}>
           <CalendarItem
-            startDate={startDate}
-            endDate={endDate}
-            setStartDate={setStartDate}
-            setEndDate={setEndDate}
+            startDate={filterStartDate}
+            endDate={filterEndDate}
+            setStartDate={setFilterStartDate}
+            setEndDate={setFilterEndDate}
           />
         </div>
       )}
@@ -49,13 +41,13 @@ const CalendarInputs = () => {
   );
 };
 
-export default CalendarInputs;
+export default CalendarFilter;
 
 const Container = styled.div`
   gap: 8px;
   padding: 5px 0 15px 0;
   position: relative;
-  z-index: 10;
+  z-index: 15;
 `;
 const Flex = styled.div`
   margin-left: 25px;

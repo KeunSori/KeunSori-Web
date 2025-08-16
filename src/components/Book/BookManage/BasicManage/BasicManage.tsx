@@ -17,6 +17,7 @@ import {
   regularReservationCreateRequestList,
   weeklyScheduleUpdateRequestList,
 } from "@/mapper/regularReservation/api/putReservationData";
+import CalendarFilter from "./CalendarFilter";
 
 const BasicManage: React.FC = () => {
   // 서버 + UI 상의 데이터
@@ -92,6 +93,7 @@ const BasicManage: React.FC = () => {
   return (
     <>
       <Container>
+        <CalendarFilter />
         <CalendarInput />
         {teamWeekData.map((date) => (
           <div

@@ -3,16 +3,20 @@ import { DateRange, RangeKeyDict } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { CalendarGlobalStyle } from "../../../../styles/Global/CalendarGlobalStyle";
-import {
-  endCalendarDateAtom,
-  startCalendarDateAtom,
-} from "@/store/calendarData";
-import { useAtom } from "jotai";
 
-const CalendarItem = () => {
-  const [startDate, setStartDate] = useAtom(startCalendarDateAtom);
-  const [endDate, setEndDate] = useAtom(endCalendarDateAtom);
+interface CalendarItemProps {
+  startDate: Date;
+  endDate: Date;
+  setStartDate: (date: Date) => void;
+  setEndDate: (date: Date) => void;
+}
 
+const CalendarItem: React.FC<CalendarItemProps> = ({
+  startDate,
+  endDate,
+  setStartDate,
+  setEndDate,
+}) => {
   const handleSelectRange = (ranges: RangeKeyDict) => {
     const { startDate, endDate } = ranges.selection;
     if (startDate) setStartDate(startDate);
