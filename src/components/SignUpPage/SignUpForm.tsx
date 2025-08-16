@@ -1,17 +1,18 @@
 // hook
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCapsLock } from "@/utils/useCapsLock.ts";
 
 // style
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
-import Input from "../Input.tsx";
-import Button from "../../styles/Button.ts";
+import Input from "@/components/Input.tsx";
+import Button from "@/styles/Button.ts";
+import { CapsLockWarning } from "@/styles/Auth/Notice";
 
 // api
 import axios from "axios";
-import { registerUser } from "../../api/register.ts";
-// import { authNumberRequest, sendAuthNumber } from "../../api/emailAuth.ts";
+import { registerUser } from "@/api/register.ts";
 
 // interface
 interface FormData {
@@ -24,23 +25,32 @@ interface FormData {
 
 // component
 const SignUpForm: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    studentId: "",
-    password: "",
-    passwordConfirm: "",
-    email: "", // 이메일 필드 추가
-  });
+  const [formData, setFormData] =
+    useState<FormData>({
+      name: "",
+      studentId: "",
+      password: "",
+      passwordConfirm: "",
+      email: "", // 이메일 필드 추가
+    });
 
   const [message, setMessage] = useState("");
-  const [capsLockOn, setCapsLockOn] = useState(false);
+  const { isCapsLockOn, capsLockProps } =
+    useCapsLock();
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (
+    e: React.FormEvent
+  ) => {
     e.preventDefault();
     try {
       await registerUser(formData);
@@ -48,7 +58,10 @@ const SignUpForm: React.FC = () => {
       navigate("/login");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        setMessage(error.response?.data.message || "다시 시도해주세요.");
+        setMessage(
+          error.response?.data.message ||
+            "다시 시도해주세요."
+        );
       } else {
         setMessage("다시 시도해주세요.");
       }
@@ -79,14 +92,6 @@ const SignUpForm: React.FC = () => {
   //   }
   // };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    setCapsLockOn(e.getModifierState("CapsLock"));
-  };
-
-  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    setCapsLockOn(e.getModifierState("CapsLock"));
-  };
-
   return (
     <>
       <Form onSubmit={handleSubmit}>
@@ -115,7 +120,7 @@ const SignUpForm: React.FC = () => {
               value={formData.studentId}
               onChange={handleChange}
               required
-            ></Input>
+            />
           </Slot>
           <Slot>
             <Input
@@ -129,7 +134,7 @@ const SignUpForm: React.FC = () => {
                 width: 100%;
                 border-right: none;
               `}
-            ></Input>
+            />
             {/* <CustomButton onClick={handleSendEmail}>인증번호발송</CustomButton> */}
           </Slot>
 
@@ -158,10 +163,9 @@ const SignUpForm: React.FC = () => {
               type="password"
               value={formData.password}
               onChange={handleChange}
-              onKeyUp={handleKeyUp}
-              onKeyDown={handleKeyDown}
+              {...capsLockProps}
               required
-            ></Input>
+            />
           </Slot>
           <Slot>
             <Input
@@ -173,8 +177,9 @@ const SignUpForm: React.FC = () => {
               type="password"
               value={formData.passwordConfirm}
               onChange={handleChange}
+              {...capsLockProps}
               required
-            ></Input>
+            />
           </Slot>
 
           <div
@@ -195,7 +200,11 @@ const SignUpForm: React.FC = () => {
           </Slot>
         </Ground>
       </Form>
-      {capsLockOn && <Notice>⚠️ Caps Lock이 켜져 있습니다!</Notice>}
+      {isCapsLockOn && (
+        <CapsLockWarning>
+          ⚠️ Caps Lock이 켜져 있습니다!
+        </CapsLockWarning>
+      )}
       {message && <Message>{message}</Message>}
     </>
   );
@@ -223,22 +232,6 @@ const Ground = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 1px;
-`;
-
-// const CustomInput = styled(Input)`
-//   width: 150px;
-// `;
-
-// const CustomButton = styled(Button)`
-//   margin: 5px;
-//   font-size: 15px;
-// `;
-
-const Notice = styled.div`
-  color: "red";
-  fontsize: "14px";
-  margintop: "5px";
-  marginbottom: "5px";
 `;
 
 const Message = styled.p`
