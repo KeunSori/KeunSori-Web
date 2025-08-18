@@ -3,12 +3,12 @@ import authApi from "@/api/Instance/authApi";
 import {
   convertDayOfWeek,
   DayOfWeekNum,
-} from "@/mapper/regularReservation/convertDayOfWeek";
-import { ReservationType } from "@/mapper/regularReservation/convertResType";
+} from "@/utils/mapper/regularReservation/convertDayOfWeek";
+import { ReservationType } from "@/utils/mapper/regularReservation/convertResType";
 import {
   convertSession,
   ReservationSession,
-} from "@/mapper/regularReservation/convertSession";
+} from "@/utils/mapper/regularReservation/convertSession";
 import {
   endCalendarDateAtom,
   startCalendarDateAtom,

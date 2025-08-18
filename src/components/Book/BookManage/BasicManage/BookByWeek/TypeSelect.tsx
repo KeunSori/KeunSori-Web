@@ -1,5 +1,5 @@
-import { ReservationType } from "@/mapper/regularReservation/convertResType";
-import { ReservationSession } from "@/mapper/regularReservation/convertSession";
+import { ReservationType } from "@/utils/mapper/regularReservation/convertResType";
+import { ReservationSession } from "@/utils/mapper/regularReservation/convertSession";
 import styled from "@emotion/styled";
 import { useState } from "react";
 // 예약 유형 선택 토글

@@ -16,7 +16,7 @@ import BookByWeek from "./BookByWeek/BookByWeek";
 import {
   regularReservationCreateRequestList,
   weeklyScheduleUpdateRequestList,
-} from "@/mapper/regularReservation/api/putReservationData";
+} from "@/utils/mapper/regularReservation/api/putReservationData";
 import CalendarFilter from "./CalendarFilter";
 
 const BasicManage: React.FC = () => {

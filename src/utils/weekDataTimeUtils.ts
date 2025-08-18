@@ -1,4 +1,4 @@
-import { Week } from "@/store/weekData";
+import { TeamWeek } from "@/store/weekData";
 
 export type TimeType =
   | "startTime"
@@ -16,11 +16,11 @@ export type TimeType =
  */
 
 export function getUpdateWeekDateWithTime(
-  weekData: Week[],
+  weekData: TeamWeek[],
   dayOfWeekNum: number,
   timeType: TimeType,
   timeValue: string
-): Week[] {
+): TeamWeek[] {
   return weekData.map((data) =>
     data.dayOfWeekNum === dayOfWeekNum
       ? { ...data, [timeType]: timeValue }

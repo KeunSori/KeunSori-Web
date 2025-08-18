@@ -1,6 +1,6 @@
-import { DayOfWeek } from "@/mapper/regularReservation/convertDayOfWeek";
-import { ReservationType } from "@/mapper/regularReservation/convertResType";
-import { ReservationSession } from "@/mapper/regularReservation/convertSession";
+import { DayOfWeek } from "@/utils/mapper/regularReservation/convertDayOfWeek";
+import { ReservationType } from "@/utils/mapper/regularReservation/convertResType";
+import { ReservationSession } from "@/utils/mapper/regularReservation/convertSession";
 import { atom } from "jotai";
 
 interface RegularReservation {
