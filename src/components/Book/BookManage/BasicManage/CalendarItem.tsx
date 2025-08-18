@@ -3,6 +3,7 @@ import { DateRange, RangeKeyDict } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { CalendarGlobalStyle } from "../../../../styles/Global/CalendarGlobalStyle";
+import { ko } from "date-fns/locale";
 
 interface CalendarItemProps {
   startDate: Date;
@@ -36,6 +37,7 @@ const CalendarItem: React.FC<CalendarItemProps> = ({
         ]}
         editableDateInputs={true}
         onChange={handleSelectRange}
+        locale={ko}
       />
     </Container>
   );
