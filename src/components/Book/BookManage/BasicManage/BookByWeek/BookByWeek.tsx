@@ -40,10 +40,10 @@ const BookByWeek: React.FC<BookByWeekProps> = ({ date }) => {
     setRegularReservationTeamName,
     teamLeaderStudentId,
     setTeamLeaderStudentId,
-    regularReservationApplyStartDate,
-    setRegularReservationApplyStartDate,
-    regularReservationApplyEndDate,
-    setRegularReservationApplyEndDate,
+    regularReservationStartTime,
+    setRegularReservationStartTime,
+    regularReservationEndTime,
+    setRegularReservationEndTime,
   } = useTeamReservation(date);
 
   const [fetchedTeamWeekData] = useAtom(fetchedTeamWeekDataAtom);
@@ -107,10 +107,10 @@ const BookByWeek: React.FC<BookByWeekProps> = ({ date }) => {
               setStudentId={setTeamLeaderStudentId}
               teamName={regularReservationTeamName}
               setTeamName={setRegularReservationTeamName}
-              teamStartTime={regularReservationApplyStartDate}
-              teamEndTime={regularReservationApplyEndDate}
-              setTeamStartTime={setRegularReservationApplyStartDate}
-              setTeamEndTime={setRegularReservationApplyEndDate}
+              teamStartTime={regularReservationStartTime}
+              teamEndTime={regularReservationEndTime}
+              setTeamStartTime={setRegularReservationStartTime}
+              setTeamEndTime={setRegularReservationEndTime}
             />
             <ConfirmButton onClick={onClickConfirmReservation}>
               확인

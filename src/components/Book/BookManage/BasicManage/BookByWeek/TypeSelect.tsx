@@ -25,7 +25,7 @@ const TypeSelect = ({
     setIsOpenLesson(true);
   };
   return (
-    <Container>
+    <Container isOpen={isOpen}>
       <div style={{ position: "relative" }}>
         <InputType
           disabledHover={reservationType === "예약 유형"}
@@ -55,8 +55,9 @@ const TypeSelect = ({
 
 export default TypeSelect;
 
-const Container = styled.div`
-  z-index: 1;
+const Container = styled.div<{ isOpen: boolean }>`
+  // 클릭된 경우만 위로 덮어써서 보이게
+  z-index: ${(props) => (props.isOpen ? 1 : "auto")};
 `;
 
 const InputType = styled.div<{ disabledHover?: boolean }>`

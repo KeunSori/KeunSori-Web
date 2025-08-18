@@ -40,11 +40,9 @@ export const useTeamReservation = (date: TeamWeek) => {
   const [regularReservationSession, setRegularReservationSession] =
     useState<ReservationSession>("보컬");
   const [teamLeaderStudentId, setTeamLeaderStudentId] = useState("");
-  const [
-    regularReservationApplyStartDate,
-    setRegularReservationApplyStartDate,
-  ] = useState("10:00");
-  const [regularReservationApplyEndDate, setRegularReservationApplyEndDate] =
+  const [regularReservationStartTime, setRegularReservationStartTime] =
+    useState("10:00");
+  const [regularReservationEndTime, setRegularReservationEndTime] =
     useState("23:00");
 
   const formattedStartDate = formatDateYYYYMMDD(startDate);
@@ -76,13 +74,27 @@ export const useTeamReservation = (date: TeamWeek) => {
     fetchReservationId();
   }, []);
 
+  // 팀 시작~끝 시간을 주간 시작~끝 시간에 맞게 맞추기
+  useEffect(() => {
+    if (teamWeekItems.length > 0) {
+      const todayDay = teamWeekItems.find(
+        (item) => item.dayOfWeekNum === date.dayOfWeekNum
+      );
+
+      if (todayDay) {
+        setRegularReservationStartTime(todayDay.startTime || "10:00");
+        setRegularReservationEndTime(todayDay.endTime || "23:00");
+      }
+    }
+  }, [teamWeekItems, date.dayOfWeekNum]);
+
   // 팀별 예약 확인 버튼 클릭 시 저장하는 함수
   const onClickConfirmReservation = () => {
     if (
       regularReservationType === "예약 유형" ||
       !regularReservationTeamName ||
-      !regularReservationApplyStartDate ||
-      !regularReservationApplyEndDate ||
+      !regularReservationStartTime ||
+      !regularReservationEndTime ||
       !teamLeaderStudentId
     ) {
       alert("모든 값을 입력하세요");
@@ -92,8 +104,8 @@ export const useTeamReservation = (date: TeamWeek) => {
     setRegularReservationType("예약 유형");
     setRegularReservationTeamName("");
     setTeamLeaderStudentId("");
-    setRegularReservationApplyStartDate("10:00");
-    setRegularReservationApplyEndDate("23:00");
+    setRegularReservationStartTime("");
+    setRegularReservationEndTime("");
     setRegularReservationSession("보컬");
 
     // 팀별 예약 추가
@@ -114,8 +126,8 @@ export const useTeamReservation = (date: TeamWeek) => {
               : convertSession(regularReservationType as ReservationSession),
 
           regularReservationTeamName: regularReservationTeamName,
-          regularReservationStartTime: regularReservationApplyStartDate,
-          regularReservationEndTime: regularReservationApplyEndDate,
+          regularReservationStartTime: regularReservationStartTime,
+          regularReservationEndTime: regularReservationEndTime,
 
           TeamLeaderStudentId: teamLeaderStudentId,
           regularReservationApplyStartDate: formattedStartDate,
@@ -164,9 +176,9 @@ export const useTeamReservation = (date: TeamWeek) => {
     setRegularReservationTeamName,
     teamLeaderStudentId,
     setTeamLeaderStudentId,
-    regularReservationApplyStartDate,
-    setRegularReservationApplyStartDate,
-    regularReservationApplyEndDate,
-    setRegularReservationApplyEndDate,
+    regularReservationStartTime,
+    regularReservationEndTime,
+    setRegularReservationStartTime,
+    setRegularReservationEndTime,
   };
 };
