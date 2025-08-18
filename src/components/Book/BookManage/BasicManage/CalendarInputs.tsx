@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import CalendarImg from "../../../../../public/image/calendar-keun.svg";
+import CalendarImg from "@/assets/reservation/calendar-keun.svg";
 import CalendarItem from "./CalendarItem";
 import { useState } from "react";
 import { useAtom } from "jotai";
