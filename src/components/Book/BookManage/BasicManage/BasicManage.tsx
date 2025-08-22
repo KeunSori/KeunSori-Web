@@ -65,7 +65,7 @@ const BasicManage: React.FC = () => {
         regularReservationCreateRequestList: createList,
         deleteRegularReservationIds: deletedIds,
       });
-      // alert("예약 관리 업데이트 성공");
+      alert("예약 관리 업데이트에 성공했습니다.");
       setDeletedIds([]); // 초기화
       fetchData();
 
@@ -74,7 +74,7 @@ const BasicManage: React.FC = () => {
     } catch (error: any) {
       console.log(`에러남:${error}`);
       console.error("예약 관리 업데이트 실패:", error.response?.data || error);
-      alert(`예약 실패:\n${error.response?.data.message}`);
+      alert(`요청 실패:\n${error.response?.data.message}`);
     }
     console.log("주간 예약 업데이트 요청:", {
       weeklyScheduleUpdateRequestList: weeklyList,
