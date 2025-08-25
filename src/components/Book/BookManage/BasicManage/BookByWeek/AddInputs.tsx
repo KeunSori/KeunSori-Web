@@ -1,15 +1,15 @@
 import styled from "@emotion/styled";
 import { TeamWeek } from "@/store/weekData";
 import { ReservationType } from "@/utils/mapper/regularReservation/convertResType";
-import { ReservationSession } from "@/utils/mapper/regularReservation/convertSession";
 import TypeSelect from "./TypeSelect";
 import TimeSelecter from "../../TimeSelecter";
+import { ReservationSessionKor } from "@/utils/mapper/regularReservation/convertSession";
 
 interface AddInputsProps {
   teamDate?: TeamWeek;
   isActive: boolean;
-  reservationType: ReservationType | ReservationSession;
-  setReservationType: (type: ReservationType | ReservationSession) => void;
+  reservationType: ReservationType | ReservationSessionKor;
+  setReservationType: (type: ReservationType | ReservationSessionKor) => void;
   teamName: string;
   setTeamName: (val: string) => void;
   studentId: string;

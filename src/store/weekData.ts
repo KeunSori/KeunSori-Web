@@ -1,6 +1,6 @@
 import { DayOfWeek } from "@/utils/mapper/regularReservation/convertDayOfWeek";
 import { ReservationType } from "@/utils/mapper/regularReservation/convertResType";
-import { ReservationSession } from "@/utils/mapper/regularReservation/convertSession";
+import { ReservationSessionEng } from "@/utils/mapper/regularReservation/convertSession";
 import { atom } from "jotai";
 
 interface RegularReservation {
@@ -9,7 +9,7 @@ interface RegularReservation {
   regularReservationStartTime: string;
   regularReservationEndTime: string;
   regularReservationType: ReservationType | string;
-  regularReservationSession: ReservationSession | string;
+  regularReservationSession: ReservationSessionEng | string;
   regularReservationTeamName: string;
   regularReservationApplyStartDate: string;
   regularReservationApplyEndDate: string;

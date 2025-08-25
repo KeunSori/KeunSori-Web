@@ -15,7 +15,7 @@ import { useTeamReservation } from "@/hooks/useTeamReservation";
 
 import PlusButton from "@/assets/reservation/plus-black.svg";
 import MinusButton from "@/assets/reservation/minus-black.svg";
-import { ReservationSession } from "@/utils/mapper/regularReservation/convertSession";
+import { ReservationSessionEng } from "@/utils/mapper/regularReservation/convertSession";
 
 interface BookByWeekProps {
   date: TeamWeek;
@@ -25,10 +25,6 @@ const BookByWeek: React.FC<BookByWeekProps> = ({ date }) => {
   const [isActive] = useState<boolean>(date.isActive);
   const [showInputs, setShowInputs] = useState(false);
   const [teamWeekItems, setTeamWeekItems] = useAtom(teamWeekDataAtom);
-
-  // // 기간 필터링된 것만 보여주가
-  // const [filterStartDate] = useAtom(filterStartDateAtom);
-  // const [filterEndDate] = useAtom(filterEndDateAtom);
 
   // 팀 예약 확인 버튼 클릭 시 저장하는 훅
   const {
@@ -124,8 +120,8 @@ const BookByWeek: React.FC<BookByWeekProps> = ({ date }) => {
                 <BookByWeekNotion
                   key={idx}
                   regularReservationId={item.regularReservationId}
-                  reservationSession={
-                    item.regularReservationSession as ReservationSession
+                  reservationSessionEng={
+                    item.regularReservationSession as ReservationSessionEng
                   }
                   applyStartDate={item.regularReservationApplyStartDate}
                   applyEndDate={item.regularReservationApplyEndDate}

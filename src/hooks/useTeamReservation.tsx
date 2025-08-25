@@ -6,8 +6,8 @@ import {
 } from "@/utils/mapper/regularReservation/convertDayOfWeek";
 import { ReservationType } from "@/utils/mapper/regularReservation/convertResType";
 import {
-  convertSession,
-  ReservationSession,
+  convertSessionEng,
+  ReservationSessionKor,
 } from "@/utils/mapper/regularReservation/convertSession";
 import {
   endCalendarDateAtom,
@@ -33,12 +33,12 @@ export const useTeamReservation = (date: TeamWeek) => {
 
   // state
   const [regularReservationType, setRegularReservationType] = useState<
-    ReservationType | ReservationSession
+    ReservationType | ReservationSessionKor
   >("예약 유형");
   const [regularReservationTeamName, setRegularReservationTeamName] =
     useState("");
   const [regularReservationSession, setRegularReservationSession] =
-    useState<ReservationSession>("보컬");
+    useState<ReservationSessionKor>("보컬");
   const [teamLeaderStudentId, setTeamLeaderStudentId] = useState("");
   const [regularReservationStartTime, setRegularReservationStartTime] =
     useState("10:00");
@@ -123,7 +123,9 @@ export const useTeamReservation = (date: TeamWeek) => {
           regularReservationSession:
             regularReservationType === "합주"
               ? "ALL"
-              : convertSession(regularReservationType as ReservationSession),
+              : convertSessionEng(
+                  regularReservationType as ReservationSessionKor
+                ),
 
           regularReservationTeamName: regularReservationTeamName,
           regularReservationStartTime: regularReservationStartTime,

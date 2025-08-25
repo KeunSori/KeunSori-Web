@@ -1,13 +1,13 @@
 import { SelectedButton } from "@/styles/DropBoxStyle";
 import {
   convertSessionKor,
-  ReservationSession,
+  ReservationSessionEng,
 } from "@/utils/mapper/regularReservation/convertSession";
 import styled from "@emotion/styled";
 
 interface BookByWeekNotionProps {
   regularReservationId: number; // 예약 고유 ID
-  reservationSession: ReservationSession;
+  reservationSessionEng: ReservationSessionEng;
   applyStartDate: string;
   applyEndDate: string;
   teamName: string;
@@ -18,7 +18,7 @@ interface BookByWeekNotionProps {
 
 const BookByWeekNotion = ({
   regularReservationId,
-  reservationSession,
+  reservationSessionEng,
   applyStartDate,
   applyEndDate,
   teamName,
@@ -29,8 +29,6 @@ const BookByWeekNotion = ({
   const startDateWithoutYear = applyStartDate.slice(5);
   const endDateWithoutYear = applyEndDate.slice(5);
 
-  // 영어를 한글 세션으로 변경
-
   return (
     <Container>
       <Flex>
@@ -39,7 +37,7 @@ const BookByWeekNotion = ({
         <div>{endDateWithoutYear}</div>
       </Flex>
       <UserName>{teamName}</UserName>
-      <SessionBox>{convertSessionKor(reservationSession)}</SessionBox>
+      <SessionBox>{convertSessionKor(reservationSessionEng)}</SessionBox>
       <TimeContainer>
         <SelectedButton>{teamStartTime}</SelectedButton>
         <div>~</div>

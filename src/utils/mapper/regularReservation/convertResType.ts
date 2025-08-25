@@ -1,4 +1,4 @@
-import { ReservationSessionEng } from "./convertSession";
+import { ReservationSessionKor } from "./convertSession";
 
 const TYPE_MAP = {
   합주: "TEAM",
@@ -8,5 +8,5 @@ const TYPE_MAP = {
 
 export type ReservationType = keyof typeof TYPE_MAP;
 
-export const convertResType = (type: ReservationType | ReservationSessionEng) =>
+export const convertResType = (type: ReservationType | ReservationSessionKor) =>
   type in TYPE_MAP ? TYPE_MAP[type as ReservationType] : ""; // 없는 경우 빈 문자열 반환

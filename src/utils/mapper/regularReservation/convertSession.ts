@@ -16,13 +16,13 @@ const ENG_TO_KOR = {
   ALL: "합주",
 } as const;
 
-export type ReservationSessionEng = keyof typeof KOR_TO_ENG;
-export type ReservationSessionKor = keyof typeof ENG_TO_KOR;
+export type ReservationSessionKor = keyof typeof KOR_TO_ENG;
+export type ReservationSessionEng = keyof typeof ENG_TO_KOR;
 
 // 한글 -> 영어
-export const convertSessionEng = (session: ReservationSessionEng) =>
+export const convertSessionEng = (session: ReservationSessionKor) =>
   KOR_TO_ENG[session]; // 여기는 string 리턴
 
 // 영어 -> 한글
-export const convertSessionKor = (session: ReservationSessionKor) =>
+export const convertSessionKor = (session: ReservationSessionEng) =>
   ENG_TO_KOR[session]; // 여기는 string 리턴

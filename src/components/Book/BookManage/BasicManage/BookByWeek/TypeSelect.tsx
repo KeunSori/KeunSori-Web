@@ -1,12 +1,12 @@
 import { ReservationType } from "@/utils/mapper/regularReservation/convertResType";
-import { ReservationSession } from "@/utils/mapper/regularReservation/convertSession";
+import { ReservationSessionKor } from "@/utils/mapper/regularReservation/convertSession";
 import styled from "@emotion/styled";
 import { useState } from "react";
 // 예약 유형 선택 토글
 
 interface TypeSelectProps {
-  reservationType: ReservationType | ReservationSession;
-  setReservationType: (type: ReservationType | ReservationSession) => void;
+  reservationType: ReservationType | ReservationSessionKor;
+  setReservationType: (type: ReservationType | ReservationSessionKor) => void;
 }
 
 const TypeSelect = ({
@@ -16,7 +16,7 @@ const TypeSelect = ({
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenLesson, setIsOpenLesson] = useState(false);
 
-  const onClose = (text: ReservationType | ReservationSession) => {
+  const onClose = (text: ReservationType | ReservationSessionKor) => {
     setIsOpen(false);
     setReservationType(text);
     setIsOpenLesson(false);
