@@ -7,6 +7,7 @@ import {
   endCalendarDateAtom,
   startCalendarDateAtom,
 } from "@/store/calendarData";
+import { formatDateYYYYMMDD } from "@/utils/dateUtils";
 
 const CalendarInputs = () => {
   const [showCalendar, setShowCalendar] = useState(false);
@@ -18,20 +19,14 @@ const CalendarInputs = () => {
     setShowCalendar(!showCalendar);
   };
 
-  const formatDateToString = (date: Date) => {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, "0");
-    const d = String(date.getDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`;
-  };
   return (
     <Container>
       <ContainerFlex>
-        <div>예약할 기간 입력:</div>
+        <div>예약할 기간 입력하기:</div>
         <Flex>
-          <div>{formatDateToString(startDate)}</div>
+          <div>{formatDateYYYYMMDD(startDate)}</div>
           <div>~</div>
-          <div>{formatDateToString(endDate)}</div>
+          <div>{formatDateYYYYMMDD(endDate)}</div>
           <CalendarIcon src={CalendarImg} onClick={onShowCalendar} />
         </Flex>
       </ContainerFlex>
@@ -60,7 +55,7 @@ const Container = styled.div`
 
 const ContainerFlex = styled.div`
   display: flex;
-  gap: 104px;
+  gap: 30px;
   align-items: center;
 `;
 const Flex = styled.div`

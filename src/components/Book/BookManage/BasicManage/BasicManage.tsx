@@ -17,7 +17,6 @@ import {
   regularReservationCreateRequestList,
   weeklyScheduleUpdateRequestList,
 } from "@/utils/mapper/regularReservation/api/putReservationData";
-import CalendarFilter from "./CalendarFilter";
 
 const BasicManage: React.FC = () => {
   // 서버 + UI 상의 데이터
@@ -37,7 +36,6 @@ const BasicManage: React.FC = () => {
       const response = await authApi.get(`/admin/reservation/weekly-schedule`);
       setTeamWeekData(response.data);
       setFetchedTeamWeekData(response.data);
-      // console.log(teamWeekData);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.log(`에러남:${error}`);
@@ -68,8 +66,6 @@ const BasicManage: React.FC = () => {
       alert("예약 관리 업데이트에 성공했습니다.");
       setDeletedIds([]); // 초기화
       fetchData();
-
-      //window.location.reload();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.log(`에러남:${error}`);
@@ -94,7 +90,6 @@ const BasicManage: React.FC = () => {
     <>
       <Container>
         <div>
-          <CalendarFilter />
           <CalendarInput />
         </div>
 

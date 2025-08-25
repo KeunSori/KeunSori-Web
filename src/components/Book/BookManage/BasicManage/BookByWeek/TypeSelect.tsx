@@ -19,6 +19,7 @@ const TypeSelect = ({
   const onClose = (text: ReservationType | ReservationSession) => {
     setIsOpen(false);
     setReservationType(text);
+    setIsOpenLesson(false);
   };
 
   const onSelectLesson = () => {

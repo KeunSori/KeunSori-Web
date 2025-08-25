@@ -15,8 +15,7 @@ import { useTeamReservation } from "@/hooks/useTeamReservation";
 
 import PlusButton from "@/assets/reservation/plus-black.svg";
 import MinusButton from "@/assets/reservation/minus-black.svg";
-import { filterEndDateAtom, filterStartDateAtom } from "@/store/calendarData";
-import { formatDateYYYYMMDD } from "@/utils/dateUtils";
+import { ReservationSession } from "@/utils/mapper/regularReservation/convertSession";
 
 interface BookByWeekProps {
   date: TeamWeek;
@@ -27,9 +26,9 @@ const BookByWeek: React.FC<BookByWeekProps> = ({ date }) => {
   const [showInputs, setShowInputs] = useState(false);
   const [teamWeekItems, setTeamWeekItems] = useAtom(teamWeekDataAtom);
 
-  // 기간 필터링된 것만 보여주가
-  const [filterStartDate] = useAtom(filterStartDateAtom);
-  const [filterEndDate] = useAtom(filterEndDateAtom);
+  // // 기간 필터링된 것만 보여주가
+  // const [filterStartDate] = useAtom(filterStartDateAtom);
+  // const [filterEndDate] = useAtom(filterEndDateAtom);
 
   // 팀 예약 확인 버튼 클릭 시 저장하는 훅
   const {
@@ -120,23 +119,16 @@ const BookByWeek: React.FC<BookByWeekProps> = ({ date }) => {
           {teamWeekItems
             .filter((item) => item.dayOfWeekNum === date.dayOfWeekNum)
             .flatMap((item) => item.regularReservations)
-
-            .filter((r) => {
-              if (originalIds.includes(r.regularReservationId)) {
-                return (
-                  r.regularReservationApplyStartDate >=
-                    formatDateYYYYMMDD(filterStartDate) &&
-                  r.regularReservationApplyEndDate <=
-                    formatDateYYYYMMDD(filterEndDate)
-                );
-              }
-              return true;
-            })
             .map((item, idx) => {
               return (
                 <BookByWeekNotion
                   key={idx}
                   regularReservationId={item.regularReservationId}
+                  reservationSession={
+                    item.regularReservationSession as ReservationSession
+                  }
+                  applyStartDate={item.regularReservationApplyStartDate}
+                  applyEndDate={item.regularReservationApplyEndDate}
                   teamName={item.regularReservationTeamName}
                   teamStartTime={item.regularReservationStartTime}
                   teamEndTime={item.regularReservationEndTime}
