@@ -4,6 +4,7 @@ import { ReservationType } from "@/utils/mapper/regularReservation/convertResTyp
 import TypeSelect from "./TypeSelect";
 import TimeSelecter from "../../TimeSelecter";
 import { ReservationSessionKor } from "@/utils/mapper/regularReservation/convertSession";
+import { TimeString } from "@/store/Time";
 
 interface AddInputsProps {
   teamDate?: TeamWeek;
@@ -14,10 +15,10 @@ interface AddInputsProps {
   setTeamName: (val: string) => void;
   studentId: string;
   setStudentId: (val: string) => void;
-  teamStartTime: string;
-  teamEndTime: string;
-  setTeamStartTime: (val: string) => void;
-  setTeamEndTime: (val: string) => void;
+  teamStartTime: TimeString;
+  teamEndTime: TimeString;
+  setTeamStartTime: (val: TimeString) => void;
+  setTeamEndTime: (val: TimeString) => void;
 }
 
 const AddInputs = ({
@@ -39,9 +40,9 @@ const AddInputs = ({
       const value = e.currentTarget.getAttribute("value");
       if (value) {
         if (timeType === "teamStartTime") {
-          setTeamStartTime(value);
+          setTeamStartTime(value as TimeString);
         } else {
-          setTeamEndTime(value);
+          setTeamEndTime(value as TimeString);
         }
       }
     };
@@ -56,11 +57,13 @@ const AddInputs = ({
         placeholder="팀명 입력"
         value={teamName}
         onChange={(e) => setTeamName(e.target.value)}
+        onBlur={() => setTeamName(teamName.trim())}
       />
       <InputName
         placeholder="팀장 학번"
         value={studentId}
         onChange={(e) => setStudentId(e.target.value)}
+        onBlur={() => setStudentId(studentId.trim())}
       />
       <TimeContainer>
         <TimeSelecter

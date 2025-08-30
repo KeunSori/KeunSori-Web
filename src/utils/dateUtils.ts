@@ -1,3 +1,5 @@
+import { DateString } from "@/store/Time";
+
 const today = new Date();
 export const transDate = (userDate: string) => {
   return `${userDate[0].toString()}/${userDate[1].toString()}/${userDate[2].toString()}`;
@@ -33,10 +35,10 @@ export const unvailableMonth = (date: Date) => {
 };
 
 // 날짜를 YYYY-MM-DD 형식으로 변환
-export const formatDateYYYYMMDD = (dateStr: Date) => {
+export const formatDateYYYYMMDD = (dateStr: Date): DateString => {
   const d = new Date(dateStr);
   const yyyy = d.getFullYear();
   const mm = String(d.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 +1
   const dd = String(d.getDate()).padStart(2, "0");
-  return `${yyyy}-${mm}-${dd}`;
+  return `${yyyy}-${mm}-${dd}` as DateString;
 };

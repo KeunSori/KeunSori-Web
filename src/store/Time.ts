@@ -1,16 +1,12 @@
 import { atom } from "jotai";
 import { Month } from "@/store/monthData.ts";
 
-export interface instrument {
-  vocal: boolean;
-  guitar: boolean;
-  bass: boolean;
-  keyboard: boolean;
-  drum: boolean;
-}
+// 날짜와 시간 형식 고정
+export type DateString = `${number}-${number}-${number}`; // YYYY-MM-DD
+export type TimeString = `${number}:${number}`; // HH:MM
 
 export interface TimeInfo {
-  time: string;
+  time: TimeString;
   index: number;
 }
 

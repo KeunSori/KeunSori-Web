@@ -21,6 +21,7 @@ import {
 import { formatDateYYYYMMDD } from "@/utils/dateUtils";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
+import { TimeString } from "@/store/Time";
 
 export const useTeamReservation = (date: TeamWeek) => {
   // atom
@@ -37,13 +38,11 @@ export const useTeamReservation = (date: TeamWeek) => {
   >("예약 유형");
   const [regularReservationTeamName, setRegularReservationTeamName] =
     useState("");
-  const [regularReservationSession, setRegularReservationSession] =
-    useState<ReservationSessionKor>("보컬");
   const [teamLeaderStudentId, setTeamLeaderStudentId] = useState("");
   const [regularReservationStartTime, setRegularReservationStartTime] =
-    useState("10:00");
+    useState<TimeString>("10:00");
   const [regularReservationEndTime, setRegularReservationEndTime] =
-    useState("23:00");
+    useState<TimeString>("23:00");
 
   const formattedStartDate = formatDateYYYYMMDD(startDate);
   const formattedEndDate = formatDateYYYYMMDD(endDate);
@@ -104,9 +103,6 @@ export const useTeamReservation = (date: TeamWeek) => {
     setRegularReservationType("예약 유형");
     setRegularReservationTeamName("");
     setTeamLeaderStudentId("");
-    setRegularReservationStartTime("");
-    setRegularReservationEndTime("");
-    setRegularReservationSession("보컬");
 
     // 팀별 예약 추가
     const newItem: TeamWeek = {

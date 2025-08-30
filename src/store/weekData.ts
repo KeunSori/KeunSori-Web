@@ -2,25 +2,26 @@ import { DayOfWeek } from "@/utils/mapper/regularReservation/convertDayOfWeek";
 import { ReservationType } from "@/utils/mapper/regularReservation/convertResType";
 import { ReservationSessionEng } from "@/utils/mapper/regularReservation/convertSession";
 import { atom } from "jotai";
+import { DateString, TimeString } from "./Time";
 
 interface RegularReservation {
   regularReservationId: number; // 예약 고유 ID
   dayOfWeek: DayOfWeek | string;
-  regularReservationStartTime: string;
-  regularReservationEndTime: string;
+  regularReservationStartTime: TimeString;
+  regularReservationEndTime: TimeString;
   regularReservationType: ReservationType | string;
   regularReservationSession: ReservationSessionEng | string;
   regularReservationTeamName: string;
-  regularReservationApplyStartDate: string;
-  regularReservationApplyEndDate: string;
+  regularReservationApplyStartDate: DateString;
+  regularReservationApplyEndDate: DateString;
   TeamLeaderStudentId: string;
 }
 
 export interface TeamWeek {
   dayOfWeekNum: number; // 각 요일별 구분
   isActive: boolean;
-  startTime: string;
-  endTime: string;
+  startTime: TimeString;
+  endTime: TimeString;
   // 팀별 예약 정보
   regularReservations: RegularReservation[]; // 각 요일별 예약 정보
 }

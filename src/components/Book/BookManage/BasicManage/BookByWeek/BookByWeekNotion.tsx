@@ -1,3 +1,4 @@
+import { DateString, TimeString } from "@/store/Time";
 import { SelectedButton } from "@/styles/DropBoxStyle";
 import {
   convertSessionKor,
@@ -9,11 +10,11 @@ import { memo } from "react";
 interface BookByWeekNotionProps {
   regularReservationId: number; // 예약 고유 ID
   reservationSessionEng: ReservationSessionEng;
-  applyStartDate: string;
-  applyEndDate: string;
+  applyStartDate: DateString;
+  applyEndDate: DateString;
   teamName: string;
-  teamStartTime: string;
-  teamEndTime: string;
+  teamStartTime: TimeString;
+  teamEndTime: TimeString;
   handleDeleteItem: (reservationId: number) => void;
 }
 
@@ -37,7 +38,7 @@ const BookByWeekNotion = ({
         <div>~</div>
         <div>{endDateWithoutYear}</div>
       </Flex>
-      <UserName>{teamName}</UserName>
+      <UserName title={teamName}>{teamName}</UserName>
       <SessionBox>{convertSessionKor(reservationSessionEng)}</SessionBox>
       <TimeContainer>
         <SelectedButton>{teamStartTime}</SelectedButton>
@@ -71,9 +72,6 @@ const TimeContainer = styled.div`
   gap: 10px;
 `;
 const UserName = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin-left: 5px;
 
   width: 100px;
@@ -84,7 +82,11 @@ const UserName = styled.div`
   font-weight: 500;
   color: #ffaa00;
 
+  display: block; // 고정된 너비 갖기
   overflow: hidden;
+  white-space: nowrap; // 한 줄로
+  text-overflow: ellipsis; // ... 처리 !!
+  padding: 7px 0 0 7px;
 `;
 const DeleteButton = styled.button`
   color: #d61b1b;
