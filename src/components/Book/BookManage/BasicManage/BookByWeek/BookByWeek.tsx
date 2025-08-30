@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 
 import {
   deletedReservationIdsAtom,
@@ -50,20 +50,23 @@ const BookByWeek: React.FC<BookByWeekProps> = ({ date }) => {
     .flatMap((item) => item.regularReservations)
     .map((r) => r.regularReservationId);
 
-  const handleDeleteItem = (reservationId: number) => {
-    setTeamWeekItems((prev) =>
-      prev.map((item) => ({
-        ...item,
-        regularReservations: item.regularReservations.filter(
-          (reservation) => reservation.regularReservationId !== reservationId
-        ),
-      }))
-    );
-    // 서버에 존재하는 id만 삭제 ids 리스트에 추가
-    if (originalIds.includes(reservationId)) {
-      setDeletedIds((prev) => [...prev, reservationId]);
-    }
-  };
+  const handleDeleteItem = useCallback(
+    (reservationId: number) => {
+      setTeamWeekItems((prev) =>
+        prev.map((item) => ({
+          ...item,
+          regularReservations: item.regularReservations.filter(
+            (reservation) => reservation.regularReservationId !== reservationId
+          ),
+        }))
+      );
+      // 서버에 존재하는 id만 삭제 ids 리스트에 추가
+      if (originalIds.includes(reservationId)) {
+        setDeletedIds((prev) => [...prev, reservationId]);
+      }
+    },
+    [setTeamWeekItems, setDeletedIds, originalIds]
+  );
 
   useEffect(() => {
     console.log("삭제된 아이디들:", deletedIds);
@@ -138,7 +141,7 @@ const BookByWeek: React.FC<BookByWeekProps> = ({ date }) => {
   );
 };
 
-export default BookByWeek;
+export default memo(BookByWeek);
 
 const TeamContainer = styled.div`
   display: flex;

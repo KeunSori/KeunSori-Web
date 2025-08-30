@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import TimeSelecter from "@/components/Book/BookManage/TimeSelecter.tsx";
 import styled from "@emotion/styled";
 import { useAtom } from "jotai";
@@ -74,7 +74,7 @@ const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
   );
 };
 
-export default DayNotion;
+export default memo(DayNotion);
 
 const Input = styled.input`
   width: 13px;

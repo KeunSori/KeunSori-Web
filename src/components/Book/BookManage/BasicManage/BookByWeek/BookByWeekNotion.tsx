@@ -4,6 +4,7 @@ import {
   ReservationSessionEng,
 } from "@/utils/mapper/regularReservation/convertSession";
 import styled from "@emotion/styled";
+import { memo } from "react";
 
 interface BookByWeekNotionProps {
   regularReservationId: number; // 예약 고유 ID
@@ -50,7 +51,7 @@ const BookByWeekNotion = ({
   );
 };
 
-export default BookByWeekNotion;
+export default memo(BookByWeekNotion);
 
 const Container = styled.div`
   display: flex;

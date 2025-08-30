@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
-import { css } from "@emotion/css";
 import Container from "@/components/Book/BookManage/Container.ts";
 import DayNotion from "@/components/Book/BookManage/BasicManage/DayNotion.tsx";
 import authApi from "@/api/Instance/authApi.ts";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAtom } from "jotai";
 import ManageModal from "@/components/Book/BookManage/ManageModal.tsx";
 import CalendarInput from "./CalendarInputs";
@@ -44,7 +43,8 @@ const BasicManage: React.FC = () => {
     }
   };
 
-  const handleSubmit = async () => {
+  // useCallback: 의존성이 바뀌지 않은 한 같은 함수 객체를 재사용
+  const handleSubmit = useCallback(async () => {
     // 서버에서 받은 예약 id들
     const originalIds = fetchedTeamWeekData
       .flatMap((item) => item.regularReservations)
@@ -77,7 +77,7 @@ const BasicManage: React.FC = () => {
       regularReservationCreateRequestList: createList,
       deleteRegularReservationIds: deletedIds,
     });
-  };
+  }, [fetchedTeamWeekData, teamWeekData, deletedIds, setDeletedIds, fetchData]);
 
   useEffect(() => {
     fetchData();
@@ -86,6 +86,18 @@ const BasicManage: React.FC = () => {
   useEffect(() => {
     console.log("fetchedTeamWeekData", fetchedTeamWeekData);
   }, [fetchedTeamWeekData]);
+
+  // 컴포넌트 최상단에서 useMemo: 자식의 불필요한 리렌더링 방지
+  const stableTeamWeekData = useMemo(() => {
+    return teamWeekData.map((date) => ({
+      dayOfWeekNum: date.dayOfWeekNum,
+      isActive: date.isActive,
+      startTime: date.startTime,
+      endTime: date.endTime,
+      regularReservations: date.regularReservations,
+    }));
+  }, [teamWeekData]);
+
   return (
     <>
       <Container>
@@ -93,21 +105,14 @@ const BasicManage: React.FC = () => {
           <CalendarInput />
         </div>
 
-        {teamWeekData.map((date) => (
-          <div
-            key={date.dayOfWeekNum}
-            className={css`
-              // border: 1px solid black;
-              width: 750px;
-              display: flex;
-              flex-direction: column;
-              gap: 10px;
-            `}
-          >
-            <DayNotion date={date} />
-            <BookByWeek date={date} />
-          </div>
-        ))}
+        {stableTeamWeekData.map((date) => {
+          return (
+            <DayOfWeekStyle key={date.dayOfWeekNum}>
+              <DayNotion date={date} />
+              <BookByWeek date={date} />
+            </DayOfWeekStyle>
+          );
+        })}
         <SumbmitButton onClick={() => setIsModalOpen(true)}>저장</SumbmitButton>
       </Container>
       {isModalOpen && (
@@ -133,4 +138,10 @@ const SumbmitButton = styled.button`
     background-color: #ffc927;
     color: white;
   }
+`;
+const DayOfWeekStyle = styled.div`
+  width: 750px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
