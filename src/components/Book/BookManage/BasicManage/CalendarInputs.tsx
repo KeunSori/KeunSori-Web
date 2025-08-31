@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import CalendarImg from "@/assets/reservation/calendar-keun.svg";
 import CalendarItem from "./CalendarItem";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
 import {
   endCalendarDateAtom,
@@ -15,9 +15,31 @@ const CalendarInputs = () => {
   const [startDate, setStartDate] = useAtom(startCalendarDateAtom);
   const [endDate, setEndDate] = useAtom(endCalendarDateAtom);
 
+  // 클릭된 타켓이 안인지 밖인지 판단
+  const calendarRef = useRef<HTMLDivElement>(null);
+
   const onShowCalendar = () => {
-    setShowCalendar(!showCalendar);
+    setShowCalendar(true);
   };
+
+  // 바깥 클릭 감지 -> 캘린더 닫힘
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        calendarRef.current &&
+        !calendarRef.current.contains(e.target as Node)
+      ) {
+        setShowCalendar(false);
+      }
+    };
+
+    if (showCalendar) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showCalendar]);
 
   return (
     <Container>
@@ -31,7 +53,10 @@ const CalendarInputs = () => {
         </Flex>
       </ContainerFlex>
       {showCalendar && (
-        <div style={{ position: "absolute", marginLeft: 200 }}>
+        <div
+          ref={calendarRef}
+          style={{ position: "absolute", marginLeft: 200 }}
+        >
           <CalendarItem
             startDate={startDate}
             endDate={endDate}
