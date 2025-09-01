@@ -1,6 +1,11 @@
 import styled from "@emotion/styled";
 import { useAtom } from "jotai";
-import { endTimeAtom, printEndTimeAtom, startTimeAtom } from "@/store/Time.ts";
+import {
+  endTimeAtom,
+  printEndTimeAtom,
+  startTimeAtom,
+  TimeString,
+} from "@/store/Time.ts";
 import { UserInfo } from "@/data/user.ts";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,9 +19,12 @@ import {
 } from "@/api/reservationSevice.ts";
 
 const baseSlots = Array.from({ length: 26 }, (_, index) => ({
-  time: `${10 + Math.floor(index / 2)}:${index % 2 === 0 ? "00" : "30"}`,
+  time: `${10 + Math.floor(index / 2)}:${
+    index % 2 === 0 ? "00" : "30"
+  }` as TimeString,
   available: true,
 }));
+
 interface ReservationProps {
   date: Date | null;
   instrument: string;
@@ -103,7 +111,11 @@ const Reservation: React.FC<ReservationProps> = ({
       });
     }
   };
-  const handleSlotClick = (index: number, time: string, available: boolean) => {
+  const handleSlotClick = (
+    index: number,
+    time: TimeString,
+    available: boolean
+  ) => {
     if (available) {
       if (!startTime) {
         setStartTime({ time, index });
