@@ -4,12 +4,12 @@ const SelectedTime = styled.div<{ isMobile: boolean }>`
   display: flex;
   padding-top: 40px;
   flex-direction: ${({ isMobile }) => (isMobile ? "row" : "column")};
-  width: 100%
-  
+  width: 100%;
+
   align-items: center;
   justify-content: center;
   gap: 20px;
-  margin-right: 20px
+  margin-right: 20px;
   font-size: 20px;
   font-weight: 300;
 `;

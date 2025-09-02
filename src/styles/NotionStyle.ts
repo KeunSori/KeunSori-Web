@@ -19,7 +19,7 @@ const NotionItem = styled.div`
   padding: 20px 30px;
   width: 320px;
   max-width: 100%;
-  height:100%
+  height: 100%;
   min-height: 150px;
   border-radius: 10px;
   border: 1px solid rgb(218, 218, 218);

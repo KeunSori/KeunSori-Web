@@ -30,8 +30,9 @@ const ButtonContainer = styled.div`
 const TypeContainer = styled.div`
   min-width: 70px;
   @media (max-width: 768px) {
-  min-width: 45px;
-  font-size: 12px;
+    min-width: 45px;
+    font-size: 12px;
+  }
 `;
 const MidContainer = styled.div`
   padding-left: 20px;
