@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import musicClass from "/image/home/musicClass.jpeg";
-import concert from "/image/home/concert.jpeg";
-import MT from "/image/home/MT.jpeg";
-import practice from "/image/home/practice.jpeg";
-import activity from "/image/home/activity.png";
+import musicClass from "/image/home/musicClass.webp";
+import concert from "/image/home/concert-2.webp";
+import MT from "/image/home/MT.webp";
+import practice from "/image/home/practice.webp";
+import activity from "/image/home/activity.webp";
 const Activity = () => {
   return (
     <>
@@ -106,12 +106,12 @@ const ImageTitle = styled.div`
   font-size: 30px;
   margin-top: 30px;
   margin-bottom: 20px;
-  font-family: LeeSeoyun, sans-serif;
+  font-family: ImHyeMin, sans-serif;
   color: #505050;
   text-align: center;
 `;
 const ImageDetail = styled.div`
-  font-family: LeeSeoyun, sans-serif;
+  font-family: ImHyeMin, sans-serif;
   font-size: 20px;
   width: 350px;
   line-height: 1.5;

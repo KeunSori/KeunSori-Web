@@ -9,7 +9,7 @@ const Poster = styled.img`
 `;
 const SubTitle = styled.a`
   cursor: pointer;
-  font-family: LeeSeoyun, sans-serif;
+  font-family: ImHyeMin, sans-serif;
   font-size: 25px;
   @media (max-width: 768px) {
     font-size: 20px;
@@ -18,7 +18,7 @@ const SubTitle = styled.a`
   white-space: nowrap;
 `;
 const SubDetail = styled.div`
-  font-family: LeeSeoyun, sans-serif;
+  font-family: ImHyeMin, sans-serif;
   font-size: 20px;
   @media (max-width: 768px) {
     font-size: 15px;
@@ -34,7 +34,7 @@ const SubContent = styled.div`
   }
 `;
 const MoreDetail = styled.div`
-  font-family: LeeSeoyun, sans-serif;
+  font-family: ImHyeMin, sans-serif;
   font-size: 20px;
   @media (max-width: 768px) {
     font-size: 12px;
@@ -44,7 +44,7 @@ const MoreDetail = styled.div`
   color: #505050;
 `;
 const RecruitTitle = styled.div`
-  font-family: LeeSeoyun, sans-serif;
+  font-family: ImHyeMin, sans-serif;
   font-size: 30px;
   @media (max-width: 768px) {
     font-size: 20px;
@@ -52,7 +52,7 @@ const RecruitTitle = styled.div`
   color: #505050;
 `;
 const RecruitDetail = styled.div`
-  font-family: LeeSeoyun, sans-serif;
+  font-family: ImHyeMin, sans-serif;
   font-size: 23px;
   @media (max-width: 768px) {
     font-size: 13px;
@@ -78,7 +78,7 @@ const RecruitContent = styled.div<{ isSmail?: boolean }>`
     }`
       : ""}
   justify-content: center;
-  font-family: LeeSeoyun, sans-serif;
+  font-family: ImHyeMin, sans-serif;
   margin-top: 50px;
   margin-left: 20px;
   margin-right: 20px;
@@ -94,7 +94,7 @@ const Image = styled.img`
   height: 100%;
 `;
 const Go = styled.a`
-  font-family: LeeSeoyun, sans-serif;
+  font-family: ImHyeMin, sans-serif;
   margin-top: 50px;
   font-size: 20px;
   padding: 12px;

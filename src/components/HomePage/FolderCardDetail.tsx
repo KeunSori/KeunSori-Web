@@ -26,7 +26,7 @@ const TextStyle = styled.div`
   position: absolute;
   top: 190px;
   padding: 10px;
-  font-family: LeeSeoyun, sans-serif;
+  font-family: ImHyeMin, sans-serif;
   width: 250px;
   height: 30px;
   z-index: 20;

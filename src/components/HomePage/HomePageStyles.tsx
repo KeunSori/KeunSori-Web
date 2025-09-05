@@ -28,7 +28,7 @@ const Details = styled.div`
   font-size: 20px;
   margin-top: 20px;
   margin-bottom: 120px;
-  font-family: LeeSeoyun, sans-serif;
+  font-family: ImHyeMin, sans-serif;
   color: #505050;
   line-height: 1.5;
 `;
@@ -36,7 +36,7 @@ const Detail = styled.div`
   text-align: center;
   font-size: 35px;
   margin-top: 30px;
-  font-family: LeeSeoyun, sans-serif;
+  font-family: ImHyeMin, sans-serif;
   color: #505050;
 `;
 const HeartImg = styled.img`

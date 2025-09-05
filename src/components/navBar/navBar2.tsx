@@ -96,7 +96,7 @@ const Button = styled.button`
   margin-right: 10px;
 `;
 const LogOutButton = styled.button`
-  font-family: SejongGeulggot;
+  font-family: Goyang;
   background-color: transparent;
   border: 1.5px solid #fec511;
   &:hover {

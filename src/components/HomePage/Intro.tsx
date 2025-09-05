@@ -1,11 +1,11 @@
 import { css } from "@emotion/css";
-import backgroundimg from "/image/home/concert.png";
-import concert from "/image/home/concert.jpeg";
+import backgroundimg from "/image/home/concert.webp";
+import concert from "/image/home/concert-2.webp";
 import styled from "@emotion/styled";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useEffect, useState } from "react";
-import bass from "/image/home/bass.jpeg";
-import vocal from "/image/home/vocal.jpeg";
+import bass from "/image/home/bass.webp";
+import vocal from "/image/home/vocal.webp";
 import logo from "/image/logowhite.svg";
 const Intro = () => {
   const slides = [backgroundimg, concert, bass, vocal];
