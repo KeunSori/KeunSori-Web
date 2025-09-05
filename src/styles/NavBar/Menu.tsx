@@ -9,8 +9,7 @@ const MobileMenu = styled.div<MobileMenuProps>`
   flex-direction: column;
   position: absolute;
   width: 100%;
-  max-height: ${({ isOpened }) => (isOpened ? "230px" : "0px")};
-  ${({ isSmall }) => (isSmall ? `height:170px` : null)};
+  max-height: ${({ isOpened }) => (isOpened ? "200px" : "0px")};
   transition: max-height 0.3s ease-in-out;
   z-index: 1;
   gap: 5px;

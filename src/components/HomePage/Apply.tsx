@@ -20,14 +20,14 @@ const Apply = () => {
 };
 const ApplyLink = styled.div`
   margin-top: 20px;
-  font-family: LeeSeoyun, sans-serif;
+  font-family: ImHyeMin, sans-serif;
   font-size: 20px;
   :hover {
     color: rgb(180, 173, 159);
   }
 `;
 const ApplyDetail = styled.div`
-  font-family: LeeSeoyun, sans-serif;
+  font-family: ImHyeMin, sans-serif;
   font-size: 20px;
   margin-right: 50px;
 `;
