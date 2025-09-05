@@ -1,17 +1,17 @@
 import { css } from "@emotion/css";
-import { TimeInfo } from "@/store/Time";
+import { TimeInfo, TimeString } from "@/store/Time";
 import { TimeSlots } from "@/styles/Book/Times";
 import { SlotButton } from "@/styles/Book/Button";
 import useIsMobile from "@/hooks/useIsMobile";
 interface TimeSlot {
-  time: string;
+  time: TimeString;
   available: boolean;
 }
 interface TimeSlotsGridProps {
   slots: TimeSlot[];
   startTime: TimeInfo | null;
   endTime: TimeInfo | null;
-  onSlotsClick: (index: number, time: string, available: boolean) => void;
+  onSlotsClick: (index: number, time: TimeString, available: boolean) => void;
 }
 export const TimeSlotsGrid: React.FC<TimeSlotsGridProps> = ({
   slots,

@@ -4,7 +4,6 @@ import { useAtom } from "jotai";
 import {
   endTimeAtom,
   startTimeAtom,
-  instrument,
   printEndTimeAtom,
   monthDataAtom,
 } from "@/store/Time.ts";
@@ -22,6 +21,7 @@ import TimeContainer from "@/components/Book/BookPage/Application/TimeContainer.
 import { formatDate } from "@/utils/dateUtils.ts";
 import CalendarComponent from "@/components/Book/BookPage/Application/Calendar/CalendarComponent.tsx";
 import ButtonsContainer from "@/components/Book/BookPage/Application/ButtonsComponent.tsx";
+import { instrument } from "@/store/instrunment";
 
 const ApplicationBook: React.FC = () => {
   const defaultInstruments: InstrumentInfo = {

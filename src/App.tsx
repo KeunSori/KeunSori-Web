@@ -12,6 +12,8 @@ import BookManagePage from "./pages/BookManagePage.tsx";
 import MyPage from "./pages/MyPage.tsx";
 import ManagePage from "./pages/ManagePage.tsx";
 import PasswordChange from "./pages/PasswordChange.tsx";
+import PasswordResetPage from "./pages/PasswordResetPage.tsx";
+import PasswordResetRedirectPage from "./pages/PasswordResetRedirectPage.tsx";
 
 import { Analytics } from "@vercel/analytics/react";
 
@@ -25,6 +27,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/password/reset" element={<PasswordResetPage />} />
+            <Route path="/password/reset/redirect" element={<PasswordResetRedirectPage />} />
 
             {/* 인증이 필요한 페이지들 */}
 

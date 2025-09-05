@@ -6,6 +6,7 @@ import {
   ModalWrapper,
   Overlay,
 } from "@/styles/ModalStyle";
+import { memo } from "react";
 interface ManageModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -29,4 +30,4 @@ const ManageModal: React.FC<ManageModalProps> = ({ onClose, onStore }) => {
     modalRoot
   );
 };
-export default ManageModal;
+export default memo(ManageModal);

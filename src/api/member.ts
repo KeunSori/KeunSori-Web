@@ -2,6 +2,7 @@ import { memberStatus } from "@/data/user";
 import baseApi from "@/api/Instance/baseApi";
 
 export const getUserInfo = async (): Promise<UserInfo> => {
+  alert("getUserInfo");
   try {
     const response = await baseApi.get("/members/me");
     return response.data;

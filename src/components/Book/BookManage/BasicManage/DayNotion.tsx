@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import TimeSelecter from "@/components/Book/BookManage/TimeSelecter.tsx";
 import styled from "@emotion/styled";
 import { useAtom } from "jotai";
-import { Week, weekDataAtom } from "@/store/weekData.ts";
+import { getUpdateWeekDateWithTime } from "@/utils/weekDataTimeUtils";
+import { TeamWeek, teamWeekDataAtom } from "@/store/weekData";
 interface DayNotionProps {
-  date: Week;
+  date: TeamWeek;
 }
 
 const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
   const [isActive, setIsActive] = useState<boolean>(date.isActive);
-  const [weekData, setWeekData] = useAtom(weekDataAtom);
+  const [weekData, setWeekData] = useAtom(teamWeekDataAtom);
   const days = [
     "일요일",
     "월요일",
@@ -24,21 +25,13 @@ const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
     (e: React.MouseEvent<HTMLButtonElement>): void => {
       const value = e.currentTarget.getAttribute("value");
       if (value) {
-        if (timeType === "startTime") {
-          const newWeekData = weekData.map((data) =>
-            data.dayOfWeekNum === date.dayOfWeekNum
-              ? { ...data, startTime: value }
-              : data
-          );
-          setWeekData(newWeekData);
-        } else if (timeType === "endTime") {
-          const newWeekData = weekData.map((data) =>
-            data.dayOfWeekNum === date.dayOfWeekNum
-              ? { ...data, endTime: value }
-              : data
-          );
-          setWeekData(newWeekData);
-        }
+        const newWeekData = getUpdateWeekDateWithTime(
+          weekData,
+          date.dayOfWeekNum,
+          timeType,
+          value
+        );
+        setWeekData(newWeekData);
       }
     };
   const handleCheck = (isActive: boolean) => {
@@ -55,31 +48,33 @@ const DayNotion: React.FC<DayNotionProps> = ({ date }) => {
 
   return (
     <>
-      <Input
-        type="checkbox"
-        defaultChecked={isActive}
-        onChange={() => handleCheck(isActive)}
-      />
-      <DayContainer isActive={isActive}>
-        <span>{days[date.dayOfWeekNum]}</span>
-        <TimeSelecter
-          disabled={isActive}
-          startTime={date.startTime}
-          onClick={handleClick("startTime")}
+      <Container>
+        <Input
+          type="checkbox"
+          defaultChecked={isActive}
+          onChange={() => handleCheck(isActive)}
         />
-        부터
-        <TimeSelecter
-          disabled={isActive}
-          endTime={date.endTime}
-          onClick={handleClick("endTime")}
-        />
-        까지
-      </DayContainer>
+        <DayContainer isActive={isActive}>
+          <span>{days[date.dayOfWeekNum]}</span>
+          <TimeSelecter
+            disabled={isActive}
+            startTime={date.startTime}
+            onClick={handleClick("startTime")}
+          />
+          부터
+          <TimeSelecter
+            disabled={isActive}
+            endTime={date.endTime}
+            onClick={handleClick("endTime")}
+          />
+          까지
+        </DayContainer>
+      </Container>
     </>
   );
 };
 
-export default DayNotion;
+export default memo(DayNotion);
 
 const Input = styled.input`
   width: 13px;
@@ -90,4 +85,8 @@ const DayContainer = styled.div<{ isActive?: boolean }>`
   display: flex;
   align-items: center;
   gap: 10px;
+`;
+const Container = styled.div`
+  display: flex;
+  gap: 5px;
 `;

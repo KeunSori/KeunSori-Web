@@ -1,21 +1,17 @@
-import { defineConfig } from "vite";
+// vite.config.ts
+import { defineConfig, type ServerOptions } from "vite";
 import react from "@vitejs/plugin-react";
+import basicSsl from "@vitejs/plugin-basic-ssl";
 import path from "path";
-// import fs from "fs";
 
+const server: ServerOptions = {
+  port: 5173,
+};
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), basicSsl()],
   resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "src"),
-    },
+    alias: { "@": path.resolve(__dirname, "src") },
   },
-  // server: {
-  //   port: 5173,
-  //   https: {
-  //     key: fs.readFileSync("./ssl/key.pem"),
-  //     cert: fs.readFileSync("./ssl/cert.pem"),
-  //   },
-  // },
+  server, // <- 타입을 ServerOptions로 고정해서 넘김
 });
