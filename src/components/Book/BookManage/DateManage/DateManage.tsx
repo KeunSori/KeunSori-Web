@@ -226,7 +226,7 @@ const DateManage: React.FC = () => {
           isOpen={storeModalOpen}
           onClose={() => setStoreModalOpen(false)}
           onAccept={handleStoreSubmit}
-          questionText={`오늘의 예약 정보가 변경 또는 취소됩니다. \n진짜 저장하시겠습니까?`}
+          questionText={`오늘의 예약 정보가 수정/삭제될 수 있습니다. \n진짜 저장하시겠습니까?`}
         />
       )}
     </>
