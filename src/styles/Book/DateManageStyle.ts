@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
 
 const StoreButton = styled.button`
-  position: absolute;
-  left: 70%;
   background-color: #68ae82;
   color: white;
   border: none;
@@ -12,6 +10,18 @@ const StoreButton = styled.button`
   cursor: pointer;
   &:hover {
     background-color: #5c9f78;
+  }
+`;
+const CancelButton = styled.button`
+  background-color: #e86960ff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  &:hover {
+    background-color: #c65a52ff;
   }
 `;
 const Input = styled.input`
@@ -49,4 +59,11 @@ const InContainer = styled.div`
   gap: 10px;
 `;
 
-export { StoreButton, Input, CalendarContainer, Divider, InContainer };
+export {
+  StoreButton,
+  Input,
+  CalendarContainer,
+  Divider,
+  InContainer,
+  CancelButton,
+};

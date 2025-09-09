@@ -1,10 +1,19 @@
 import { css } from "@emotion/css";
-import { Detail, Notion, Title } from "./NotionStyle.tsx";
+import {
+  Checkbox,
+  Detail,
+  FlexRow,
+  Notion,
+  Title,
+  UserName,
+} from "./NotionStyle.tsx";
 import { UserInfo } from "../../../../data/user.ts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "./Modal.tsx";
 import { isSameDate, transDate } from "../../../../utils/dateUtils.ts";
 import { useUserTitle } from "@/hooks/useUserTitle.ts";
+import { useAtom } from "jotai";
+import { checkedDeleteIdsAtom } from "@/store/weekData.ts";
 interface NotionCardProps {
   user: UserInfo;
   onDelete: () => void;
@@ -32,10 +41,33 @@ const NotionCard: React.FC<NotionCardProps> = ({
   };
 
   const userTitle = useUserTitle(user);
+
+  const [checkedDeleteIds, setCheckedDeleteIds] = useAtom(checkedDeleteIdsAtom);
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const isChecked = e.target.checked;
+    if (isChecked) {
+      setCheckedDeleteIds([...checkedDeleteIds, user.reservationId]);
+    } else {
+      setCheckedDeleteIds(
+        checkedDeleteIds.filter((id) => id !== user.reservationId)
+      );
+    }
+  };
+
+  useEffect(() => {
+    console.log("checkedDeleteIds:", checkedDeleteIds);
+  }, [checkedDeleteIds]);
   return (
     <>
       <Notion>
-        {userTitle}
+        <FlexRow>
+          <UserName>{userTitle}</UserName>
+          <Checkbox
+            type="checkbox"
+            onChange={handleCheckboxChange}
+            checked={checkedDeleteIds.includes(user.reservationId)}
+          />
+        </FlexRow>
         <Title>악기</Title>
         <Detail>{instrument}</Detail>
         <div
