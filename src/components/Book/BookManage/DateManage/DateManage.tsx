@@ -75,6 +75,7 @@ const DateManage: React.FC = () => {
         });
         setFilteredUserData(filteredData || null);
       }
+      console.log("예약리스트:", response.data);
     } catch (error) {
       console.log(`유저 정보 에러남:${error}`);
       alert("정보를 불러올 수 없습니다");

@@ -4,6 +4,7 @@ import { UserInfo } from "../../../../data/user.ts";
 import { useState } from "react";
 import Modal from "./Modal.tsx";
 import { isSameDate, transDate } from "../../../../utils/dateUtils.ts";
+import { useUserTitle } from "@/hooks/useUserTitle.ts";
 interface NotionCardProps {
   user: UserInfo;
   onDelete: () => void;
@@ -30,10 +31,11 @@ const NotionCard: React.FC<NotionCardProps> = ({
     return false;
   };
 
+  const userTitle = useUserTitle(user);
   return (
     <>
       <Notion>
-        {user.reservationMemberName}
+        {userTitle}
         <Title>악기</Title>
         <Detail>{instrument}</Detail>
         <div
