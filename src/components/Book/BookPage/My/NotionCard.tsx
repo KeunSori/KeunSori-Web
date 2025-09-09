@@ -14,8 +14,10 @@ import { isSameDate, transDate } from "../../../../utils/dateUtils.ts";
 import { useUserTitle } from "@/hooks/useUserTitle.ts";
 import { useAtom } from "jotai";
 import { checkedDeleteIdsAtom } from "@/store/weekData.ts";
+
 interface NotionCardProps {
   user: UserInfo;
+  isAdmin?: boolean;
   onDelete: () => void;
   date: Date | null;
   instrument: string;
@@ -23,6 +25,7 @@ interface NotionCardProps {
 
 const NotionCard: React.FC<NotionCardProps> = ({
   user,
+  isAdmin,
   onDelete,
   date,
   instrument,
@@ -62,11 +65,13 @@ const NotionCard: React.FC<NotionCardProps> = ({
       <Notion>
         <FlexRow>
           <UserName>{userTitle}</UserName>
-          <Checkbox
-            type="checkbox"
-            onChange={handleCheckboxChange}
-            checked={checkedDeleteIds.includes(user.reservationId)}
-          />
+          {isAdmin && (
+            <Checkbox
+              type="checkbox"
+              onChange={handleCheckboxChange}
+              checked={checkedDeleteIds.includes(user.reservationId)}
+            />
+          )}
         </FlexRow>
         <Title>악기</Title>
         <Detail>{instrument}</Detail>

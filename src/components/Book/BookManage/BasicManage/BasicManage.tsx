@@ -119,7 +119,7 @@ const BasicManage: React.FC = () => {
         <ManageModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          onStore={handleSubmit}
+          onAccept={handleSubmit}
         />
       )}
     </>

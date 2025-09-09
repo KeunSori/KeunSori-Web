@@ -11,7 +11,7 @@ interface ManageModalProps {
   isOpen: boolean;
   onClose: () => void;
   onAccept: () => void;
-  questionText: string;
+  questionText?: string;
 }
 const ManageModal: React.FC<ManageModalProps> = ({
   onClose,
@@ -23,7 +23,9 @@ const ManageModal: React.FC<ManageModalProps> = ({
   return ReactDOM.createPortal(
     <Overlay onClick={onClose}>
       <ModalWrapper>
-        <Text style={{ whiteSpace: "pre-line" }}>{questionText}</Text>
+        <Text style={{ whiteSpace: "pre-line" }}>
+          {questionText || "진짜 저장하시겠습니까?"}
+        </Text>
         <ButtonWrapper>
           <Button onClick={onClose}>아니요</Button>
           <Button onClick={onAccept} isDelete={true}>
