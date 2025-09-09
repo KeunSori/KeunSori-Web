@@ -2,11 +2,11 @@
 import { css } from "@emotion/css";
 
 // images
-import heart from "/image/home/heart.svg";
+import heart from "/image/home/heart.webp";
 import timeline from "/image/home/timeline.svg";
-import room from "/image/home/room.jpeg";
-import family from "/image/home/family.jpeg";
-import kawai from "/image/home/kawai.png";
+import room from "/image/home/room.webp";
+import family from "/image/home/family.webp";
+import kawai from "/image/home/kawai.webp";
 
 // shared
 import NavBar from "@/components/navBar/navBar.tsx";
@@ -15,7 +15,7 @@ import Footer from "@/styles/Footer.tsx";
 
 // this
 import FolderCard from "@/components/HomePage/FolderCard.tsx";
-import Activity from "@/components/HomePage/Activity.tsx";
+import Activity from "@/components/Home/Activity.tsx";
 import Apply from "@/components/HomePage/Apply.tsx";
 import YoutubeContents from "@/components/HomePage/YoutubeContents.tsx";
 import Intro from "@/components/HomePage/Intro.tsx";

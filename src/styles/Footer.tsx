@@ -61,7 +61,7 @@ const Ptag = styled.p`
   padding: 0;
   margin: 0;
   font-size: 18px;
-  font-family: LeeSeoyun, sans-serif;
+  font-family: ImHyeMin, sans-serif;
   color: #505050;
 
   &.copy {
@@ -70,7 +70,7 @@ const Ptag = styled.p`
     }
     color: #8e8e8e;
     font-size: 20px;
-    font-family: LeeSeoyun, sans-serif;
+    font-family: ImHyeMin, sans-serif;
   }
 `;
 
