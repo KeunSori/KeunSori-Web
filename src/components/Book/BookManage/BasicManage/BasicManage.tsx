@@ -5,7 +5,6 @@ import authApi from "@/api/Instance/authApi.ts";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAtom } from "jotai";
 import ManageModal from "@/components/Book/BookManage/ManageModal.tsx";
-import CalendarInput from "./CalendarInputs";
 import {
   deletedReservationIdsAtom,
   fetchedTeamWeekDataAtom,
@@ -103,7 +102,6 @@ const BasicManage: React.FC = () => {
     <>
       <Container>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <CalendarInput />
           <FlexStyle>
             <AddInputs />
           </FlexStyle>

@@ -10,6 +10,7 @@ import DayOfWeekSelect from "./DayOfWeekSelect";
 import { useState } from "react";
 import { useTeamReservation } from "@/hooks/useTeamReservation";
 import { dayOfWeekNumber } from "@/utils/mapper/regularReservation/dayOfWeekConstant";
+import CalendarInputs from "../CalendarInputs";
 
 const AddInputs = () => {
   const [dayOfWeekName, setDayOfWeekName] = useState("요일 선택");
@@ -47,8 +48,9 @@ const AddInputs = () => {
 
   return (
     <Container>
-      <div>요일/시간 선택</div>
-      <FlexContainer style={{ marginBottom: "15px" }}>
+      <CalendarInputs />
+      <div>요일/시간 선택:</div>
+      <FlexContainer style={{ marginBottom: "18px" }}>
         <FlexContainer>
           <DayOfWeekSelect
             dayOfWeekName={dayOfWeekName}
@@ -72,7 +74,7 @@ const AddInputs = () => {
         </TimeContainer>
       </FlexContainer>
 
-      <div>팀 정보 입력</div>
+      <div>팀 정보 입력:</div>
 
       <FlexContainer>
         <TypeSelect
