@@ -1,7 +1,7 @@
 import { ReservationType } from "@/utils/mapper/regularReservation/convertResType";
 import { ReservationSessionKor } from "@/utils/mapper/regularReservation/convertSession";
 import { useState } from "react";
-import { Container, InputType } from "./SelectStyle";
+import { Container, InputType } from "../../../../../styles/Book/SelectStyle";
 // 예약 유형 선택 토글
 
 interface TypeSelectProps {

@@ -9,8 +9,19 @@ import { TimeString } from "@/store/Time";
 import DayOfWeekSelect from "./DayOfWeekSelect";
 import { useState } from "react";
 import { useTeamReservation } from "@/hooks/useTeamReservation";
+import { dayOfWeekNumber } from "@/utils/mapper/regularReservation/dayOfWeekConstant";
 
 const AddInputs = () => {
+  const [dayOfWeekName, setDayOfWeekName] = useState("요일 선택");
+  const [reservationType, setReservationType] = useState<
+    ReservationType | ReservationSessionKor
+  >("예약 유형");
+  const [teamName, setTeamName] = useState("");
+  const [studentId, setStudentId] = useState("");
+  const [teamStartTime, setTeamStartTime] = useState<TimeString>("10:00");
+  const [teamEndTime, setTeamEndTime] = useState<TimeString>("23:00");
+
+  // 시작 시간, 종료 시간 선택 시 실행되는 함수
   const handleClick =
     (timeType: "teamStartTime" | "teamEndTime") =>
     (e: React.MouseEvent<HTMLButtonElement>): void => {
@@ -24,31 +35,9 @@ const AddInputs = () => {
       }
     };
 
-  const [dayOfWeekName, setDayOfWeekName] = useState("요일 선택");
-
-  const [reservationType, setReservationType] = useState<
-    ReservationType | ReservationSessionKor
-  >("예약 유형");
-  const [teamName, setTeamName] = useState("");
-  const [studentId, setStudentId] = useState("");
-  const [teamStartTime, setTeamStartTime] = useState<TimeString>("10:00");
-  const [teamEndTime, setTeamEndTime] = useState<TimeString>("23:00");
-
-  // 문자열 요일 -> 숫자 변환 매핑
-  const dayOfWeekMap: Record<string, number> = {
-    일요일: 0,
-    월요일: 1,
-    화요일: 2,
-    수요일: 3,
-    목요일: 4,
-    금요일: 5,
-    토요일: 6,
-  };
-  const dayOfWeekNumber = dayOfWeekMap[dayOfWeekName] ?? -1; // 잘못된 값이면 -1
-
   // 팀 예약 확인 버튼 클릭 시 저장하는 훅
   const { onClickConfirmReservation } = useTeamReservation({
-    dayOfWeekNum: dayOfWeekNumber,
+    dayOfWeekNum: dayOfWeekNumber(dayOfWeekName),
     regularReservationType: reservationType,
     regularReservationTeamName: teamName,
     teamLeaderStudentId: studentId,

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, InputType } from "./SelectStyle";
+import { Container, InputType } from "../../../../../styles/Book/SelectStyle";
 
 interface DayOfWeekSelectProps {
   dayOfWeekName: string;
