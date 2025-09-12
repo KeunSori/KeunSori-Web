@@ -16,6 +16,7 @@ import {
   regularReservationCreateRequestList,
   weeklyScheduleUpdateRequestList,
 } from "@/utils/mapper/regularReservation/api/putReservationData";
+import AddInputs from "./BookByWeek/AddInputs";
 
 const BasicManage: React.FC = () => {
   // 서버 + UI 상의 데이터
@@ -101,8 +102,11 @@ const BasicManage: React.FC = () => {
   return (
     <>
       <Container>
-        <div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           <CalendarInput />
+          <FlexStyle>
+            <AddInputs />
+          </FlexStyle>
         </div>
 
         {stableTeamWeekData.map((date) => {
@@ -145,3 +149,23 @@ const DayOfWeekStyle = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
+const FlexStyle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 60px;
+`;
+// const ConfirmButton = styled.button`
+//   background-color: #ffefbe;
+//   &:hover {
+//     background-color: #ffc927;
+//     color: white;
+//   }
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   width: 50px;
+//   border-radius: 5px;
+//   height: 30px;
+//   margin-left: 10px;
+// `;

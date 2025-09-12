@@ -44,7 +44,7 @@ const CalendarInputs = () => {
   return (
     <Container>
       <ContainerFlex>
-        <div>예약할 기간 입력하기:</div>
+        <div>&nbsp;예약할 기간 입력:</div>
         <Flex>
           <div>{formatDateYYYYMMDD(startDate)}</div>
           <div>~</div>
@@ -73,7 +73,7 @@ export default CalendarInputs;
 
 const Container = styled.div`
   gap: 8px;
-  padding: 5px 0 30px 0;
+  padding: 5px 0 10px 0;
   position: relative;
   z-index: 10;
 `;
@@ -84,7 +84,7 @@ const ContainerFlex = styled.div`
   align-items: center;
 `;
 const Flex = styled.div`
-  margin-left: 25px;
+  margin-left: 15px;
   display: flex;
   gap: 7px;
   align-items: center;

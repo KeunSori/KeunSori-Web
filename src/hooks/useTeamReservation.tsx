@@ -23,7 +23,23 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { TimeString } from "@/store/Time";
 
-export const useTeamReservation = (date: TeamWeek) => {
+interface ReservationInput {
+  dayOfWeekNum: number;
+  regularReservationType: ReservationType | ReservationSessionKor;
+  regularReservationTeamName: string;
+  teamLeaderStudentId: string;
+  regularReservationStartTime: TimeString;
+  regularReservationEndTime: TimeString;
+}
+
+export const useTeamReservation = ({
+  dayOfWeekNum,
+  regularReservationType,
+  regularReservationTeamName,
+  teamLeaderStudentId,
+  regularReservationStartTime,
+  regularReservationEndTime,
+}: ReservationInput) => {
   // atom
   const [teamWeekItems, setTeamWeekItems] = useAtom(teamWeekDataAtom);
   const [regularReservationId, setRegularReservationId] = useAtom(
@@ -33,17 +49,6 @@ export const useTeamReservation = (date: TeamWeek) => {
   const [endDate] = useAtom(endCalendarDateAtom);
 
   // state
-  const [regularReservationType, setRegularReservationType] = useState<
-    ReservationType | ReservationSessionKor
-  >("예약 유형");
-  const [regularReservationTeamName, setRegularReservationTeamName] =
-    useState("");
-  const [teamLeaderStudentId, setTeamLeaderStudentId] = useState("");
-  const [regularReservationStartTime, setRegularReservationStartTime] =
-    useState<TimeString>("10:00");
-  const [regularReservationEndTime, setRegularReservationEndTime] =
-    useState<TimeString>("23:00");
-
   const formattedStartDate = formatDateYYYYMMDD(startDate);
   const formattedEndDate = formatDateYYYYMMDD(endDate);
 
@@ -74,18 +79,18 @@ export const useTeamReservation = (date: TeamWeek) => {
   }, []);
 
   // 팀 시작~끝 시간을 주간 시작~끝 시간에 맞게 맞추기
-  useEffect(() => {
-    if (teamWeekItems.length > 0) {
-      const todayDay = teamWeekItems.find(
-        (item) => item.dayOfWeekNum === date.dayOfWeekNum
-      );
+  // useEffect(() => {
+  //   if (teamWeekItems.length > 0) {
+  //     const todayDay = teamWeekItems.find(
+  //       (item) => item.dayOfWeekNum === date.dayOfWeekNum
+  //     );
 
-      if (todayDay) {
-        setRegularReservationStartTime(todayDay.startTime || "10:00");
-        setRegularReservationEndTime(todayDay.endTime || "23:00");
-      }
-    }
-  }, [teamWeekItems, date.dayOfWeekNum]);
+  //     if (todayDay) {
+  //       setRegularReservationStartTime(todayDay.startTime || "10:00");
+  //       setRegularReservationEndTime(todayDay.endTime || "23:00");
+  //     }
+  //   }
+  // }, [teamWeekItems, date.dayOfWeekNum]);
 
   // 팀별 예약 확인 버튼 클릭 시 저장하는 함수
   const onClickConfirmReservation = () => {
@@ -100,20 +105,20 @@ export const useTeamReservation = (date: TeamWeek) => {
       return;
     }
     // 확인 누르면 input 초기화
-    setRegularReservationType("예약 유형");
-    setRegularReservationTeamName("");
-    setTeamLeaderStudentId("");
+    // setRegularReservationType("예약 유형");
+    // setRegularReservationTeamName("");
+    // setTeamLeaderStudentId("");
 
     // 팀별 예약 추가
     const newItem: TeamWeek = {
-      dayOfWeekNum: date.dayOfWeekNum,
-      isActive: date.isActive,
-      startTime: date.startTime,
-      endTime: date.endTime,
+      dayOfWeekNum: dayOfWeekNum,
+      isActive: true,
+      startTime: regularReservationStartTime,
+      endTime: regularReservationEndTime,
       regularReservations: [
         {
           regularReservationId: regularReservationId,
-          dayOfWeek: convertDayOfWeek(date.dayOfWeekNum as DayOfWeekNum),
+          dayOfWeek: convertDayOfWeek(dayOfWeekNum as DayOfWeekNum),
           regularReservationType:
             regularReservationType === "합주" ? "TEAM" : "LESSON",
           regularReservationSession:
@@ -140,7 +145,7 @@ export const useTeamReservation = (date: TeamWeek) => {
     setTeamWeekItems((prev) => {
       // 기존에 같은 요일이 있는지 확인
       const existingItemIndex = prev.findIndex(
-        (item) => item.dayOfWeekNum === date.dayOfWeekNum
+        (item) => item.dayOfWeekNum === dayOfWeekNum
       );
 
       if (existingItemIndex !== -1) {
@@ -164,19 +169,9 @@ export const useTeamReservation = (date: TeamWeek) => {
     setRegularReservationId((prev) => prev + 1); // 다음 id를 그 다음부터 사용
   };
 
-  console.log(teamWeekItems);
+  console.log("UI상의 teamWeekItems:", teamWeekItems);
 
   return {
     onClickConfirmReservation,
-    regularReservationType,
-    setRegularReservationType,
-    regularReservationTeamName,
-    setRegularReservationTeamName,
-    teamLeaderStudentId,
-    setTeamLeaderStudentId,
-    regularReservationStartTime,
-    regularReservationEndTime,
-    setRegularReservationStartTime,
-    setRegularReservationEndTime,
   };
 };

@@ -57,7 +57,7 @@ export default memo(BookByWeekNotion);
 const Container = styled.div`
   display: flex;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 9px;
   margin-left: 15px;
   align-items: center;
 `;
