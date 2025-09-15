@@ -35,7 +35,8 @@ const CalendarItem: React.FC<CalendarItemProps> = ({
             key: "selection",
           },
         ]}
-        editableDateInputs={true}
+        minDate={new Date()} // 오늘 이전은 선택 불가
+        maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 1))} // 오늘 기준 1년 뒤까지 선택 가능
         onChange={handleSelectRange}
         locale={ko}
       />
