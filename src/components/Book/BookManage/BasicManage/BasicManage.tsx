@@ -5,7 +5,6 @@ import authApi from "@/api/Instance/authApi.ts";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAtom } from "jotai";
 import ManageModal from "@/components/Book/BookManage/ManageModal.tsx";
-import CalendarInput from "./CalendarInputs";
 import {
   deletedReservationIdsAtom,
   fetchedTeamWeekDataAtom,
@@ -16,6 +15,7 @@ import {
   regularReservationCreateRequestList,
   weeklyScheduleUpdateRequestList,
 } from "@/utils/mapper/regularReservation/api/putReservationData";
+import AddInputs from "./BookByWeek/AddInputs";
 
 const BasicManage: React.FC = () => {
   // 서버 + UI 상의 데이터
@@ -101,8 +101,10 @@ const BasicManage: React.FC = () => {
   return (
     <>
       <Container>
-        <div>
-          <CalendarInput />
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <FlexStyle>
+            <AddInputs />
+          </FlexStyle>
         </div>
 
         {stableTeamWeekData.map((date) => {
@@ -119,7 +121,7 @@ const BasicManage: React.FC = () => {
         <ManageModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          onStore={handleSubmit}
+          onAccept={handleSubmit}
         />
       )}
     </>
@@ -145,3 +147,23 @@ const DayOfWeekStyle = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
+const FlexStyle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 60px;
+`;
+// const ConfirmButton = styled.button`
+//   background-color: #ffefbe;
+//   &:hover {
+//     background-color: #ffc927;
+//     color: white;
+//   }
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   width: 50px;
+//   border-radius: 5px;
+//   height: 30px;
+//   margin-left: 10px;
+// `;

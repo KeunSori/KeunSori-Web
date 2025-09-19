@@ -10,6 +10,7 @@ import TimeSelecter from "@/components/Book/BookManage/TimeSelecter.tsx";
 import ManageNotion from "@/components/Book/BookManage/DateManage/ManageNotion.tsx";
 import {
   CalendarContainer,
+  CancelButton,
   Divider,
   InContainer,
   Input,
@@ -20,6 +21,7 @@ import { Month, MonthDataAtom } from "@/store/monthData.ts";
 import ManageModal from "@/components/Book/BookManage/ManageModal.tsx";
 import { formatDate, isSameDate, transDate } from "@/utils/dateUtils.ts";
 import { NotionContainer } from "@/styles/Book/currentBook/CurrentBookStyle";
+import { checkedDeleteIdsAtom } from "@/store/weekData";
 
 const today = new Date();
 
@@ -31,7 +33,8 @@ const DateManage: React.FC = () => {
   const [filteredUserData, setFilteredUserData] = useState<UserInfo[] | null>(
     UserData
   );
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [storeModalOpen, setStoreModalOpen] = useState(false);
+  const [cancelModalOpen, setCancelModalOpen] = useState(false);
 
   const handleClick =
     (timeType: "startTime" | "endTime") =>
@@ -75,6 +78,7 @@ const DateManage: React.FC = () => {
         });
         setFilteredUserData(filteredData || null);
       }
+      console.log("예약리스트:", response.data);
     } catch (error) {
       console.log(`유저 정보 에러남:${error}`);
       alert("정보를 불러올 수 없습니다");
@@ -101,9 +105,19 @@ const DateManage: React.FC = () => {
       setDate(value);
     }
   };
-  const handleSubmit = async () => {
+  const handleStoreSubmit = async () => {
     try {
       await authApi.put(`/admin/reservation/daily-schedule`, filterDate);
+      window.location.reload();
+    } catch (e) {
+      console.log(e);
+      alert("다시 시도해 주세요");
+    }
+  };
+  const [checkedDeleteIds] = useAtom(checkedDeleteIdsAtom);
+  const handleCancelSubmit = async () => {
+    try {
+      await authApi.delete(`/admin/reservation`, { data: checkedDeleteIds });
       window.location.reload();
     } catch (e) {
       console.log(e);
@@ -182,13 +196,36 @@ const DateManage: React.FC = () => {
             </NotionContainer>
           </div>
         </CalendarContainer>
-        <StoreButton onClick={() => setIsModalOpen(true)}>저장하기</StoreButton>
+        <div
+          style={{
+            position: "absolute",
+            left: "60%",
+            display: "flex",
+            gap: "15px",
+          }}
+        >
+          <CancelButton onClick={() => setCancelModalOpen(true)}>
+            예약 취소
+          </CancelButton>
+          <StoreButton onClick={() => setStoreModalOpen(true)}>
+            저장하기
+          </StoreButton>
+        </div>
       </OutContainer>
-      {isModalOpen && (
+      {cancelModalOpen && (
         <ManageModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onStore={handleSubmit}
+          isOpen={cancelModalOpen}
+          onClose={() => setCancelModalOpen(false)}
+          onAccept={handleCancelSubmit}
+          questionText="선택된 예약을 취소하시겠습니까?"
+        />
+      )}
+      {storeModalOpen && (
+        <ManageModal
+          isOpen={storeModalOpen}
+          onClose={() => setStoreModalOpen(false)}
+          onAccept={handleStoreSubmit}
+          questionText={`오늘의 예약 정보가 수정/삭제될 수 있습니다. \n진짜 저장하시겠습니까?`}
         />
       )}
     </>

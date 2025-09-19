@@ -32,12 +32,10 @@ const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-itmes: center;
   background-color: white;
   padding: 15px;
   border-radius: 10px;
-  max-width: 300px;
-  width: 60%;
+  max-width: 500px;
 `;
 const Button = styled.button<{ isDelete?: boolean }>`
   cursor: pointer;

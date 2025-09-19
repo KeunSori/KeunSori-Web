@@ -28,4 +28,7 @@ export interface TeamWeek {
 export const teamWeekDataAtom = atom<TeamWeek[]>([]);
 export const fetchedTeamWeekDataAtom = atom<TeamWeek[]>([]);
 export const reservationIdCounterAtom = atom(0);
+// 기본 예약 관리
 export const deletedReservationIdsAtom = atom<number[]>([]);
+// 일자별 예약 관리 (체크된 예약 ID)
+export const checkedDeleteIdsAtom = atom<number[]>([]);

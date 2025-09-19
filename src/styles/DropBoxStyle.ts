@@ -18,7 +18,7 @@ const Dropbox = styled.div<{ isOpened: boolean }>`
   border: ${(props) => (props.isOpened ? "1px solid #ddd" : "none")};
 `;
 const SelectedButton = styled.button<{ disabled?: boolean }>`
-  cusur: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   width: 100px;
   height: 30px;
   color: black;

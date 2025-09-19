@@ -1,7 +1,7 @@
 import { ReservationType } from "@/utils/mapper/regularReservation/convertResType";
 import { ReservationSessionKor } from "@/utils/mapper/regularReservation/convertSession";
-import styled from "@emotion/styled";
 import { useState } from "react";
+import { Container, InputType } from "../../../../../styles/Book/SelectStyle";
 // 예약 유형 선택 토글
 
 interface TypeSelectProps {
@@ -56,28 +56,28 @@ const TypeSelect = ({
 
 export default TypeSelect;
 
-const Container = styled.div<{ isOpen: boolean }>`
-  // 클릭된 경우만 위로 덮어써서 보이게
-  z-index: ${(props) => (props.isOpen ? 1 : "auto")};
-`;
+// const Container = styled.div<{ isOpen: boolean }>`
+//   // 클릭된 경우만 위로 덮어써서 보이게
+//   z-index: ${(props) => (props.isOpen ? 1 : "auto")};
+// `;
 
-const InputType = styled.div<{ disabledHover?: boolean }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+// const InputType = styled.div<{ disabledHover?: boolean }>`
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
 
-  width: 100px;
-  height: 30px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+//   width: 100px;
+//   height: 30px;
+//   background-color: #fff;
+//   border: 1px solid #ddd;
+//   border-radius: 5px;
 
-  ${({ disabledHover }) =>
-    !disabledHover &&
-    `
-    &:hover {
-      background-color: #ececec;
-      cursor: pointer;
-    }
-  `}
-`;
+//   ${({ disabledHover }) =>
+//     !disabledHover &&
+//     `
+//     &:hover {
+//       background-color: #ececec;
+//       cursor: pointer;
+//     }
+//   `}
+// `;
