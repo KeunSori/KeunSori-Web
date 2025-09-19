@@ -83,7 +83,6 @@ const DateManage: React.FC = () => {
 
   const UnvailableMonth = (date: Date) => {
     return (
-      date.getDate() < today.getDate() ||
       date.getMonth() - 1 > today.getMonth() ||
       date.getMonth() < today.getMonth() ||
       date.getFullYear() !== today.getFullYear()
