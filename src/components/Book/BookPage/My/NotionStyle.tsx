@@ -1,5 +1,23 @@
 import styled from "@emotion/styled";
 
+const UserName = styled.div`
+  font-size: 15px;
+  font-weight: 700;
+`;
+
+const Checkbox = styled.input`
+  accent-color: #294031;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+`;
+
+const FlexRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const Title = styled.div`
   font-size: 11px;
   font-weight: 300;
@@ -24,4 +42,4 @@ const Notion = styled.div`
   font-size: 15px;
   font-weight: 700;
 `;
-export { Notion, Detail, Title };
+export { Notion, Detail, Title, UserName, Checkbox, FlexRow };

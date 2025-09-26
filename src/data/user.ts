@@ -7,6 +7,8 @@ export interface UserInfo {
   reservationType: string;
   reservationMemberId: number;
   reservationMemberName: string;
+  regularReservationId: number;
+  regularReservationTeamName: string;
 }
 
 export interface InstrumentInfo {

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { transInstrument } from "@/utils/instrumentUtils.ts";
 import { transDate } from "@/utils/dateUtils.ts";
 import { Detail, NotionItem, Title } from "@/styles/NotionStyle.ts";
+import { useUserTitle } from "@/hooks/useUserTitle";
 
 interface NotionProps {
   user: UserInfo;
@@ -20,10 +21,12 @@ const Notion: React.FC<NotionProps> = ({ user }) => {
     TransInstrument(user.reservationSession);
     setDate(new Date(transDate(user.reservationDate)));
   }, []);
+  const userTitle = useUserTitle(user);
+
   return (
     <>
       <NotionItem>
-        {user.reservationMemberName}
+        {userTitle}
         <Title>악기</Title>
         <Detail>{instrument}</Detail>
         <div

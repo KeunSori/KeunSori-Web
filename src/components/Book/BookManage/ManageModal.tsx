@@ -10,19 +10,26 @@ import { memo } from "react";
 interface ManageModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onStore: () => void;
+  onAccept: () => void;
+  questionText?: string;
 }
-const ManageModal: React.FC<ManageModalProps> = ({ onClose, onStore }) => {
+const ManageModal: React.FC<ManageModalProps> = ({
+  onClose,
+  onAccept,
+  questionText,
+}) => {
   const modalRoot = document.getElementById("modal-root");
   if (!modalRoot) return null;
   return ReactDOM.createPortal(
     <Overlay onClick={onClose}>
       <ModalWrapper>
-        <Text>기존 예약이 삭제될 수 있습니다</Text>
+        <Text style={{ whiteSpace: "pre-line" }}>
+          {questionText || "진짜 저장하시겠습니까?"}
+        </Text>
         <ButtonWrapper>
-          <Button onClick={onClose}>닫기</Button>
-          <Button onClick={onStore} isDelete={true}>
-            진짜 저장하기
+          <Button onClick={onClose}>아니요</Button>
+          <Button onClick={onAccept} isDelete={true}>
+            네
           </Button>
         </ButtonWrapper>
       </ModalWrapper>

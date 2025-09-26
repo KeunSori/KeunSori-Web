@@ -28,6 +28,7 @@ const ManageNotion: React.FC<ManageNotionProps> = ({ user }) => {
     <>
       <NotionCard
         user={user}
+        isAdmin={true}
         instrument={instrument}
         date={date}
         onDelete={handleDelete}
