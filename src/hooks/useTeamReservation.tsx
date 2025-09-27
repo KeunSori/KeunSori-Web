@@ -20,7 +20,7 @@ import {
 } from "@/store/weekData";
 import { formatDateYYYYMMDD } from "@/utils/dateUtils";
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { TimeString } from "@/store/Time";
 
 interface ReservationInput {
