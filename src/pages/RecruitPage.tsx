@@ -13,7 +13,6 @@ import {
   SubTitle,
   SubContent,
   SubDetail,
-  MoreDetail,
   RecruitTitle,
   RecruitDetail,
   RecruitContent,
@@ -23,6 +22,7 @@ import {
 import { Helmet } from "react-helmet";
 
 import { useEffect } from "react";
+import RecruitContents from "@/components/RecruitPage/RecruitContents";
 
 const RecruitPage = () => {
   useEffect(() => {
@@ -61,31 +61,24 @@ const RecruitPage = () => {
             2024년 2학기, <br />
             큰소리는 이런 사람을 기다리고 있어요.
           </RecruitTitle>
-          <RecruitDetail>
-            음악을 좋아하는 당신 !
-            <br />
-            실력자들과 멋진 합주를 즐기고 싶은 당신 !
-            <br />
-            친구들을 만들고 싶은 당신 !
-          </RecruitDetail>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              textAlign: "center",
+            }}
+          >
+            <RecruitDetail>음악을 좋아하는 당신 !</RecruitDetail>
+            <RecruitDetail>
+              실력자들과 멋진 합주를 즐기고 싶은 당신 !
+            </RecruitDetail>
+            <RecruitDetail>친구들을 만들고 싶은 당신 !</RecruitDetail>
+          </div>
         </RecruitContent>
-        <RecruitContent>
-          <RecruitTitle>모집 안내</RecruitTitle>
-          <RecruitDetail>
-            모집 대상: 홍익대 컴퓨터공학과, 컴퓨터 공학과 진입 예정 자율 전공
-            재학생 및 휴학생
-            <br />
-            모집 세션: 드럼, 베이스, 기타, 키보드, 보컬
-            <MoreDetail>* 여설 보컬, 기타, 드럼, 경력자 우대</MoreDetail>
-            모집 기간: 7/23 (수) ~ 9/7 (일)
-            <br />
-            면접 기간: 9/8 (월) ~ 9/12 (금)
-            <br />
-            면접 장소: D동 411호 대면 진행
-            <br />
-            합격 발표: 9/14 (일) 개별 문자 통보
-          </RecruitDetail>
-        </RecruitContent>
+
+        {/* 모집 안내 */}
+        <RecruitContents />
+
         <SubContent>
           <RecruitContent isSmail={true}>
             <SubDetail>더 궁금한 점이 있다면?</SubDetail>
