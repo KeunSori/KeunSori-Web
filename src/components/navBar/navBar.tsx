@@ -71,8 +71,8 @@ const NavBar: React.FC = () => {
           <Link to="/contact">
             <Space isActive={location.pathname === "/contact"}>문의하기</Space>
           </Link>
-          <Link to="/book">
-            <Space isActive={location.pathname === "/book"}>my keun</Space>
+          <Link to="/login">
+            <Space isActive={location.pathname === "/login"}>my keun</Space>
           </Link>
         </div>
       ) : (
@@ -94,7 +94,7 @@ const NavBar: React.FC = () => {
             <Link to="/contact">
               <Space isActive={false}>문의하기</Space>
             </Link>
-            <Link to="/book">
+            <Link to="/login">
               <Space isActive={false}>my keun</Space>
             </Link>
           </MobileMenu>
