@@ -100,7 +100,7 @@ const Image = styled.img`
   background: #e0e0e0;
   width: 350px;
   max-width: 350px;
-  height: 200px;
+  height: 240px;
 `;
 const ImageTitle = styled.div`
   font-size: 30px;

@@ -28,10 +28,12 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/password/reset" element={<PasswordResetPage />} />
-            <Route path="/password/reset/redirect" element={<PasswordResetRedirectPage />} />
+            <Route
+              path="/password/reset/redirect"
+              element={<PasswordResetRedirectPage />}
+            />
 
             {/* 인증이 필요한 페이지들 */}
-
             <Route path="/user" element={<UserPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/recruit" element={<RecruitPage />} />

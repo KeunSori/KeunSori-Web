@@ -1,5 +1,19 @@
 import styled from "@emotion/styled";
 
+// 공통 스타일 변수
+const baseFont = `
+  font-family: ImHyeMin, sans-serif;
+  color: #505050;
+`;
+
+const responsiveFont = (desktop: string, mobile: string) => `
+  font-size: ${desktop};
+  @media (max-width: 768px) {
+    font-size: ${mobile};
+  }
+`;
+
+// 실제 컴포넌트
 const Poster = styled.img`
   margin: 50px;
   height: 300px;
@@ -8,24 +22,16 @@ const Poster = styled.img`
   }
 `;
 const SubTitle = styled.a`
-  cursor: pointer;
-  font-family: ImHyeMin, sans-serif;
-  font-size: 25px;
-  @media (max-width: 768px) {
-    font-size: 20px;
-  }
-  color: #505050;
+  ${baseFont}
+  ${responsiveFont("25px", "20px")}
   white-space: nowrap;
+  cursor: pointer;
 `;
 const SubDetail = styled.div`
-  font-family: ImHyeMin, sans-serif;
-  font-size: 20px;
-  @media (max-width: 768px) {
-    font-size: 15px;
-  }
+  ${baseFont}
+  ${responsiveFont("20px", "15px")}
   width: 100%;
   text-align: center;
-  color: #505050;
 `;
 const SubContent = styled.div`
   display: flex;
@@ -34,34 +40,41 @@ const SubContent = styled.div`
   }
 `;
 const MoreDetail = styled.div`
-  font-family: ImHyeMin, sans-serif;
-  font-size: 20px;
-  @media (max-width: 768px) {
-    font-size: 12px;
-  }
+  ${baseFont}
+  ${responsiveFont("20px", "12px")}
   width: 100%;
   text-align: center;
   color: #505050;
+  margin-bottom: 20px;
 `;
 const RecruitTitle = styled.div`
-  font-family: ImHyeMin, sans-serif;
-  font-size: 30px;
-  @media (max-width: 768px) {
-    font-size: 20px;
-  }
+  ${baseFont}
+  ${responsiveFont("30px", "20px")}
   color: #505050;
 `;
 const RecruitDetail = styled.div`
-  font-family: ImHyeMin, sans-serif;
-  font-size: 23px;
+  ${baseFont}
+  ${responsiveFont("23px", "13px")}
   @media (max-width: 768px) {
-    font-size: 13px;
     line-height: 2;
   }
   width: 100%;
   text-align: center;
   line-height: 2.5;
   color: #505050;
+`;
+const DetailTitle = styled.div`
+  ${baseFont}
+  ${responsiveFont("23px", "13px")}
+  @media (max-width: 768px) {
+    line-height: 2;
+  }
+  width: 40%;
+  text-align: center;
+  line-height: 2.5;
+  color: #505050;
+
+  font-weight: 600;
 `;
 const RecruitContent = styled.div<{ isSmail?: boolean }>`
   padding: 40px;
@@ -78,7 +91,7 @@ const RecruitContent = styled.div<{ isSmail?: boolean }>`
     }`
       : ""}
   justify-content: center;
-  font-family: ImHyeMin, sans-serif;
+  ${baseFont}
   margin-top: 50px;
   margin-left: 20px;
   margin-right: 20px;
@@ -94,22 +107,25 @@ const Image = styled.img`
   height: 100%;
 `;
 const Go = styled.a`
-  font-family: ImHyeMin, sans-serif;
-  margin-top: 50px;
-  font-size: 20px;
-  padding: 12px;
-  border-radius: 15px;
+  ${baseFont}
+  ${responsiveFont("20px", "15px")}
   @media (max-width: 768px) {
-    font-size: 15px;
     width: 100px;
     padding: 10px;
   }
 
+  margin-top: 50px;
+  padding: 12px;
   border: 1px solid #fec511;
+  border-radius: 15px;
   text-align: center;
   width: 180px;
   cursor: pointer;
   color: #505050;
+`;
+const FlexStyle = styled.div`
+  display: flex;
+  gap: 15px;
 `;
 export {
   Poster,
@@ -119,7 +135,9 @@ export {
   MoreDetail,
   RecruitTitle,
   RecruitDetail,
+  DetailTitle,
   RecruitContent,
   Image,
   Go,
+  FlexStyle,
 };
