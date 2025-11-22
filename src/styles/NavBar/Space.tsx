@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 
 const Space = styled.div<{ isActive?: boolean }>`
+  all: unset;
   cursor: pointer;
   font-family: Goyang;
   display: flex;
@@ -16,6 +17,7 @@ const Space = styled.div<{ isActive?: boolean }>`
   @media (max-width: 768px) {
     padding: 20px 30px;
     color: black;
+    background-color: ${({ isActive }) => (isActive ? "#f1f1f1" : "white")};
     &:hover {
       background-color: #f1f1f1;
       border-bottom: none;

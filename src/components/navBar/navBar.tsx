@@ -92,7 +92,11 @@ const NavBar: React.FC = () => {
           <Link to="/contact">
             <Space isActive={location.pathname === "/contact"}>문의하기</Space>
           </Link>
-          <Space as="button" onClick={handleMyKeunClick} isActive={location.pathname === "/login"}>
+          <Space
+            as="button"
+            onClick={handleMyKeunClick}
+            isActive={location.pathname === "/login"}
+          >
             my keun
           </Space>
         </div>
