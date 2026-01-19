@@ -1,0 +1,32 @@
+name: Synchronize to forked repo
+
+on:
+  push:
+    branches: [main, develop]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Push to fork
+        env:
+          FORKED_REPO_TOKEN: ${{ secrets.FORKED_REPO_TOKEN }}
+        run: |
+          git config user.name "BeanMouse"
+          git config user.email "BeanMouse@users.noreply.github.com"
+
+          git remote add forked-repo "https://x-access-token:${FORKED_REPO_TOKEN}@github.com/BeanMouse/KeunSori-Web.git"
+
+          # 현재 브랜치 이름
+          BRANCH="${GITHUB_REF_NAME}"
+
+          git push --force forked-repo "HEAD:${BRANCH}"
+
+          git remote remove forked-repo
