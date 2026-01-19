@@ -24,9 +24,11 @@ jobs:
         run: |
           rm -rf .github/workflows || true
 
-      - name: Force sync branch to fork
+      - name: Force sync branch to fork (safe auth)
         env:
           FORKED_REPO_TOKEN: ${{ secrets.FORKED_REPO_TOKEN }}
           BRANCH: ${{ github.ref_name }}
         run: |
-          git push --force "https://x-access-token:${FORKED_REPO_TOKEN}@github.com/BeanMouse/KeunSori-Web.git" "HEAD:${BRANCH}"
+          AUTH="$(printf "x-access-token:%s" "$FORKED_REPO_TOKEN" | base64 -w 0)"
+          git -c http.extraheader="Authorization: Basic $AUTH" \
+            push --force https://github.com/BeanMouse/KeunSori-Web.git "HEAD:${BRANCH}"
