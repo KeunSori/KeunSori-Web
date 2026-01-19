@@ -2,16 +2,18 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/css";
 import React, { useEffect, useState } from "react";
 import logo from "/image/logo.svg";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useIsMobile from "@/hooks/useIsMobile.tsx";
 import { IoClose, IoMenu } from "react-icons/io5";
 import Space from "@/styles/NavBar/Space.tsx";
 import { Menu, MobileMenu } from "@/styles/NavBar/Menu.tsx";
 import logowhite from "/image/logowhite.svg";
+import { authCheck } from "@/api/auth";
 
 const NavBar: React.FC = () => {
   const [isMove, setIsMove] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,6 +27,24 @@ const NavBar: React.FC = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  /** 🔑 로그인 상태 확인 및 이동 처리 */
+  const handleMyKeunClick = async () => {
+    try {
+      const res = await authCheck();
+
+      if (res.status === 200) {
+        // ✅ 로그인된 상태
+        navigate("/book");
+      } else {
+        // ❌ 비로그인 상태
+        navigate("/login");
+      }
+    } catch (err) {
+      console.error("auth/me check failed:", err);
+      navigate("/login");
+    }
+  };
 
   return (
     <Menu isMove={isMove} isOpen={isOpen} isHome={location.pathname === "/"}>
@@ -57,12 +77,14 @@ const NavBar: React.FC = () => {
           )}
         </Link>
       </div>
+
       {!isMobile ? (
         <div
           className={css`
             display: flex;
             gap: 25px;
             margin: auto;
+            align-items: center;
           `}
         >
           <Link to="/recruit">
@@ -71,9 +93,13 @@ const NavBar: React.FC = () => {
           <Link to="/contact">
             <Space isActive={location.pathname === "/contact"}>문의하기</Space>
           </Link>
-          <Link to="/login">
-            <Space isActive={location.pathname === "/login"}>my keun</Space>
-          </Link>
+          <Space
+            as="button"
+            onClick={handleMyKeunClick}
+            isActive={location.pathname === "/login"}
+          >
+            my keun
+          </Space>
         </div>
       ) : (
         <>
@@ -94,9 +120,9 @@ const NavBar: React.FC = () => {
             <Link to="/contact">
               <Space isActive={false}>문의하기</Space>
             </Link>
-            <Link to="/login">
-              <Space isActive={false}>my keun</Space>
-            </Link>
+            <Space as="button" onClick={handleMyKeunClick} isActive={false}>
+              my keun
+            </Space>
           </MobileMenu>
         </>
       )}

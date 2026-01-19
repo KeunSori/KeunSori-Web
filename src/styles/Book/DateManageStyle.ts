@@ -47,6 +47,7 @@ const Divider = styled.div`
   max-height: 100%;
   background-color: #f1f1f1;
 `;
+
 const InContainer = styled.div`
   @media (max-width: 768px) {
     width: 60%;

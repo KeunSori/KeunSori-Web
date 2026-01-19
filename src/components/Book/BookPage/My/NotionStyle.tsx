@@ -21,20 +21,26 @@ const FlexRow = styled.div`
 const Title = styled.div`
   font-size: 11px;
   font-weight: 300;
-  margin-top: 15px;
   color: #7f8fa4;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;
 const Detail = styled.div`
   font-size: 14px;
   font-weight: 400;
   color: rgb(98, 98, 98);
   white-space: nowrap;
-  margin-top: 5px;
 `;
 const Notion = styled.div`
-  width: 250px;
   max-width: 100%;
+  min-width: 250px;
+
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
   border-radius: 10px;
   border: 1px solid rgb(218, 218, 218);
   box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
