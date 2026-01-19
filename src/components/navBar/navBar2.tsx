@@ -52,6 +52,7 @@ const NavBar2: React.FC = () => {
             display: flex;
             gap: 25px;
             margin: auto;
+            align-items: center;
           `}
         >
           <Link to={{ pathname: "/book", search: "?type=current" }}>

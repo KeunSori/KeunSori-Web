@@ -84,6 +84,7 @@ const NavBar: React.FC = () => {
             display: flex;
             gap: 25px;
             margin: auto;
+            align-items: center;
           `}
         >
           <Link to="/recruit">

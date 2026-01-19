@@ -6,7 +6,6 @@ const Space = styled.div<{ isActive?: boolean }>`
   font-family: Goyang;
   display: flex;
   align-items: center;
-  height: 110%;
   border: none;
   color: ${({ isActive }) => (isActive ? "#ffaa00" : "inherit")};
   border-bottom: ${({ isActive }) => (isActive ? "1px solid #ffaa00" : "none")};
