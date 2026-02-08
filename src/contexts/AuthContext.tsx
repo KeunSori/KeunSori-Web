@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import { login, logout, authCheck } from "../api/auth";
 import axios from "axios";
 
@@ -10,6 +10,7 @@ interface AuthContextProps {
     password: string,
   ) => Promise<{ success: boolean; message?: string; user?: User }>;
   logoutUser: () => void;
+  checkAuth: () => Promise<void>;
 }
 
 interface AuthProviderProps {
@@ -28,6 +29,7 @@ export const AuthContext = createContext<AuthContextProps>({
   isLoading: true,
   loginUser: async () => ({ success: false, message: "초기값" }),
   logoutUser: () => {},
+  checkAuth: async () => {},
 });
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
@@ -35,27 +37,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     isLoggedIn: false,
     memberStatus: "알 수 없음",
   });
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // 앱이 리부트될 때마다
-  useEffect(() => {
-    const bootstrapAuth = async () => {
-      try {
-        const res = await authCheck();
+  const checkAuth = async () => {
+    console.log("[AuthProv]");
 
-        if (res.data) {
-          setUser({ isLoggedIn: true, memberStatus: res.data.status });
-        }
-      } catch (error) {
-        console.error(error);
-        setUser({ isLoggedIn: false, memberStatus: "알 수 없음" });
-      } finally {
-        setIsLoading(false);
+    setIsLoading(true);
+    try {
+      const res = await authCheck();
+      if (res.data) {
+        setUser({ isLoggedIn: true, memberStatus: res.data.status });
       }
-    };
-
-    bootstrapAuth();
-  }, []);
+    } catch (error) {
+      console.error(error);
+      setUser({ isLoggedIn: false, memberStatus: "알 수 없음" });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const loginUser = async (
     studentId: string,
@@ -94,8 +93,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, loginUser, logoutUser }}>
-      {!isLoading ? children : <div>인증 정보 확인 중...</div>}
+    <AuthContext.Provider
+      value={{ user, isLoading, loginUser, logoutUser, checkAuth }}
+    >
+      {children}
     </AuthContext.Provider>
   );
 };
