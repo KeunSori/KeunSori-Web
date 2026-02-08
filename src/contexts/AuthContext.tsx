@@ -37,16 +37,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     isLoggedIn: false,
     memberStatus: "알 수 없음",
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const checkAuth = async () => {
-    console.log("[AuthProv]");
-
     setIsLoading(true);
     try {
       const res = await authCheck();
       if (res.data) {
-        setUser({ isLoggedIn: true, memberStatus: res.data.status });
+        setUser({ isLoggedIn: true, memberStatus: res.data.role });
       }
     } catch (error) {
       console.error(error);

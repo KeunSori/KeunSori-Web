@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom"; // Outlet 추가
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -8,26 +8,17 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ allowedStatuses }: ProtectedRouteProps) => {
   const { user, isLoading, checkAuth } = useContext(AuthContext);
-  const [isChecking, setIsChecking] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
-    console.log("[Protected]");
     const verify = async () => {
-      console.log("[Verify]");
-      if (!user.isLoggedIn) {
-        console.log("[LoggedOut]");
-
-        await checkAuth();
-      }
-      setIsChecking(false);
+      await checkAuth();
     };
 
     verify();
   }, []);
 
-  if (isChecking || isLoading) {
-    console.log("[AuthCheck]", isChecking, isLoading);
+  if (isLoading) {
     return <div>로딩 중...</div>;
   }
   if (!user.isLoggedIn) {
