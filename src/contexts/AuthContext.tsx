@@ -1,6 +1,5 @@
-import React, { createContext, useState } from "react";
-import { login, logout } from "../api/auth";
-import { removeToken } from "../utils/jwt";
+import React, { createContext, useEffect, useState } from "react";
+import { login, logout, authCheck } from "../api/auth";
 import axios from "axios";
 
 interface AuthContextProps {
@@ -8,7 +7,7 @@ interface AuthContextProps {
   isLoading: boolean;
   loginUser: (
     studentId: string,
-    password: string
+    password: string,
   ) => Promise<{ success: boolean; message?: string; user?: User }>;
   logoutUser: () => void;
 }
@@ -36,20 +35,31 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     isLoggedIn: false,
     memberStatus: "알 수 없음",
   });
-  const [isLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // useEffect(() => {
-  //   const token = getToken();
+  // 앱이 리부트될 때마다
+  useEffect(() => {
+    const bootstrapAuth = async () => {
+      try {
+        const res = await authCheck();
 
-  //   if (token) {
-  //     setUser({ isLoggedIn: true });
-  //     setIsLoading(false);
-  //   }
-  // }, []);
+        if (res.data) {
+          setUser({ isLoggedIn: true, memberStatus: res.data.status });
+        }
+      } catch (error) {
+        console.error(error);
+        setUser({ isLoggedIn: false, memberStatus: "알 수 없음" });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    bootstrapAuth();
+  }, []);
 
   const loginUser = async (
     studentId: string,
-    password: string
+    password: string,
   ): Promise<{ success: boolean; message?: string; user?: User }> => {
     try {
       const memberResponse = await login(studentId, password);
@@ -73,15 +83,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logoutUser = async () => {
-    removeToken();
+    try {
+      await logout();
+    } catch (e) {
+      // ignore logout error
+      console.error(e);
+    }
     setUser({ isLoggedIn: false, memberStatus: "알 수 없음" });
     window.location.href = "/login";
-    await logout();
   };
 
   return (
     <AuthContext.Provider value={{ user, isLoading, loginUser, logoutUser }}>
-      {children}
+      {!isLoading ? children : <div>인증 정보 확인 중...</div>}
     </AuthContext.Provider>
   );
 };
