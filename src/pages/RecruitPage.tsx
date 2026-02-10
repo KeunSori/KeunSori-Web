@@ -61,7 +61,7 @@ const RecruitPage = () => {
         </Go>
         <RecruitContent>
           <RecruitTitle>
-            2026년 1학기, <br />
+            {RECRUIT_INFO.semester}, <br />
             큰소리는 이런 사람을 기다리고 있어요.
           </RecruitTitle>
           <div
