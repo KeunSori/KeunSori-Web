@@ -55,7 +55,7 @@ const RecruitPage = () => {
       <NavBar />
       <Wrapper>
         <Image src={recruit} />
-        <Go href="https://forms.gle/rG5CGppUftwgc6cX7">지원하러가기</Go>
+        <Go href="https://docs.google.com/forms/d/e/1FAIpQLSdaDbf256nrUZXM7Df-1-mKUveGAvKi2OLnwPXnx9iem9ZqcA/viewform">지원하러가기</Go>
         <RecruitContent>
           <RecruitTitle>
             2026년 1학기, <br />

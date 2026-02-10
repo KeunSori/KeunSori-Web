@@ -5,7 +5,6 @@ import {
   RecruitContent,
   RecruitDetail,
   RecruitTitle,
-  ExternalLink,
 } from "./RecruitPageStyles";
 
 const RecruitContents = () => {
@@ -42,18 +41,6 @@ const RecruitContents = () => {
         <FlexStyle>
           <DetailTitle>합격 발표:</DetailTitle>
           <RecruitDetail>3/17 (화)</RecruitDetail>
-        </FlexStyle>
-        <FlexStyle>
-          <DetailTitle>지원 링크:</DetailTitle>
-          <ExternalLink>
-            <a
-              href="https://example.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              https://docs.google.com/forms/d/e/1FAIpQLSdaDbf256nrUZXM7Df-1-mKUveGAvKi2OLnwPXnx9iem9ZqcA/viewform
-            </a>
-          </ExternalLink>
         </FlexStyle>
       </div>
     </RecruitContent>
