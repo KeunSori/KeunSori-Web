@@ -58,7 +58,7 @@ const RecruitPage = () => {
         <Go href="https://forms.gle/rG5CGppUftwgc6cX7">지원하러가기</Go>
         <RecruitContent>
           <RecruitTitle>
-            2024년 2학기, <br />
+            2026년 1학기, <br />
             큰소리는 이런 사람을 기다리고 있어요.
           </RecruitTitle>
           <div

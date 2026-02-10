@@ -5,6 +5,7 @@ import {
   RecruitContent,
   RecruitDetail,
   RecruitTitle,
+  ExternalLink,
 } from "./RecruitPageStyles";
 
 const RecruitContents = () => {
@@ -23,24 +24,36 @@ const RecruitContents = () => {
           <DetailTitle>모집 세션:</DetailTitle>
           <div style={{ width: "100%" }}>
             <RecruitDetail> 드럼, 베이스, 기타, 키보드, 보컬</RecruitDetail>
-            <MoreDetail>* 여설 보컬, 기타, 드럼, 경력자 우대</MoreDetail>
+            <MoreDetail>* 여성 보컬, 기타, 드럼, 경력자 우대</MoreDetail>
           </div>
         </FlexStyle>
         <FlexStyle>
           <DetailTitle>모집 기간:</DetailTitle>
-          <RecruitDetail>7/23 (수) ~ 9/7 (일)</RecruitDetail>
+          <RecruitDetail>~ 3/12 (목)</RecruitDetail>
         </FlexStyle>
         <FlexStyle>
           <DetailTitle>면접 기간:</DetailTitle>
-          <RecruitDetail>9/8 (월) ~ 9/12 (금)</RecruitDetail>
+          <RecruitDetail>3/13 (금), 3/15 (일), 3/16 (월)</RecruitDetail>
         </FlexStyle>
         <FlexStyle>
           <DetailTitle>면접 장소:</DetailTitle>
-          <RecruitDetail>D동 411호 대면 진행</RecruitDetail>
+          <RecruitDetail>D동 411호 대면 진행 (D동 지하 4층)</RecruitDetail>
         </FlexStyle>
         <FlexStyle>
           <DetailTitle>합격 발표:</DetailTitle>
-          <RecruitDetail>9/14 (일) 개별 문자 통보</RecruitDetail>
+          <RecruitDetail>3/17 (화)</RecruitDetail>
+        </FlexStyle>
+        <FlexStyle>
+          <DetailTitle>지원 링크:</DetailTitle>
+          <ExternalLink>
+            <a
+              href="https://example.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://docs.google.com/forms/d/e/1FAIpQLSdaDbf256nrUZXM7Df-1-mKUveGAvKi2OLnwPXnx9iem9ZqcA/viewform
+            </a>
+          </ExternalLink>
         </FlexStyle>
       </div>
     </RecruitContent>

@@ -127,6 +127,19 @@ const FlexStyle = styled.div`
   display: flex;
   gap: 15px;
 `;
+const ExternalLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 export {
   Poster,
   SubTitle,
@@ -140,4 +153,5 @@ export {
   Image,
   Go,
   FlexStyle,
+  ExternalLink,
 };
