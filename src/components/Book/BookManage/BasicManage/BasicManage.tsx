@@ -22,7 +22,7 @@ const BasicManage: React.FC = () => {
   const [teamWeekData, setTeamWeekData] = useAtom(teamWeekDataAtom);
   // 서버에서 받은 실제 저장 데이터
   const [fetchedTeamWeekData, setFetchedTeamWeekData] = useAtom(
-    fetchedTeamWeekDataAtom
+    fetchedTeamWeekDataAtom,
   );
 
   const [deletedIds, setDeletedIds] = useAtom(deletedReservationIdsAtom);
@@ -54,10 +54,15 @@ const BasicManage: React.FC = () => {
     const weeklyList = weeklyScheduleUpdateRequestList(teamWeekData);
     const createList = regularReservationCreateRequestList(
       teamWeekData,
-      originalIds
+      fetchedTeamWeekData,
     );
 
     try {
+      console.log("주간 예약 업데이트 요청:", {
+        weeklyScheduleUpdateRequestList: weeklyList,
+        regularReservationCreateRequestList: createList,
+        deleteRegularReservationIds: deletedIds,
+      });
       await authApi.put(`/admin/reservation/weekly-schedule/management`, {
         weeklyScheduleUpdateRequestList: weeklyList,
         regularReservationCreateRequestList: createList,

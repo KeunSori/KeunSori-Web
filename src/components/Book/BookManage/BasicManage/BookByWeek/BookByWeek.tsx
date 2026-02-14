@@ -36,16 +36,16 @@ const BookByWeek: React.FC<BookByWeekProps> = ({ date }) => {
         prev.map((item) => ({
           ...item,
           regularReservations: item.regularReservations.filter(
-            (reservation) => reservation.regularReservationId !== reservationId
+            (reservation) => reservation.regularReservationId !== reservationId,
           ),
-        }))
+        })),
       );
       // 서버에 존재하는 id만 삭제 ids 리스트에 추가
       if (originalIds.includes(reservationId)) {
         setDeletedIds((prev) => [...prev, reservationId]);
       }
     },
-    [setTeamWeekItems, setDeletedIds, originalIds]
+    [setTeamWeekItems, setDeletedIds, originalIds],
   );
 
   useEffect(() => {
@@ -74,6 +74,7 @@ const BookByWeek: React.FC<BookByWeekProps> = ({ date }) => {
                     teamStartTime={item.regularReservationStartTime}
                     teamEndTime={item.regularReservationEndTime}
                     handleDeleteItem={handleDeleteItem}
+                    dayOfWeekNum={date.dayOfWeekNum}
                   />
                 );
               })}

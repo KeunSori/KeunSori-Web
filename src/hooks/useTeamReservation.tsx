@@ -42,7 +42,7 @@ export const useTeamReservation = ({
   // atom
   const [teamWeekItems, setTeamWeekItems] = useAtom(teamWeekDataAtom);
   const [regularReservationId, setRegularReservationId] = useAtom(
-    reservationIdCounterAtom
+    reservationIdCounterAtom,
   );
   const [startDate] = useAtom(startCalendarDateAtom);
   const [endDate] = useAtom(endCalendarDateAtom);
@@ -56,11 +56,11 @@ export const useTeamReservation = ({
     const fetchReservationId = async () => {
       try {
         const response = await authApi.get(
-          `/admin/reservation/weekly-schedule`
+          `/admin/reservation/weekly-schedule`,
         );
 
         const allIds = response.data.flatMap((item: TeamWeek) =>
-          item.regularReservations.map((res) => res.regularReservationId)
+          item.regularReservations.map((res) => res.regularReservationId),
         );
 
         const maxId = Math.max(...allIds, 0); // 0을 기본값으로 사용하여 빈 배열 처리
@@ -124,14 +124,14 @@ export const useTeamReservation = ({
             regularReservationType === "합주"
               ? "ALL"
               : convertSessionEng(
-                  regularReservationType as ReservationSessionKor
+                  regularReservationType as ReservationSessionKor,
                 ),
 
           regularReservationTeamName: regularReservationTeamName,
           regularReservationStartTime: regularReservationStartTime,
           regularReservationEndTime: regularReservationEndTime,
 
-          TeamLeaderStudentId: teamLeaderStudentId,
+          teamLeaderStudentId: teamLeaderStudentId,
           regularReservationApplyStartDate: formattedStartDate,
           regularReservationApplyEndDate: formattedEndDate,
         },
@@ -144,7 +144,7 @@ export const useTeamReservation = ({
     setTeamWeekItems((prev) => {
       // 기존에 같은 요일이 있는지 확인
       const existingItemIndex = prev.findIndex(
-        (item) => item.dayOfWeekNum === dayOfWeekNum
+        (item) => item.dayOfWeekNum === dayOfWeekNum,
       );
 
       if (existingItemIndex !== -1) {

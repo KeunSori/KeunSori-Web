@@ -4,7 +4,7 @@ import { ReservationSessionEng } from "@/utils/mapper/regularReservation/convert
 import { atom } from "jotai";
 import { DateString, TimeString } from "./Time";
 
-interface RegularReservation {
+export interface RegularReservation {
   regularReservationId: number; // 예약 고유 ID
   dayOfWeek: DayOfWeek | string;
   regularReservationStartTime: TimeString;
@@ -14,7 +14,7 @@ interface RegularReservation {
   regularReservationTeamName: string;
   regularReservationApplyStartDate: DateString;
   regularReservationApplyEndDate: DateString;
-  TeamLeaderStudentId: string;
+  teamLeaderStudentId: string;
 }
 
 export interface TeamWeek {
