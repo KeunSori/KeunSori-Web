@@ -33,12 +33,12 @@ function App() {
               path="/password/reset/redirect"
               element={<PasswordResetRedirectPage />}
             />
+            <Route path="/recruit" element={<RecruitPage />} />
+            <Route path="/contact" element={<ContactPage />} />
 
             {/* 인증이 필요한 페이지들 */}
             <Route element={<ProtectedRoute />}>
               <Route path="/user" element={<UserPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/recruit" element={<RecruitPage />} />
               <Route path="/book" element={<BookPage />} />
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/password-change" element={<PasswordChange />} />

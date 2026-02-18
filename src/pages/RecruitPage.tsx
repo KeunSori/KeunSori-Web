@@ -23,6 +23,7 @@ import { Helmet } from "react-helmet";
 
 import { useEffect } from "react";
 import RecruitContents from "@/components/RecruitPage/RecruitContents";
+import { RECRUIT_INFO } from "@/components/RecruitPage/recruit.data";
 
 const RecruitPage = () => {
   useEffect(() => {
@@ -55,10 +56,12 @@ const RecruitPage = () => {
       <NavBar />
       <Wrapper>
         <Image src={recruit} />
-        <Go href="https://forms.gle/rG5CGppUftwgc6cX7">지원하러가기</Go>
+        <Go href={RECRUIT_INFO.applyLink} target="_blank">
+          지원하러가기
+        </Go>
         <RecruitContent>
           <RecruitTitle>
-            2024년 2학기, <br />
+            {RECRUIT_INFO.semester}, <br />
             큰소리는 이런 사람을 기다리고 있어요.
           </RecruitTitle>
           <div
@@ -86,7 +89,7 @@ const RecruitPage = () => {
           </RecruitContent>
           <RecruitContent isSmail={true}>
             <SubDetail>큰소리 공연이 궁금하다면?</SubDetail>
-            <SubTitle href="https://www.youtube.com/@keunsori_hongik">
+            <SubTitle href={RECRUIT_INFO.youtubeLink} target="_blank">
               큰소리 유튜브 보러가기
             </SubTitle>
           </RecruitContent>
