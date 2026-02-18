@@ -4,7 +4,7 @@ import {
   ReservationSessionEng,
 } from "@/utils/mapper/regularReservation/convertSession";
 import styled from "@emotion/styled";
-import { memo, useEffect } from "react";
+import { memo } from "react";
 import TimeSelecter from "../../TimeSelecter";
 import { teamWeekDataAtom } from "@/store/weekData";
 import { getUpdateWeekDateWithTimeDetail } from "@/utils/weekDataTimeUtils";
@@ -53,9 +53,6 @@ const BookByWeekNotion = ({
       }
     };
 
-  useEffect(() => {
-    console.log("업데이트된 팀 예약 데이터:", teamWeekData);
-  }, [teamWeekData]);
   return (
     <Container>
       <Flex>

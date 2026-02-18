@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useAtom } from "jotai";
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useState } from "react";
 
 import {
   deletedReservationIdsAtom,
@@ -47,10 +47,6 @@ const BookByWeek: React.FC<BookByWeekProps> = ({ date }) => {
     },
     [setTeamWeekItems, setDeletedIds, originalIds],
   );
-
-  useEffect(() => {
-    console.log("삭제된 아이디들:", deletedIds);
-  }, [deletedIds]);
 
   return (
     <TeamContainer>

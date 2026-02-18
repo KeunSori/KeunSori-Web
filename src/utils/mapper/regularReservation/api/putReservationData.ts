@@ -1,4 +1,5 @@
-import { RegularReservation, TeamWeek } from "@/store/weekData";
+import { TimeString } from "@/store/Time";
+import { TeamWeek } from "@/store/weekData";
 
 // 팀별 예약 PUT 데이터 형식으로 변환
 
@@ -17,25 +18,13 @@ export const regularReservationCreateRequestList = (
   teamWeekData: TeamWeek[],
   fetchedTeamWeekData: TeamWeek[],
 ) => {
-  console.log("studentID:", teamWeekData);
-  const originalMap = new Map<number, RegularReservation>();
+  const originalIds = fetchedTeamWeekData
+    .flatMap((d) => d.regularReservations)
+    .map((r) => r.regularReservationId);
 
-  fetchedTeamWeekData.forEach((day) => {
-    day.regularReservations.forEach((r) => {
-      originalMap.set(r.regularReservationId, r);
-    });
-  });
   return teamWeekData.flatMap((item) =>
     item.regularReservations
-      .filter((r) => {
-        const original = originalMap.get(r.regularReservationId);
-
-        // ✅ 신규
-        if (!original) return true;
-
-        // ✅ 기존 + 변경됨
-        return isReservationChanged(r, original);
-      })
+      .filter((r) => !originalIds.includes(r.regularReservationId)) // 기존에 없던 예약만 포함
       .map((r) => ({
         reservationType: r.regularReservationType,
         reservationSession: r.regularReservationSession,
@@ -50,16 +39,43 @@ export const regularReservationCreateRequestList = (
   );
 };
 
-// 예약이 변경되었는지 비교하는 함수
-function isReservationChanged(
-  current: RegularReservation,
-  original: RegularReservation,
-) {
-  return (
-    current.regularReservationTeamName !==
-      original.regularReservationTeamName ||
-    current.regularReservationStartTime !==
-      original.regularReservationStartTime ||
-    current.regularReservationEndTime !== original.regularReservationEndTime
+export const regularReservationTimeUpdateList = (
+  current: TeamWeek[],
+  original: TeamWeek[],
+) => {
+  const originalMap = new Map<
+    number,
+    {
+      start: TimeString;
+      end: TimeString;
+    }
+  >();
+
+  original.forEach((day) => {
+    day.regularReservations.forEach((r) => {
+      originalMap.set(r.regularReservationId, {
+        start: r.regularReservationStartTime,
+        end: r.regularReservationEndTime,
+      });
+    });
+  });
+
+  return current.flatMap((item) =>
+    item.regularReservations
+      .filter((r) => {
+        const original = originalMap.get(r.regularReservationId);
+        if (!original) return false; // 신규는 제외
+
+        // 시간 변경된 예약만 포함
+        return (
+          r.regularReservationStartTime !== original.start ||
+          r.regularReservationEndTime !== original.end
+        );
+      })
+      .map((r) => ({
+        regularReservationId: r.regularReservationId,
+        regularReservationStartTime: r.regularReservationStartTime,
+        regularReservationEndTime: r.regularReservationEndTime,
+      })),
   );
-}
+};

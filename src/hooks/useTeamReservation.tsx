@@ -77,20 +77,6 @@ export const useTeamReservation = ({
     fetchReservationId();
   }, []);
 
-  // 팀 시작~끝 시간을 주간 시작~끝 시간에 맞게 맞추기
-  // useEffect(() => {
-  //   if (teamWeekItems.length > 0) {
-  //     const todayDay = teamWeekItems.find(
-  //       (item) => item.dayOfWeekNum === date.dayOfWeekNum
-  //     );
-
-  //     if (todayDay) {
-  //       setRegularReservationStartTime(todayDay.startTime || "10:00");
-  //       setRegularReservationEndTime(todayDay.endTime || "23:00");
-  //     }
-  //   }
-  // }, [teamWeekItems, date.dayOfWeekNum]);
-
   // 팀별 예약 확인 버튼 클릭 시 저장하는 함수
   const onClickConfirmReservation = () => {
     if (
@@ -103,10 +89,6 @@ export const useTeamReservation = ({
       alert("모든 값을 입력하세요");
       return;
     }
-    // 확인 누르면 input 초기화
-    // setRegularReservationType("예약 유형");
-    // setRegularReservationTeamName("");
-    // setTeamLeaderStudentId("");
 
     // 팀별 예약 추가
     const newItem: TeamWeek = {
@@ -167,8 +149,6 @@ export const useTeamReservation = ({
     });
     setRegularReservationId((prev) => prev + 1); // 다음 id를 그 다음부터 사용
   };
-
-  console.log("UI상의 teamWeekItems:", teamWeekItems);
 
   return {
     onClickConfirmReservation,
