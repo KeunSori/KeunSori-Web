@@ -13,6 +13,7 @@ import {
 import BookByWeek from "./BookByWeek/BookByWeek";
 import {
   regularReservationCreateRequestList,
+  regularReservationTimeUpdateList,
   weeklyScheduleUpdateRequestList,
 } from "@/utils/mapper/regularReservation/api/putReservationData";
 import AddInputs from "./BookByWeek/AddInputs";
@@ -22,12 +23,10 @@ const BasicManage: React.FC = () => {
   const [teamWeekData, setTeamWeekData] = useAtom(teamWeekDataAtom);
   // 서버에서 받은 실제 저장 데이터
   const [fetchedTeamWeekData, setFetchedTeamWeekData] = useAtom(
-    fetchedTeamWeekDataAtom
+    fetchedTeamWeekDataAtom,
   );
 
   const [deletedIds, setDeletedIds] = useAtom(deletedReservationIdsAtom);
-  console.log("deletedIds", deletedIds);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchData = async () => {
@@ -35,7 +34,6 @@ const BasicManage: React.FC = () => {
       const response = await authApi.get(`/admin/reservation/weekly-schedule`);
       setTeamWeekData(response.data);
       setFetchedTeamWeekData(response.data);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.log(`에러남:${error}`);
       console.error("예약 관리 가져오기 실패:", error.response?.data || error);
@@ -45,38 +43,48 @@ const BasicManage: React.FC = () => {
 
   // useCallback: 의존성이 바뀌지 않은 한 같은 함수 객체를 재사용
   const handleSubmit = useCallback(async () => {
-    // 서버에서 받은 예약 id들
-    const originalIds = fetchedTeamWeekData
-      .flatMap((item) => item.regularReservations)
-      .map((r) => r.regularReservationId);
-    console.log("originalIds", originalIds);
-
     const weeklyList = weeklyScheduleUpdateRequestList(teamWeekData);
+    // 신규 예약만
     const createList = regularReservationCreateRequestList(
       teamWeekData,
-      originalIds
+      fetchedTeamWeekData,
+    );
+    // 기존 예약 중 시간만 변경된 것
+    const timeUpdateList = regularReservationTimeUpdateList(
+      teamWeekData,
+      fetchedTeamWeekData,
     );
 
     try {
-      await authApi.put(`/admin/reservation/weekly-schedule/management`, {
-        weeklyScheduleUpdateRequestList: weeklyList,
-        regularReservationCreateRequestList: createList,
-        deleteRegularReservationIds: deletedIds,
-      });
+      // 1️⃣ create / delete / weekly
+      if (weeklyList.length || createList.length || deletedIds.length) {
+        console.log("주간 예약 업데이트 요청:", {
+          weeklyScheduleUpdateRequestList: weeklyList,
+          regularReservationCreateRequestList: createList,
+          deleteRegularReservationIds: deletedIds,
+        });
+        await authApi.put("/admin/reservation/weekly-schedule/management", {
+          weeklyScheduleUpdateRequestList: weeklyList,
+          regularReservationCreateRequestList: createList,
+          deleteRegularReservationIds: deletedIds,
+        });
+      }
+
+      // 2️⃣ time update (수정만)
+      if (timeUpdateList.length > 0) {
+        console.log("시간 업데이트 요청 리스트:", timeUpdateList);
+        await authApi.put(
+          "/admin/reservation/regular-reservations/time",
+          timeUpdateList,
+        );
+      }
       alert("예약 관리 업데이트에 성공했습니다.");
       setDeletedIds([]); // 초기화
       fetchData();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      console.log(`에러남:${error}`);
       console.error("예약 관리 업데이트 실패:", error.response?.data || error);
       alert(`요청 실패:\n${error.response?.data.message}`);
     }
-    console.log("주간 예약 업데이트 요청:", {
-      weeklyScheduleUpdateRequestList: weeklyList,
-      regularReservationCreateRequestList: createList,
-      deleteRegularReservationIds: deletedIds,
-    });
   }, [fetchedTeamWeekData, teamWeekData, deletedIds, setDeletedIds, fetchData]);
 
   useEffect(() => {
@@ -153,17 +161,3 @@ const FlexStyle = styled.div`
   justify-content: center;
   margin-bottom: 60px;
 `;
-// const ConfirmButton = styled.button`
-//   background-color: #ffefbe;
-//   &:hover {
-//     background-color: #ffc927;
-//     color: white;
-//   }
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   width: 50px;
-//   border-radius: 5px;
-//   height: 30px;
-//   margin-left: 10px;
-// `;
