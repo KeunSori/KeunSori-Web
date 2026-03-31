@@ -43,8 +43,8 @@ const Button = styled.button<{ isDelete?: boolean }>`
   font-size: 15px;
   font-weight: 400;
   border: ${(props) =>
-    props.isDelete ? "none" : "1px solid rgb(146, 146, 146)"};
-  background-color: ${(props) => (props.isDelete ? "#FEDC75" : "white")};
+    props.isDelete ? "1px solid rgb(146, 146, 146);" : "none"};
+  background-color: ${(props) => (props.isDelete ? "white" : "#FEDC75")};
   border-radius: 5px;
   padding: 10px;
   margin: 0 5px;

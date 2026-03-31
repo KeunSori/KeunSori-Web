@@ -1,4 +1,3 @@
-import { TimeString } from "@/store/Time";
 import { TeamWeek } from "@/store/weekData";
 
 export type TimeType =
@@ -20,35 +19,11 @@ export function getUpdateWeekDateWithTime(
   weekData: TeamWeek[],
   dayOfWeekNum: number,
   timeType: TimeType,
-  timeValue: string,
+  timeValue: string
 ): TeamWeek[] {
   return weekData.map((data) =>
     data.dayOfWeekNum === dayOfWeekNum
       ? { ...data, [timeType]: timeValue }
-      : data,
+      : data
   );
-}
-
-export function getUpdateWeekDateWithTimeDetail(
-  weekData: TeamWeek[],
-  dayOfWeekNum: number,
-  timeType: TimeType,
-  timeValue: TimeString,
-): TeamWeek[] {
-  return weekData.map((data) => {
-    if (data.dayOfWeekNum !== dayOfWeekNum) return data;
-
-    return {
-      ...data,
-      regularReservations: data.regularReservations.map((res) => ({
-        ...res,
-        ...(timeType === "startTime" && {
-          regularReservationStartTime: timeValue,
-        }),
-        ...(timeType === "endTime" && {
-          regularReservationEndTime: timeValue,
-        }),
-      })),
-    };
-  });
 }

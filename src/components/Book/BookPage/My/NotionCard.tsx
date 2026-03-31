@@ -1,6 +1,4 @@
 import { css } from "@emotion/css";
-import styled from "@emotion/styled";
-
 import {
   Checkbox,
   Detail,
@@ -10,7 +8,7 @@ import {
   UserName,
 } from "./NotionStyle.tsx";
 import { UserInfo } from "../../../../data/user.ts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "./Modal.tsx";
 import { isSameDate, transDate } from "../../../../utils/dateUtils.ts";
 import { useUserTitle } from "@/hooks/useUserTitle.ts";
@@ -29,6 +27,7 @@ const NotionCard: React.FC<NotionCardProps> = ({
   user,
   isAdmin,
   onDelete,
+  date,
   instrument,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -47,71 +46,65 @@ const NotionCard: React.FC<NotionCardProps> = ({
   const userTitle = useUserTitle(user);
 
   const [checkedDeleteIds, setCheckedDeleteIds] = useAtom(checkedDeleteIdsAtom);
-
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked;
     if (isChecked) {
       setCheckedDeleteIds([...checkedDeleteIds, user.reservationId]);
     } else {
       setCheckedDeleteIds(
-        checkedDeleteIds.filter((id) => id !== user.reservationId),
+        checkedDeleteIds.filter((id) => id !== user.reservationId)
       );
     }
   };
 
+  useEffect(() => {
+    console.log("checkedDeleteIds:", checkedDeleteIds);
+  }, [checkedDeleteIds]);
   return (
     <>
       <Notion>
+        <FlexRow>
+          <UserName>{userTitle}</UserName>
+          {isAdmin && (
+            <Checkbox
+              type="checkbox"
+              onChange={handleCheckboxChange}
+              checked={checkedDeleteIds.includes(user.reservationId)}
+            />
+          )}
+        </FlexRow>
+        <Title>악기</Title>
+        <Detail>{instrument}</Detail>
         <div
           className={css`
             display: flex;
-            flex-direction: column;
-            gap: 10px;
+            justify-content: space-between;
+            padding-right: 30px;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f1f1f1;
           `}
         >
-          <FlexRow>
-            <UserName>{userTitle}</UserName>
-            {isAdmin && (
-              <Checkbox
-                type="checkbox"
-                onChange={handleCheckboxChange}
-                checked={checkedDeleteIds.includes(user.reservationId)}
-              />
-            )}
-          </FlexRow>
-          <Title>
-            악기 <Detail>{instrument}</Detail>
-          </Title>
-          <div
-            className={css`
-              display: flex;
-              justify-content: space-between;
-              gap: 15px;
-            `}
-          >
-            <Title>
-              날짜
-              <Detail>{`${formatDate(user.reservationDate)}`}</Detail>
-            </Title>
-
-            <Title>
-              시간{" "}
-              <Detail>
-                {user.reservationStartTime} - {user.reservationEndTime}
-              </Detail>
-            </Title>
+          <div>
+            <Title>날짜</Title>
+            <Detail>{`${
+              date
+                ? `${date.getFullYear()}년 ${
+                    date.getMonth() + 1
+                  }월 ${date.getDate()}일`
+                : "날짜 정보 없음"
+            }`}</Detail>
+          </div>
+          <div>
+            <Title>시간</Title>
+            <Detail>
+              {user.reservationStartTime} - {user.reservationEndTime}
+            </Detail>
           </div>
         </div>
-        <RowDivider />
         <div
           className={css`
+            margin-top: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -157,9 +150,3 @@ const NotionCard: React.FC<NotionCardProps> = ({
 };
 
 export default NotionCard;
-
-const RowDivider = styled.div`
-  width: 100%;
-  height: 1.5px;
-  background-color: #f1f1f1;
-`;

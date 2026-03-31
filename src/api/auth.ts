@@ -31,11 +31,6 @@ export const passwordUpdate = async (token: string, newPassword: string): Promis
     return response;
 };
 
-export const authCheck = async (): Promise<AxiosResponse> => {
-    const response = await authApi.get(`/auth/me`);
-    return response;
-};
-
 // ToDo: 위치 옮기기
 interface LoginResponse {
   name: string;

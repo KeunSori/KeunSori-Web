@@ -1,14 +1,11 @@
 import { DateString, TimeString } from "@/store/Time";
+import { SelectedButton } from "@/styles/DropBoxStyle";
 import {
   convertSessionKor,
   ReservationSessionEng,
 } from "@/utils/mapper/regularReservation/convertSession";
 import styled from "@emotion/styled";
 import { memo } from "react";
-import TimeSelecter from "../../TimeSelecter";
-import { teamWeekDataAtom } from "@/store/weekData";
-import { getUpdateWeekDateWithTimeDetail } from "@/utils/weekDataTimeUtils";
-import { useAtom } from "jotai";
 
 interface BookByWeekNotionProps {
   regularReservationId: number; // 예약 고유 ID
@@ -19,7 +16,6 @@ interface BookByWeekNotionProps {
   teamStartTime: TimeString;
   teamEndTime: TimeString;
   handleDeleteItem: (reservationId: number) => void;
-  dayOfWeekNum: number;
 }
 
 const BookByWeekNotion = ({
@@ -31,27 +27,9 @@ const BookByWeekNotion = ({
   teamStartTime,
   teamEndTime,
   handleDeleteItem,
-  dayOfWeekNum,
 }: BookByWeekNotionProps) => {
   const startDateWithoutYear = applyStartDate.slice(5);
   const endDateWithoutYear = applyEndDate.slice(5);
-
-  const [teamWeekData, setTeamWeekData] = useAtom(teamWeekDataAtom);
-
-  const handleClick =
-    (timeType: "startTime" | "endTime") =>
-    (e: React.MouseEvent<HTMLButtonElement>): void => {
-      const value = e.currentTarget.getAttribute("value") as TimeString | null;
-      if (value) {
-        const newTeamWeekData = getUpdateWeekDateWithTimeDetail(
-          teamWeekData,
-          dayOfWeekNum,
-          timeType,
-          value,
-        );
-        setTeamWeekData(newTeamWeekData);
-      }
-    };
 
   return (
     <Container>
@@ -63,17 +41,9 @@ const BookByWeekNotion = ({
       <UserName title={teamName}>{teamName}</UserName>
       <SessionBox>{convertSessionKor(reservationSessionEng)}</SessionBox>
       <TimeContainer>
-        <TimeSelecter
-          disabled={true}
-          startTime={teamStartTime}
-          onClick={handleClick("startTime")}
-        />
+        <SelectedButton>{teamStartTime}</SelectedButton>
         <div>~</div>
-        <TimeSelecter
-          disabled={true}
-          startTime={teamEndTime}
-          onClick={handleClick("endTime")}
-        />
+        <SelectedButton>{teamEndTime}</SelectedButton>
       </TimeContainer>
       <DeleteButton onClick={() => handleDeleteItem(regularReservationId)}>
         x

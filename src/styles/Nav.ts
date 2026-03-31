@@ -5,6 +5,7 @@ interface NavProps {
 }
 const Nav = styled.button<NavProps>`
   font-size: 20px;
+  font-family: S-CoreDream, sans-serif;
   min-width: 80px;
   font-weight: 300;
   font-size: 15px;
