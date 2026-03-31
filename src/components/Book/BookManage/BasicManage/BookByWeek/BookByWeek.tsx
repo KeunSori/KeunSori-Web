@@ -23,7 +23,7 @@ const BookByWeek: React.FC<BookByWeekProps> = ({ date }) => {
 
   const [fetchedTeamWeekData] = useAtom(fetchedTeamWeekDataAtom);
   // 삭제 ids
-  const [deletedIds, setDeletedIds] = useAtom(deletedReservationIdsAtom);
+  const [_deletedIds, setDeletedIds] = useAtom(deletedReservationIdsAtom);
 
   // 서버에 존재하는 id만 삭제 ids 리스트에 추가
   const originalIds = fetchedTeamWeekData
