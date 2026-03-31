@@ -50,6 +50,7 @@ const NavBar2: React.FC = () => {
         <div
           className={css`
             display: flex;
+            align-items: center;
             gap: 25px;
             margin: auto;
           `}

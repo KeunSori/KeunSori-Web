@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import authApi from "@/api/Instance/authApi";
 import {
   convertDayOfWeek,
@@ -43,7 +42,7 @@ export const useTeamReservation = ({
   // atom
   const [teamWeekItems, setTeamWeekItems] = useAtom(teamWeekDataAtom);
   const [regularReservationId, setRegularReservationId] = useAtom(
-    reservationIdCounterAtom
+    reservationIdCounterAtom,
   );
   const [startDate] = useAtom(startCalendarDateAtom);
   const [endDate] = useAtom(endCalendarDateAtom);
@@ -57,11 +56,11 @@ export const useTeamReservation = ({
     const fetchReservationId = async () => {
       try {
         const response = await authApi.get(
-          `/admin/reservation/weekly-schedule`
+          `/admin/reservation/weekly-schedule`,
         );
 
         const allIds = response.data.flatMap((item: TeamWeek) =>
-          item.regularReservations.map((res) => res.regularReservationId)
+          item.regularReservations.map((res) => res.regularReservationId),
         );
 
         const maxId = Math.max(...allIds, 0); // 0을 기본값으로 사용하여 빈 배열 처리
@@ -78,20 +77,6 @@ export const useTeamReservation = ({
     fetchReservationId();
   }, []);
 
-  // 팀 시작~끝 시간을 주간 시작~끝 시간에 맞게 맞추기
-  // useEffect(() => {
-  //   if (teamWeekItems.length > 0) {
-  //     const todayDay = teamWeekItems.find(
-  //       (item) => item.dayOfWeekNum === date.dayOfWeekNum
-  //     );
-
-  //     if (todayDay) {
-  //       setRegularReservationStartTime(todayDay.startTime || "10:00");
-  //       setRegularReservationEndTime(todayDay.endTime || "23:00");
-  //     }
-  //   }
-  // }, [teamWeekItems, date.dayOfWeekNum]);
-
   // 팀별 예약 확인 버튼 클릭 시 저장하는 함수
   const onClickConfirmReservation = () => {
     if (
@@ -104,10 +89,6 @@ export const useTeamReservation = ({
       alert("모든 값을 입력하세요");
       return;
     }
-    // 확인 누르면 input 초기화
-    // setRegularReservationType("예약 유형");
-    // setRegularReservationTeamName("");
-    // setTeamLeaderStudentId("");
 
     // 팀별 예약 추가
     const newItem: TeamWeek = {
@@ -125,14 +106,14 @@ export const useTeamReservation = ({
             regularReservationType === "합주"
               ? "ALL"
               : convertSessionEng(
-                  regularReservationType as ReservationSessionKor
+                  regularReservationType as ReservationSessionKor,
                 ),
 
           regularReservationTeamName: regularReservationTeamName,
           regularReservationStartTime: regularReservationStartTime,
           regularReservationEndTime: regularReservationEndTime,
 
-          TeamLeaderStudentId: teamLeaderStudentId,
+          teamLeaderStudentId: teamLeaderStudentId,
           regularReservationApplyStartDate: formattedStartDate,
           regularReservationApplyEndDate: formattedEndDate,
         },
@@ -145,7 +126,7 @@ export const useTeamReservation = ({
     setTeamWeekItems((prev) => {
       // 기존에 같은 요일이 있는지 확인
       const existingItemIndex = prev.findIndex(
-        (item) => item.dayOfWeekNum === dayOfWeekNum
+        (item) => item.dayOfWeekNum === dayOfWeekNum,
       );
 
       if (existingItemIndex !== -1) {
@@ -168,8 +149,6 @@ export const useTeamReservation = ({
     });
     setRegularReservationId((prev) => prev + 1); // 다음 id를 그 다음부터 사용
   };
-
-  console.log("UI상의 teamWeekItems:", teamWeekItems);
 
   return {
     onClickConfirmReservation,

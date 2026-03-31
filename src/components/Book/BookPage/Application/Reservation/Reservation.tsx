@@ -100,7 +100,8 @@ const Reservation: React.FC<ReservationProps> = ({
           updateSlot((i) => i >= startIndex && i <= endIndex);
         } else if (
           user.reservationSession == instrument ||
-          user.reservationSession == "all"
+          user.reservationSession == "all" ||
+          user.reservationType == "LESSON"
         ) {
           const { startIndex, endIndex } = getSlotIndex(
             user.reservationStartTime,

@@ -16,6 +16,7 @@ import PasswordResetPage from "./pages/PasswordResetPage.tsx";
 import PasswordResetRedirectPage from "./pages/PasswordResetRedirectPage.tsx";
 
 import { Analytics } from "@vercel/analytics/react";
+import ProtectedRoute from "./routes/ProtectedRoute.tsx";
 
 function App() {
   return (
@@ -32,18 +33,25 @@ function App() {
               path="/password/reset/redirect"
               element={<PasswordResetRedirectPage />}
             />
+            <Route path="/recruit" element={<RecruitPage />} />
+            <Route path="/contact" element={<ContactPage />} />
 
             {/* 인증이 필요한 페이지들 */}
-            <Route path="/user" element={<UserPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/recruit" element={<RecruitPage />} />
-            <Route path="/book" element={<BookPage />} />
-            <Route path="/mypage" element={<MyPage />} />
-            <Route path="/password-change" element={<PasswordChange />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/user" element={<UserPage />} />
+              <Route path="/book" element={<BookPage />} />
+              <Route path="/mypage" element={<MyPage />} />
+              <Route path="/password-change" element={<PasswordChange />} />
+            </Route>
 
             {/* 관리자 페이지 */}
-            <Route path="/admin/bookmanagement" element={<BookManagePage />} />
-            <Route path="/admin/member-management" element={<ManagePage />} />
+            <Route element={<ProtectedRoute allowedStatuses={["관리자"]} />}>
+              <Route
+                path="/admin/bookmanagement"
+                element={<BookManagePage />}
+              />
+              <Route path="/admin/member-management" element={<ManagePage />} />
+            </Route>
           </Routes>
         </BrowserRouter>
         <Analytics />

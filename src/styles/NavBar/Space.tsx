@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 
 const Space = styled.div<{ isActive?: boolean }>`
+  all: unset;
   cursor: pointer;
   font-family: Goyang;
   display: flex;
   align-items: center;
-  height: 110%;
   border: none;
   color: ${({ isActive }) => (isActive ? "#ffaa00" : "inherit")};
   border-bottom: ${({ isActive }) => (isActive ? "1px solid #ffaa00" : "none")};
@@ -16,6 +16,7 @@ const Space = styled.div<{ isActive?: boolean }>`
   @media (max-width: 768px) {
     padding: 20px 30px;
     color: black;
+    background-color: ${({ isActive }) => (isActive ? "#f1f1f1" : "white")};
     &:hover {
       background-color: #f1f1f1;
       border-bottom: none;

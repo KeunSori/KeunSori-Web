@@ -1,3 +1,4 @@
+import { RECRUIT_INFO } from "./recruit.data";
 import {
   DetailTitle,
   FlexStyle,
@@ -15,32 +16,31 @@ const RecruitContents = () => {
         <FlexStyle>
           <DetailTitle>모집 대상:</DetailTitle>
           <RecruitDetail>
-            홍익대 컴퓨터공학과, 컴퓨터 공학과 진입 예정 자율 전공 재학생 및
-            휴학생
+            {RECRUIT_INFO.target}
           </RecruitDetail>
         </FlexStyle>
         <FlexStyle>
           <DetailTitle>모집 세션:</DetailTitle>
           <div style={{ width: "100%" }}>
-            <RecruitDetail> 드럼, 베이스, 기타, 키보드, 보컬</RecruitDetail>
-            <MoreDetail>* 여설 보컬, 기타, 드럼, 경력자 우대</MoreDetail>
+            <RecruitDetail>{RECRUIT_INFO.sessions}</RecruitDetail>
+            <MoreDetail>{RECRUIT_INFO.note}</MoreDetail>
           </div>
         </FlexStyle>
         <FlexStyle>
           <DetailTitle>모집 기간:</DetailTitle>
-          <RecruitDetail>7/23 (수) ~ 9/7 (일)</RecruitDetail>
+          <RecruitDetail>{RECRUIT_INFO.applyDates}</RecruitDetail>
         </FlexStyle>
         <FlexStyle>
           <DetailTitle>면접 기간:</DetailTitle>
-          <RecruitDetail>9/8 (월) ~ 9/12 (금)</RecruitDetail>
+          <RecruitDetail>{RECRUIT_INFO.interviewDates}</RecruitDetail>
         </FlexStyle>
         <FlexStyle>
           <DetailTitle>면접 장소:</DetailTitle>
-          <RecruitDetail>D동 411호 대면 진행</RecruitDetail>
+          <RecruitDetail>{RECRUIT_INFO.interviewPlace}</RecruitDetail>
         </FlexStyle>
         <FlexStyle>
           <DetailTitle>합격 발표:</DetailTitle>
-          <RecruitDetail>9/14 (일) 개별 문자 통보</RecruitDetail>
+          <RecruitDetail>{RECRUIT_INFO.resultDate}</RecruitDetail>
         </FlexStyle>
       </div>
     </RecruitContent>
