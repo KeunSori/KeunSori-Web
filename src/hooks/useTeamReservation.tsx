@@ -40,7 +40,7 @@ export const useTeamReservation = ({
   regularReservationEndTime,
 }: ReservationInput) => {
   // atom
-  const [teamWeekItems, setTeamWeekItems] = useAtom(teamWeekDataAtom);
+  const [_teamWeekItems, setTeamWeekItems] = useAtom(teamWeekDataAtom);
   const [regularReservationId, setRegularReservationId] = useAtom(
     reservationIdCounterAtom,
   );
